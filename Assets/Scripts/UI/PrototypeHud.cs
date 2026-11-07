@@ -9,16 +9,20 @@ namespace FarmGame2D.UI
     {
         private PrototypePlayerController player;
         private GUIStyle bodyStyle;
+        private GUIStyle smallStyle;
+        private GUIStyle centeredStyle;
         private GUIStyle titleStyle;
         private Font koreanFont;
         private FarmGuiSkin farmSkin;
+        private readonly HudMessageVisibility messageVisibility = new(4f);
 
         public bool HasArtSkin => farmSkin?.IsReady == true;
 
         public void Configure(PrototypePlayerController controlledPlayer)
         {
             player = controlledPlayer;
-            koreanFont = Font.CreateDynamicFontFromOSFont(new[] { "Malgun Gothic", "Arial" }, 18);
+            koreanFont = Resources.Load<Font>("Fonts/NotoSansKR-VF")
+                ?? Font.CreateDynamicFontFromOSFont(new[] { "Noto Sans KR", "Malgun Gothic", "Arial" }, 18);
             farmSkin = new FarmGuiSkin(koreanFont);
         }
 
@@ -31,24 +35,44 @@ namespace FarmGame2D.UI
             }
 
             EnsureStyles();
-            DrawStatus(session);
-            DrawQuest(session);
-            DrawHotbar(session);
-            DrawDialogue(session);
+            var previousMatrix = GUI.matrix;
+            var viewport = HudLayout.CalculateViewport(Screen.width, Screen.height);
+            GUI.matrix = Matrix4x4.TRS(
+                new Vector3(viewport.OffsetX, viewport.OffsetY, 0f),
+                Quaternion.identity,
+                new Vector3(viewport.Scale, viewport.Scale, 1f));
 
-            if (session.Data.characterChoice == CharacterChoice.None)
+            try
             {
-                DrawCharacterChoice(session);
+                if (session.Data.characterChoice == CharacterChoice.None)
+                {
+                    DrawCharacterChoice(session);
+                    return;
+                }
+
+                DrawStatus(session);
+                DrawQuest(session);
+                DrawHotbar(session);
+                DrawInteractionPrompt();
+
+                if (messageVisibility.ShouldShow(session.MessageRevision, Time.unscaledTime))
+                {
+                    DrawDialogue(session);
+                }
+
+                if (session.PhoneOpen)
+                {
+                    DrawPhone(session);
+                }
+
+                if (session.ShopOpen)
+                {
+                    DrawShop(session);
+                }
             }
-
-            if (session.PhoneOpen)
+            finally
             {
-                DrawPhone(session);
-            }
-
-            if (session.ShopOpen)
-            {
-                DrawShop(session);
+                GUI.matrix = previousMatrix;
             }
         }
 
@@ -56,11 +80,11 @@ namespace FarmGame2D.UI
         {
             var time = GameClockController.Instance?.CurrentTime;
             var timeText = time.HasValue ? $"{time.Value.Hour:00}:{time.Value.Minute:00}" : "--:--";
-            var rect = new Rect(Screen.width - 300f, 14f, 282f, 118f);
+            var rect = new Rect(HudLayout.ReferenceWidth - 300f, 14f, 282f, 118f);
             farmSkin.DrawBanner(rect);
-            GUI.Label(new Rect(rect.x + 32f, rect.y + 24f, 220f, 82f),
+            GUI.Label(new Rect(rect.x + 32f, rect.y + 23f, 220f, 84f),
                 $"{session.CurrentSeason} {SeasonCalendar.GetDayOfSeason(session.Data.day)}일  {timeText}\n{session.Data.money}G\n씨앗 {session.Data.inventory.Count(GameItem.WheatSeed)} · 밀 {session.Data.inventory.Count(GameItem.Wheat)} · 사료 {session.Data.inventory.Count(GameItem.Feed)} · 달걀 {session.Data.inventory.Count(GameItem.Egg)}",
-                bodyStyle);
+                smallStyle);
         }
 
         private void DrawQuest(GameSession session)
@@ -71,27 +95,39 @@ namespace FarmGame2D.UI
                 : $"퀘스트: 밀 3개 수확 ({progress}/3)";
             var rect = new Rect(14f, 14f, 320f, 100f);
             farmSkin.DrawBanner(rect);
-            GUI.Label(new Rect(rect.x + 34f, rect.y + 22f, 255f, 60f), quest + "\nF6: 계절 미리보기", bodyStyle);
+            GUI.Label(new Rect(rect.x + 34f, rect.y + 25f, 255f, 46f), quest, bodyStyle);
         }
 
         private void DrawHotbar(GameSession session)
         {
             var label = $"[1] 호미  [2] 밀 씨앗  [3] 물뿌리개   선택: {session.SelectedTool}";
-            var rect = new Rect((Screen.width - 520f) / 2f, Screen.height - 70f, 520f, 54f);
-            farmSkin.DrawButton(rect, label, true);
+            var rect = new Rect((HudLayout.ReferenceWidth - 520f) / 2f, HudLayout.ReferenceHeight - 70f, 520f, 54f);
+            farmSkin.DrawButtonBackground(rect, true);
+            GUI.Label(rect, label, centeredStyle);
         }
 
         private void DrawDialogue(GameSession session)
         {
-            var prompt = string.IsNullOrEmpty(player?.NearbyPrompt) ? "WASD 이동 · E 상호작용 · P 휴대폰 · F5 저장 · F9 불러오기" : player.NearbyPrompt;
-            var rect = new Rect(18f, Screen.height - 236f, Screen.width - 36f, 156f);
+            var rect = new Rect(90f, 480f, 1100f, 160f);
             farmSkin.DrawDialogue(rect);
-            GUI.Label(new Rect(rect.x + 210f, rect.y + 54f, rect.width - 255f, 78f), $"{session.Message}\n{prompt}", bodyStyle);
+            GUI.Label(new Rect(rect.x + 205f, rect.y + 52f, rect.width - 255f, 62f), session.Message, bodyStyle);
+        }
+
+        private void DrawInteractionPrompt()
+        {
+            if (string.IsNullOrEmpty(player?.NearbyPrompt))
+            {
+                return;
+            }
+
+            var rect = new Rect(440f, 410f, 400f, 64f);
+            farmSkin.DrawBanner(rect);
+            GUI.Label(new Rect(rect.x + 35f, rect.y + 12f, rect.width - 70f, 40f), player.NearbyPrompt, centeredStyle);
         }
 
         private void DrawCharacterChoice(GameSession session)
         {
-            var rect = new Rect((Screen.width - 420f) / 2f, (Screen.height - 210f) / 2f, 420f, 210f);
+            var rect = new Rect((HudLayout.ReferenceWidth - 420f) / 2f, (HudLayout.ReferenceHeight - 210f) / 2f, 420f, 210f);
             farmSkin.DrawWindow(rect);
             GUI.Label(new Rect(rect.x + 32f, rect.y + 20f, 356f, 42f), "플레이어 캐릭터 선택", titleStyle);
             GUI.Label(new Rect(rect.x + 38f, rect.y + 70f, 344f, 38f), "외형만 다르며 능력 차이는 없습니다.", bodyStyle);
@@ -108,23 +144,23 @@ namespace FarmGame2D.UI
 
         private void DrawPhone(GameSession session)
         {
-            var rect = new Rect((Screen.width - 360f) / 2f, 130f, 360f, 330f);
+            var rect = new Rect((HudLayout.ReferenceWidth - 400f) / 2f, 150f, 400f, 350f);
             farmSkin.DrawWindow(rect);
-            GUI.Label(new Rect(rect.x + 20f, rect.y + 16f, 320f, 40f), "농장 휴대폰", titleStyle);
-            GUI.Label(new Rect(rect.x + 20f, rect.y + 62f, 320f, 88f),
+            GUI.Label(new Rect(rect.x + 35f, rect.y + 18f, 330f, 40f), "농장 휴대폰", titleStyle);
+            GUI.Label(new Rect(rect.x + 42f, rect.y + 72f, 316f, 88f),
                 $"퀘스트: 밀 수확 {Mathf.Min(session.Data.wheatHarvested, 3)}/3\n첫 수확: {(session.Data.firstHarvestAchievement ? "달성" : "미달성")}\n첫 달걀: {(session.Data.firstEggAchievement ? "달성" : "미달성")}", bodyStyle);
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 30f, rect.y + 170f, 140f, 48f), "저장"))
+            if (farmSkin.DrawButton(new Rect(rect.x + 40f, rect.y + 190f, 140f, 48f), "저장"))
             {
                 session.Save(false);
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 190f, rect.y + 170f, 140f, 48f), "불러오기", true))
+            if (farmSkin.DrawButton(new Rect(rect.x + 220f, rect.y + 190f, 140f, 48f), "불러오기", true))
             {
                 session.Load();
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 110f, rect.y + 242f, 140f, 48f), "닫기 (P)"))
+            if (farmSkin.DrawButton(new Rect(rect.x + 130f, rect.y + 270f, 140f, 48f), "닫기 (P)"))
             {
                 session.TogglePhone();
             }
@@ -132,21 +168,21 @@ namespace FarmGame2D.UI
 
         private void DrawShop(GameSession session)
         {
-            var rect = new Rect((Screen.width - 390f) / 2f, 150f, 390f, 270f);
+            var rect = new Rect((HudLayout.ReferenceWidth - 420f) / 2f, 180f, 420f, 300f);
             farmSkin.DrawWindow(rect);
-            GUI.Label(new Rect(rect.x + 20f, rect.y + 18f, 350f, 42f), "씨앗·사료 상점", titleStyle);
-            GUI.Label(new Rect(rect.x + 20f, rect.y + 62f, 350f, 32f), $"보유 금액: {session.Data.money}G", bodyStyle);
-            if (farmSkin.DrawButton(new Rect(rect.x + 35f, rect.y + 110f, 320f, 45f), "밀 씨앗 5개 — 20G"))
+            GUI.Label(new Rect(rect.x + 35f, rect.y + 20f, 350f, 42f), "씨앗·사료 상점", titleStyle);
+            GUI.Label(new Rect(rect.x + 45f, rect.y + 72f, 330f, 32f), $"보유 금액: {session.Data.money}G", bodyStyle);
+            if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 115f, 330f, 46f), "밀 씨앗 5개 — 20G"))
             {
                 session.PurchaseSeeds();
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 35f, rect.y + 165f, 320f, 45f), "닭 사료 3개 — 15G", true))
+            if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 172f, 330f, 46f), "닭 사료 3개 — 15G", true))
             {
                 session.PurchaseFeed();
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 135f, rect.y + 220f, 120f, 34f), "닫기"))
+            if (farmSkin.DrawButton(new Rect(rect.x + 150f, rect.y + 238f, 120f, 38f), "닫기"))
             {
                 session.ToggleShop();
             }
@@ -157,9 +193,18 @@ namespace FarmGame2D.UI
             bodyStyle ??= new GUIStyle(GUI.skin.label)
             {
                 font = koreanFont,
-                fontSize = 16,
+                fontSize = 18,
                 wordWrap = true,
                 normal = { textColor = new Color32(78, 48, 31, 255) }
+            };
+            smallStyle ??= new GUIStyle(bodyStyle)
+            {
+                fontSize = 14
+            };
+            centeredStyle ??= new GUIStyle(bodyStyle)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                fontStyle = FontStyle.Bold
             };
             titleStyle ??= new GUIStyle(bodyStyle)
             {

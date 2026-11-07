@@ -13,13 +13,23 @@ namespace FarmGame2D.Core
         private readonly SaveService saveService = new();
         private Transform playerTransform;
         private int processedDay;
+        private string message = "안내자를 찾아가 농장 생활을 시작하세요.";
 
         public static GameSession Instance { get; private set; }
         public GameSaveData Data { get; private set; }
         public FarmTool SelectedTool { get; private set; } = FarmTool.Hoe;
         public bool PhoneOpen { get; private set; }
         public bool ShopOpen { get; private set; }
-        public string Message { get; private set; } = "안내자를 찾아가 농장 생활을 시작하세요.";
+        public string Message
+        {
+            get => message;
+            private set
+            {
+                message = value;
+                MessageRevision++;
+            }
+        }
+        public int MessageRevision { get; private set; }
         public Season CurrentSeason => SeasonCalendar.GetSeason(Data.day);
 
         public event Action StateChanged;

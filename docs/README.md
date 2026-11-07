@@ -10,10 +10,13 @@
 - [마을 이동 구현 설계](plans/2026-11-07-village-walking-design.md): C안 마을, 이동·충돌·카메라와 런타임 생성 구조
 - [마을 배치 시안](plans/2026-11-07-village-layout-options.md): A·B·C 마을 구조 비교와 현재 C안 선호 기록
 - [캐릭터·UI 아트 연결 설계](plans/2026-11-07-character-ui-art-integration-design.md): 플레이어·NPC 스프라이트와 농장 UI 시안의 실제 런타임 연결 구조
+- [WebGL 검토와 HUD 정리 설계](plans/2026-11-07-web-review-and-hud-polish-design.md): 브라우저 검토 환경, 걷기 애니메이션, 자동으로 숨는 안내와 반응형 UI
 
 ## 프로토타입 실행과 조작
 
 Unity에서 `Assets/Scenes/Main.unity`를 열고 Play를 누른다.
+
+WebGL 검토용 빌드는 Unity 메뉴 `FarmGame2D > Build WebGL Site`로 생성한다. 생성 후 `Tools/WebGLServer/serve_webgl.mjs`로 `Builds/WebGL` 폴더를 제공하면 브라우저에서 확인할 수 있다.
 
 - `M` / `F`: 남성형·여성형 캐릭터 선택
 - `WASD` 또는 방향키: 이동

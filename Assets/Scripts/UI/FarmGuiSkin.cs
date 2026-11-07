@@ -31,8 +31,13 @@ namespace FarmGame2D.UI
 
         public bool DrawButton(Rect rect, string label, bool orange = false)
         {
-            DrawAtlas(rect, orange ? OrangeButtonAtlasRect : GreenButtonAtlasRect);
+            DrawButtonBackground(rect, orange);
             return GUI.Button(rect, label, GetButtonStyle());
+        }
+
+        public void DrawButtonBackground(Rect rect, bool orange = false)
+        {
+            DrawAtlas(rect, orange ? OrangeButtonAtlasRect : GreenButtonAtlasRect);
         }
 
         private GUIStyle GetButtonStyle()

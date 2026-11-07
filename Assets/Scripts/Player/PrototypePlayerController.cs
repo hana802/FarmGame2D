@@ -9,7 +9,6 @@ namespace FarmGame2D.Player
     [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(SpriteRenderer))]
     public sealed class PrototypePlayerController : MonoBehaviour
     {
-        private const float MoveSpeed = 4f;
         private readonly Collider2D[] interactionResults = new Collider2D[12];
 
         private Rigidbody2D body;
@@ -29,6 +28,9 @@ namespace FarmGame2D.Player
             body.freezeRotation = true;
             body.interpolation = RigidbodyInterpolation2D.Interpolate;
             body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            var playerCollider = GetComponent<BoxCollider2D>();
+            playerCollider.size = new Vector2(0.5f, 0.32f);
+            playerCollider.offset = new Vector2(0f, 0.14f);
             spriteRenderer = GetComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = 10;
             transform.localScale = Vector3.one;
@@ -61,7 +63,7 @@ namespace FarmGame2D.Player
 
         private void FixedUpdate()
         {
-            body.MovePosition(body.position + (moveInput * MoveSpeed * Time.fixedDeltaTime));
+            body.MovePosition(body.position + (moveInput * PlayerMotionPresentation.MoveSpeed * Time.fixedDeltaTime));
         }
 
         private static Vector2 ReadMovementInput()
@@ -131,7 +133,7 @@ namespace FarmGame2D.Player
                 return;
             }
 
-            var frame = moveInput.sqrMagnitude > 0.01f ? Mathf.FloorToInt(Time.time * 8f) % 4 : 0;
+            var frame = PlayerMotionPresentation.GetAnimationFrame(Time.time, moveInput.sqrMagnitude > 0.01f);
             if (!force && displayedChoice == choice && displayedRow == facingRow && displayedFrame == frame)
             {
                 return;

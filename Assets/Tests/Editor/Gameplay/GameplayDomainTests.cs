@@ -1,6 +1,8 @@
 using System;
 using FarmGame2D.Core;
 using FarmGame2D.Farming;
+using FarmGame2D.Player;
+using FarmGame2D.UI;
 using NUnit.Framework;
 
 namespace FarmGame2D.Tests
@@ -57,6 +59,36 @@ namespace FarmGame2D.Tests
         {
             var inventory = new InventoryModel();
             Assert.Throws<ArgumentOutOfRangeException>(() => inventory.Add(GameItem.Wheat, 0));
+        }
+
+        [TestCase(0f, 1)]
+        [TestCase(0.17f, 2)]
+        [TestCase(0.34f, 3)]
+        [TestCase(0.51f, 2)]
+        public void WalkingAnimation_DoesNotMixIdleFrame(float elapsed, int expectedFrame)
+        {
+            Assert.That(PlayerMotionPresentation.GetAnimationFrame(elapsed, true), Is.EqualTo(expectedFrame));
+            Assert.That(PlayerMotionPresentation.GetAnimationFrame(elapsed, false), Is.Zero);
+        }
+
+        [Test]
+        public void HudMessageVisibility_ExpiresUntilMessageRevisionChanges()
+        {
+            var visibility = new HudMessageVisibility(4f);
+
+            Assert.That(visibility.ShouldShow(0, 0f), Is.True);
+            Assert.That(visibility.ShouldShow(0, 4.1f), Is.False);
+            Assert.That(visibility.ShouldShow(1, 4.1f), Is.True);
+        }
+
+        [Test]
+        public void HudLayout_FitsAndCentersReferenceCanvas()
+        {
+            var viewport = HudLayout.CalculateViewport(1000f, 1000f);
+
+            Assert.That(viewport.Scale, Is.EqualTo(0.78125f).Within(0.0001f));
+            Assert.That(viewport.OffsetX, Is.Zero.Within(0.0001f));
+            Assert.That(viewport.OffsetY, Is.EqualTo(218.75f).Within(0.0001f));
         }
     }
 }
