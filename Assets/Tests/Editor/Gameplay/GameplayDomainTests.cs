@@ -123,6 +123,9 @@ namespace FarmGame2D.Tests
 
             Assert.That(layout.Panel.width, Is.LessThan(HudLayout.ReferenceWidth));
             Assert.That(layout.Panel.yMax, Is.LessThan(650f), "The dialogue card must not cover the hotbar.");
+            Assert.That(layout.Panel.width / layout.Panel.height,
+                Is.EqualTo(1618f / 356f).Within(0.01f),
+                "The dialogue atlas must keep its original aspect ratio so its visual slots stay aligned.");
             Assert.That(layout.Portrait.xMax, Is.LessThan(layout.Body.xMin));
             Assert.That(layout.Name.yMax, Is.LessThanOrEqualTo(layout.Body.yMin));
             Assert.That(layout.Name.width, Is.GreaterThanOrEqualTo(220f));

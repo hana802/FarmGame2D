@@ -36,6 +36,8 @@ namespace FarmGame2D.UI
     {
         public const float ReferenceWidth = 1280f;
         public const float ReferenceHeight = 720f;
+        private const float DialogueAtlasWidth = 1618f;
+        private const float DialogueAtlasHeight = 356f;
 
         public static HudViewport CalculateViewport(float screenWidth, float screenHeight)
         {
@@ -47,12 +49,24 @@ namespace FarmGame2D.UI
 
         public static DialogueHudLayout CalculateDialogueLayout()
         {
-            var panel = new Rect(112f, 482f, 1056f, 158f);
+            const float panelWidth = 1100f;
+            var panelHeight = panelWidth * DialogueAtlasHeight / DialogueAtlasWidth;
+            var panel = new Rect((ReferenceWidth - panelWidth) * 0.5f, 640f - panelHeight, panelWidth, panelHeight);
             return new DialogueHudLayout(
                 panel,
-                new Rect(panel.x + 30f, panel.y + 22f, 116f, 116f),
-                new Rect(panel.x + 168f, panel.y + 16f, 260f, 38f),
-                new Rect(panel.x + 168f, panel.y + 58f, 840f, 76f));
+                ScaleDialogueSlot(panel, new Rect(80f, 107f, 201f, 193f)),
+                ScaleDialogueSlot(panel, new Rect(362f, 27f, 335f, 50f)),
+                ScaleDialogueSlot(panel, new Rect(355f, 118f, 1170f, 165f)));
+        }
+
+        private static Rect ScaleDialogueSlot(Rect panel, Rect atlasSlot)
+        {
+            var scale = panel.width / DialogueAtlasWidth;
+            return new Rect(
+                panel.x + (atlasSlot.x * scale),
+                panel.y + (atlasSlot.y * scale),
+                atlasSlot.width * scale,
+                atlasSlot.height * scale);
         }
     }
 }
