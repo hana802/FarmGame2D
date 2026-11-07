@@ -117,6 +117,19 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
+        public void DialogueLayout_SeparatesPortraitNameAndBody()
+        {
+            var layout = HudLayout.CalculateDialogueLayout();
+
+            Assert.That(layout.Panel.width, Is.LessThan(HudLayout.ReferenceWidth));
+            Assert.That(layout.Panel.yMax, Is.LessThan(650f), "The dialogue card must not cover the hotbar.");
+            Assert.That(layout.Portrait.xMax, Is.LessThan(layout.Body.xMin));
+            Assert.That(layout.Name.yMax, Is.LessThanOrEqualTo(layout.Body.yMin));
+            Assert.That(layout.Name.width, Is.GreaterThanOrEqualTo(220f));
+            Assert.That(layout.Body.width, Is.GreaterThanOrEqualTo(760f));
+        }
+
+        [Test]
         public void CharacterChoice_UsesRequestedTitle()
         {
             Assert.That(PrototypeHud.CharacterChoiceTitle, Is.EqualTo("당신의 성별을 골라주세요"));

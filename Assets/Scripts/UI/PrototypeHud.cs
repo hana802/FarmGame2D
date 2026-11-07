@@ -16,6 +16,7 @@ namespace FarmGame2D.UI
         private GUIStyle centeredStyle;
         private GUIStyle titleStyle;
         private GUIStyle speakerStyle;
+        private GUIStyle dialogueBodyStyle;
         private GUIStyle panelStyle;
         private Font koreanFont;
         private FarmGuiSkin farmSkin;
@@ -162,12 +163,12 @@ namespace FarmGame2D.UI
                 return;
             }
 
-            var rect = new Rect(90f, 466f, 1100f, 174f);
-            farmSkin.DrawDialogue(rect);
+            var layout = HudLayout.CalculateDialogueLayout();
+            farmSkin.DrawDialogue(layout.Panel);
             var portrait = GameArtCatalog.GetNpcPortrait(session.ActivePortraitRow);
-            farmSkin.DrawSprite(new Rect(rect.x + 42f, rect.y + 24f, 126f, 126f), portrait);
-            GUI.Label(new Rect(rect.x + 192f, rect.y + 30f, rect.width - 245f, 32f), session.ActiveSpeaker, speakerStyle);
-            GUI.Label(new Rect(rect.x + 192f, rect.y + 72f, rect.width - 246f, 76f), session.Message, bodyStyle);
+            farmSkin.DrawSprite(layout.Portrait, portrait);
+            GUI.Label(layout.Name, session.ActiveSpeaker, speakerStyle);
+            GUI.Label(layout.Body, session.Message, dialogueBodyStyle);
         }
 
         private void DrawInteractionPrompt()
@@ -272,9 +273,18 @@ namespace FarmGame2D.UI
             };
             speakerStyle ??= new GUIStyle(bodyStyle)
             {
-                fontSize = 22,
+                fontSize = 21,
                 fontStyle = FontStyle.Bold,
-                alignment = TextAnchor.MiddleLeft
+                alignment = TextAnchor.MiddleCenter,
+                clipping = TextClipping.Clip
+            };
+            dialogueBodyStyle ??= new GUIStyle(bodyStyle)
+            {
+                fontSize = 19,
+                alignment = TextAnchor.MiddleLeft,
+                wordWrap = true,
+                clipping = TextClipping.Clip,
+                padding = new RectOffset(8, 8, 4, 4)
             };
             panelStyle ??= new GUIStyle(smallStyle)
             {

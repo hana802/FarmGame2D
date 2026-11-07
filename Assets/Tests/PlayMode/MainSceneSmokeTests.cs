@@ -120,6 +120,7 @@ namespace FarmGame2D.Tests
             guide.GetComponent<DialogueInteractable>().Interact(player);
             Assert.That(GameSession.Instance.ActivePortraitRow, Is.EqualTo(0));
             Assert.That(GameSession.Instance.ActiveSpeaker, Is.EqualTo("안내자 하람"));
+            Assert.That(GameSession.Instance.Message, Does.StartWith("I로 가방"));
         }
     }
 }

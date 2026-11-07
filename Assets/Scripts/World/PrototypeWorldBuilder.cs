@@ -120,7 +120,7 @@ namespace FarmGame2D.World
 
             var guide = CreateNpc("Guide", new Vector2(3f, 3.5f), new Color(0.8f, 0.58f, 0.25f), townRoot);
             ApplyNpcArt(guide, 0);
-            guide.Configure("안내자 하람", "1·2·3번으로 도구를 고르고 E로 밭과 물건을 사용하세요. P는 휴대폰입니다.", 0);
+            guide.Configure("안내자 하람", "I로 가방을 열어 도구를 꺼내고, E로 밭과 물건을 사용하세요. P는 휴대폰입니다.", 0);
             var elder = CreateNpc("Elder", new Vector2(-7f, 5f), new Color(0.55f, 0.38f, 0.42f), townRoot);
             ApplyNpcArt(elder, 2);
             elder.Configure("주민 순자", "계절마다 나무와 들판의 색이 달라진답니다.", 2);
