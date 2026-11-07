@@ -24,6 +24,7 @@ namespace FarmGame2D.Core
         public bool harvestQuestCompleted;
         public bool firstHarvestAchievement;
         public bool firstEggAchievement;
+        public List<int> pulledWeedIds = new();
 
         public static GameSaveData CreateNew(int plotCount, int worldSeed)
         {

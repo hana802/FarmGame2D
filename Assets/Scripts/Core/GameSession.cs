@@ -23,6 +23,7 @@ namespace FarmGame2D.Core
         public FarmTool SelectedTool { get; private set; } = FarmTool.Hoe;
         public bool PhoneOpen { get; private set; }
         public bool ShopOpen { get; private set; }
+        public bool InventoryOpen { get; private set; }
         public string Message
         {
             get => message;
@@ -82,11 +83,14 @@ namespace FarmGame2D.Core
 
         private void Update()
         {
-            HandleToolInput();
-
             if (Input.GetKeyDown(KeyCode.P))
             {
                 TogglePhone();
+            }
+
+            if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.B))
+            {
+                ToggleInventory();
             }
 
             if (Input.GetKeyDown(KeyCode.F5))
@@ -232,6 +236,7 @@ namespace FarmGame2D.Core
         {
             PhoneOpen = !PhoneOpen;
             ShopOpen = false;
+            InventoryOpen = false;
             NotifyChanged();
         }
 
@@ -239,6 +244,15 @@ namespace FarmGame2D.Core
         {
             ShopOpen = !ShopOpen;
             PhoneOpen = false;
+            InventoryOpen = false;
+            NotifyChanged();
+        }
+
+        public void ToggleInventory()
+        {
+            InventoryOpen = !InventoryOpen;
+            PhoneOpen = false;
+            ShopOpen = false;
             NotifyChanged();
         }
 
@@ -288,26 +302,27 @@ namespace FarmGame2D.Core
             NotifyChanged();
         }
 
-        private void HandleToolInput()
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                SelectTool(FarmTool.Hoe);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                SelectTool(FarmTool.Seeds);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                SelectTool(FarmTool.WateringCan);
-            }
-        }
-
         public void SelectTool(FarmTool tool)
         {
             SelectedTool = tool;
+            InventoryOpen = false;
+            Message = $"가방에서 {GetToolLabel(tool)}를 꺼냈습니다.";
             NotifyChanged();
+        }
+
+        public bool PullWeed(int weedId)
+        {
+            Data.pulledWeedIds ??= new System.Collections.Generic.List<int>();
+            if (Data.pulledWeedIds.Contains(weedId))
+            {
+                return false;
+            }
+
+            Data.pulledWeedIds.Add(weedId);
+            Data.inventory.Add(GameItem.Weed, 1);
+            Message = "잡초를 뽑아 가방에 넣었습니다.";
+            NotifyChanged();
+            return true;
         }
 
         private void HandleTimeChanged(GameTimeSnapshot snapshot)
@@ -391,6 +406,7 @@ namespace FarmGame2D.Core
         private void EnsurePlotCount()
         {
             Data.inventory ??= new InventoryModel();
+            Data.pulledWeedIds ??= new System.Collections.Generic.List<int>();
             Data.farmPlots ??= new System.Collections.Generic.List<FarmPlotData>();
             while (Data.farmPlots.Count < PlotCount)
             {
@@ -412,6 +428,17 @@ namespace FarmGame2D.Core
         private void NotifyChanged()
         {
             StateChanged?.Invoke();
+        }
+
+        private static string GetToolLabel(FarmTool tool)
+        {
+            return tool switch
+            {
+                FarmTool.Hoe => "호미",
+                FarmTool.Seeds => "밀 씨앗",
+                FarmTool.WateringCan => "물뿌리개",
+                _ => tool.ToString()
+            };
         }
     }
 }

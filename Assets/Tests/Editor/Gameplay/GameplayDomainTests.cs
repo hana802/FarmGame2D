@@ -63,6 +63,16 @@ namespace FarmGame2D.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => inventory.Add(GameItem.Wheat, 0));
         }
 
+        [Test]
+        public void Inventory_StoresPulledWeeds()
+        {
+            var inventory = new InventoryModel();
+
+            inventory.Add(GameItem.Weed, 2);
+
+            Assert.That(inventory.Count(GameItem.Weed), Is.EqualTo(2));
+        }
+
         [TestCase(0f, 1)]
         [TestCase(0.17f, 2)]
         [TestCase(0.34f, 3)]

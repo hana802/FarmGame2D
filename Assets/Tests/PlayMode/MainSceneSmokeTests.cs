@@ -8,6 +8,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.Tilemaps;
 
 namespace FarmGame2D.Tests
 {
@@ -39,6 +40,13 @@ namespace FarmGame2D.Tests
             yield return null;
             Assert.That(player.HeldItemPresenter.DisplayedTool, Is.EqualTo(FarmTool.WateringCan));
             Assert.That(hud.HasArtSkin, Is.True, "HUD must load the illustrated UI atlas.");
+
+            var ground = GameObject.Find("Seasonal Ground").GetComponent<Tilemap>();
+            var road = GameObject.Find("Main Street").GetComponent<Tilemap>();
+            Assert.That(ground.GetSprite(new Vector3Int(0, 0, 0)).texture.width, Is.GreaterThan(1),
+                "Ground must use illustrated grass instead of a 1x1 color block.");
+            Assert.That(road.GetSprite(new Vector3Int(0, 0, 0)).texture.width, Is.GreaterThan(1),
+                "Roads must use illustrated stone instead of a 1x1 color block.");
 
             var guide = GameObject.Find("Guide");
             Assert.That(guide, Is.Not.Null);
@@ -76,6 +84,27 @@ namespace FarmGame2D.Tests
             Assert.That(GameObject.Find("East Home").GetComponent<SpriteRenderer>().sprite.texture, Is.Not.SameAs(farmHouseTexture));
             Assert.That(GameObject.Find("West Home").GetComponent<SpriteRenderer>().sprite.texture,
                 Is.Not.SameAs(GameObject.Find("East Home").GetComponent<SpriteRenderer>().sprite.texture));
+
+            foreach (var interiorProp in new[] { "Interior Bed Art", "Interior Rug Art", "Interior Table", "Interior Cabinet" })
+            {
+                var prop = GameObject.Find(interiorProp);
+                Assert.That(prop, Is.Not.Null, $"{interiorProp} must be placed inside the farm house.");
+                Assert.That(prop.GetComponent<SpriteRenderer>().sprite.texture.width, Is.GreaterThan(1));
+            }
+
+            var weed = GameObject.Find("Weed 1");
+            Assert.That(weed, Is.Not.Null, "The world must contain pullable weeds.");
+            Assert.That(weed.GetComponent<SpriteRenderer>().sprite.texture.width, Is.GreaterThan(1));
+            var weedCount = GameSession.Instance.Data.inventory.Count(GameItem.Weed);
+            weed.GetComponent<WeedInteractable>().Interact(player);
+            yield return null;
+            Assert.That(GameSession.Instance.Data.inventory.Count(GameItem.Weed), Is.EqualTo(weedCount + 1));
+            Assert.That(GameSession.Instance.Data.pulledWeedIds, Does.Contain(0));
+
+            GameSession.Instance.ToggleInventory();
+            Assert.That(GameSession.Instance.InventoryOpen, Is.True);
+            GameSession.Instance.SelectTool(FarmTool.Hoe);
+            Assert.That(GameSession.Instance.InventoryOpen, Is.False, "Taking an item out of the bag should close it.");
 
             var entrance = GameObject.Find("Farm House Door").GetComponent<DoorInteractable>();
             Assert.That(entrance, Is.Not.Null);

@@ -1,0 +1,1016 @@
+fileFormatVersion: 2
+guid: 8e23e77298e6a6641af9feba9eb62961
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6970760502747832506
+    second: interior_rug_v1_0
+  - first:
+      213: -7286019354667738555
+    second: interior_rug_v1_1
+  - first:
+      213: -818485971011549066
+    second: interior_rug_v1_2
+  - first:
+      213: 461899733858407718
+    second: interior_rug_v1_3
+  - first:
+      213: -484892171977952537
+    second: interior_rug_v1_4
+  - first:
+      213: 7683940126781604966
+    second: interior_rug_v1_5
+  - first:
+      213: -6613937010757654346
+    second: interior_rug_v1_6
+  - first:
+      213: 6918924880677120752
+    second: interior_rug_v1_7
+  - first:
+      213: -6679544422735455658
+    second: interior_rug_v1_8
+  - first:
+      213: 7001658790933430265
+    second: interior_rug_v1_9
+  - first:
+      213: -7350900418722516395
+    second: interior_rug_v1_10
+  - first:
+      213: 7038021296911987884
+    second: interior_rug_v1_11
+  - first:
+      213: 9095818777271146768
+    second: interior_rug_v1_12
+  - first:
+      213: -4354339305101767019
+    second: interior_rug_v1_13
+  - first:
+      213: -3458359924287746561
+    second: interior_rug_v1_14
+  - first:
+      213: -3947303215914239849
+    second: interior_rug_v1_15
+  - first:
+      213: -4310970661132712523
+    second: interior_rug_v1_16
+  - first:
+      213: 3763671384973138287
+    second: interior_rug_v1_17
+  - first:
+      213: 7619702088312194670
+    second: interior_rug_v1_18
+  - first:
+      213: -760858054420432686
+    second: interior_rug_v1_19
+  - first:
+      213: 7735645803719931883
+    second: interior_rug_v1_20
+  - first:
+      213: 9184052711845988075
+    second: interior_rug_v1_21
+  - first:
+      213: -356675512223118499
+    second: interior_rug_v1_22
+  - first:
+      213: 2370898820739279552
+    second: interior_rug_v1_23
+  - first:
+      213: -8837833697410912473
+    second: interior_rug_v1_24
+  - first:
+      213: -7889971901352835702
+    second: interior_rug_v1_25
+  - first:
+      213: -8067180983623489187
+    second: interior_rug_v1_26
+  - first:
+      213: 7953679426362478290
+    second: interior_rug_v1_27
+  - first:
+      213: -7263687469914983866
+    second: interior_rug_v1_28
+  - first:
+      213: 1041173158189765479
+    second: interior_rug_v1_29
+  - first:
+      213: 1244021757092805390
+    second: interior_rug_v1_30
+  - first:
+      213: -1573519028066870160
+    second: interior_rug_v1_31
+  - first:
+      213: 3084839955521638094
+    second: interior_rug_v1_32
+  - first:
+      213: 5125354229052438610
+    second: interior_rug_v1_33
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: interior_rug_v1_0
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 1017
+        width: 13
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64f54636142e24f90800000000000000
+      internalID: -6970760502747832506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_1
+      rect:
+        serializedVersion: 2
+        x: 943
+        y: 975
+        width: 194
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54a986afffbd2ea90800000000000000
+      internalID: -7286019354667738555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1523
+        height: 1012
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 678473c885724a4f0800000000000000
+      internalID: -818485971011549066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_3
+      rect:
+        serializedVersion: 2
+        x: 1391
+        y: 741
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6255a765c5ff86600800000000000000
+      internalID: 461899733858407718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_4
+      rect:
+        serializedVersion: 2
+        x: 1414
+        y: 725
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e2f2ee73215549f0800000000000000
+      internalID: -484892171977952537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_5
+      rect:
+        serializedVersion: 2
+        x: 1376
+        y: 661
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 664003485d6d2aa60800000000000000
+      internalID: 7683940126781604966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_6
+      rect:
+        serializedVersion: 2
+        x: 1410
+        y: 663
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b82bf2b4539634a0800000000000000
+      internalID: -6613937010757654346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_7
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 595
+        width: 25
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fa2f5c5585f40060800000000000000
+      internalID: 6918924880677120752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_8
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 537
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65a596dbcbd7d43a0800000000000000
+      internalID: -6679544422735455658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_9
+      rect:
+        serializedVersion: 2
+        x: 1397
+        y: 541
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fff310f293ea2160800000000000000
+      internalID: 7001658790933430265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_10
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 500
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55236c2140b5cf990800000000000000
+      internalID: -7350900418722516395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_11
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 351
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca4b21c94131ca160800000000000000
+      internalID: 7038021296911987884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_12
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 295
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01913987cf6da3e70800000000000000
+      internalID: 9095818777271146768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_13
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 257
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59e43e7e8774293c0800000000000000
+      internalID: -4354339305101767019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_14
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 127
+        width: 93
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffdc167d8ff6100d0800000000000000
+      internalID: -3458359924287746561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_15
+      rect:
+        serializedVersion: 2
+        x: 1320
+        y: 208
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 798bcaa83ac5839c0800000000000000
+      internalID: -3947303215914239849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_16
+      rect:
+        serializedVersion: 2
+        x: 1378
+        y: 213
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b5cd02360b5c24c0800000000000000
+      internalID: -4310970661132712523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_17
+      rect:
+        serializedVersion: 2
+        x: 1312
+        y: 181
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6950a01f2f3b3430800000000000000
+      internalID: 3763671384973138287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_18
+      rect:
+        serializedVersion: 2
+        x: 1305
+        y: 172
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e66862cadae9eb960800000000000000
+      internalID: 7619702088312194670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_19
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 125
+        width: 15
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d876c571a3e075f0800000000000000
+      internalID: -760858054420432686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_20
+      rect:
+        serializedVersion: 2
+        x: 1206
+        y: 125
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be7b7fe8fd88a5b60800000000000000
+      internalID: 7735645803719931883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_21
+      rect:
+        serializedVersion: 2
+        x: 1246
+        y: 135
+        width: 17
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be60b00484f447f70800000000000000
+      internalID: 9184052711845988075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_22
+      rect:
+        serializedVersion: 2
+        x: 1214
+        y: 103
+        width: 27
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5b4cd9e285dc0bf0800000000000000
+      internalID: -356675512223118499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_23
+      rect:
+        serializedVersion: 2
+        x: 1362
+        y: 119
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0caae887aef17e020800000000000000
+      internalID: 2370898820739279552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_24
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 87
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72f68d9b315b95580800000000000000
+      internalID: -8837833697410912473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_25
+      rect:
+        serializedVersion: 2
+        x: 1176
+        y: 95
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a850d0ccb50318290800000000000000
+      internalID: -7889971901352835702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_26
+      rect:
+        serializedVersion: 2
+        x: 1180
+        y: 49
+        width: 41
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d59e55c13ad9b0090800000000000000
+      internalID: -8067180983623489187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_27
+      rect:
+        serializedVersion: 2
+        x: 1204
+        y: 93
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2de0ba14c45216e60800000000000000
+      internalID: 7953679426362478290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_28
+      rect:
+        serializedVersion: 2
+        x: 1216
+        y: 85
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 642f2441bb2323b90800000000000000
+      internalID: -7263687469914983866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_29
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 79
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7639293987df27e00800000000000000
+      internalID: 1041173158189765479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_30
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 77
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0bbf5c6237a34110800000000000000
+      internalID: 1244021757092805390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_31
+      rect:
+        serializedVersion: 2
+        x: 1228
+        y: 65
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07c91c4e7ccb92ae0800000000000000
+      internalID: -1573519028066870160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_32
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 35
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ece8cc9689d8fca20800000000000000
+      internalID: 3084839955521638094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_rug_v1_33
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 35
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25877ba148ae02740800000000000000
+      internalID: 5125354229052438610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      interior_rug_v1_0: -6970760502747832506
+      interior_rug_v1_1: -7286019354667738555
+      interior_rug_v1_10: -7350900418722516395
+      interior_rug_v1_11: 7038021296911987884
+      interior_rug_v1_12: 9095818777271146768
+      interior_rug_v1_13: -4354339305101767019
+      interior_rug_v1_14: -3458359924287746561
+      interior_rug_v1_15: -3947303215914239849
+      interior_rug_v1_16: -4310970661132712523
+      interior_rug_v1_17: 3763671384973138287
+      interior_rug_v1_18: 7619702088312194670
+      interior_rug_v1_19: -760858054420432686
+      interior_rug_v1_2: -818485971011549066
+      interior_rug_v1_20: 7735645803719931883
+      interior_rug_v1_21: 9184052711845988075
+      interior_rug_v1_22: -356675512223118499
+      interior_rug_v1_23: 2370898820739279552
+      interior_rug_v1_24: -8837833697410912473
+      interior_rug_v1_25: -7889971901352835702
+      interior_rug_v1_26: -8067180983623489187
+      interior_rug_v1_27: 7953679426362478290
+      interior_rug_v1_28: -7263687469914983866
+      interior_rug_v1_29: 1041173158189765479
+      interior_rug_v1_3: 461899733858407718
+      interior_rug_v1_30: 1244021757092805390
+      interior_rug_v1_31: -1573519028066870160
+      interior_rug_v1_32: 3084839955521638094
+      interior_rug_v1_33: 5125354229052438610
+      interior_rug_v1_4: -484892171977952537
+      interior_rug_v1_5: 7683940126781604966
+      interior_rug_v1_6: -6613937010757654346
+      interior_rug_v1_7: 6918924880677120752
+      interior_rug_v1_8: -6679544422735455658
+      interior_rug_v1_9: 7001658790933430265
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

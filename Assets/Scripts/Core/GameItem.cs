@@ -5,7 +5,8 @@ namespace FarmGame2D.Core
         WheatSeed,
         Wheat,
         Feed,
-        Egg
+        Egg,
+        Weed
     }
 
     public enum FarmTool

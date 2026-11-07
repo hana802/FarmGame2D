@@ -19,6 +19,7 @@ namespace FarmGame2D.World
             BuildTilemaps();
             BuildFarm(session);
             BuildMainStreetTown(session.Data.worldSeed);
+            BuildWeeds(session);
             BuildBoundaries();
             session.StateChanged += RefreshSeason;
             RefreshSeason();
@@ -40,9 +41,9 @@ namespace FarmGame2D.World
 
             groundTilemap = CreateTilemap(gridObject.transform, "Seasonal Ground", 0);
             var roadTilemap = CreateTilemap(gridObject.transform, "Main Street", 1);
-            FillRectangle(groundTilemap, new BoundsInt(-18, -16, 0, 37, 35, 1), PrototypeSpriteFactory.CreateTile(Color.white));
+            FillRectangle(groundTilemap, new BoundsInt(-18, -16, 0, 37, 35, 1), WorldArtCatalog.GetTile(WorldTileKind.Grass));
 
-            var roadTile = PrototypeSpriteFactory.CreateTile(new Color(0.72f, 0.57f, 0.35f));
+            var roadTile = WorldArtCatalog.GetTile(WorldTileKind.StonePath);
             FillRectangle(roadTilemap, new BoundsInt(-1, -16, 0, 3, 30, 1), roadTile);
             FillRectangle(roadTilemap, new BoundsInt(-6, 2, 0, 13, 6, 1), roadTile);
             FillRectangle(roadTilemap, new BoundsInt(-10, 5, 0, 21, 2, 1), roadTile);
@@ -83,14 +84,16 @@ namespace FarmGame2D.World
             var interior = new GameObject("Farm House Interior").transform;
             interior.SetParent(transform);
             PrototypeSpriteFactory.CreateBlock("Interior Floor", new Vector2(40f, -9.5f), new Vector2(8f, 6f), new Color(0.77f, 0.62f, 0.42f), interior);
-            PrototypeSpriteFactory.CreateBlock("Interior Rug", new Vector2(40f, -9.8f), new Vector2(2.6f, 1.7f), new Color(0.55f, 0.22f, 0.2f), interior);
+            CreateWorldArt("Interior Rug Art", WorldArtKind.InteriorRug, new Vector2(40f, -9.6f), interior, 2);
             PrototypeSpriteFactory.CreateBlock("Interior Top Wall", new Vector2(40f, -6.45f), new Vector2(8.4f, 0.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
             PrototypeSpriteFactory.CreateBlock("Interior Left Wall", new Vector2(35.8f, -9.5f), new Vector2(0.5f, 6.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
             PrototypeSpriteFactory.CreateBlock("Interior Right Wall", new Vector2(44.2f, -9.5f), new Vector2(0.5f, 6.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
             PrototypeSpriteFactory.CreateBlock("Interior Bottom Wall Left", new Vector2(37.8f, -12.55f), new Vector2(3.9f, 0.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
             PrototypeSpriteFactory.CreateBlock("Interior Bottom Wall Right", new Vector2(42.2f, -12.55f), new Vector2(3.9f, 0.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
 
-            CreateInteractable<BedInteractable>("Bed", new Vector2(37.3f, -8.1f), new Vector2(1.5f, 2.2f), new Color(0.55f, 0.2f, 0.25f), interior);
+            CreateArtInteractable<BedInteractable>("Interior Bed Art", WorldArtKind.InteriorBed, new Vector2(37.4f, -8.6f), new Vector2(1.3f, 2.2f), interior);
+            CreateWorldArt("Interior Table", WorldArtKind.InteriorTable, new Vector2(40.6f, -8.8f), interior, 4, new Vector2(1.7f, 0.8f), new Vector2(0f, 0.35f));
+            CreateWorldArt("Interior Cabinet", WorldArtKind.InteriorCabinet, new Vector2(42.4f, -7.2f), interior, 3, new Vector2(1.3f, 0.65f), new Vector2(0f, 0.6f));
             var exit = CreateInteractable<DoorInteractable>("Farm House Exit", new Vector2(40f, -12.2f), new Vector2(1.1f, 0.6f), new Color(0.5f, 0.28f, 0.13f), interior);
             exit.Configure(new Vector2(6f, -13f), "밖으로 나가기", "농장으로 나왔습니다.");
         }
@@ -156,6 +159,39 @@ namespace FarmGame2D.World
             }
         }
 
+        private void BuildWeeds(GameSession session)
+        {
+            var weedRoot = new GameObject("Pullable Weeds").transform;
+            weedRoot.SetParent(transform);
+            var positions = new[]
+            {
+                new Vector2(2.5f, -9.5f),
+                new Vector2(-10f, -5.5f),
+                new Vector2(13.5f, -10.5f),
+                new Vector2(14f, -3.5f),
+                new Vector2(-14.5f, 12f),
+                new Vector2(14.5f, 14f),
+                new Vector2(-15f, 3f),
+                new Vector2(12.5f, 2f)
+            };
+
+            for (var index = 0; index < positions.Length; index++)
+            {
+                if (session.Data.pulledWeedIds != null && session.Data.pulledWeedIds.Contains(index))
+                {
+                    continue;
+                }
+
+                var weed = CreateArtInteractable<WeedInteractable>(
+                    $"Weed {index + 1}",
+                    WorldArtKind.Weed,
+                    positions[index],
+                    new Vector2(0.75f, 0.65f),
+                    weedRoot);
+                weed.Configure(index);
+            }
+        }
+
         private static bool CanPlaceTree(Vector2 position)
         {
             if (Mathf.Abs(position.x) < 3f || (position.y < -6f && position.x > -7f && position.x < 11f))
@@ -218,10 +254,10 @@ namespace FarmGame2D.World
         {
             return season switch
             {
-                Season.Spring => (new Color(0.62f, 0.78f, 0.45f), Color.white, new Color(0.9f, 1f, 1f)),
-                Season.Summer => (new Color(0.42f, 0.68f, 0.3f), new Color(0.82f, 0.98f, 0.78f), new Color(0.85f, 0.97f, 1f)),
-                Season.Autumn => (new Color(0.72f, 0.58f, 0.3f), new Color(1f, 0.68f, 0.36f), new Color(0.9f, 0.94f, 1f)),
-                Season.Winter => (new Color(0.82f, 0.88f, 0.9f), new Color(0.78f, 0.9f, 1f), new Color(0.85f, 0.95f, 1f)),
+                Season.Spring => (Color.white, Color.white, new Color(0.9f, 1f, 1f)),
+                Season.Summer => (new Color(0.9f, 1f, 0.88f), new Color(0.82f, 0.98f, 0.78f), new Color(0.85f, 0.97f, 1f)),
+                Season.Autumn => (new Color(1f, 0.82f, 0.58f), new Color(1f, 0.68f, 0.36f), new Color(0.9f, 0.94f, 1f)),
+                Season.Winter => (new Color(0.9f, 0.95f, 1f), new Color(0.78f, 0.9f, 1f), new Color(0.85f, 0.95f, 1f)),
                 _ => (Color.white, Color.green, Color.cyan)
             };
         }

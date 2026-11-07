@@ -1,0 +1,938 @@
+fileFormatVersion: 2
+guid: 9ff74d12c2943444e8ce68f5f6c3d44f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6613603959450487699
+    second: interior_bed_v1_0
+  - first:
+      213: -928484913067192429
+    second: interior_bed_v1_1
+  - first:
+      213: 5088374516519244547
+    second: interior_bed_v1_2
+  - first:
+      213: -8218319298233704645
+    second: interior_bed_v1_3
+  - first:
+      213: -8774357306505716834
+    second: interior_bed_v1_4
+  - first:
+      213: -1633301239678921902
+    second: interior_bed_v1_5
+  - first:
+      213: 1183014286114585831
+    second: interior_bed_v1_6
+  - first:
+      213: 5421021210341116071
+    second: interior_bed_v1_7
+  - first:
+      213: -6844530651582733085
+    second: interior_bed_v1_8
+  - first:
+      213: -38931211802487552
+    second: interior_bed_v1_9
+  - first:
+      213: 7867536915352137270
+    second: interior_bed_v1_10
+  - first:
+      213: 4152990050267782993
+    second: interior_bed_v1_11
+  - first:
+      213: 7928502088068875749
+    second: interior_bed_v1_12
+  - first:
+      213: 2323989354960182297
+    second: interior_bed_v1_13
+  - first:
+      213: 5239493338825612769
+    second: interior_bed_v1_14
+  - first:
+      213: 4929765454549622763
+    second: interior_bed_v1_15
+  - first:
+      213: 7002796588112434095
+    second: interior_bed_v1_16
+  - first:
+      213: 4478669792580501455
+    second: interior_bed_v1_17
+  - first:
+      213: 8128113847952309849
+    second: interior_bed_v1_18
+  - first:
+      213: -9113494576749361624
+    second: interior_bed_v1_19
+  - first:
+      213: -3372431901985353203
+    second: interior_bed_v1_20
+  - first:
+      213: 8169238526188281079
+    second: interior_bed_v1_21
+  - first:
+      213: -4487778693817718961
+    second: interior_bed_v1_22
+  - first:
+      213: -5851980463091871146
+    second: interior_bed_v1_23
+  - first:
+      213: 1993668151676515394
+    second: interior_bed_v1_24
+  - first:
+      213: 3520236371984259086
+    second: interior_bed_v1_25
+  - first:
+      213: -1142857758475738657
+    second: interior_bed_v1_26
+  - first:
+      213: -1803270450740308035
+    second: interior_bed_v1_27
+  - first:
+      213: 1959962489857251383
+    second: interior_bed_v1_28
+  - first:
+      213: 2026168364554271445
+    second: interior_bed_v1_29
+  - first:
+      213: -8106796201979983372
+    second: interior_bed_v1_30
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: interior_bed_v1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1423
+        width: 125
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6436df3d32c734a0800000000000000
+      internalID: -6613603959450487699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1022
+        height: 1504
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39f025114eb5d13f0800000000000000
+      internalID: -928484913067192429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_2
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 1417
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3039745d9a98d9640800000000000000
+      internalID: 5088374516519244547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_3
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 1463
+        width: 35
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3fda0a042aa2fd80800000000000000
+      internalID: -8218319298233704645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_4
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 1499
+        width: 59
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9b9f5da4883b3680800000000000000
+      internalID: -8774357306505716834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_5
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 1408
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2539bb51d295559e0800000000000000
+      internalID: -1633301239678921902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_6
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 1095
+        width: 17
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ec7210b939ea6010800000000000000
+      internalID: 1183014286114585831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_7
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 1111
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a88d3aa1165b3b40800000000000000
+      internalID: 5421021210341116071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_8
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 663
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e46322e2a75301a0800000000000000
+      internalID: -6844530651582733085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_9
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 641
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00556d5e440b57ff0800000000000000
+      internalID: -38931211802487552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_10
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 159
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63e26d8f32b1f2d60800000000000000
+      internalID: 7867536915352137270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_11
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 165
+        width: 7
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15f51fd727262a930800000000000000
+      internalID: 4152990050267782993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_12
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 140
+        width: 11
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e5c94064a2b70e60800000000000000
+      internalID: 7928502088068875749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_13
+      rect:
+        serializedVersion: 2
+        x: 558
+        y: 135
+        width: 9
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91cd03c5108704020800000000000000
+      internalID: 2323989354960182297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_14
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 110
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1edd9bf7e6b66b840800000000000000
+      internalID: 5239493338825612769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_15
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 125
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bef1c68df8b0a6440800000000000000
+      internalID: 4929765454549622763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_16
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 115
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa352ccf46eee2160800000000000000
+      internalID: 7002796588112434095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_17
+      rect:
+        serializedVersion: 2
+        x: 854
+        y: 97
+        width: 9
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcf7805827e672e30800000000000000
+      internalID: 4478669792580501455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_18
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 71
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95e7129ea7cdcc070800000000000000
+      internalID: 8128113847952309849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_19
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 63
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 826c762c7fc568180800000000000000
+      internalID: -9113494576749361624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_20
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 66
+        width: 17
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d02d7f49d07b231d0800000000000000
+      internalID: -3372431901985353203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_21
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 63
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fc53e63827fe5170800000000000000
+      internalID: 8169238526188281079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_22
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 37
+        width: 31
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f47ad642e0538b1c0800000000000000
+      internalID: -4487778693817718961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_23
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 65
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65212e026c699cea0800000000000000
+      internalID: -5851980463091871146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_24
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 37
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24430bcfe9eeaab10800000000000000
+      internalID: 1993668151676515394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_25
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 47
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e08188d44546ad030800000000000000
+      internalID: 3520236371984259086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_26
+      rect:
+        serializedVersion: 2
+        x: 686
+        y: 46
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd1214d7ce0c320f0800000000000000
+      internalID: -1142857758475738657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_27
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 36
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db75aa5441f79f6e0800000000000000
+      internalID: -1803270450740308035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_28
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 27
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 738180d008f233b10800000000000000
+      internalID: 1959962489857251383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_29
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 31
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5da346874656e1c10800000000000000
+      internalID: 2026168364554271445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: interior_bed_v1_30
+      rect:
+        serializedVersion: 2
+        x: 686
+        y: 23
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f94f725ecfde7f80800000000000000
+      internalID: -8106796201979983372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      interior_bed_v1_0: -6613603959450487699
+      interior_bed_v1_1: -928484913067192429
+      interior_bed_v1_10: 7867536915352137270
+      interior_bed_v1_11: 4152990050267782993
+      interior_bed_v1_12: 7928502088068875749
+      interior_bed_v1_13: 2323989354960182297
+      interior_bed_v1_14: 5239493338825612769
+      interior_bed_v1_15: 4929765454549622763
+      interior_bed_v1_16: 7002796588112434095
+      interior_bed_v1_17: 4478669792580501455
+      interior_bed_v1_18: 8128113847952309849
+      interior_bed_v1_19: -9113494576749361624
+      interior_bed_v1_2: 5088374516519244547
+      interior_bed_v1_20: -3372431901985353203
+      interior_bed_v1_21: 8169238526188281079
+      interior_bed_v1_22: -4487778693817718961
+      interior_bed_v1_23: -5851980463091871146
+      interior_bed_v1_24: 1993668151676515394
+      interior_bed_v1_25: 3520236371984259086
+      interior_bed_v1_26: -1142857758475738657
+      interior_bed_v1_27: -1803270450740308035
+      interior_bed_v1_28: 1959962489857251383
+      interior_bed_v1_29: 2026168364554271445
+      interior_bed_v1_3: -8218319298233704645
+      interior_bed_v1_30: -8106796201979983372
+      interior_bed_v1_4: -8774357306505716834
+      interior_bed_v1_5: -1633301239678921902
+      interior_bed_v1_6: 1183014286114585831
+      interior_bed_v1_7: 5421021210341116071
+      interior_bed_v1_8: -6844530651582733085
+      interior_bed_v1_9: -38931211802487552
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

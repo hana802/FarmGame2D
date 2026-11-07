@@ -16,6 +16,7 @@ namespace FarmGame2D.UI
         private GUIStyle centeredStyle;
         private GUIStyle titleStyle;
         private GUIStyle speakerStyle;
+        private GUIStyle panelStyle;
         private Font koreanFont;
         private FarmGuiSkin farmSkin;
         private readonly HudMessageVisibility messageVisibility = new();
@@ -73,6 +74,11 @@ namespace FarmGame2D.UI
                 {
                     DrawShop(session);
                 }
+
+                if (session.InventoryOpen)
+                {
+                    DrawInventory(session);
+                }
             }
             finally
             {
@@ -84,11 +90,11 @@ namespace FarmGame2D.UI
         {
             var time = GameClockController.Instance?.CurrentTime;
             var timeText = time.HasValue ? $"{time.Value.Hour:00}:{time.Value.Minute:00}" : "--:--";
-            var rect = new Rect(HudLayout.ReferenceWidth - 300f, 14f, 282f, 118f);
+            var rect = new Rect(HudLayout.ReferenceWidth - 292f, 14f, 274f, 104f);
             farmSkin.DrawBanner(rect);
-            GUI.Label(new Rect(rect.x + 82f, rect.y + 18f, 178f, 88f),
-                $"{GetSeasonLabel(session.CurrentSeason)} {SeasonCalendar.GetDayOfSeason(session.Data.day)}일  {timeText}\n{session.Data.money}G\n씨앗 {session.Data.inventory.Count(GameItem.WheatSeed)} · 밀 {session.Data.inventory.Count(GameItem.Wheat)}\n사료 {session.Data.inventory.Count(GameItem.Feed)} · 달걀 {session.Data.inventory.Count(GameItem.Egg)}",
-                smallStyle);
+            GUI.Label(new Rect(rect.x + 90f, rect.y + 22f, rect.width - 116f, 62f),
+                $"{GetSeasonLabel(session.CurrentSeason)} {SeasonCalendar.GetDayOfSeason(session.Data.day)}일  {timeText}\n보유 금액 {session.Data.money}G",
+                panelStyle);
         }
 
         private void DrawQuest(GameSession session)
@@ -97,17 +103,53 @@ namespace FarmGame2D.UI
             var quest = session.Data.harvestQuestCompleted
                 ? "완료: 첫 밀 수확"
                 : $"퀘스트: 밀 3개 수확 ({progress}/3)";
-            var rect = new Rect(14f, 14f, 320f, 100f);
+            var rect = new Rect(14f, 14f, 340f, 104f);
             farmSkin.DrawBanner(rect);
-            GUI.Label(new Rect(rect.x + 84f, rect.y + 18f, 208f, 62f), quest, bodyStyle);
+            GUI.Label(new Rect(rect.x + 90f, rect.y + 22f, rect.width - 120f, 62f), quest, panelStyle);
         }
 
         private void DrawHotbar(GameSession session)
         {
-            var label = $"[1] 호미  [2] 밀 씨앗  [3] 물뿌리개   선택: {GetToolLabel(session.SelectedTool)}";
-            var rect = new Rect((HudLayout.ReferenceWidth - 520f) / 2f, HudLayout.ReferenceHeight - 70f, 520f, 54f);
+            var label = $"[I] 가방 열기   들고 있음: {GetToolLabel(session.SelectedTool)}";
+            var rect = new Rect((HudLayout.ReferenceWidth - 430f) / 2f, HudLayout.ReferenceHeight - 70f, 430f, 54f);
             farmSkin.DrawButtonBackground(rect, true);
             GUI.Label(rect, label, centeredStyle);
+        }
+
+        private void DrawInventory(GameSession session)
+        {
+            var rect = new Rect((HudLayout.ReferenceWidth - 560f) / 2f, 128f, 560f, 440f);
+            farmSkin.DrawWindow(rect);
+            GUI.Label(new Rect(rect.x + 150f, rect.y + 10f, rect.width - 300f, 42f), "농장 가방", titleStyle);
+            GUI.Label(new Rect(rect.x + 48f, rect.y + 66f, rect.width - 96f, 30f), "꺼낼 도구나 씨앗을 선택하세요.", centeredStyle);
+
+            if (farmSkin.DrawButton(new Rect(rect.x + 35f, rect.y + 112f, 150f, 48f), "호미"))
+            {
+                session.SelectTool(FarmTool.Hoe);
+            }
+
+            var seedCount = session.Data.inventory.Count(GameItem.WheatSeed);
+            if (farmSkin.DrawButton(new Rect(rect.x + 205f, rect.y + 112f, 150f, 48f), $"밀 씨앗 ×{seedCount}", true))
+            {
+                session.SelectTool(FarmTool.Seeds);
+            }
+
+            if (farmSkin.DrawButton(new Rect(rect.x + 375f, rect.y + 112f, 150f, 48f), "물뿌리개"))
+            {
+                session.SelectTool(FarmTool.WateringCan);
+            }
+
+            GUI.Label(new Rect(rect.x + 55f, rect.y + 190f, 210f, 38f), $"밀 씨앗   {seedCount}개", bodyStyle);
+            GUI.Label(new Rect(rect.x + 295f, rect.y + 190f, 210f, 38f), $"수확한 밀   {session.Data.inventory.Count(GameItem.Wheat)}개", bodyStyle);
+            GUI.Label(new Rect(rect.x + 55f, rect.y + 240f, 210f, 38f), $"닭 사료   {session.Data.inventory.Count(GameItem.Feed)}개", bodyStyle);
+            GUI.Label(new Rect(rect.x + 295f, rect.y + 240f, 210f, 38f), $"달걀   {session.Data.inventory.Count(GameItem.Egg)}개", bodyStyle);
+            GUI.Label(new Rect(rect.x + 55f, rect.y + 290f, 210f, 38f), $"잡초   {session.Data.inventory.Count(GameItem.Weed)}개", bodyStyle);
+            GUI.Label(new Rect(rect.x + 295f, rect.y + 290f, 210f, 38f), $"돈   {session.Data.money}G", bodyStyle);
+
+            if (farmSkin.DrawButton(new Rect(rect.x + 200f, rect.y + 360f, 160f, 48f), "가방 닫기 (I)"))
+            {
+                session.ToggleInventory();
+            }
         }
 
         private void DrawMessage(GameSession session)
@@ -232,6 +274,13 @@ namespace FarmGame2D.UI
             {
                 fontSize = 22,
                 fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleLeft
+            };
+            panelStyle ??= new GUIStyle(smallStyle)
+            {
+                fontSize = 14,
+                wordWrap = true,
+                clipping = TextClipping.Clip,
                 alignment = TextAnchor.MiddleLeft
             };
             GUI.skin.font = koreanFont;

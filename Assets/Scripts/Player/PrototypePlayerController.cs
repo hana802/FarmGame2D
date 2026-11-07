@@ -57,6 +57,16 @@ namespace FarmGame2D.Player
                 return;
             }
 
+            if (GameSession.Instance.InventoryOpen || GameSession.Instance.PhoneOpen || GameSession.Instance.ShopOpen)
+            {
+                moveInput = Vector2.zero;
+                UpdateCharacterVisual(false);
+                UpdateHeldItem();
+                NearbyPrompt = string.Empty;
+                nearbyPromptVisibleUntil = 0f;
+                return;
+            }
+
             moveInput = ReadMovementInput();
             UpdateFacingDirection();
             UpdateCharacterVisual(false);
