@@ -52,6 +52,8 @@ namespace FarmGame2D.Tests
             Assert.That(guide, Is.Not.Null);
             Assert.That(guide.GetComponent<SpriteRenderer>().sprite.texture.width, Is.GreaterThan(1),
                 "NPC must use the village NPC art sheet, not a 1x1 block.");
+            Assert.That(guide.transform.localScale, Is.EqualTo(Vector3.one),
+                "NPC artwork must use the same world scale as the player instead of inheriting prototype block scale.");
 
             var farmHouse = GameObject.Find("Farm House");
             Assert.That(farmHouse, Is.Not.Null);

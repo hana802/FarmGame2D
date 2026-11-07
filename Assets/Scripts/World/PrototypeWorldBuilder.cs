@@ -380,6 +380,13 @@ namespace FarmGame2D.World
 
             renderer.sprite = artSprite;
             renderer.color = Color.white;
+            npc.transform.localScale = Vector3.one;
+
+            var interactionCollider = npc.GetComponent<BoxCollider2D>();
+            if (interactionCollider != null)
+            {
+                interactionCollider.size = new Vector2(0.8f, 1f);
+            }
         }
     }
 }
