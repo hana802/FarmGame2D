@@ -1,3 +1,4 @@
+using FarmGame2D.Art;
 using FarmGame2D.Core;
 using FarmGame2D.Interactions;
 using FarmGame2D.World;
@@ -14,6 +15,10 @@ namespace FarmGame2D.Player
         private Rigidbody2D body;
         private SpriteRenderer spriteRenderer;
         private Vector2 moveInput;
+        private CharacterChoice displayedChoice;
+        private int displayedRow = -1;
+        private int displayedFrame = -1;
+        private int facingRow = 3;
 
         public string NearbyPrompt { get; private set; }
 
@@ -25,15 +30,14 @@ namespace FarmGame2D.Player
             body.interpolation = RigidbodyInterpolation2D.Interpolate;
             body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
             spriteRenderer = GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = PrototypeSpriteFactory.CreateSprite(new Color(0.22f, 0.55f, 0.32f));
             spriteRenderer.sortingOrder = 10;
-            transform.localScale = new Vector3(0.75f, 1f, 1f);
+            transform.localScale = Vector3.one;
         }
 
         private void Start()
         {
             GameSession.Instance?.RegisterPlayer(transform);
-            UpdateCharacterColor();
+            UpdateCharacterVisual(true);
         }
 
         private void Update()
@@ -46,6 +50,8 @@ namespace FarmGame2D.Player
             }
 
             moveInput = ReadMovementInput();
+            UpdateFacingDirection();
+            UpdateCharacterVisual(false);
             UpdateNearbyInteraction();
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -91,24 +97,57 @@ namespace FarmGame2D.Player
             if (Input.GetKeyDown(KeyCode.M))
             {
                 GameSession.Instance?.ChooseCharacter(CharacterChoice.Male);
-                UpdateCharacterColor();
+                UpdateCharacterVisual(true);
             }
             else if (Input.GetKeyDown(KeyCode.F))
             {
                 GameSession.Instance?.ChooseCharacter(CharacterChoice.Female);
-                UpdateCharacterColor();
+                UpdateCharacterVisual(true);
             }
         }
 
-        private void UpdateCharacterColor()
+        private void UpdateFacingDirection()
+        {
+            if (moveInput.sqrMagnitude <= 0.01f)
+            {
+                return;
+            }
+
+            if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y))
+            {
+                facingRow = moveInput.x < 0f ? 2 : 1;
+                return;
+            }
+
+            facingRow = moveInput.y > 0f ? 0 : 3;
+        }
+
+        private void UpdateCharacterVisual(bool force)
         {
             var choice = GameSession.Instance?.Data.characterChoice ?? CharacterChoice.None;
-            spriteRenderer.color = choice switch
+            spriteRenderer.enabled = choice != CharacterChoice.None;
+            if (choice == CharacterChoice.None)
             {
-                CharacterChoice.Female => new Color(0.8f, 0.35f, 0.25f),
-                CharacterChoice.Male => new Color(0.25f, 0.55f, 0.3f),
-                _ => Color.gray
-            };
+                return;
+            }
+
+            var frame = moveInput.sqrMagnitude > 0.01f ? Mathf.FloorToInt(Time.time * 8f) % 4 : 0;
+            if (!force && displayedChoice == choice && displayedRow == facingRow && displayedFrame == frame)
+            {
+                return;
+            }
+
+            var artSprite = GameArtCatalog.GetPlayerSprite(choice, facingRow, frame);
+            if (artSprite == null)
+            {
+                return;
+            }
+
+            spriteRenderer.sprite = artSprite;
+            spriteRenderer.color = Color.white;
+            displayedChoice = choice;
+            displayedRow = facingRow;
+            displayedFrame = frame;
         }
 
         private void UpdateNearbyInteraction()

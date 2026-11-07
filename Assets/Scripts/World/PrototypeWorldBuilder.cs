@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FarmGame2D.Art;
 using FarmGame2D.Core;
 using FarmGame2D.Farming;
 using FarmGame2D.Interactions;
@@ -90,10 +91,13 @@ namespace FarmGame2D.World
             board.Configure("광장 게시판", "밀 3개를 수확하면 100G를 드립니다. 휴대폰에서 진행도를 확인하세요.");
 
             var guide = CreateNpc("Guide", new Vector2(3f, 3.5f), new Color(0.8f, 0.58f, 0.25f), townRoot);
+            ApplyNpcArt(guide, 0);
             guide.Configure("안내자 하람", "1·2·3번으로 도구를 고르고 E로 밭과 물건을 사용하세요. P는 휴대폰입니다.");
             var elder = CreateNpc("Elder", new Vector2(-7f, 5f), new Color(0.55f, 0.38f, 0.42f), townRoot);
+            ApplyNpcArt(elder, 2);
             elder.Configure("주민 순자", "계절마다 나무와 들판의 색이 달라진답니다.");
             var villager = CreateNpc("Young Villager", new Vector2(8f, 5f), new Color(0.35f, 0.48f, 0.62f), townRoot);
+            ApplyNpcArt(villager, 3);
             villager.Configure("주민 도윤", "수확한 밀과 달걀은 농장의 판매 상자에 넣어보세요.");
 
             var water = PrototypeSpriteFactory.CreateBlock("Pond", new Vector2(-11f, 2f), new Vector2(5f, 3f), Color.cyan, townRoot, true);
@@ -231,6 +235,19 @@ namespace FarmGame2D.World
         private static DialogueInteractable CreateNpc(string name, Vector2 position, Color color, Transform parent)
         {
             return CreateInteractable<DialogueInteractable>(name, position, new Vector2(0.8f, 1f), color, parent);
+        }
+
+        private static void ApplyNpcArt(DialogueInteractable npc, int characterRowFromTop)
+        {
+            var renderer = npc.GetComponent<SpriteRenderer>();
+            var artSprite = GameArtCatalog.GetNpcSprite(characterRowFromTop);
+            if (artSprite == null)
+            {
+                return;
+            }
+
+            renderer.sprite = artSprite;
+            renderer.color = Color.white;
         }
     }
 }
