@@ -18,6 +18,7 @@ namespace FarmGame2D.Art
         private static readonly Dictionary<int, Sprite> playerSprites = new();
         private static readonly Dictionary<int, Sprite> npcSprites = new();
         private static readonly Dictionary<int, Sprite> npcPortraits = new();
+        private static readonly Dictionary<FarmTool, Sprite> heldToolSprites = new();
         private static Texture2D playerSheet;
         private static Texture2D npcSheet;
         private static Texture2D uiAtlas;
@@ -103,6 +104,38 @@ namespace FarmGame2D.Art
                 SpriteMeshType.FullRect);
             farmHouseSprite.name = "farm_house_v1_runtime";
             return farmHouseSprite;
+        }
+
+        public static Sprite GetHeldToolSprite(FarmTool tool)
+        {
+            if (heldToolSprites.TryGetValue(tool, out var cached))
+            {
+                return cached;
+            }
+
+            var (path, rect) = tool switch
+            {
+                FarmTool.Hoe => ("Art/Items/held_hoe_v1", new Rect(528f, 269f, 513f, 467f)),
+                FarmTool.Seeds => ("Art/Items/held_seeds_v1", new Rect(571f, 292f, 360f, 425f)),
+                FarmTool.WateringCan => ("Art/Items/held_watering_can_v1", new Rect(547f, 324f, 441f, 357f)),
+                _ => (string.Empty, default)
+            };
+
+            if (string.IsNullOrEmpty(path))
+            {
+                return null;
+            }
+
+            var texture = LoadTexture(path);
+            if (texture == null)
+            {
+                return null;
+            }
+
+            var sprite = Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f), 420f, 0, SpriteMeshType.FullRect);
+            sprite.name = $"held_{tool}";
+            heldToolSprites[tool] = sprite;
+            return sprite;
         }
 
         private static Sprite GetOrCreate(

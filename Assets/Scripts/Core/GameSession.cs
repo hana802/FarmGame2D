@@ -292,19 +292,22 @@ namespace FarmGame2D.Core
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                SelectedTool = FarmTool.Hoe;
-                NotifyChanged();
+                SelectTool(FarmTool.Hoe);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                SelectedTool = FarmTool.Seeds;
-                NotifyChanged();
+                SelectTool(FarmTool.Seeds);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                SelectedTool = FarmTool.WateringCan;
-                NotifyChanged();
+                SelectTool(FarmTool.WateringCan);
             }
+        }
+
+        public void SelectTool(FarmTool tool)
+        {
+            SelectedTool = tool;
+            NotifyChanged();
         }
 
         private void HandleTimeChanged(GameTimeSnapshot snapshot)

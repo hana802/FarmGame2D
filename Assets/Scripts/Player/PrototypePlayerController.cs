@@ -13,6 +13,7 @@ namespace FarmGame2D.Player
 
         private Rigidbody2D body;
         private SpriteRenderer spriteRenderer;
+        private HeldItemPresenter heldItemPresenter;
         private Vector2 moveInput;
         private CharacterChoice displayedChoice;
         private int displayedRow = -1;
@@ -22,6 +23,7 @@ namespace FarmGame2D.Player
 
         public string NearbyPrompt { get; private set; }
         public string VisibleNearbyPrompt => Time.unscaledTime < nearbyPromptVisibleUntil ? NearbyPrompt : string.Empty;
+        public HeldItemPresenter HeldItemPresenter => heldItemPresenter;
 
         private void Awake()
         {
@@ -35,6 +37,7 @@ namespace FarmGame2D.Player
             playerCollider.offset = new Vector2(0f, 0.14f);
             spriteRenderer = GetComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = 10;
+            heldItemPresenter = gameObject.AddComponent<HeldItemPresenter>();
             transform.localScale = Vector3.one;
         }
 
@@ -50,12 +53,14 @@ namespace FarmGame2D.Player
             if (GameSession.Instance == null || GameSession.Instance.Data.characterChoice == CharacterChoice.None)
             {
                 moveInput = Vector2.zero;
+                heldItemPresenter.Present(FarmTool.Hoe, facingRow, false, false);
                 return;
             }
 
             moveInput = ReadMovementInput();
             UpdateFacingDirection();
             UpdateCharacterVisual(false);
+            UpdateHeldItem();
             UpdateNearbyInteraction();
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -165,6 +170,14 @@ namespace FarmGame2D.Player
 
             NearbyPrompt = nextPrompt;
             nearbyPromptVisibleUntil = string.IsNullOrEmpty(nextPrompt) ? 0f : Time.unscaledTime + 1f;
+        }
+
+        private void UpdateHeldItem()
+        {
+            var session = GameSession.Instance;
+            var available = session.SelectedTool != FarmTool.Seeds
+                || session.Data.inventory.Count(GameItem.WheatSeed) > 0;
+            heldItemPresenter.Present(session.SelectedTool, facingRow, moveInput.sqrMagnitude > 0.01f, available);
         }
 
         private void InteractWithNearest()

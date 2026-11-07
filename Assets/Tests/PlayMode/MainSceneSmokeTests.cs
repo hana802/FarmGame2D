@@ -30,6 +30,14 @@ namespace FarmGame2D.Tests
             var player = Object.FindFirstObjectByType<PrototypePlayerController>();
             var playerTexture = player.GetComponent<SpriteRenderer>().sprite.texture;
             Assert.That(playerTexture.width, Is.GreaterThan(1), "Player must use the character art sheet, not a 1x1 block.");
+            Assert.That(player.HeldItemPresenter, Is.Not.Null);
+            Assert.That(player.HeldItemPresenter.ItemRenderer.sprite, Is.Not.Null,
+                "Selected farm tool must be visible in the player's hand.");
+            Assert.That(player.HeldItemPresenter.DisplayedTool, Is.EqualTo(FarmTool.Hoe));
+
+            GameSession.Instance.SelectTool(FarmTool.WateringCan);
+            yield return null;
+            Assert.That(player.HeldItemPresenter.DisplayedTool, Is.EqualTo(FarmTool.WateringCan));
             Assert.That(hud.HasArtSkin, Is.True, "HUD must load the illustrated UI atlas.");
 
             var guide = GameObject.Find("Guide");
