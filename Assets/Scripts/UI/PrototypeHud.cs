@@ -1,3 +1,4 @@
+using FarmGame2D.Art;
 using FarmGame2D.Core;
 using FarmGame2D.Player;
 using FarmGame2D.TimeSystem;
@@ -12,9 +13,10 @@ namespace FarmGame2D.UI
         private GUIStyle smallStyle;
         private GUIStyle centeredStyle;
         private GUIStyle titleStyle;
+        private GUIStyle speakerStyle;
         private Font koreanFont;
         private FarmGuiSkin farmSkin;
-        private readonly HudMessageVisibility messageVisibility = new(4f);
+        private readonly HudMessageVisibility messageVisibility = new();
 
         public bool HasArtSkin => farmSkin?.IsReady == true;
 
@@ -55,9 +57,9 @@ namespace FarmGame2D.UI
                 DrawHotbar(session);
                 DrawInteractionPrompt();
 
-                if (messageVisibility.ShouldShow(session.MessageRevision, Time.unscaledTime))
+                if (messageVisibility.ShouldShow(session.MessageRevision, Time.unscaledTime, session.MessageDisplaySeconds))
                 {
-                    DrawDialogue(session);
+                    DrawMessage(session);
                 }
 
                 if (session.PhoneOpen)
@@ -82,8 +84,8 @@ namespace FarmGame2D.UI
             var timeText = time.HasValue ? $"{time.Value.Hour:00}:{time.Value.Minute:00}" : "--:--";
             var rect = new Rect(HudLayout.ReferenceWidth - 300f, 14f, 282f, 118f);
             farmSkin.DrawBanner(rect);
-            GUI.Label(new Rect(rect.x + 32f, rect.y + 23f, 220f, 84f),
-                $"{session.CurrentSeason} {SeasonCalendar.GetDayOfSeason(session.Data.day)}일  {timeText}\n{session.Data.money}G\n씨앗 {session.Data.inventory.Count(GameItem.WheatSeed)} · 밀 {session.Data.inventory.Count(GameItem.Wheat)} · 사료 {session.Data.inventory.Count(GameItem.Feed)} · 달걀 {session.Data.inventory.Count(GameItem.Egg)}",
+            GUI.Label(new Rect(rect.x + 82f, rect.y + 18f, 178f, 88f),
+                $"{GetSeasonLabel(session.CurrentSeason)} {SeasonCalendar.GetDayOfSeason(session.Data.day)}일  {timeText}\n{session.Data.money}G\n씨앗 {session.Data.inventory.Count(GameItem.WheatSeed)} · 밀 {session.Data.inventory.Count(GameItem.Wheat)}\n사료 {session.Data.inventory.Count(GameItem.Feed)} · 달걀 {session.Data.inventory.Count(GameItem.Egg)}",
                 smallStyle);
         }
 
@@ -95,34 +97,46 @@ namespace FarmGame2D.UI
                 : $"퀘스트: 밀 3개 수확 ({progress}/3)";
             var rect = new Rect(14f, 14f, 320f, 100f);
             farmSkin.DrawBanner(rect);
-            GUI.Label(new Rect(rect.x + 34f, rect.y + 25f, 255f, 46f), quest, bodyStyle);
+            GUI.Label(new Rect(rect.x + 84f, rect.y + 18f, 208f, 62f), quest, bodyStyle);
         }
 
         private void DrawHotbar(GameSession session)
         {
-            var label = $"[1] 호미  [2] 밀 씨앗  [3] 물뿌리개   선택: {session.SelectedTool}";
+            var label = $"[1] 호미  [2] 밀 씨앗  [3] 물뿌리개   선택: {GetToolLabel(session.SelectedTool)}";
             var rect = new Rect((HudLayout.ReferenceWidth - 520f) / 2f, HudLayout.ReferenceHeight - 70f, 520f, 54f);
             farmSkin.DrawButtonBackground(rect, true);
             GUI.Label(rect, label, centeredStyle);
         }
 
-        private void DrawDialogue(GameSession session)
+        private void DrawMessage(GameSession session)
         {
-            var rect = new Rect(90f, 480f, 1100f, 160f);
+            if (session.ActivePortraitRow < 0)
+            {
+                var toast = new Rect((HudLayout.ReferenceWidth - 620f) / 2f, 132f, 620f, 72f);
+                farmSkin.DrawBanner(toast);
+                GUI.Label(new Rect(toast.x + 48f, toast.y + 12f, toast.width - 96f, 48f), session.Message, centeredStyle);
+                return;
+            }
+
+            var rect = new Rect(90f, 466f, 1100f, 174f);
             farmSkin.DrawDialogue(rect);
-            GUI.Label(new Rect(rect.x + 205f, rect.y + 52f, rect.width - 255f, 62f), session.Message, bodyStyle);
+            var portrait = GameArtCatalog.GetNpcPortrait(session.ActivePortraitRow);
+            farmSkin.DrawSprite(new Rect(rect.x + 42f, rect.y + 24f, 126f, 126f), portrait);
+            GUI.Label(new Rect(rect.x + 192f, rect.y + 30f, rect.width - 245f, 32f), session.ActiveSpeaker, speakerStyle);
+            GUI.Label(new Rect(rect.x + 192f, rect.y + 72f, rect.width - 246f, 76f), session.Message, bodyStyle);
         }
 
         private void DrawInteractionPrompt()
         {
-            if (string.IsNullOrEmpty(player?.NearbyPrompt))
+            var prompt = player?.VisibleNearbyPrompt;
+            if (string.IsNullOrEmpty(prompt))
             {
                 return;
             }
 
-            var rect = new Rect(440f, 410f, 400f, 64f);
+            var rect = new Rect(440f, 392f, 400f, 58f);
             farmSkin.DrawBanner(rect);
-            GUI.Label(new Rect(rect.x + 35f, rect.y + 12f, rect.width - 70f, 40f), player.NearbyPrompt, centeredStyle);
+            GUI.Label(new Rect(rect.x + 35f, rect.y + 9f, rect.width - 70f, 40f), prompt, centeredStyle);
         }
 
         private void DrawCharacterChoice(GameSession session)
@@ -212,7 +226,36 @@ namespace FarmGame2D.UI
                 fontStyle = FontStyle.Bold,
                 alignment = TextAnchor.MiddleCenter
             };
+            speakerStyle ??= new GUIStyle(bodyStyle)
+            {
+                fontSize = 22,
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleLeft
+            };
             GUI.skin.font = koreanFont;
+        }
+
+        private static string GetSeasonLabel(Season season)
+        {
+            return season switch
+            {
+                Season.Spring => "봄",
+                Season.Summer => "여름",
+                Season.Autumn => "가을",
+                Season.Winter => "겨울",
+                _ => season.ToString()
+            };
+        }
+
+        private static string GetToolLabel(FarmTool tool)
+        {
+            return tool switch
+            {
+                FarmTool.Hoe => "호미",
+                FarmTool.Seeds => "밀 씨앗",
+                FarmTool.WateringCan => "물뿌리개",
+                _ => tool.ToString()
+            };
         }
     }
 }

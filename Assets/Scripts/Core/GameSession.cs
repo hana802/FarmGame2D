@@ -14,6 +14,9 @@ namespace FarmGame2D.Core
         private Transform playerTransform;
         private int processedDay;
         private string message = "안내자를 찾아가 농장 생활을 시작하세요.";
+        private string activeSpeaker = string.Empty;
+        private int activePortraitRow = -1;
+        private float messageDisplaySeconds = 1f;
 
         public static GameSession Instance { get; private set; }
         public GameSaveData Data { get; private set; }
@@ -26,10 +29,16 @@ namespace FarmGame2D.Core
             private set
             {
                 message = value;
+                activeSpeaker = string.Empty;
+                activePortraitRow = -1;
+                messageDisplaySeconds = 1f;
                 MessageRevision++;
             }
         }
         public int MessageRevision { get; private set; }
+        public string ActiveSpeaker => activeSpeaker;
+        public int ActivePortraitRow => activePortraitRow;
+        public float MessageDisplaySeconds => messageDisplaySeconds;
         public Season CurrentSeason => SeasonCalendar.GetSeason(Data.day);
 
         public event Action StateChanged;
@@ -236,6 +245,15 @@ namespace FarmGame2D.Core
         public void ShowMessage(string message)
         {
             Message = message;
+            NotifyChanged();
+        }
+
+        public void ShowDialogue(string speaker, string dialogue, int portraitRow)
+        {
+            Message = dialogue;
+            activeSpeaker = speaker;
+            activePortraitRow = portraitRow;
+            messageDisplaySeconds = 4f;
             NotifyChanged();
         }
 

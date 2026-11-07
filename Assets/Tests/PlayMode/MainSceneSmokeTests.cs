@@ -1,5 +1,6 @@
 using System.Collections;
 using FarmGame2D.Core;
+using FarmGame2D.Interactions;
 using FarmGame2D.Player;
 using FarmGame2D.UI;
 using FarmGame2D.World;
@@ -35,6 +36,20 @@ namespace FarmGame2D.Tests
             Assert.That(guide, Is.Not.Null);
             Assert.That(guide.GetComponent<SpriteRenderer>().sprite.texture.width, Is.GreaterThan(1),
                 "NPC must use the village NPC art sheet, not a 1x1 block.");
+
+            var farmHouse = GameObject.Find("Farm House");
+            Assert.That(farmHouse, Is.Not.Null);
+            Assert.That(farmHouse.GetComponent<SpriteRenderer>().sprite.texture.width, Is.GreaterThan(1),
+                "Farm house must use illustrated building art, not a 1x1 block.");
+
+            var entrance = GameObject.Find("Farm House Door").GetComponent<DoorInteractable>();
+            Assert.That(entrance, Is.Not.Null);
+            entrance.Interact(player);
+            Assert.That(player.transform.position.x, Is.EqualTo(40f).Within(0.1f));
+
+            guide.GetComponent<DialogueInteractable>().Interact(player);
+            Assert.That(GameSession.Instance.ActivePortraitRow, Is.EqualTo(0));
+            Assert.That(GameSession.Instance.ActiveSpeaker, Is.EqualTo("안내자 하람"));
         }
     }
 }

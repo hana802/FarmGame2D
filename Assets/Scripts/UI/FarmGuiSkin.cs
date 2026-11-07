@@ -40,6 +40,23 @@ namespace FarmGame2D.UI
             DrawAtlas(rect, orange ? OrangeButtonAtlasRect : GreenButtonAtlasRect);
         }
 
+        public void DrawSprite(Rect destination, Sprite sprite)
+        {
+            if (sprite == null || sprite.texture == null)
+            {
+                return;
+            }
+
+            var texture = sprite.texture;
+            var source = sprite.rect;
+            var uv = new Rect(
+                source.x / texture.width,
+                source.y / texture.height,
+                source.width / texture.width,
+                source.height / texture.height);
+            GUI.DrawTextureWithTexCoords(destination, texture, uv, true);
+        }
+
         private GUIStyle GetButtonStyle()
         {
             if (buttonStyle != null)

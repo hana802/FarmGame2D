@@ -52,10 +52,11 @@ namespace FarmGame2D.World
         {
             var farmRoot = new GameObject("Farm").transform;
             farmRoot.SetParent(transform);
-            PrototypeSpriteFactory.CreateBlock("Farm House", new Vector2(6f, -10f), new Vector2(5f, 3f), new Color(0.55f, 0.28f, 0.18f), farmRoot, true);
+            CreateHouseArt("Farm House", new Vector2(6f, -12f), 0.9f, farmRoot);
             PrototypeSpriteFactory.CreateBlock("Chicken Coop", new Vector2(9f, -7f), new Vector2(3f, 2f), new Color(0.65f, 0.45f, 0.2f), farmRoot, true);
 
-            CreateInteractable<BedInteractable>("Bed", new Vector2(3.2f, -11.6f), new Vector2(1.2f, 0.8f), new Color(0.55f, 0.2f, 0.25f), farmRoot);
+            var entrance = CreateInteractable<DoorInteractable>("Farm House Door", new Vector2(6f, -12.25f), new Vector2(1.1f, 0.55f), Color.clear, farmRoot);
+            entrance.Configure(new Vector2(40f, -11.2f), "집에 들어가기", "농장 집 안으로 들어왔습니다.");
             CreateInteractable<SellBoxInteractable>("Selling Box", new Vector2(3.5f, -7.5f), Vector2.one, new Color(0.4f, 0.2f, 0.08f), farmRoot);
             CreateInteractable<ChickenInteractable>("Chicken", new Vector2(7.2f, -7f), new Vector2(0.8f, 0.8f), new Color(0.95f, 0.86f, 0.55f), farmRoot);
 
@@ -73,6 +74,25 @@ namespace FarmGame2D.World
                 plot.GetComponent<BoxCollider2D>().isTrigger = true;
                 plot.AddComponent<FarmPlotView>().Configure(index);
             }
+
+            BuildFarmHouseInterior();
+        }
+
+        private void BuildFarmHouseInterior()
+        {
+            var interior = new GameObject("Farm House Interior").transform;
+            interior.SetParent(transform);
+            PrototypeSpriteFactory.CreateBlock("Interior Floor", new Vector2(40f, -9.5f), new Vector2(8f, 6f), new Color(0.77f, 0.62f, 0.42f), interior);
+            PrototypeSpriteFactory.CreateBlock("Interior Rug", new Vector2(40f, -9.8f), new Vector2(2.6f, 1.7f), new Color(0.55f, 0.22f, 0.2f), interior);
+            PrototypeSpriteFactory.CreateBlock("Interior Top Wall", new Vector2(40f, -6.45f), new Vector2(8.4f, 0.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
+            PrototypeSpriteFactory.CreateBlock("Interior Left Wall", new Vector2(35.8f, -9.5f), new Vector2(0.5f, 6.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
+            PrototypeSpriteFactory.CreateBlock("Interior Right Wall", new Vector2(44.2f, -9.5f), new Vector2(0.5f, 6.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
+            PrototypeSpriteFactory.CreateBlock("Interior Bottom Wall Left", new Vector2(37.8f, -12.55f), new Vector2(3.9f, 0.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
+            PrototypeSpriteFactory.CreateBlock("Interior Bottom Wall Right", new Vector2(42.2f, -12.55f), new Vector2(3.9f, 0.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
+
+            CreateInteractable<BedInteractable>("Bed", new Vector2(37.3f, -8.1f), new Vector2(1.5f, 2.2f), new Color(0.55f, 0.2f, 0.25f), interior);
+            var exit = CreateInteractable<DoorInteractable>("Farm House Exit", new Vector2(40f, -12.2f), new Vector2(1.1f, 0.6f), new Color(0.5f, 0.28f, 0.13f), interior);
+            exit.Configure(new Vector2(6f, -13f), "밖으로 나가기", "농장으로 나왔습니다.");
         }
 
         private void BuildMainStreetTown(int seed)
@@ -83,8 +103,8 @@ namespace FarmGame2D.World
             CreateBuilding("Town Hall", new Vector2(0f, 12f), new Vector2(5f, 3f), new Color(0.7f, 0.55f, 0.32f), townRoot);
             CreateBuilding("General Store", new Vector2(-5f, 7.5f), new Vector2(4f, 3f), new Color(0.68f, 0.35f, 0.22f), townRoot);
             CreateBuilding("Seed And Feed Shop", new Vector2(5f, 7.5f), new Vector2(4f, 3f), new Color(0.4f, 0.55f, 0.28f), townRoot);
-            CreateBuilding("West Home", new Vector2(-10f, 10f), new Vector2(3.5f, 2.5f), new Color(0.58f, 0.34f, 0.24f), townRoot);
-            CreateBuilding("East Home", new Vector2(10f, 10f), new Vector2(3.5f, 2.5f), new Color(0.48f, 0.5f, 0.25f), townRoot);
+            CreateHouseArt("West Home", new Vector2(-10f, 8.7f), 0.64f, townRoot);
+            CreateHouseArt("East Home", new Vector2(10f, 8.7f), 0.64f, townRoot);
 
             CreateInteractable<ShopInteractable>("Shop Counter", new Vector2(5f, 5.6f), new Vector2(1.2f, 0.5f), new Color(0.85f, 0.7f, 0.3f), townRoot);
             var board = CreateInteractable<DialogueInteractable>("Quest Board", new Vector2(0f, 4f), new Vector2(1.4f, 1f), new Color(0.45f, 0.25f, 0.12f), townRoot);
@@ -92,13 +112,13 @@ namespace FarmGame2D.World
 
             var guide = CreateNpc("Guide", new Vector2(3f, 3.5f), new Color(0.8f, 0.58f, 0.25f), townRoot);
             ApplyNpcArt(guide, 0);
-            guide.Configure("안내자 하람", "1·2·3번으로 도구를 고르고 E로 밭과 물건을 사용하세요. P는 휴대폰입니다.");
+            guide.Configure("안내자 하람", "1·2·3번으로 도구를 고르고 E로 밭과 물건을 사용하세요. P는 휴대폰입니다.", 0);
             var elder = CreateNpc("Elder", new Vector2(-7f, 5f), new Color(0.55f, 0.38f, 0.42f), townRoot);
             ApplyNpcArt(elder, 2);
-            elder.Configure("주민 순자", "계절마다 나무와 들판의 색이 달라진답니다.");
+            elder.Configure("주민 순자", "계절마다 나무와 들판의 색이 달라진답니다.", 2);
             var villager = CreateNpc("Young Villager", new Vector2(8f, 5f), new Color(0.35f, 0.48f, 0.62f), townRoot);
             ApplyNpcArt(villager, 3);
-            villager.Configure("주민 도윤", "수확한 밀과 달걀은 농장의 판매 상자에 넣어보세요.");
+            villager.Configure("주민 도윤", "수확한 밀과 달걀은 농장의 판매 상자에 넣어보세요.", 3);
 
             var water = PrototypeSpriteFactory.CreateBlock("Pond", new Vector2(-11f, 2f), new Vector2(5f, 3f), Color.cyan, townRoot, true);
             waterRenderer = water.GetComponent<SpriteRenderer>();
@@ -221,6 +241,21 @@ namespace FarmGame2D.World
         {
             var building = PrototypeSpriteFactory.CreateBlock(name, position, size, color, parent, true);
             building.GetComponent<SpriteRenderer>().sortingOrder = 3;
+        }
+
+        private static void CreateHouseArt(string name, Vector2 position, float scale, Transform parent)
+        {
+            var house = new GameObject(name);
+            house.transform.SetParent(parent);
+            house.transform.position = position;
+            house.transform.localScale = Vector3.one * scale;
+            var renderer = house.AddComponent<SpriteRenderer>();
+            renderer.sprite = GameArtCatalog.GetFarmHouseSprite();
+            renderer.sortingOrder = 3;
+
+            var collider = house.AddComponent<BoxCollider2D>();
+            collider.size = new Vector2(5f, 1.45f);
+            collider.offset = new Vector2(0f, 1.72f);
         }
 
         private static T CreateInteractable<T>(string name, Vector2 position, Vector2 size, Color color, Transform parent)

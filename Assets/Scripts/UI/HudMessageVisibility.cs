@@ -2,21 +2,15 @@ namespace FarmGame2D.UI
 {
     public sealed class HudMessageVisibility
     {
-        private readonly float displayDuration;
         private int observedRevision = -1;
         private float visibleUntil;
 
-        public HudMessageVisibility(float displayDuration)
-        {
-            this.displayDuration = displayDuration;
-        }
-
-        public bool ShouldShow(int messageRevision, float currentTime)
+        public bool ShouldShow(int messageRevision, float currentTime, float displayDuration)
         {
             if (messageRevision != observedRevision)
             {
                 observedRevision = messageRevision;
-                visibleUntil = currentTime + displayDuration;
+                visibleUntil = currentTime + UnityEngine.Mathf.Max(0f, displayDuration);
             }
 
             return currentTime < visibleUntil;

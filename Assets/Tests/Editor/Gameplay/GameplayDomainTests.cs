@@ -3,7 +3,9 @@ using FarmGame2D.Core;
 using FarmGame2D.Farming;
 using FarmGame2D.Player;
 using FarmGame2D.UI;
+using FarmGame2D.Art;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace FarmGame2D.Tests
 {
@@ -74,11 +76,22 @@ namespace FarmGame2D.Tests
         [Test]
         public void HudMessageVisibility_ExpiresUntilMessageRevisionChanges()
         {
-            var visibility = new HudMessageVisibility(4f);
+            var visibility = new HudMessageVisibility();
 
-            Assert.That(visibility.ShouldShow(0, 0f), Is.True);
-            Assert.That(visibility.ShouldShow(0, 4.1f), Is.False);
-            Assert.That(visibility.ShouldShow(1, 4.1f), Is.True);
+            Assert.That(visibility.ShouldShow(0, 0f, 1f), Is.True);
+            Assert.That(visibility.ShouldShow(0, 1.1f, 1f), Is.False);
+            Assert.That(visibility.ShouldShow(1, 1.1f, 4f), Is.True);
+            Assert.That(visibility.ShouldShow(1, 4.9f, 4f), Is.True);
+        }
+
+        [Test]
+        public void FrontFacingSprite_UsesMeasuredRowAndKeepsFeet()
+        {
+            var sprite = GameArtCatalog.GetPlayerSprite(CharacterChoice.Male, 3, 0);
+
+            Assert.That(sprite, Is.Not.Null);
+            Assert.That(sprite.rect.y, Is.EqualTo(704f));
+            Assert.That(sprite.rect.height, Is.EqualTo(256f));
         }
 
         [Test]

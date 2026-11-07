@@ -7,18 +7,43 @@ namespace FarmGame2D.Interactions
     {
         private string speaker = "주민";
         private string line = "좋은 하루예요.";
+        private int portraitRow = -1;
 
         public override string Prompt => $"{speaker}와 대화";
 
-        public void Configure(string speakerName, string dialogue)
+        public void Configure(string speakerName, string dialogue, int npcPortraitRow = -1)
         {
             speaker = speakerName;
             line = dialogue;
+            portraitRow = npcPortraitRow;
         }
 
         public override void Interact(PrototypePlayerController player)
         {
-            GameSession.Instance?.ShowMessage($"{speaker}: {line}");
+            GameSession.Instance?.ShowDialogue(speaker, line, portraitRow);
+        }
+    }
+
+    public sealed class DoorInteractable : InteractableBehaviour
+    {
+        private UnityEngine.Vector2 destination;
+        private string prompt = "문 열기";
+        private string arrivalMessage = "집 안으로 들어왔습니다.";
+
+        public override string Prompt => prompt;
+        public UnityEngine.Vector2 Destination => destination;
+
+        public void Configure(UnityEngine.Vector2 target, string interactionPrompt, string message)
+        {
+            destination = target;
+            prompt = interactionPrompt;
+            arrivalMessage = message;
+        }
+
+        public override void Interact(PrototypePlayerController player)
+        {
+            player.Teleport(destination);
+            GameSession.Instance?.ShowMessage(arrivalMessage);
         }
     }
 

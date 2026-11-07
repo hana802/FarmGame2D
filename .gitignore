@@ -41,3 +41,6 @@ crashlytics-build.properties
 # Local test output
 TestResults/
 *.test-results.xml
+TestResults-*.xml
+/Data/
+/ProjectSettings/SceneTemplateSettings.json
