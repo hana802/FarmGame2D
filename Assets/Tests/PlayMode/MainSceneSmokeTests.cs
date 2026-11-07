@@ -79,6 +79,12 @@ namespace FarmGame2D.Tests
 
             var entrance = GameObject.Find("Farm House Door").GetComponent<DoorInteractable>();
             Assert.That(entrance, Is.Not.Null);
+            Assert.That(entrance.Prompt, Is.EqualTo("집에 들어가기"));
+            Assert.That(GameObject.Find("Farm House Wall Left").GetComponent<BoxCollider2D>().isTrigger, Is.False);
+            Assert.That(GameObject.Find("Farm House Wall Right").GetComponent<BoxCollider2D>().isTrigger, Is.False);
+            Assert.That(GameObject.Find("Farm House Door Blocker").GetComponent<BoxCollider2D>().isTrigger, Is.False);
+            Assert.That(GameObject.Find("Town Hall Entrance").GetComponent<InteractableBehaviour>(), Is.Not.Null,
+                "Town buildings must explain what happens at their front door instead of allowing wall penetration.");
             entrance.Interact(player);
             Assert.That(player.transform.position.x, Is.EqualTo(40f).Within(0.1f));
 

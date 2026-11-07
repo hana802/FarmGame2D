@@ -23,6 +23,7 @@ async function hold(page, key, milliseconds) {
   await canvas.waitFor({ state: 'visible', timeout: 120000 });
   await page.waitForTimeout(12000);
   await canvas.click({ position: { x: 640, y: 360 } });
+  await page.screenshot({ path: path.join(outputDirectory, 'review-character-choice.png'), fullPage: true });
   await page.keyboard.press('KeyM');
   await page.waitForTimeout(1500);
   await page.keyboard.press('Digit1');
@@ -38,6 +39,7 @@ async function hold(page, key, milliseconds) {
   await page.screenshot({ path: path.join(outputDirectory, 'review-farm.png'), fullPage: true });
 
   await hold(page, 'ArrowRight', 1800);
+  await page.screenshot({ path: path.join(outputDirectory, 'review-house-door.png'), fullPage: true });
   await page.keyboard.press('KeyE');
   await page.waitForTimeout(1500);
   await page.screenshot({ path: path.join(outputDirectory, 'review-interior.png'), fullPage: true });
@@ -52,6 +54,6 @@ async function hold(page, key, milliseconds) {
   await page.waitForTimeout(700);
   await page.screenshot({ path: path.join(outputDirectory, 'review-dialogue.png'), fullPage: true });
 
-  console.log(JSON.stringify({ screenshots: 7, errors }, null, 2));
+  console.log(JSON.stringify({ screenshots: 9, errors }, null, 2));
   await browser.close();
 })();

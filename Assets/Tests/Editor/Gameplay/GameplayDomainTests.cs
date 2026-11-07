@@ -105,5 +105,11 @@ namespace FarmGame2D.Tests
             Assert.That(viewport.OffsetX, Is.Zero.Within(0.0001f));
             Assert.That(viewport.OffsetY, Is.EqualTo(218.75f).Within(0.0001f));
         }
+
+        [Test]
+        public void CharacterChoice_UsesRequestedTitle()
+        {
+            Assert.That(PrototypeHud.CharacterChoiceTitle, Is.EqualTo("당신의 성별을 골라주세요"));
+        }
     }
 }

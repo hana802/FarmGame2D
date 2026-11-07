@@ -57,6 +57,25 @@ namespace FarmGame2D.Interactions
         }
     }
 
+    public sealed class NoticeInteractable : InteractableBehaviour
+    {
+        private string prompt = "문 확인하기";
+        private string message = "아직 들어갈 수 없습니다.";
+
+        public override string Prompt => prompt;
+
+        public void Configure(string interactionPrompt, string noticeMessage)
+        {
+            prompt = interactionPrompt;
+            message = noticeMessage;
+        }
+
+        public override void Interact(PrototypePlayerController player)
+        {
+            GameSession.Instance?.ShowMessage(message);
+        }
+    }
+
     public sealed class BedInteractable : InteractableBehaviour
     {
         public override string Prompt => "취침하고 다음 날로 이동";

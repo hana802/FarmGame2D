@@ -8,6 +8,8 @@ namespace FarmGame2D.UI
 {
     public sealed class PrototypeHud : MonoBehaviour
     {
+        public const string CharacterChoiceTitle = "당신의 성별을 골라주세요";
+
         private PrototypePlayerController player;
         private GUIStyle bodyStyle;
         private GUIStyle smallStyle;
@@ -143,7 +145,7 @@ namespace FarmGame2D.UI
         {
             var rect = new Rect((HudLayout.ReferenceWidth - 420f) / 2f, (HudLayout.ReferenceHeight - 210f) / 2f, 420f, 210f);
             farmSkin.DrawWindow(rect);
-            GUI.Label(new Rect(rect.x + 32f, rect.y + 20f, 356f, 42f), "플레이어 캐릭터 선택", titleStyle);
+            GUI.Label(new Rect(rect.x + 32f, rect.y + 20f, 356f, 42f), CharacterChoiceTitle, titleStyle);
             GUI.Label(new Rect(rect.x + 38f, rect.y + 70f, 344f, 38f), "외형만 다르며 능력 차이는 없습니다.", bodyStyle);
             if (farmSkin.DrawButton(new Rect(rect.x + 35f, rect.y + 125f, 160f, 52f), "남성형 (M)"))
             {

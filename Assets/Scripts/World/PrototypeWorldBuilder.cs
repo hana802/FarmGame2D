@@ -52,7 +52,7 @@ namespace FarmGame2D.World
         {
             var farmRoot = new GameObject("Farm").transform;
             farmRoot.SetParent(transform);
-            CreateWorldArt("Farm House", WorldArtKind.FarmHouse, new Vector2(6f, -12f), farmRoot, 3, new Vector2(4.6f, 1.35f), new Vector2(0f, 1.55f));
+            CreateBuildingArt("Farm House", WorldArtKind.FarmHouse, new Vector2(6f, -12f), farmRoot, 4.6f, 1.1f);
             CreateWorldArt("Chicken Coop", WorldArtKind.ChickenCoop, new Vector2(-6.3f, -9.6f), farmRoot, 3, new Vector2(3.1f, 0.85f), new Vector2(0f, 1.05f));
 
             var entrance = CreateInteractable<DoorInteractable>("Farm House Door", new Vector2(6f, -12.25f), new Vector2(1.1f, 0.55f), Color.clear, farmRoot);
@@ -100,14 +100,18 @@ namespace FarmGame2D.World
             var townRoot = new GameObject("C Main Street Village").transform;
             townRoot.SetParent(transform);
 
-            CreateWorldArt("Town Hall", WorldArtKind.TownHall, new Vector2(0f, 11f), townRoot, 3, new Vector2(5.2f, 1.2f), new Vector2(0f, 1.9f));
-            CreateWorldArt("General Store", WorldArtKind.GeneralStore, new Vector2(-5.8f, 6.7f), townRoot, 3, new Vector2(4.4f, 1.1f), new Vector2(0f, 1.5f));
-            CreateWorldArt("Seed And Feed Shop", WorldArtKind.SeedFeedShop, new Vector2(5.8f, 6.7f), townRoot, 3, new Vector2(4.2f, 1.1f), new Vector2(0f, 1.5f));
-            CreateWorldArt("West Home", WorldArtKind.WestCottage, new Vector2(-11.5f, 8.2f), townRoot, 3, new Vector2(3.7f, 1f), new Vector2(0f, 1.35f));
-            CreateWorldArt("East Home", WorldArtKind.EastCottage, new Vector2(11.5f, 8.2f), townRoot, 3, new Vector2(3.7f, 1f), new Vector2(0f, 1.35f));
+            CreateBuildingArt("Town Hall", WorldArtKind.TownHall, new Vector2(0f, 11f), townRoot, 5.2f, 1.1f);
+            CreateBuildingArt("General Store", WorldArtKind.GeneralStore, new Vector2(-5.8f, 6.7f), townRoot, 4.4f, 1f);
+            CreateBuildingArt("Seed And Feed Shop", WorldArtKind.SeedFeedShop, new Vector2(5.8f, 6.7f), townRoot, 4.2f, 1f);
+            CreateBuildingArt("West Home", WorldArtKind.WestCottage, new Vector2(-11.5f, 8.2f), townRoot, 3.7f, 0.9f);
+            CreateBuildingArt("East Home", WorldArtKind.EastCottage, new Vector2(11.5f, 8.2f), townRoot, 3.7f, 0.9f);
             CreateWorldArt("Village Square", WorldArtKind.VillageSquare, new Vector2(0f, 0.5f), townRoot, 2);
 
-            CreateInteractable<ShopInteractable>("Shop Counter", new Vector2(5.8f, 5.35f), new Vector2(1.2f, 0.5f), Color.clear, townRoot);
+            CreateNoticeEntrance("Town Hall Entrance", new Vector2(0f, 10.55f), "시청에 들어가기", "시청 내부는 아직 준비 중입니다.", townRoot);
+            CreateNoticeEntrance("General Store Entrance", new Vector2(-5.8f, 6.25f), "잡화점에 들어가기", "잡화점 내부는 아직 준비 중입니다.", townRoot);
+            CreateInteractable<ShopInteractable>("Seed And Feed Shop Entrance", new Vector2(5.8f, 6.25f), new Vector2(1.2f, 0.55f), Color.clear, townRoot);
+            CreateNoticeEntrance("West Home Entrance", new Vector2(-11.5f, 7.75f), "서쪽 집에 들어가기", "문이 잠겨 있습니다. 집주인을 먼저 만나보세요.", townRoot);
+            CreateNoticeEntrance("East Home Entrance", new Vector2(11.5f, 7.75f), "동쪽 집에 들어가기", "문이 잠겨 있습니다. 집주인을 먼저 만나보세요.", townRoot);
             var board = CreateInteractable<DialogueInteractable>("Quest Board", new Vector2(0f, 4.2f), new Vector2(1.4f, 1f), Color.clear, townRoot);
             board.Configure("광장 게시판", "밀 3개를 수확하면 100G를 드립니다. 휴대폰에서 진행도를 확인하세요.");
 
@@ -264,6 +268,42 @@ namespace FarmGame2D.World
             }
 
             return target;
+        }
+
+        private static GameObject CreateBuildingArt(
+            string name,
+            WorldArtKind artKind,
+            Vector2 position,
+            Transform parent,
+            float footprintWidth,
+            float doorWidth)
+        {
+            var building = CreateWorldArt(name, artKind, position, parent, 3);
+            var sideWidth = (footprintWidth - doorWidth) * 0.5f;
+            var sideOffset = (doorWidth + sideWidth) * 0.5f;
+            CreateSolidCollider($"{name} Wall Left", building.transform, new Vector2(-sideOffset, 0.4f), new Vector2(sideWidth, 0.8f));
+            CreateSolidCollider($"{name} Wall Right", building.transform, new Vector2(sideOffset, 0.4f), new Vector2(sideWidth, 0.8f));
+            CreateSolidCollider($"{name} Door Blocker", building.transform, new Vector2(0f, 0.4f), new Vector2(doorWidth, 0.8f));
+            return building;
+        }
+
+        private static void CreateSolidCollider(string name, Transform parent, Vector2 localPosition, Vector2 size)
+        {
+            var blocker = new GameObject(name);
+            blocker.transform.SetParent(parent, false);
+            blocker.transform.localPosition = localPosition;
+            blocker.AddComponent<BoxCollider2D>().size = size;
+        }
+
+        private static void CreateNoticeEntrance(
+            string name,
+            Vector2 position,
+            string prompt,
+            string message,
+            Transform parent)
+        {
+            var entrance = CreateInteractable<NoticeInteractable>(name, position, new Vector2(1.2f, 0.55f), Color.clear, parent);
+            entrance.Configure(prompt, message);
         }
 
         private static T CreateArtInteractable<T>(
