@@ -9,7 +9,7 @@ namespace FarmGame2D.TimeSystem
 
         private int minuteOfDay;
 
-        public GameClock(int startHour = 6, int startMinute = 0)
+        public GameClock(int startHour = 6, int startMinute = 0, int startDay = 1)
         {
             if (startHour is < 0 or > 23)
             {
@@ -21,7 +21,12 @@ namespace FarmGame2D.TimeSystem
                 throw new ArgumentOutOfRangeException(nameof(startMinute));
             }
 
-            Day = 1;
+            if (startDay < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(startDay));
+            }
+
+            Day = startDay;
             minuteOfDay = (startHour * MinutesPerHour) + startMinute;
         }
 
@@ -40,6 +45,17 @@ namespace FarmGame2D.TimeSystem
             var totalMinutes = minuteOfDay + minutes;
             Day += totalMinutes / MinutesPerDay;
             minuteOfDay = totalMinutes % MinutesPerDay;
+        }
+
+        public void Set(int day, int hour, int minute)
+        {
+            if (day < 1 || hour is < 0 or > 23 || minute is < 0 or > 59)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            Day = day;
+            minuteOfDay = (hour * MinutesPerHour) + minute;
         }
     }
 }

@@ -7,14 +7,13 @@ namespace FarmGame2D.TimeSystem
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void CreateGameClock()
         {
-            if (Object.FindFirstObjectByType<GameClockController>() != null)
+            if (Object.FindAnyObjectByType<GameClockController>() != null)
             {
                 return;
             }
 
             var clockObject = new GameObject("Game Time");
             clockObject.AddComponent<GameClockController>();
-            clockObject.AddComponent<GameClockOverlay>();
         }
     }
 }

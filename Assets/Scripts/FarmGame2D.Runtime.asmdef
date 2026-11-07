@@ -1,4 +1,7 @@
 {
   "name": "FarmGame2D.Runtime",
-  "rootNamespace": "FarmGame2D"
+  "rootNamespace": "FarmGame2D",
+  "references": [
+    "Unity.2D.PixelPerfect"
+  ]
 }

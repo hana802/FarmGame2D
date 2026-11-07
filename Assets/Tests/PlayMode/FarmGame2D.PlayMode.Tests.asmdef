@@ -1,0 +1,10 @@
+{
+  "name": "FarmGame2D.PlayMode.Tests",
+  "rootNamespace": "FarmGame2D.Tests",
+  "references": [
+    "FarmGame2D.Runtime"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}
