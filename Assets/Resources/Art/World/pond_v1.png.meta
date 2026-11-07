@@ -1,0 +1,704 @@
+fileFormatVersion: 2
+guid: 0a0b8e05379a34740b53aa5e603515a8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2389033781983563100
+    second: pond_v1_0
+  - first:
+      213: -4848168325842651905
+    second: pond_v1_1
+  - first:
+      213: -7674251371645762554
+    second: pond_v1_2
+  - first:
+      213: -8947964944879547063
+    second: pond_v1_3
+  - first:
+      213: -7888309519852961932
+    second: pond_v1_4
+  - first:
+      213: 7759966520834473388
+    second: pond_v1_5
+  - first:
+      213: 2207063261627419121
+    second: pond_v1_6
+  - first:
+      213: 2561713213210929369
+    second: pond_v1_7
+  - first:
+      213: -802617132816029222
+    second: pond_v1_8
+  - first:
+      213: -563473894880158761
+    second: pond_v1_9
+  - first:
+      213: 2981532196031117760
+    second: pond_v1_10
+  - first:
+      213: -3145540023855685470
+    second: pond_v1_11
+  - first:
+      213: 5838048318217071529
+    second: pond_v1_12
+  - first:
+      213: -4392499159510598906
+    second: pond_v1_13
+  - first:
+      213: -646651516874288490
+    second: pond_v1_14
+  - first:
+      213: -7721310262927494406
+    second: pond_v1_15
+  - first:
+      213: 3138352081129764350
+    second: pond_v1_16
+  - first:
+      213: 3811539781626872275
+    second: pond_v1_17
+  - first:
+      213: 71270973760274086
+    second: pond_v1_18
+  - first:
+      213: 5023740189197360843
+    second: pond_v1_19
+  - first:
+      213: 8733864140797179938
+    second: pond_v1_20
+  - first:
+      213: -2463667750003487382
+    second: pond_v1_21
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: pond_v1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1473
+        height: 1006
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a23674de6278ded0800000000000000
+      internalID: -2389033781983563100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_1
+      rect:
+        serializedVersion: 2
+        x: 1326
+        y: 767
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff439d62898d7bcb0800000000000000
+      internalID: -4848168325842651905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_2
+      rect:
+        serializedVersion: 2
+        x: 1366
+        y: 757
+        width: 9
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 604000499059f7590800000000000000
+      internalID: -7674251371645762554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_3
+      rect:
+        serializedVersion: 2
+        x: 1365
+        y: 733
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94d8ecd7a4172d380800000000000000
+      internalID: -8947964944879547063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_4
+      rect:
+        serializedVersion: 2
+        x: 1368
+        y: 711
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47ff4d62948178290800000000000000
+      internalID: -7888309519852961932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_5
+      rect:
+        serializedVersion: 2
+        x: 1360
+        y: 719
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cad3347cf60f0bb60800000000000000
+      internalID: 7759966520834473388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_6
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 705
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f90e1ac75011ae10800000000000000
+      internalID: 2207063261627419121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_7
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 563
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d8acd948980d8320800000000000000
+      internalID: 2561713213210929369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_8
+      rect:
+        serializedVersion: 2
+        x: 1397
+        y: 544
+        width: 20
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad9abdb58f78cd4f0800000000000000
+      internalID: -802617132816029222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_9
+      rect:
+        serializedVersion: 2
+        x: 1424
+        y: 535
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7db567f5a732e28f0800000000000000
+      internalID: -563473894880158761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_10
+      rect:
+        serializedVersion: 2
+        x: 1340
+        y: 325
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c933d64cb7806920800000000000000
+      internalID: 2981532196031117760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_11
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 305
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a0ee4b930cc854d0800000000000000
+      internalID: -3145540023855685470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_12
+      rect:
+        serializedVersion: 2
+        x: 1379
+        y: 313
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ab25ec930ae40150800000000000000
+      internalID: 5838048318217071529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_13
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 263
+        width: 7
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60b3b217945ba03c0800000000000000
+      internalID: -4392499159510598906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_14
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 175
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6929d3b1fd1a607f0800000000000000
+      internalID: -646651516874288490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_15
+      rect:
+        serializedVersion: 2
+        x: 1174
+        y: 97
+        width: 27
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af2f0a1a93568d490800000000000000
+      internalID: -7721310262927494406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_16
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef5f8df079aad8b20800000000000000
+      internalID: 3138352081129764350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_17
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 65
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d1c32bac3f45e430800000000000000
+      internalID: 3811539781626872275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_18
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 47
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6aef6c1b2943df000800000000000000
+      internalID: 71270973760274086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_19
+      rect:
+        serializedVersion: 2
+        x: 1054
+        y: 39
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bce56fcc519e7b540800000000000000
+      internalID: 5023740189197360843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_20
+      rect:
+        serializedVersion: 2
+        x: 1135
+        y: 21
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 228fcbc792be43970800000000000000
+      internalID: 8733864140797179938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pond_v1_21
+      rect:
+        serializedVersion: 2
+        x: 1142
+        y: 20
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6dc4740c3b4fcdd0800000000000000
+      internalID: -2463667750003487382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      pond_v1_0: -2389033781983563100
+      pond_v1_1: -4848168325842651905
+      pond_v1_10: 2981532196031117760
+      pond_v1_11: -3145540023855685470
+      pond_v1_12: 5838048318217071529
+      pond_v1_13: -4392499159510598906
+      pond_v1_14: -646651516874288490
+      pond_v1_15: -7721310262927494406
+      pond_v1_16: 3138352081129764350
+      pond_v1_17: 3811539781626872275
+      pond_v1_18: 71270973760274086
+      pond_v1_19: 5023740189197360843
+      pond_v1_2: -7674251371645762554
+      pond_v1_20: 8733864140797179938
+      pond_v1_21: -2463667750003487382
+      pond_v1_3: -8947964944879547063
+      pond_v1_4: -7888309519852961932
+      pond_v1_5: 7759966520834473388
+      pond_v1_6: 2207063261627419121
+      pond_v1_7: 2561713213210929369
+      pond_v1_8: -802617132816029222
+      pond_v1_9: -563473894880158761
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

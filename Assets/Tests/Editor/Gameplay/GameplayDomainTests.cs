@@ -90,8 +90,10 @@ namespace FarmGame2D.Tests
             var sprite = GameArtCatalog.GetPlayerSprite(CharacterChoice.Male, 3, 0);
 
             Assert.That(sprite, Is.Not.Null);
-            Assert.That(sprite.rect.y, Is.EqualTo(704f));
-            Assert.That(sprite.rect.height, Is.EqualTo(256f));
+            Assert.That(sprite.rect.x, Is.EqualTo(89f));
+            Assert.That(sprite.rect.y, Is.EqualTo(712f));
+            Assert.That(sprite.rect.width, Is.EqualTo(160f));
+            Assert.That(sprite.rect.height, Is.EqualTo(208f));
         }
 
         [Test]

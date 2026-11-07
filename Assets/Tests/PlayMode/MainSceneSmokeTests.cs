@@ -49,6 +49,33 @@ namespace FarmGame2D.Tests
             Assert.That(farmHouse, Is.Not.Null);
             Assert.That(farmHouse.GetComponent<SpriteRenderer>().sprite.texture.width, Is.GreaterThan(1),
                 "Farm house must use illustrated building art, not a 1x1 block.");
+            var distinctVillageArt = new[]
+            {
+                "Town Hall",
+                "General Store",
+                "Seed And Feed Shop",
+                "West Home",
+                "East Home",
+                "Village Square",
+                "Pond",
+                "Chicken Coop",
+                "Chicken",
+                "Seeded Tree 1"
+            };
+
+            foreach (var objectName in distinctVillageArt)
+            {
+                var worldObject = GameObject.Find(objectName);
+                Assert.That(worldObject, Is.Not.Null, $"{objectName} must exist in the prototype world.");
+                Assert.That(worldObject.GetComponent<SpriteRenderer>().sprite.texture.width, Is.GreaterThan(1),
+                    $"{objectName} must use illustrated art, not a 1x1 block.");
+            }
+
+            var farmHouseTexture = farmHouse.GetComponent<SpriteRenderer>().sprite.texture;
+            Assert.That(GameObject.Find("West Home").GetComponent<SpriteRenderer>().sprite.texture, Is.Not.SameAs(farmHouseTexture));
+            Assert.That(GameObject.Find("East Home").GetComponent<SpriteRenderer>().sprite.texture, Is.Not.SameAs(farmHouseTexture));
+            Assert.That(GameObject.Find("West Home").GetComponent<SpriteRenderer>().sprite.texture,
+                Is.Not.SameAs(GameObject.Find("East Home").GetComponent<SpriteRenderer>().sprite.texture));
 
             var entrance = GameObject.Find("Farm House Door").GetComponent<DoorInteractable>();
             Assert.That(entrance, Is.Not.Null);

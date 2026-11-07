@@ -47,10 +47,11 @@ async function hold(page, key, milliseconds) {
   await hold(page, 'ArrowLeft', 2050);
   await hold(page, 'ArrowUp', 5650);
   await hold(page, 'ArrowRight', 900);
+  await page.screenshot({ path: path.join(outputDirectory, 'review-village-art.png'), fullPage: true });
   await page.keyboard.press('KeyE');
   await page.waitForTimeout(700);
   await page.screenshot({ path: path.join(outputDirectory, 'review-dialogue.png'), fullPage: true });
 
-  console.log(JSON.stringify({ screenshots: 6, errors }, null, 2));
+  console.log(JSON.stringify({ screenshots: 7, errors }, null, 2));
   await browser.close();
 })();

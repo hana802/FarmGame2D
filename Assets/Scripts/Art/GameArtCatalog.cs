@@ -6,14 +6,14 @@ namespace FarmGame2D.Art
 {
     public static class GameArtCatalog
     {
-        private const int CellWidth = 192;
-        private const int CellHeight = 256;
+        private const int PlayerFrameWidth = 160;
+        private const int PlayerFrameHeight = 208;
         private const float PixelsPerUnit = 160f;
-        private const float BuildingPixelsPerUnit = 160f;
 
-        // The generated sheets have visual padding between rows. These are the
-        // measured row bottoms in Unity's bottom-left texture coordinates.
-        private static readonly int[] CharacterRowBottoms = { 16, 240, 464, 704 };
+        private static readonly int[] CharacterRowBottoms = { 64, 272, 496, 712 };
+        private static readonly int[] MaleFrameLefts = { 89, 243, 399, 555 };
+        private static readonly int[] FemaleFrameLefts = { 824, 978, 1134, 1289 };
+        private static readonly int[] NpcFrameLefts = { 80, 240, 400, 560, 816, 976, 1136, 1296 };
 
         private static readonly Dictionary<int, Sprite> playerSprites = new();
         private static readonly Dictionary<int, Sprite> npcSprites = new();
@@ -22,8 +22,6 @@ namespace FarmGame2D.Art
         private static Texture2D playerSheet;
         private static Texture2D npcSheet;
         private static Texture2D uiAtlas;
-        private static Texture2D farmHouseTexture;
-        private static Sprite farmHouseSprite;
 
         public static Texture2D UiAtlas => uiAtlas ??= LoadTexture("Art/UI/dialogue_info_ui_concept_v1");
 
@@ -40,11 +38,12 @@ namespace FarmGame2D.Art
                 return null;
             }
 
-            var characterOffset = choice == CharacterChoice.Female ? 4 : 0;
-            var column = characterOffset + Mathf.Clamp(frame, 0, 3);
+            var safeFrame = Mathf.Clamp(frame, 0, 3);
             var row = Mathf.Clamp(rowFromBottom, 0, 3);
-            var key = ((int)choice * 100) + (row * 10) + frame;
-            return GetOrCreate(playerSprites, key, playerSheet, column, row, new Vector2(0.5f, 0.12f));
+            var key = ((int)choice * 100) + (row * 10) + safeFrame;
+            var frameLefts = choice == CharacterChoice.Female ? FemaleFrameLefts : MaleFrameLefts;
+            var rect = new Rect(frameLefts[safeFrame], CharacterRowBottoms[row], PlayerFrameWidth, PlayerFrameHeight);
+            return GetOrCreate(playerSprites, key, playerSheet, rect, new Vector2(0.5f, 0.12f));
         }
 
         public static Sprite GetNpcSprite(int characterRowFromTop, int column = 0)
@@ -58,7 +57,8 @@ namespace FarmGame2D.Art
             var rowFromBottom = 3 - Mathf.Clamp(characterRowFromTop, 0, 3);
             var safeColumn = Mathf.Clamp(column, 0, 7);
             var key = (rowFromBottom * 10) + safeColumn;
-            return GetOrCreate(npcSprites, key, npcSheet, safeColumn, rowFromBottom, new Vector2(0.5f, 0.12f));
+            var rect = new Rect(NpcFrameLefts[safeColumn], CharacterRowBottoms[rowFromBottom], PlayerFrameWidth, PlayerFrameHeight);
+            return GetOrCreate(npcSprites, key, npcSheet, rect, new Vector2(0.5f, 0.12f));
         }
 
         public static Sprite GetNpcPortrait(int characterRowFromTop)
@@ -75,35 +75,11 @@ namespace FarmGame2D.Art
                 return cached;
             }
 
-            var rect = new Rect(32f, CharacterRowBottoms[rowFromBottom] + 104f, 128f, 136f);
+            var rect = new Rect(96f, CharacterRowBottoms[rowFromBottom] + 76f, 128f, 128f);
             var sprite = Sprite.Create(npcSheet, rect, new Vector2(0.5f, 0.5f), PixelsPerUnit, 0, SpriteMeshType.FullRect);
             sprite.name = $"npc_portrait_{characterRowFromTop}";
             npcPortraits[rowFromBottom] = sprite;
             return sprite;
-        }
-
-        public static Sprite GetFarmHouseSprite()
-        {
-            farmHouseTexture ??= LoadTexture("Art/World/farm_house_v1");
-            if (farmHouseTexture == null)
-            {
-                return null;
-            }
-
-            if (farmHouseSprite != null)
-            {
-                return farmHouseSprite;
-            }
-
-            farmHouseSprite = Sprite.Create(
-                farmHouseTexture,
-                new Rect(0f, 0f, farmHouseTexture.width, farmHouseTexture.height),
-                new Vector2(0.5f, 0.08f),
-                BuildingPixelsPerUnit,
-                0,
-                SpriteMeshType.FullRect);
-            farmHouseSprite.name = "farm_house_v1_runtime";
-            return farmHouseSprite;
         }
 
         public static Sprite GetHeldToolSprite(FarmTool tool)
@@ -142,8 +118,7 @@ namespace FarmGame2D.Art
             IDictionary<int, Sprite> cache,
             int key,
             Texture2D texture,
-            int column,
-            int row,
+            Rect rect,
             Vector2 pivot)
         {
             if (cache.TryGetValue(key, out var cached))
@@ -151,9 +126,8 @@ namespace FarmGame2D.Art
                 return cached;
             }
 
-            var rect = new Rect(column * CellWidth, CharacterRowBottoms[row], CellWidth, CellHeight);
             var sprite = Sprite.Create(texture, rect, pivot, PixelsPerUnit, 0, SpriteMeshType.FullRect);
-            sprite.name = $"{texture.name}_{column}_{row}";
+            sprite.name = $"{texture.name}_{key}";
             cache[key] = sprite;
             return sprite;
         }
