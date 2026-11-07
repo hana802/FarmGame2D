@@ -1,0 +1,13 @@
+{
+  "name": "FarmGame2D.Time.Tests",
+  "rootNamespace": "FarmGame2D.Tests",
+  "references": [
+    "FarmGame2D.Runtime"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}
