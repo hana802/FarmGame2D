@@ -236,6 +236,10 @@ namespace FarmGame2D.Tests
             Assert.That(GameObject.Find("Village Square Left Bench Blocker"), Is.Not.Null);
             Assert.That(GameObject.Find("Village Square Right Bench Blocker"), Is.Not.Null);
             Assert.That(GameObject.Find("Village Square Flower Bed Blocker"), Is.Not.Null);
+            var lowerRightPlanter = GameObject.Find("Village Square Lower Right Planter Blocker")
+                .GetComponent<BoxCollider2D>();
+            Assert.That(lowerRightPlanter.bounds.max.x, Is.LessThanOrEqualTo(1.9f),
+                "The lower-right planter collider must not protrude into the side approach and trap the player on its corner.");
 
             var farmHouseTexture = farmHouse.GetComponent<SpriteRenderer>().sprite.texture;
             Assert.That(GameObject.Find("West Home").GetComponent<SpriteRenderer>().sprite.texture, Is.Not.SameAs(farmHouseTexture));

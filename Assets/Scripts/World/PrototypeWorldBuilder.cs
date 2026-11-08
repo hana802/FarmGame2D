@@ -450,8 +450,8 @@ namespace FarmGame2D.World
             CreateSolidCollider("Village Square Flower Bed Blocker", square, new Vector2(0f, 1.45f), new Vector2(0.9f, 0.85f));
             CreateSolidCollider("Village Square Upper Left Planter Blocker", square, new Vector2(-1.35f, 2.45f), new Vector2(0.82f, 0.56f));
             CreateSolidCollider("Village Square Upper Right Planter Blocker", square, new Vector2(1.35f, 2.45f), new Vector2(0.82f, 0.56f));
-            CreateSolidCollider("Village Square Lower Left Planter Blocker", square, new Vector2(-1.55f, 0.35f), new Vector2(0.95f, 0.58f));
-            CreateSolidCollider("Village Square Lower Right Planter Blocker", square, new Vector2(1.55f, 0.35f), new Vector2(0.95f, 0.58f));
+            CreateSolidCollider("Village Square Lower Left Planter Blocker", square, new Vector2(-1.4f, 0.35f), new Vector2(0.9f, 0.58f));
+            CreateSolidCollider("Village Square Lower Right Planter Blocker", square, new Vector2(1.4f, 0.35f), new Vector2(0.9f, 0.58f));
         }
 
         private static void CreateNoticeEntrance(
