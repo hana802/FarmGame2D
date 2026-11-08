@@ -28,6 +28,9 @@ namespace FarmGame2D.Core
             { GameItem.CopperOre, "구리 광석" },
             { GameItem.IronOre, "철 광석" },
             { GameItem.GoldOre, "금 광석" }
+            ,{ GameItem.RiverFish, "민물고기" }
+            ,{ GameItem.SeaBass, "농어" }
+            ,{ GameItem.GoldenCarp, "황금 잉어" }
         };
 
         private static readonly Dictionary<GameItem, int> SellPrices = new()
@@ -38,7 +41,10 @@ namespace FarmGame2D.Core
             { GameItem.Stone, 4 },
             { GameItem.CopperOre, 18 },
             { GameItem.IronOre, 32 },
-            { GameItem.GoldOre, 60 }
+            { GameItem.GoldOre, 60 },
+            { GameItem.RiverFish, 28 },
+            { GameItem.SeaBass, 45 },
+            { GameItem.GoldenCarp, 120 }
         };
 
         public static string GetLabel(GameItem item)

@@ -19,6 +19,9 @@ namespace FarmGame2D.Farming
         public int growthDays;
         public int gridX;
         public int gridY;
+        public bool freeform;
+        public float worldX;
+        public float worldY;
         public GameItem plantedSeed = GameItem.WheatSeed;
 
         public void AdvanceDay()

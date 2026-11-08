@@ -19,6 +19,7 @@ namespace FarmGame2D.Core
         private bool cloudSyncBusy;
         private bool hadLocalSaveAtStartup;
         private bool cloudLoadRequired;
+        private string lastMorningEvent = string.Empty;
 
         public static GameSession Instance { get; private set; }
         public GameSaveData Data { get; private set; }
@@ -28,6 +29,8 @@ namespace FarmGame2D.Core
         public bool PhoneOpen { get; private set; }
         public bool ShopOpen { get; private set; }
         public bool InventoryOpen { get; private set; }
+        public bool QuestBoardOpen { get; private set; }
+        public Vector2 PlayerPosition => playerTransform == null ? Vector2.zero : playerTransform.position;
         public bool CloudSyncBusy => cloudSyncBusy;
         public bool CloudSyncLinked => cloudSaveClient.IsLinked;
         public string CloudSyncCode => cloudSaveClient.SyncCode;
@@ -359,8 +362,11 @@ namespace FarmGame2D.Core
             }
 
             clock.SetTime(Data.day + 1, 6, 0);
-            Message = "새로운 아침입니다. 자동 저장했습니다.";
-            Save(true);
+            Message = string.IsNullOrEmpty(lastMorningEvent)
+                ? "새로운 아침입니다. 자동 저장했습니다."
+                : $"새로운 아침입니다. {lastMorningEvent} 자동 저장했습니다.";
+            SaveSilently();
+            NotifyChanged();
         }
 
         public void TogglePhone()
@@ -368,6 +374,7 @@ namespace FarmGame2D.Core
             PhoneOpen = !PhoneOpen;
             ShopOpen = false;
             InventoryOpen = false;
+            QuestBoardOpen = false;
             NotifyChanged();
         }
 
@@ -383,6 +390,7 @@ namespace FarmGame2D.Core
             ShopOpen = shouldOpen;
             PhoneOpen = false;
             InventoryOpen = false;
+            QuestBoardOpen = false;
             NotifyChanged();
         }
 
@@ -391,7 +399,74 @@ namespace FarmGame2D.Core
             InventoryOpen = !InventoryOpen;
             PhoneOpen = false;
             ShopOpen = false;
+            QuestBoardOpen = false;
             NotifyChanged();
+        }
+
+        public void OpenQuestBoard()
+        {
+            QuestBoardOpen = true;
+            PhoneOpen = false;
+            ShopOpen = false;
+            InventoryOpen = false;
+            NotifyChanged();
+        }
+
+        public void CloseQuestBoard()
+        {
+            QuestBoardOpen = false;
+            NotifyChanged();
+        }
+
+        public void AcceptQuest(StarterQuestId questId)
+        {
+            if (!StarterQuestProgress.TryAccept(Data, questId))
+            {
+                Message = Data.activeQuestId >= 0 ? "먼저 진행 중인 의뢰를 완료하세요." : "이미 완료한 의뢰입니다.";
+                NotifyChanged();
+                return;
+            }
+
+            var quest = StarterQuestProgress.GetCurrent(Data);
+            QuestBoardOpen = false;
+            Message = $"의뢰를 수락했습니다: {quest.Title}";
+            CompleteCurrentStarterQuest();
+            NotifyChanged();
+            SaveSilently();
+        }
+
+        public bool AddFreeformPlot(Vector2 position)
+        {
+            if (FarmFieldLayout.HasPlotNear(Data.farmPlots, position))
+            {
+                Message = "이미 밭이 있는 자리입니다.";
+                NotifyChanged();
+                return false;
+            }
+
+            Data.farmPlots.Add(new FarmPlotData
+            {
+                state = SoilState.Tilled,
+                freeform = true,
+                worldX = position.x,
+                worldY = position.y
+            });
+            Message = "호미로 새 밭을 만들었습니다.";
+            NotifyChanged();
+            SaveSilently();
+            return true;
+        }
+
+        public void CatchFish()
+        {
+            var roll = Mathf.Abs(unchecked((Data.worldSeed * 31) + (Data.day * 17) + (Data.fishCaught * 13))) % 100;
+            var fish = roll < 8 ? GameItem.GoldenCarp : roll < 43 ? GameItem.SeaBass : GameItem.RiverFish;
+            Data.inventory.Add(fish, 1);
+            Data.fishCaught++;
+            Message = $"{ItemCatalog.GetLabel(fish)}을(를) 낚았습니다!";
+            CompleteCurrentStarterQuest();
+            NotifyChanged();
+            SaveSilently();
         }
 
         public void ShowMessage(string message)
@@ -586,7 +661,9 @@ namespace FarmGame2D.Core
 
             node.Mine();
             Data.inventory.Add(node.ore, 1);
+            Data.oreMined++;
             Message = $"{ItemCatalog.GetLabel(node.ore)}을 채굴했습니다.";
+            CompleteCurrentStarterQuest();
             NotifyChanged();
         }
 
@@ -623,6 +700,7 @@ namespace FarmGame2D.Core
 
         private void ProcessNewDay()
         {
+            lastMorningEvent = string.Empty;
             foreach (var plot in Data.farmPlots)
             {
                 plot.AdvanceDay();
@@ -630,21 +708,50 @@ namespace FarmGame2D.Core
 
             if (Data.chickenFedToday)
             {
-                Data.readyEggs += Data.ownedChickens;
+                Data.readyEggs += Mathf.Max(0, Data.ownedChickens - Data.chickenJuvenileDays.Count);
             }
 
             if (Data.cowFedToday)
             {
-                Data.readyMilk += Data.ownedCows;
+                Data.readyMilk += Mathf.Max(0, Data.ownedCows - Data.cowJuvenileDays.Count);
             }
 
             Data.chickenFedToday = false;
             Data.cowFedToday = false;
 
+            AnimalBreedingRules.AdvanceJuveniles(Data.chickenJuvenileDays);
+            AnimalBreedingRules.AdvanceJuveniles(Data.cowJuvenileDays);
+            TryBreedAnimals(FarmAnimalKind.Chicken);
+            TryBreedAnimals(FarmAnimalKind.Cow);
+
             foreach (var node in Data.miningNodes)
             {
                 node.AdvanceDay();
             }
+        }
+
+        private void TryBreedAnimals(FarmAnimalKind kind)
+        {
+            var chickens = kind == FarmAnimalKind.Chicken;
+            var total = chickens ? Data.ownedChickens : Data.ownedCows;
+            var juveniles = chickens ? Data.chickenJuvenileDays : Data.cowJuvenileDays;
+            if (!AnimalBreedingRules.ShouldBreed(Data.worldSeed, Data.day, kind, total - juveniles.Count, total))
+            {
+                return;
+            }
+
+            if (chickens)
+            {
+                Data.ownedChickens++;
+            }
+            else
+            {
+                Data.ownedCows++;
+            }
+
+            juveniles.Add(AnimalBreedingRules.JuvenileDays);
+            var birthMessage = chickens ? "병아리가 태어났습니다!" : "송아지가 태어났습니다!";
+            lastMorningEvent = string.IsNullOrEmpty(lastMorningEvent) ? birthMessage : $"{lastMorningEvent} {birthMessage}";
         }
 
         private void Plant(FarmPlotData plot)
@@ -892,6 +999,7 @@ namespace FarmGame2D.Core
                 FarmTool.Seeds => "씨앗",
                 FarmTool.WateringCan => "물뿌리개",
                 FarmTool.Pickaxe => "곡괭이",
+                FarmTool.FishingRod => "낚싯대",
                 _ => tool.ToString()
             };
         }

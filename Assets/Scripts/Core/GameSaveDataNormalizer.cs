@@ -23,7 +23,12 @@ namespace FarmGame2D.Core
             data.pulledWeedIds ??= new List<int>();
             data.farmPlots ??= new List<FarmPlotData>();
             data.miningNodes ??= new List<MiningNodeData>();
+            data.chickenJuvenileDays ??= new List<int>();
+            data.cowJuvenileDays ??= new List<int>();
             data.ownedChickens = System.Math.Max(1, data.ownedChickens);
+            data.ownedCows = System.Math.Max(0, data.ownedCows);
+            TrimJuveniles(data.chickenJuvenileDays, data.ownedChickens);
+            TrimJuveniles(data.cowJuvenileDays, data.ownedCows);
 
             if (data.eggReady && data.readyEggs == 0)
             {
@@ -36,6 +41,15 @@ namespace FarmGame2D.Core
             {
                 var id = data.miningNodes.Count;
                 data.miningNodes.Add(new MiningNodeData { id = id, ore = MiningOres[id] });
+            }
+        }
+
+        private static void TrimJuveniles(List<int> juvenileDays, int ownedCount)
+        {
+            juvenileDays.RemoveAll(days => days <= 0);
+            while (juvenileDays.Count > ownedCount)
+            {
+                juvenileDays.RemoveAt(juvenileDays.Count - 1);
             }
         }
     }

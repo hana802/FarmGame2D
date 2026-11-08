@@ -65,6 +65,17 @@ namespace FarmGame2D.World
                 Destroy(animals[lastIndex]);
                 animals.RemoveAt(lastIndex);
             }
+
+            var juvenileCount = animalKind == FarmAnimalKind.Chicken
+                ? session.Data.chickenJuvenileDays.Count
+                : session.Data.cowJuvenileDays.Count;
+            for (var index = 0; index < animals.Count; index++)
+            {
+                var juvenile = index >= animals.Count - juvenileCount;
+                animals[index].transform.localScale = juvenile ? Vector3.one * 0.62f : Vector3.one;
+                var label = animalKind == FarmAnimalKind.Chicken ? "Chicken" : "Cow";
+                animals[index].name = juvenile ? $"Baby {label} {index + 1}" : index == 0 ? label : $"{label} {index + 1}";
+            }
         }
 
         private GameObject CreateAnimal(int index)

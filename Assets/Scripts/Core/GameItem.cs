@@ -23,7 +23,10 @@ namespace FarmGame2D.Core
         Stone,
         CopperOre,
         IronOre,
-        GoldOre
+        GoldOre,
+        RiverFish,
+        SeaBass,
+        GoldenCarp
     }
 
     public enum FarmTool
@@ -31,7 +34,8 @@ namespace FarmGame2D.Core
         Hoe,
         Seeds,
         WateringCan,
-        Pickaxe
+        Pickaxe,
+        FishingRod
     }
 
     public enum CharacterChoice

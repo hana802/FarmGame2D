@@ -15,6 +15,7 @@ namespace FarmGame2D.World
         private static readonly BoundsInt IslandOceanBounds = new(-28, -26, 0, 57, 55, 1);
         private Tilemap groundTilemap;
         private Tilemap oceanTilemap;
+        private Tilemap roadTilemap;
         private SpriteRenderer waterRenderer;
 
         public void Build(GameSession session)
@@ -45,9 +46,10 @@ namespace FarmGame2D.World
 
             oceanTilemap = CreateTilemap(gridObject.transform, "Island Ocean", -10);
             groundTilemap = CreateTilemap(gridObject.transform, "Seasonal Ground", 0);
-            var roadTilemap = CreateTilemap(gridObject.transform, "Main Street", 1);
+            roadTilemap = CreateTilemap(gridObject.transform, "Main Street", 1);
             FillRectangle(oceanTilemap, IslandOceanBounds, WorldArtCatalog.GetTile(WorldTileKind.Ocean));
             FillRectangle(groundTilemap, IslandGroundBounds, WorldArtCatalog.GetTile(WorldTileKind.Grass));
+            oceanTilemap.gameObject.AddComponent<OceanMotionController>();
 
             var roadTile = WorldArtCatalog.GetTile(WorldTileKind.StonePath);
             FillRectangle(roadTilemap, new BoundsInt(-1, -16, 0, 3, 30, 1), roadTile);
@@ -86,7 +88,7 @@ namespace FarmGame2D.World
                 var plotData = session.Data.farmPlots[index];
                 var plot = PrototypeSpriteFactory.CreateBlock(
                     $"Wheat Plot {index + 1}",
-                    FarmFieldLayout.GetWorldPosition(plotData.gridX, plotData.gridY),
+                    FarmFieldLayout.GetWorldPosition(plotData),
                     new Vector2(1.1f, 1.1f),
                     Color.white,
                     farmRoot,
@@ -94,6 +96,10 @@ namespace FarmGame2D.World
                 plot.GetComponent<BoxCollider2D>().isTrigger = true;
                 plot.AddComponent<FarmPlotView>().Configure(index);
             }
+
+            var freeformField = new GameObject("Freeform Farm Field").AddComponent<FreeformFarmField>();
+            freeformField.transform.SetParent(farmRoot);
+            freeformField.Configure(session, groundTilemap, roadTilemap, farmRoot, session.Data.farmPlots.Count);
 
             BuildFarmHouseInterior();
         }
@@ -138,15 +144,14 @@ namespace FarmGame2D.World
             CreateArtInteractable<SellBoxInteractable>("Selling Box", WorldArtKind.SellingBox, new Vector2(9.35f, 6.05f), new Vector2(1.2f, 0.85f), townRoot);
             CreateNoticeEntrance("West Home Entrance", new Vector2(-11.5f, 7.75f), "서쪽 집에 들어가기", "문이 잠겨 있습니다. 집주인을 먼저 만나보세요.", townRoot);
             CreateNoticeEntrance("East Home Entrance", new Vector2(11.5f, 7.75f), "동쪽 집에 들어가기", "문이 잠겨 있습니다. 집주인을 먼저 만나보세요.", townRoot);
-            var board = CreateInteractable<DialogueInteractable>("Quest Board", new Vector2(0f, 4.2f), new Vector2(1.4f, 1f), Color.clear, townRoot);
-            board.Configure("광장 게시판", "초보 농부 퀘스트 3개가 준비되어 있습니다. 휴대폰에서 전체 진행도를 확인하세요.");
+            CreateInteractable<QuestBoardInteractable>("Quest Board", new Vector2(0f, 4.2f), new Vector2(1.4f, 1f), Color.clear, townRoot);
             var villageRoutes = CreateVillageRouteNetwork();
 
             var guide = CreateNpc("Guide", new Vector2(3f, 3.5f), new Color(0.8f, 0.58f, 0.25f), townRoot);
             ApplyNpcArt(guide, 0);
             guide.Configure("안내자 하람", new[]
             {
-                "I로 가방을 열어 씨앗과 도구를 고르고, E로 땅을 갈거나 광맥을 캐세요. P는 휴대폰입니다.",
+                "I로 가방을 열어 도구를 고르세요. 호미는 Space로 앞의 땅을 갈고, E로 작물과 사물을 다룹니다. P는 휴대폰입니다.",
                 "호미로 땅을 간 뒤 씨앗을 들고 심어 보세요. 마지막에는 물뿌리개로 물을 주면 됩니다.",
                 "씨앗은 계절에 맞아야 잘 자라요. 상점에서 지금 계절의 씨앗을 확인해 보세요.",
                 "작물은 하루아침에 자라지 않아요. 물을 준 뒤 집에서 자고 다음 날 다시 살펴보세요.",
@@ -179,8 +184,37 @@ namespace FarmGame2D.World
             }, 3);
             ConfigureNpcMovement(villager, villageRoutes, 13, 0.75f, seed + 33, new Vector2(11.5f, 7.2f), "주민 도윤");
 
+            var fisher = CreateNpc("Fisher Minseo", new Vector2(-9f, 0f), new Color(0.3f, 0.58f, 0.72f), townRoot);
+            ApplyNpcArt(fisher, 1, 4);
+            fisher.Configure("어부 민서", new[]
+            {
+                "낚싯대를 들고 연못이나 바닷가의 낚시 자리를 찾아보세요.",
+                "파도가 잔잔한 날에는 농어가 잘 잡히는 것 같아요.",
+                "황금 잉어는 보기 드물지만 포기하지 않으면 만날 수 있어요.",
+                "낚시는 서두르지 않는 게 중요해요. 찌가 움직일 때까지 기다려 보세요.",
+                "잡은 물고기는 판매 상자에 넣어도 되고 가방에 간직해도 돼요.",
+                "바닷물 색이 계절마다 조금씩 달라지는 걸 알고 있었나요?"
+            }, 1);
+            ConfigureNpcMovement(fisher, villageRoutes, 10, 0.68f, seed + 44, new Vector2(-11.5f, 2.5f), "어부 민서");
+
+            var florist = CreateNpc("Florist Taeo", new Vector2(5f, 0f), new Color(0.64f, 0.45f, 0.72f), townRoot);
+            ApplyNpcArt(florist, 0, 6);
+            florist.Configure("원예가 태오", new[]
+            {
+                "마을 길과 광장은 모두가 쓰는 곳이라 밭을 만들 수 없어요.",
+                "하지만 빈 잔디라면 호미로 새로운 밭을 만들 수 있답니다.",
+                "동물 두 마리가 건강하게 자라면 어느 날 새끼가 태어날 수도 있어요.",
+                "게시판 의뢰는 순서가 없어요. 마음에 드는 일을 먼저 골라 보세요.",
+                "봄 딸기 향은 마을 광장까지 퍼지는 것 같아요.",
+                "농장이 넓어질수록 물 주는 동선도 미리 생각해 두는 게 좋아요."
+            }, 0);
+            ConfigureNpcMovement(florist, villageRoutes, 11, 0.7f, seed + 55, new Vector2(5.8f, 5.4f), "원예가 태오");
+
             var water = CreateWorldArt("Pond", WorldArtKind.Pond, new Vector2(-11.5f, 1.3f), townRoot, 2, new Vector2(4.5f, 2.4f));
             waterRenderer = water.GetComponent<SpriteRenderer>();
+            CreateInteractable<FishingSpotInteractable>("Pond Fishing Spot", new Vector2(-11.5f, -0.15f), new Vector2(1.4f, 0.8f), Color.clear, townRoot);
+            CreateInteractable<FishingSpotInteractable>("West Coast Fishing Spot", new Vector2(-17.25f, -4f), new Vector2(0.8f, 1.6f), Color.clear, townRoot);
+            CreateInteractable<FishingSpotInteractable>("South Coast Fishing Spot", new Vector2(12f, -15.3f), new Vector2(1.6f, 0.8f), Color.clear, townRoot);
             BuildRandomTrees(seed, townRoot);
         }
 
@@ -472,10 +506,10 @@ namespace FarmGame2D.World
             herdObject.AddComponent<FarmAnimalHerd>().Configure(session, kind, area, speed, separationGroup);
         }
 
-        private static void ApplyNpcArt(DialogueInteractable npc, int characterRowFromTop)
+        private static void ApplyNpcArt(DialogueInteractable npc, int characterRowFromTop, int column = 0)
         {
             var renderer = npc.GetComponent<SpriteRenderer>();
-            var artSprite = GameArtCatalog.GetNpcSprite(characterRowFromTop);
+            var artSprite = GameArtCatalog.GetNpcSprite(characterRowFromTop, column);
             if (artSprite == null)
             {
                 return;

@@ -8,7 +8,7 @@ namespace FarmGame2D.Core
     [Serializable]
     public sealed class GameSaveData
     {
-        public const int CurrentVersion = 3;
+        public const int CurrentVersion = 4;
 
         public int version = CurrentVersion;
         public int worldSeed;
@@ -27,12 +27,19 @@ namespace FarmGame2D.Core
         public int readyMilk;
         public int ownedChickens = 1;
         public int ownedCows;
+        public List<int> chickenJuvenileDays = new();
+        public List<int> cowJuvenileDays = new();
         public bool cowFedToday;
         public bool hasPickaxe;
         public int wheatHarvested;
         public bool harvestQuestCompleted;
         public bool eggQuestCompleted;
         public bool weedQuestCompleted;
+        public bool fishingQuestCompleted;
+        public bool miningQuestCompleted;
+        public int activeQuestId = -1;
+        public int fishCaught;
+        public int oreMined;
         public bool firstHarvestAchievement;
         public bool firstEggAchievement;
         public List<int> pulledWeedIds = new();

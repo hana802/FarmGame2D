@@ -1,6 +1,7 @@
 using System.Collections;
 using FarmGame2D.Core;
 using FarmGame2D.Interactions;
+using FarmGame2D.Farming;
 using FarmGame2D.Player;
 using FarmGame2D.UI;
 using FarmGame2D.World;
@@ -59,6 +60,8 @@ namespace FarmGame2D.Tests
             Assert.That(ocean.GetSprite(new Vector3Int(-22, 0, 0)).texture.width, Is.GreaterThan(1),
                 "Ocean tiles must include visible pixel-art waves instead of a flat color block.");
             Assert.That(ocean.GetSprite(new Vector3Int(0, 22, 0)), Is.Not.Null);
+            Assert.That(ocean.GetComponent<OceanMotionController>(), Is.Not.Null,
+                "Ocean tiles need a looping motion controller instead of remaining static.");
 
             foreach (var boundaryName in new[] { "North Boundary", "South Boundary", "West Boundary", "East Boundary" })
             {
@@ -79,6 +82,8 @@ namespace FarmGame2D.Tests
                 "NPC movement must use the physics engine instead of writing directly to the transform.");
             Assert.That(guide.GetComponent("NpcSocialAgent"), Is.Not.Null,
                 "Villagers need a social agent so they can stop and talk to one another.");
+            Assert.That(GameObject.Find("Fisher Minseo"), Is.Not.Null);
+            Assert.That(GameObject.Find("Florist Taeo"), Is.Not.Null);
             Assert.That(guide.transform.localScale, Is.EqualTo(Vector3.one),
                 "NPC artwork must use the same world scale as the player instead of inheriting prototype block scale.");
             GameClockController.Instance.SetTime(GameSession.Instance.Data.day, 12, 0);
@@ -144,6 +149,12 @@ namespace FarmGame2D.Tests
             Assert.That(GameSession.Instance.Data.farmPlots, Has.Count.EqualTo(24),
                 "The farm should expose a 6 by 4 freely tillable field.");
             Assert.That(GameObject.Find("Wheat Plot 24"), Is.Not.Null);
+            Assert.That(Object.FindFirstObjectByType<FreeformFarmField>(), Is.Not.Null);
+            var plotCountBeforeExpansion = GameSession.Instance.Data.farmPlots.Count;
+            Assert.That(GameSession.Instance.AddFreeformPlot(new Vector2(14.5f, -3.5f)), Is.True);
+            yield return null;
+            Assert.That(GameSession.Instance.Data.farmPlots.Count, Is.EqualTo(plotCountBeforeExpansion + 1));
+            Assert.That(GameObject.Find($"Free Plot {plotCountBeforeExpansion + 1}"), Is.Not.Null);
             GameSession.Instance.Data.money = 9999;
             GameSession.Instance.PurchaseChicken();
             GameSession.Instance.PurchaseCow();
@@ -182,6 +193,19 @@ namespace FarmGame2D.Tests
                 }
             }
             Assert.That(GameObject.Find("General Store Entrance").GetComponent<ShopInteractable>(), Is.Not.Null);
+            Assert.That(GameObject.Find("Quest Board").GetComponent<QuestBoardInteractable>(), Is.Not.Null);
+            var questBoard = GameObject.Find("Quest Board").GetComponent<QuestBoardInteractable>();
+            questBoard.Interact(player);
+            Assert.That(GameSession.Instance.QuestBoardOpen, Is.True);
+            GameSession.Instance.CloseQuestBoard();
+
+            var fishingSpot = GameObject.Find("Pond Fishing Spot").GetComponent<FishingSpotInteractable>();
+            Assert.That(fishingSpot, Is.Not.Null);
+            var fishBefore = GameSession.Instance.Data.fishCaught;
+            GameSession.Instance.SelectTool(FarmTool.FishingRod);
+            fishingSpot.Interact(player);
+            yield return new WaitForSeconds(1.8f);
+            Assert.That(GameSession.Instance.Data.fishCaught, Is.EqualTo(fishBefore + 1));
 
             var distinctVillageArt = new[]
             {

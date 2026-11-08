@@ -42,6 +42,7 @@ namespace FarmGame2D.UI
             Rect seedsButton,
             Rect wateringCanButton,
             Rect pickaxeButton,
+            Rect fishingRodButton,
             float firstStatsY,
             Rect closeButton)
         {
@@ -52,6 +53,7 @@ namespace FarmGame2D.UI
             SeedsButton = seedsButton;
             WateringCanButton = wateringCanButton;
             PickaxeButton = pickaxeButton;
+            FishingRodButton = fishingRodButton;
             FirstStatsY = firstStatsY;
             CloseButton = closeButton;
         }
@@ -63,6 +65,7 @@ namespace FarmGame2D.UI
         public Rect SeedsButton { get; }
         public Rect WateringCanButton { get; }
         public Rect PickaxeButton { get; }
+        public Rect FishingRodButton { get; }
         public float ToolButtonsY => HoeButton.y;
         public float FirstStatsY { get; }
         public Rect CloseButton { get; }
@@ -147,10 +150,11 @@ namespace FarmGame2D.UI
                 panel,
                 new Rect(panel.x + 235f, panel.y + 60f, panel.width - 275f, 38f),
                 new Rect(panel.x + 55f, panel.y + 132f, panel.width - 110f, 32f),
-                new Rect(panel.x + 48f, panel.y + 178f, 168f, 44f),
-                new Rect(panel.x + 234f, panel.y + 178f, 168f, 44f),
-                new Rect(panel.x + 420f, panel.y + 178f, 168f, 44f),
-                new Rect(panel.x + 606f, panel.y + 178f, 168f, 44f),
+                new Rect(panel.x + 48f, panel.y + 178f, 126f, 44f),
+                new Rect(panel.x + 198f, panel.y + 178f, 126f, 44f),
+                new Rect(panel.x + 348f, panel.y + 178f, 126f, 44f),
+                new Rect(panel.x + 498f, panel.y + 178f, 126f, 44f),
+                new Rect(panel.x + 648f, panel.y + 178f, 126f, 44f),
                 panel.y + 382f,
                 new Rect(panel.x + 235f, panel.y + 449f, 170f, 36f));
         }

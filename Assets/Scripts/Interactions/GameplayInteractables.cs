@@ -93,6 +93,16 @@ namespace FarmGame2D.Interactions
         }
     }
 
+    public sealed class QuestBoardInteractable : InteractableBehaviour
+    {
+        public override string Prompt => "광장 의뢰 게시판 보기";
+
+        public override void Interact(PrototypePlayerController player)
+        {
+            GameSession.Instance?.OpenQuestBoard();
+        }
+    }
+
     public sealed class BedInteractable : InteractableBehaviour
     {
         public override string Prompt => "취침하고 다음 날로 이동";

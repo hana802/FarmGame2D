@@ -89,6 +89,13 @@ namespace FarmGame2D.Art
                 return cached;
             }
 
+            if (tool == FarmTool.FishingRod)
+            {
+                var fishingRod = CreateFishingRodSprite();
+                heldToolSprites[tool] = fishingRod;
+                return fishingRod;
+            }
+
             var (path, rect) = tool switch
             {
                 FarmTool.Hoe => ("Art/Items/held_hoe_v1", new Rect(528f, 269f, 513f, 467f)),
@@ -113,6 +120,35 @@ namespace FarmGame2D.Art
             sprite.name = $"held_{tool}";
             heldToolSprites[tool] = sprite;
             return sprite;
+        }
+
+        private static Sprite CreateFishingRodSprite()
+        {
+            var texture = new Texture2D(12, 20)
+            {
+                filterMode = FilterMode.Point,
+                wrapMode = TextureWrapMode.Clamp,
+                name = "held_fishing_rod_v1"
+            };
+            var clear = new Color(0f, 0f, 0f, 0f);
+            var pixels = new Color[12 * 20];
+            for (var index = 0; index < pixels.Length; index++)
+            {
+                pixels[index] = clear;
+            }
+            texture.SetPixels(pixels);
+            for (var y = 2; y < 18; y++)
+            {
+                var x = Mathf.Clamp(2 + (y / 4), 2, 8);
+                texture.SetPixel(x, y, new Color(0.42f, 0.22f, 0.08f));
+            }
+            for (var y = 4; y < 18; y++)
+            {
+                texture.SetPixel(9, y, new Color(0.82f, 0.86f, 0.8f));
+            }
+            texture.SetPixel(9, 3, new Color(0.92f, 0.24f, 0.18f));
+            texture.Apply();
+            return Sprite.Create(texture, new Rect(0, 0, 12, 20), new Vector2(0.35f, 0.2f), 16f, 0, SpriteMeshType.FullRect);
         }
 
         private static Sprite GetOrCreate(

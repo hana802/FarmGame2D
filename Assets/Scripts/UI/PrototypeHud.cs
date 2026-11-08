@@ -83,6 +83,11 @@ namespace FarmGame2D.UI
                 {
                     DrawInventory(session);
                 }
+
+                if (session.QuestBoardOpen)
+                {
+                    DrawQuestBoard(session);
+                }
             }
             finally
             {
@@ -104,8 +109,8 @@ namespace FarmGame2D.UI
         private void DrawQuest(GameSession session)
         {
             var current = StarterQuestProgress.GetCurrent(session.Data);
-            var quest = current.Id == StarterQuestId.Complete
-                ? "완료: 초보 퀘스트 3개"
+            var quest = session.Data.activeQuestId < 0
+                ? "광장 게시판에서 의뢰를 선택하세요"
                 : $"퀘스트: {current.Title} ({current.Current}/{current.Target})";
             var rect = new Rect(14f, 14f, 340f, 104f);
             farmSkin.DrawBanner(rect);
@@ -114,7 +119,9 @@ namespace FarmGame2D.UI
 
         private void DrawHotbar(GameSession session)
         {
-            var label = $"[I] 가방 열기   들고 있음: {GetToolLabel(session.SelectedTool)}";
+            var label = session.SelectedTool == FarmTool.Hoe
+                ? "[I] 가방   [Space] 앞의 땅 갈기   [E] 상호작용"
+                : $"[I] 가방 열기   들고 있음: {GetToolLabel(session.SelectedTool)}";
             var rect = new Rect((HudLayout.ReferenceWidth - 430f) / 2f, HudLayout.ReferenceHeight - 70f, 430f, 54f);
             farmSkin.DrawButtonBackground(rect, true);
             GUI.Label(rect, label, centeredStyle);
@@ -146,6 +153,11 @@ namespace FarmGame2D.UI
                 session.SelectTool(FarmTool.Pickaxe);
             }
 
+            if (farmSkin.DrawButton(layout.FishingRodButton, "낚싯대"))
+            {
+                session.SelectTool(FarmTool.FishingRod);
+            }
+
             var seedIndex = 0;
             foreach (var crop in CropCatalog.GetAll())
             {
@@ -159,11 +171,15 @@ namespace FarmGame2D.UI
                 seedIndex++;
             }
 
+            var juvenileCount = session.Data.chickenJuvenileDays.Count + session.Data.cowJuvenileDays.Count;
+            var fishCount = session.Data.inventory.Count(GameItem.RiverFish)
+                + session.Data.inventory.Count(GameItem.SeaBass)
+                + session.Data.inventory.Count(GameItem.GoldenCarp);
             GUI.Label(layout.GetStatsLabel(0, 0),
-                $"사료 {session.Data.inventory.Count(GameItem.Feed)} · 달걀 {session.Data.inventory.Count(GameItem.Egg)} · 우유 {session.Data.inventory.Count(GameItem.Milk)}\n닭 {session.Data.ownedChickens}마리 · 소 {session.Data.ownedCows}마리",
+                $"사료 {session.Data.inventory.Count(GameItem.Feed)} · 달걀 {session.Data.inventory.Count(GameItem.Egg)} · 우유 {session.Data.inventory.Count(GameItem.Milk)}\n닭 {session.Data.ownedChickens} · 소 {session.Data.ownedCows} · 새끼 {juvenileCount}",
                 smallStyle);
             GUI.Label(layout.GetStatsLabel(1, 0),
-                $"돌 {session.Data.inventory.Count(GameItem.Stone)} · 구리 {session.Data.inventory.Count(GameItem.CopperOre)} · 철 {session.Data.inventory.Count(GameItem.IronOre)} · 금 {session.Data.inventory.Count(GameItem.GoldOre)}\n잡초 {session.Data.inventory.Count(GameItem.Weed)} · 돈 {session.Data.money}G",
+                $"돌 {session.Data.inventory.Count(GameItem.Stone)} · 구리 {session.Data.inventory.Count(GameItem.CopperOre)} · 철 {session.Data.inventory.Count(GameItem.IronOre)} · 금 {session.Data.inventory.Count(GameItem.GoldOre)}\n물고기 {fishCount} · 잡초 {session.Data.inventory.Count(GameItem.Weed)} · 돈 {session.Data.money}G",
                 smallStyle);
 
             if (farmSkin.DrawTextButton(layout.CloseButton, "가방 닫기 (I)"))
@@ -226,8 +242,19 @@ namespace FarmGame2D.UI
             farmSkin.DrawWindow(layout.Panel);
             GUI.Label(layout.Title, "농장 휴대폰", titleStyle);
             var quests = StarterQuestProgress.GetAll(session.Data);
+            var completed = 0;
+            foreach (var quest in quests)
+            {
+                if (quest.Completed)
+                {
+                    completed++;
+                }
+            }
+            var active = StarterQuestProgress.GetCurrent(session.Data);
             GUI.Label(layout.QuestBody,
-                $"{FormatQuestLine(quests[0])}\n{FormatQuestLine(quests[1])}\n{FormatQuestLine(quests[2])}", bodyStyle);
+                session.Data.activeQuestId < 0
+                    ? $"완료한 의뢰 {completed}/{quests.Length}\n광장 게시판에서 다음 의뢰를 선택하세요."
+                    : $"진행 중: {active.Title}\n{active.Current}/{active.Target} · 완료 {completed}/{quests.Length}", bodyStyle);
 
             if (farmSkin.DrawButton(layout.SaveButton, "저장"))
             {
@@ -245,6 +272,37 @@ namespace FarmGame2D.UI
             }
 
             DrawCloudSync(session, layout.Panel);
+        }
+
+        private void DrawQuestBoard(GameSession session)
+        {
+            var panel = new Rect((HudLayout.ReferenceWidth - 620f) / 2f, 72f, 620f, 520f);
+            farmSkin.DrawWindow(panel);
+            GUI.Label(new Rect(panel.x + 120f, panel.y + 24f, 380f, 42f), "마을 광장 의뢰 게시판", titleStyle);
+            GUI.Label(new Rect(panel.x + 55f, panel.y + 72f, 510f, 48f),
+                session.Data.activeQuestId >= 0 ? "진행 중인 의뢰를 먼저 끝내 주세요." : "하고 싶은 의뢰를 하나 골라 보세요.", centeredStyle);
+
+            var quests = StarterQuestProgress.GetAll(session.Data);
+            for (var index = 0; index < quests.Length; index++)
+            {
+                var quest = quests[index];
+                var label = quest.Completed
+                    ? $"완료 · {quest.Title}"
+                    : $"{quest.Title}  ({quest.Current}/{quest.Target})";
+                var previousEnabled = GUI.enabled;
+                GUI.enabled = !quest.Completed && session.Data.activeQuestId < 0;
+                if (farmSkin.DrawButton(new Rect(panel.x + 70f, panel.y + 130f + (index * 60f), 480f, 48f), label,
+                        session.Data.activeQuestId == (int)quest.Id))
+                {
+                    session.AcceptQuest(quest.Id);
+                }
+                GUI.enabled = previousEnabled;
+            }
+
+            if (farmSkin.DrawTextButton(new Rect(panel.x + 210f, panel.y + 450f, 200f, 46f), "게시판 닫기"))
+            {
+                session.CloseQuestBoard();
+            }
         }
 
         private void DrawCloudSync(GameSession session, Rect phonePanel)
@@ -449,6 +507,7 @@ namespace FarmGame2D.UI
                 FarmTool.Seeds => "씨앗",
                 FarmTool.WateringCan => "물뿌리개",
                 FarmTool.Pickaxe => "곡괭이",
+                FarmTool.FishingRod => "낚싯대",
                 _ => tool.ToString()
             };
         }

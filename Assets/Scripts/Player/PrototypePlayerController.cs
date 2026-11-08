@@ -1,5 +1,6 @@
 using FarmGame2D.Art;
 using FarmGame2D.Core;
+using FarmGame2D.Farming;
 using FarmGame2D.Interactions;
 using FarmGame2D.World;
 using UnityEngine;
@@ -57,7 +58,8 @@ namespace FarmGame2D.Player
                 return;
             }
 
-            if (GameSession.Instance.InventoryOpen || GameSession.Instance.PhoneOpen || GameSession.Instance.ShopOpen)
+            if (GameSession.Instance.InventoryOpen || GameSession.Instance.PhoneOpen || GameSession.Instance.ShopOpen
+                || GameSession.Instance.QuestBoardOpen)
             {
                 moveInput = Vector2.zero;
                 UpdateCharacterVisual(false);
@@ -75,6 +77,11 @@ namespace FarmGame2D.Player
             if (Input.GetKeyDown(KeyCode.E))
             {
                 InteractWithNearest();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) && GameSession.Instance.SelectedTool == FarmTool.Hoe)
+            {
+                FindAnyObjectByType<FreeformFarmField>()?.TryTill(GetToolTarget());
             }
         }
 
@@ -181,7 +188,29 @@ namespace FarmGame2D.Player
 
         private void InteractWithNearest()
         {
-            FindNearestInteractable()?.Interact(this);
+            var interactable = FindNearestInteractable();
+            if (interactable != null)
+            {
+                interactable.Interact(this);
+                return;
+            }
+
+            if (GameSession.Instance.SelectedTool == FarmTool.Hoe)
+            {
+                FindAnyObjectByType<FreeformFarmField>()?.TryTill(GetToolTarget());
+            }
+        }
+
+        private Vector2 GetToolTarget()
+        {
+            var direction = facingRow switch
+            {
+                0 => Vector2.up,
+                1 => Vector2.right,
+                2 => Vector2.left,
+                _ => Vector2.down
+            };
+            return (Vector2)transform.position + (direction * 1.05f);
         }
 
         public void Teleport(Vector2 destination)

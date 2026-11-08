@@ -27,32 +27,51 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
-        public void StarterQuests_AdvanceInOrderAndPayRewardsOnce()
+        public void QuestBoard_AllowsChosenQuestAndPaysRewardOnce()
         {
             var data = GameSaveData.CreateNew(FarmFieldLayout.PlotCount, 1234);
             var startingMoney = data.money;
 
-            Assert.That(StarterQuestProgress.GetCurrent(data).Id, Is.EqualTo(StarterQuestId.Harvest));
-
+            Assert.That(StarterQuestProgress.TryAccept(data, StarterQuestId.Harvest), Is.True);
             data.wheatHarvested = 3;
             var harvest = StarterQuestProgress.TryCompleteCurrent(data);
             Assert.That(harvest.Reward, Is.EqualTo(100));
             Assert.That(data.money, Is.EqualTo(startingMoney + 100));
-            Assert.That(StarterQuestProgress.GetCurrent(data).Id, Is.EqualTo(StarterQuestId.Egg));
-
-            data.firstEggAchievement = true;
-            var egg = StarterQuestProgress.TryCompleteCurrent(data);
-            Assert.That(egg.Reward, Is.EqualTo(75));
-            Assert.That(StarterQuestProgress.GetCurrent(data).Id, Is.EqualTo(StarterQuestId.Weeds));
-
-            data.pulledWeedIds.AddRange(new[] { 0, 1, 2 });
-            var weeds = StarterQuestProgress.TryCompleteCurrent(data);
-            Assert.That(weeds.Reward, Is.EqualTo(100));
-            Assert.That(StarterQuestProgress.GetCurrent(data).Id, Is.EqualTo(StarterQuestId.Complete));
 
             var duplicate = StarterQuestProgress.TryCompleteCurrent(data);
             Assert.That(duplicate.Reward, Is.Zero);
-            Assert.That(data.money, Is.EqualTo(startingMoney + 275));
+            Assert.That(StarterQuestProgress.TryAccept(data, StarterQuestId.Harvest), Is.False);
+            Assert.That(StarterQuestProgress.TryAccept(data, StarterQuestId.Fishing), Is.True);
+            Assert.That(data.money, Is.EqualTo(startingMoney + 100));
+        }
+
+        [Test]
+        public void FreeformPlot_PositionSurvivesNormalization()
+        {
+            var data = GameSaveData.CreateNew(FarmFieldLayout.PlotCount, 99);
+            data.farmPlots.Add(new FarmPlotData { freeform = true, worldX = 14.5f, worldY = -3.5f, state = SoilState.Tilled });
+
+            GameSaveDataNormalizer.Normalize(data);
+
+            Assert.That(data.farmPlots, Has.Count.EqualTo(FarmFieldLayout.PlotCount + 1));
+            Assert.That(FarmFieldLayout.GetWorldPosition(data.farmPlots[^1]), Is.EqualTo(new Vector2(14.5f, -3.5f)));
+        }
+
+        [Test]
+        public void AnimalBreeding_IsDeterministicAndRequiresTwoAdults()
+        {
+            Assert.That(AnimalBreedingRules.ShouldBreed(1234, 4, FarmAnimalKind.Chicken, 1, 2), Is.False);
+            var first = AnimalBreedingRules.ShouldBreed(1234, 17, FarmAnimalKind.Chicken, 2, 2);
+            var repeated = AnimalBreedingRules.ShouldBreed(1234, 17, FarmAnimalKind.Chicken, 2, 2);
+            Assert.That(repeated, Is.EqualTo(first));
+        }
+
+        [Test]
+        public void Fish_AreSellableInventoryItems()
+        {
+            Assert.That(ItemCatalog.GetSellPrice(GameItem.RiverFish), Is.GreaterThan(0));
+            Assert.That(ItemCatalog.GetSellPrice(GameItem.SeaBass), Is.GreaterThan(ItemCatalog.GetSellPrice(GameItem.RiverFish)));
+            Assert.That(ItemCatalog.GetSellPrice(GameItem.GoldenCarp), Is.GreaterThan(ItemCatalog.GetSellPrice(GameItem.SeaBass)));
         }
 
         [Test]

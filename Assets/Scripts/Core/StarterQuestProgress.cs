@@ -7,6 +7,8 @@ namespace FarmGame2D.Core
         Harvest,
         Egg,
         Weeds,
+        Fishing,
+        Mining,
         Complete
     }
 
@@ -46,51 +48,43 @@ namespace FarmGame2D.Core
         private const int HarvestTarget = 3;
         private const int EggTarget = 1;
         private const int WeedTarget = 3;
+        private const int FishingTarget = 2;
+        private const int MiningTarget = 3;
 
         public static StarterQuestStatus GetCurrent(GameSaveData data)
         {
-            if (!data.harvestQuestCompleted)
-            {
-                return GetHarvest(data);
-            }
-
-            if (!data.eggQuestCompleted)
-            {
-                return GetEgg(data);
-            }
-
-            if (!data.weedQuestCompleted)
-            {
-                return GetWeeds(data);
-            }
-
-            return new StarterQuestStatus(StarterQuestId.Complete, "초보 퀘스트 완료", 1, 1, true);
+            return data.activeQuestId < 0
+                ? new StarterQuestStatus(StarterQuestId.Complete, "광장 게시판에서 의뢰 선택", 0, 1, false)
+                : GetStatus(data, (StarterQuestId)data.activeQuestId);
         }
 
         public static StarterQuestStatus[] GetAll(GameSaveData data)
         {
-            return new[] { GetHarvest(data), GetEgg(data), GetWeeds(data) };
+            return new[] { GetHarvest(data), GetEgg(data), GetWeeds(data), GetFishing(data), GetMining(data) };
+        }
+
+        public static bool TryAccept(GameSaveData data, StarterQuestId id)
+        {
+            if (data.activeQuestId >= 0 || IsCompleted(data, id) || id == StarterQuestId.Complete)
+            {
+                return false;
+            }
+
+            data.activeQuestId = (int)id;
+            return true;
         }
 
         public static StarterQuestCompletion TryCompleteCurrent(GameSaveData data)
         {
-            if (!data.harvestQuestCompleted && data.wheatHarvested >= HarvestTarget)
+            if (data.activeQuestId < 0)
             {
-                return Complete(data, StarterQuestId.Harvest, "작물 3개 수확", 100);
+                return default;
             }
 
-            if (data.harvestQuestCompleted && !data.eggQuestCompleted && data.firstEggAchievement)
-            {
-                return Complete(data, StarterQuestId.Egg, "달걀 1개 얻기", 75);
-            }
-
-            var pulledWeeds = data.pulledWeedIds?.Count ?? 0;
-            if (data.eggQuestCompleted && !data.weedQuestCompleted && pulledWeeds >= WeedTarget)
-            {
-                return Complete(data, StarterQuestId.Weeds, "잡초 3개 뽑기", 100);
-            }
-
-            return default;
+            var status = GetStatus(data, (StarterQuestId)data.activeQuestId);
+            return status.Current >= status.Target
+                ? Complete(data, status.Id, status.Title, GetReward(status.Id))
+                : default;
         }
 
         private static StarterQuestCompletion Complete(GameSaveData data, StarterQuestId id, string title, int reward)
@@ -106,12 +100,56 @@ namespace FarmGame2D.Core
                 case StarterQuestId.Weeds:
                     data.weedQuestCompleted = true;
                     break;
+                case StarterQuestId.Fishing:
+                    data.fishingQuestCompleted = true;
+                    break;
+                case StarterQuestId.Mining:
+                    data.miningQuestCompleted = true;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(id), id, null);
             }
 
             data.money += reward;
+            data.activeQuestId = -1;
             return new StarterQuestCompletion(title, reward);
+        }
+
+        private static StarterQuestStatus GetStatus(GameSaveData data, StarterQuestId id)
+        {
+            return id switch
+            {
+                StarterQuestId.Harvest => GetHarvest(data),
+                StarterQuestId.Egg => GetEgg(data),
+                StarterQuestId.Weeds => GetWeeds(data),
+                StarterQuestId.Fishing => GetFishing(data),
+                StarterQuestId.Mining => GetMining(data),
+                _ => new StarterQuestStatus(StarterQuestId.Complete, "의뢰 없음", 0, 1, false)
+            };
+        }
+
+        private static bool IsCompleted(GameSaveData data, StarterQuestId id)
+        {
+            return id switch
+            {
+                StarterQuestId.Harvest => data.harvestQuestCompleted,
+                StarterQuestId.Egg => data.eggQuestCompleted,
+                StarterQuestId.Weeds => data.weedQuestCompleted,
+                StarterQuestId.Fishing => data.fishingQuestCompleted,
+                StarterQuestId.Mining => data.miningQuestCompleted,
+                _ => true
+            };
+        }
+
+        private static int GetReward(StarterQuestId id)
+        {
+            return id switch
+            {
+                StarterQuestId.Egg => 75,
+                StarterQuestId.Fishing => 120,
+                StarterQuestId.Mining => 140,
+                _ => 100
+            };
         }
 
         private static StarterQuestStatus GetHarvest(GameSaveData data)
@@ -142,6 +180,18 @@ namespace FarmGame2D.Core
                 Math.Min(data.pulledWeedIds?.Count ?? 0, WeedTarget),
                 WeedTarget,
                 data.weedQuestCompleted);
+        }
+
+        private static StarterQuestStatus GetFishing(GameSaveData data)
+        {
+            return new StarterQuestStatus(StarterQuestId.Fishing, "물고기 2마리 낚기",
+                Math.Min(data.fishCaught, FishingTarget), FishingTarget, data.fishingQuestCompleted);
+        }
+
+        private static StarterQuestStatus GetMining(GameSaveData data)
+        {
+            return new StarterQuestStatus(StarterQuestId.Mining, "광석 3개 캐기",
+                Math.Min(data.oreMined, MiningTarget), MiningTarget, data.miningQuestCompleted);
         }
     }
 }
