@@ -473,11 +473,24 @@ namespace FarmGame2D.Tests
                 "The shop title must clear the illustrated decoration on the left side of the header.");
             Assert.That(layout.Title.yMin, Is.GreaterThanOrEqualTo(layout.Panel.yMin + 58f),
                 "The shop title must sit below the illustrated top frame.");
-            Assert.That(layout.Balance.yMin, Is.GreaterThanOrEqualTo(layout.Title.yMax + 6f),
-                "The balance line must not overlap the title.");
-            Assert.That(layout.GetProductButton(0).yMin, Is.GreaterThanOrEqualTo(layout.Balance.yMax + 10f),
-                "The first product must start below the balance line.");
+            Assert.That(layout.GetProductButton(0).yMin, Is.GreaterThanOrEqualTo(layout.Title.yMax + 24f),
+                "The first product must start below the header.");
             Assert.That(layout.CloseButton.yMax, Is.LessThanOrEqualTo(layout.Panel.yMax - 18f));
+        }
+
+        [Test]
+        public void ShopLayout_UsesCenteredHeaderAndSingleFooterAction()
+        {
+            var layout = HudLayout.CalculateShopLayout();
+
+            Assert.That(PrototypeHud.ShopTitle, Is.EqualTo("상점"));
+            Assert.That(layout.Title.center.x, Is.EqualTo(layout.Panel.center.x).Within(0.01f),
+                "The shop title must be centered on the whole panel.");
+            Assert.That(layout.CloseButton.center.x, Is.EqualTo(layout.Panel.center.x).Within(0.01f));
+            Assert.That(layout.CloseButton.width, Is.GreaterThanOrEqualTo(270f),
+                "One close button must cover both baked footer slots.");
+            Assert.That(layout.CloseButton.yMin, Is.InRange(layout.Panel.yMin + 440f, layout.Panel.yMin + 462f),
+                "The close button must sit over the two illustrated footer slots.");
         }
 
         [Test]

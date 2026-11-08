@@ -8,6 +8,8 @@ namespace FarmGame2D.UI
 {
     public sealed class PrototypeHud : MonoBehaviour
     {
+        public const string ShopTitle = "상점";
+
         public const string CharacterChoiceHeader = "선택해주세요.";
         public const string CharacterChoicePrompt = "당신의 성별을 골라주세요";
 
@@ -364,9 +366,7 @@ namespace FarmGame2D.UI
         {
             var layout = HudLayout.CalculateShopLayout();
             farmSkin.DrawWindow(layout.Panel);
-            var title = session.ActiveShop == ShopKind.Mining ? "광물 상점" : "씨앗·동물 상점";
-            GUI.Label(layout.Title, title, titleStyle);
-            GUI.Label(layout.Balance, $"{GetSeasonLabel(session.CurrentSeason)} · 보유 금액 {session.Data.money}G", centeredStyle);
+            GUI.Label(layout.Title, ShopTitle, titleStyle);
 
             if (session.ActiveShop == ShopKind.Mining)
             {
@@ -410,7 +410,7 @@ namespace FarmGame2D.UI
                 session.PurchaseCow();
             }
 
-            GUI.Label(layout.GetInfoLabel(4, 70f), $"현재 보유: 닭 {session.Data.ownedChickens}마리 · 소 {session.Data.ownedCows}마리\n먹이를 주면 다음 날 달걀과 우유를 얻습니다.", centeredStyle);
+            GUI.Label(layout.GetInfoLabel(4, 64f), $"현재 보유: 닭 {session.Data.ownedChickens}마리 · 소 {session.Data.ownedCows}마리\n먹이를 주면 다음 날 달걀과 우유를 얻습니다.", centeredStyle);
         }
 
         private void DrawMiningShop(GameSession session, ShopHudLayout layout)

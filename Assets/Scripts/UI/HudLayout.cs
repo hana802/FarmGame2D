@@ -118,18 +118,16 @@ namespace FarmGame2D.UI
 
     public readonly struct ShopHudLayout
     {
-        public ShopHudLayout(Rect panel, Rect title, Rect balance, float firstProductY, Rect closeButton)
+        public ShopHudLayout(Rect panel, Rect title, float firstProductY, Rect closeButton)
         {
             Panel = panel;
             Title = title;
-            Balance = balance;
             FirstProductY = firstProductY;
             CloseButton = closeButton;
         }
 
         public Rect Panel { get; }
         public Rect Title { get; }
-        public Rect Balance { get; }
         public float FirstProductY { get; }
         public Rect CloseButton { get; }
 
@@ -217,10 +215,9 @@ namespace FarmGame2D.UI
             var panel = new Rect((ReferenceWidth - 620f) * 0.5f, 92f, 620f, 550f);
             return new ShopHudLayout(
                 panel,
-                new Rect(panel.x + 140f, panel.y + 58f, 440f, 38f),
-                new Rect(panel.x + 45f, panel.y + 104f, 530f, 30f),
+                new Rect(panel.x + 120f, panel.y + 58f, 380f, 38f),
                 panel.y + 146f,
-                new Rect(panel.x + 240f, panel.y + 490f, 140f, 42f));
+                new Rect(panel.x + 170f, panel.y + 446f, 280f, 44f));
         }
 
         private static Rect ScaleDialogueSlot(Rect panel, Rect atlasSlot)
