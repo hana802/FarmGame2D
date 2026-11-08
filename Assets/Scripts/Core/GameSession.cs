@@ -305,6 +305,30 @@ namespace FarmGame2D.Core
             }
         }
 
+        public bool SellChicken()
+        {
+            const int salePrice = 100;
+            if (Data.ownedChickens <= 1)
+            {
+                Message = "마지막 닭은 판매할 수 없습니다.";
+                NotifyChanged();
+                return false;
+            }
+
+            var adultCount = Data.ownedChickens - Data.chickenJuvenileDays.Count;
+            if (adultCount <= 0 && Data.chickenJuvenileDays.Count > 0)
+            {
+                Data.chickenJuvenileDays.RemoveAt(Data.chickenJuvenileDays.Count - 1);
+            }
+
+            Data.ownedChickens--;
+            Data.money += salePrice;
+            Message = $"닭 1마리를 판매해 {salePrice}G를 받았습니다.";
+            NotifyChanged();
+            SaveSilently();
+            return true;
+        }
+
         public void PurchaseCow()
         {
             if (PurchaseWithoutItem(350, "소 1마리"))

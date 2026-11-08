@@ -124,6 +124,8 @@ namespace FarmGame2D.Art
                 3 => ("Art/NPCs/resident_doyun_portrait_v1", "npc_portrait_doyun"),
                 4 => ("Art/NPCs/romance_minseo_portrait_v1", "npc_portrait_minseo"),
                 5 => ("Art/NPCs/romance_taeo_portrait_v1", "npc_portrait_taeo"),
+                6 => ("Art/NPCs/baker_yuna_portrait_v1", "npc_portrait_yuna"),
+                7 => ("Art/NPCs/rancher_sora_portrait_v1", "npc_portrait_sora"),
                 _ => (null, null)
             };
             if (resourcePath == null)

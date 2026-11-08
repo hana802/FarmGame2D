@@ -8,6 +8,7 @@ namespace FarmGame2D.UI
         Seed,
         Feed,
         Chicken,
+        ChickenSale,
         Cow,
         Pickaxe,
         Ore
@@ -34,6 +35,7 @@ namespace FarmGame2D.UI
         public GameItem Item { get; }
         public int Quantity { get; }
         public int Price { get; }
+        public bool IsSale => Kind == ShopPurchaseKind.ChickenSale;
     }
 
     public sealed class ShopPurchaseConfirmation
@@ -43,6 +45,13 @@ namespace FarmGame2D.UI
         public static string GetPrompt(string displayName)
         {
             return $"\"{displayName}\"를 구매하시겠습니까?";
+        }
+
+        public static string GetPrompt(ShopPurchaseRequest request)
+        {
+            return request.IsSale
+                ? $"\"{request.DisplayName}\"를 판매하시겠습니까?"
+                : GetPrompt(request.DisplayName);
         }
 
         public void Request(ShopPurchaseRequest request)

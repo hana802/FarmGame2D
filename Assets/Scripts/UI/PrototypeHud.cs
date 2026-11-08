@@ -24,6 +24,8 @@ namespace FarmGame2D.UI
         private GUIStyle speakerStyle;
         private GUIStyle dialogueBodyStyle;
         private GUIStyle panelStyle;
+        private GUIStyle interactionPromptStyle;
+        private GUIStyle interactionKeyStyle;
         private Font koreanFont;
         private FarmGuiSkin farmSkin;
         private readonly HudMessageVisibility messageVisibility = new();
@@ -230,9 +232,11 @@ namespace FarmGame2D.UI
                 return;
             }
 
-            var rect = new Rect(440f, 392f, 400f, 58f);
-            farmSkin.DrawBanner(rect);
-            GUI.Label(new Rect(rect.x + 35f, rect.y + 9f, rect.width - 70f, 40f), prompt, centeredStyle);
+            var layout = HudLayout.CalculateInteractionPromptLayout();
+            var text = prompt.StartsWith("E: ") ? prompt.Substring(3) : prompt;
+            farmSkin.DrawMutedPrompt(layout.Panel, layout.Keycap);
+            GUI.Label(layout.Keycap, "E", interactionKeyStyle);
+            GUI.Label(layout.Text, text, interactionPromptStyle);
         }
 
         private void DrawCharacterChoice(GameSession session)
@@ -292,13 +296,15 @@ namespace FarmGame2D.UI
 
         private void DrawQuestBoard(GameSession session)
         {
-            var panel = new Rect((HudLayout.ReferenceWidth - 620f) / 2f, 72f, 620f, 520f);
-            farmSkin.DrawWindow(panel);
-            GUI.Label(new Rect(panel.x + 120f, panel.y + 24f, 380f, 42f), "마을 광장 의뢰 게시판", titleStyle);
-            GUI.Label(new Rect(panel.x + 55f, panel.y + 72f, 510f, 48f),
+            var layout = HudLayout.CalculateQuestBoardLayout();
+            farmSkin.DrawWindow(layout.Panel);
+            GUI.Label(layout.Title, "마을 광장 의뢰 게시판", titleStyle);
+            GUI.Label(layout.Status,
                 session.Data.activeQuestId >= 0 ? "진행 중인 의뢰를 먼저 끝내 주세요." : "하고 싶은 의뢰를 하나 골라 보세요.", centeredStyle);
+            var refreshDays = StarterQuestProgress.GetDaysUntilBoardRefresh(session.Data.day);
+            GUI.Label(layout.Refresh, $"의뢰는 3일마다 갱신됩니다 · 다음 갱신까지 {refreshDays}일", smallStyle);
 
-            var quests = StarterQuestProgress.GetAll(session.Data);
+            var quests = StarterQuestProgress.GetBoardOffers(session.Data);
             for (var index = 0; index < quests.Length; index++)
             {
                 var quest = quests[index];
@@ -307,7 +313,7 @@ namespace FarmGame2D.UI
                     : $"{quest.Title}  ({quest.Current}/{quest.Target})";
                 var previousEnabled = GUI.enabled;
                 GUI.enabled = !quest.Completed && session.Data.activeQuestId < 0;
-                if (farmSkin.DrawButton(new Rect(panel.x + 70f, panel.y + 130f + (index * 60f), 480f, 48f), label,
+                if (farmSkin.DrawButton(layout.GetQuestButton(index), label,
                         session.Data.activeQuestId == (int)quest.Id))
                 {
                     session.AcceptQuest(quest.Id);
@@ -315,7 +321,7 @@ namespace FarmGame2D.UI
                 GUI.enabled = previousEnabled;
             }
 
-            if (farmSkin.DrawTextButton(new Rect(panel.x + 210f, panel.y + 450f, 200f, 46f), "게시판 닫기"))
+            if (farmSkin.DrawButton(layout.CloseButton, "게시판 닫기"))
             {
                 session.CloseQuestBoard();
             }
@@ -407,7 +413,7 @@ namespace FarmGame2D.UI
         private void DrawFarmShop(GameSession session, ShopHudLayout layout)
         {
             var crops = CropCatalog.GetForSeason(session.CurrentSeason);
-            var productRows = crops.Count + 3;
+            var productRows = crops.Count + 4;
             BeginShopScroll(layout, productRows, 72f);
             var row = 0;
             for (var index = 0; index < crops.Count; index++)
@@ -435,7 +441,12 @@ namespace FarmGame2D.UI
                 shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Chicken, "닭 1마리"));
             }
 
-            if (farmSkin.DrawButton(layout.GetScrollableProductButton(row++), "소 1마리 — 350G", true))
+            if (farmSkin.DrawButton(layout.GetScrollableProductButton(row++), "닭 1마리 판매 — +100G", true))
+            {
+                shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.ChickenSale, "닭 1마리", price: 100));
+            }
+
+            if (farmSkin.DrawButton(layout.GetScrollableProductButton(row++), "소 1마리 — 350G"))
             {
                 shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Cow, "소 1마리"));
             }
@@ -491,13 +502,13 @@ namespace FarmGame2D.UI
 
             var request = shopPurchaseConfirmation.Pending.Value;
             farmSkin.DrawBanner(layout.ConfirmationPanel);
-            GUI.Label(layout.ConfirmationMessage, ShopPurchaseConfirmation.GetPrompt(request.DisplayName), centeredStyle);
+            GUI.Label(layout.ConfirmationMessage, ShopPurchaseConfirmation.GetPrompt(request), centeredStyle);
             if (farmSkin.DrawButton(layout.CancelButton, "취소", true))
             {
                 shopPurchaseConfirmation.Cancel();
             }
 
-            if (farmSkin.DrawButton(layout.PurchaseButton, "구매"))
+            if (farmSkin.DrawButton(layout.PurchaseButton, request.IsSale ? "판매" : "구매"))
             {
                 shopPurchaseConfirmation.Confirm(confirmed => ExecutePurchase(session, confirmed));
             }
@@ -515,6 +526,9 @@ namespace FarmGame2D.UI
                     break;
                 case ShopPurchaseKind.Chicken:
                     session.PurchaseChicken();
+                    break;
+                case ShopPurchaseKind.ChickenSale:
+                    session.SellChicken();
                     break;
                 case ShopPurchaseKind.Cow:
                     session.PurchaseCow();
@@ -577,6 +591,20 @@ namespace FarmGame2D.UI
                 wordWrap = true,
                 clipping = TextClipping.Clip,
                 alignment = TextAnchor.MiddleLeft
+            };
+            interactionPromptStyle ??= new GUIStyle(bodyStyle)
+            {
+                fontSize = 16,
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleLeft,
+                clipping = TextClipping.Clip,
+                normal = { textColor = new Color32(244, 244, 240, 255) }
+            };
+            interactionKeyStyle ??= new GUIStyle(interactionPromptStyle)
+            {
+                fontSize = 15,
+                alignment = TextAnchor.MiddleCenter,
+                normal = { textColor = new Color32(255, 222, 143, 255) }
             };
             GUI.skin.font = koreanFont;
         }

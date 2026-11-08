@@ -45,6 +45,14 @@ namespace FarmGame2D.UI
             DrawAtlas(rect, orange ? OrangeButtonAtlasRect : GreenButtonAtlasRect);
         }
 
+        public void DrawMutedPrompt(Rect rect, Rect keycap)
+        {
+            DrawSolid(new Rect(rect.x + 2f, rect.y + 3f, rect.width, rect.height), new Color(0f, 0f, 0f, 0.18f));
+            DrawSolid(rect, new Color(0.12f, 0.13f, 0.14f, 0.74f));
+            DrawSolid(new Rect(rect.x, rect.y, rect.width, 1f), new Color(1f, 1f, 1f, 0.16f));
+            DrawSolid(keycap, new Color(0.06f, 0.07f, 0.08f, 0.82f));
+        }
+
         public void DrawSprite(Rect destination, Sprite sprite)
         {
             if (sprite == null || sprite.texture == null)
@@ -80,6 +88,14 @@ namespace FarmGame2D.UI
                 active = { background = null, textColor = new Color32(63, 91, 47, 255) }
             };
             return buttonStyle;
+        }
+
+        private static void DrawSolid(Rect rect, Color color)
+        {
+            var previousColor = GUI.color;
+            GUI.color = color;
+            GUI.DrawTexture(rect, Texture2D.whiteTexture);
+            GUI.color = previousColor;
         }
 
         private void DrawAtlas(Rect destination, Rect pixelRectFromTopLeft)

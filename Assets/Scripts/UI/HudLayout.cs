@@ -110,6 +110,41 @@ namespace FarmGame2D.UI
         public Rect CloseButton { get; }
     }
 
+    public readonly struct QuestBoardHudLayout
+    {
+        public QuestBoardHudLayout(
+            Rect panel,
+            Rect title,
+            Rect status,
+            Rect refresh,
+            Rect firstQuestButton,
+            Rect closeButton)
+        {
+            Panel = panel;
+            Title = title;
+            Status = status;
+            Refresh = refresh;
+            FirstQuestButton = firstQuestButton;
+            CloseButton = closeButton;
+        }
+
+        public Rect Panel { get; }
+        public Rect Title { get; }
+        public Rect Status { get; }
+        public Rect Refresh { get; }
+        public Rect FirstQuestButton { get; }
+        public Rect CloseButton { get; }
+
+        public Rect GetQuestButton(int index)
+        {
+            return new Rect(
+                FirstQuestButton.x,
+                FirstQuestButton.y + (index * 62f),
+                FirstQuestButton.width,
+                FirstQuestButton.height);
+        }
+    }
+
     public readonly struct ToastHudLayout
     {
         public ToastHudLayout(Rect panel, Rect message)
@@ -120,6 +155,20 @@ namespace FarmGame2D.UI
 
         public Rect Panel { get; }
         public Rect Message { get; }
+    }
+
+    public readonly struct InteractionPromptHudLayout
+    {
+        public InteractionPromptHudLayout(Rect panel, Rect keycap, Rect text)
+        {
+            Panel = panel;
+            Keycap = keycap;
+            Text = text;
+        }
+
+        public Rect Panel { get; }
+        public Rect Keycap { get; }
+        public Rect Text { get; }
     }
 
     public readonly struct ShopHudLayout
@@ -226,12 +275,33 @@ namespace FarmGame2D.UI
                 new Rect(panel.x + 130f, panel.y + 270f, 140f, 48f));
         }
 
+        public static QuestBoardHudLayout CalculateQuestBoardLayout()
+        {
+            var panel = new Rect((ReferenceWidth - 820f) * 0.5f, 70f, 820f, 550f);
+            return new QuestBoardHudLayout(
+                panel,
+                new Rect(panel.x + 235f, panel.y + 58f, panel.width - 275f, 38f),
+                new Rect(panel.x + 55f, panel.y + 112f, panel.width - 110f, 32f),
+                new Rect(panel.x + 55f, panel.y + 150f, panel.width - 110f, 28f),
+                new Rect(panel.x + 100f, panel.y + 194f, panel.width - 200f, 48f),
+                new Rect(panel.x + 220f, panel.y + 447f, 380f, 40f));
+        }
+
         public static ToastHudLayout CalculateToastLayout()
         {
             var panel = new Rect((ReferenceWidth - 620f) * 0.5f, 132f, 620f, 72f);
             return new ToastHudLayout(
                 panel,
                 new Rect(panel.x + 140f, panel.y + 12f, panel.width - 172f, 48f));
+        }
+
+        public static InteractionPromptHudLayout CalculateInteractionPromptLayout()
+        {
+            var panel = new Rect((ReferenceWidth - 360f) * 0.5f, 586f, 360f, 44f);
+            return new InteractionPromptHudLayout(
+                panel,
+                new Rect(panel.x + 10f, panel.y + 8f, 28f, 28f),
+                new Rect(panel.x + 50f, panel.y + 5f, panel.width - 62f, 34f));
         }
 
         public static ShopHudLayout CalculateShopLayout()

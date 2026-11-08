@@ -45,11 +45,20 @@ namespace FarmGame2D.Core
 
     public static class StarterQuestProgress
     {
+        public const int BoardRefreshDays = 3;
         private const int HarvestTarget = 3;
         private const int EggTarget = 1;
         private const int WeedTarget = 3;
         private const int FishingTarget = 2;
         private const int MiningTarget = 3;
+        private static readonly StarterQuestId[] BoardQuestIds =
+        {
+            StarterQuestId.Harvest,
+            StarterQuestId.Egg,
+            StarterQuestId.Weeds,
+            StarterQuestId.Fishing,
+            StarterQuestId.Mining
+        };
 
         public static StarterQuestStatus GetCurrent(GameSaveData data)
         {
@@ -61,6 +70,40 @@ namespace FarmGame2D.Core
         public static StarterQuestStatus[] GetAll(GameSaveData data)
         {
             return new[] { GetHarvest(data), GetEgg(data), GetWeeds(data), GetFishing(data), GetMining(data) };
+        }
+
+        public static StarterQuestStatus[] GetBoardOffers(GameSaveData data)
+        {
+            const int offerCount = 3;
+            var cycle = Math.Max(0, (data.day - 1) / BoardRefreshDays);
+            var start = PositiveModulo(data.worldSeed + (cycle * 2), BoardQuestIds.Length);
+            var offers = new StarterQuestStatus[offerCount];
+            for (var index = 0; index < offerCount; index++)
+            {
+                offers[index] = GetStatus(data, BoardQuestIds[(start + index) % BoardQuestIds.Length]);
+            }
+
+            if (data.activeQuestId < 0)
+            {
+                return offers;
+            }
+
+            var activeId = (StarterQuestId)data.activeQuestId;
+            for (var index = 0; index < offers.Length; index++)
+            {
+                if (offers[index].Id == activeId)
+                {
+                    return offers;
+                }
+            }
+
+            offers[offers.Length - 1] = GetStatus(data, activeId);
+            return offers;
+        }
+
+        public static int GetDaysUntilBoardRefresh(int day)
+        {
+            return BoardRefreshDays - PositiveModulo(Math.Max(1, day) - 1, BoardRefreshDays);
         }
 
         public static bool TryAccept(GameSaveData data, StarterQuestId id)
@@ -150,6 +193,12 @@ namespace FarmGame2D.Core
                 StarterQuestId.Mining => 140,
                 _ => 100
             };
+        }
+
+        private static int PositiveModulo(int value, int divisor)
+        {
+            var remainder = value % divisor;
+            return remainder < 0 ? remainder + divisor : remainder;
         }
 
         private static StarterQuestStatus GetHarvest(GameSaveData data)

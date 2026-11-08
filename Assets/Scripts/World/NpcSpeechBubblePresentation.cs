@@ -11,6 +11,11 @@ namespace FarmGame2D.World
         private static Texture2D frameTexture;
         private static Texture2D tailTexture;
 
+        public static bool ShouldDraw(string bubbleText, bool modalOpen)
+        {
+            return !modalOpen && !string.IsNullOrEmpty(bubbleText);
+        }
+
         public static GUIStyle CreateStyle(GUIStyle baseStyle, Font font)
         {
             return new GUIStyle(baseStyle)

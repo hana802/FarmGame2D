@@ -274,7 +274,7 @@ namespace FarmGame2D.World
 
         private void OnGUI()
         {
-            if (string.IsNullOrEmpty(bubbleText) || Camera.main == null)
+            if (!NpcSpeechBubblePresentation.ShouldDraw(bubbleText, IsHudModalOpen()) || Camera.main == null)
             {
                 return;
             }
@@ -296,6 +296,16 @@ namespace FarmGame2D.World
                 Screen.width,
                 Screen.height);
             NpcSpeechBubblePresentation.Draw(rect, spokenLine, bubbleStyle);
+        }
+
+        private static bool IsHudModalOpen()
+        {
+            var session = GameSession.Instance;
+            return session != null
+                && (session.ShopOpen
+                    || session.InventoryOpen
+                    || session.PhoneOpen
+                    || session.QuestBoardOpen);
         }
 
         private static GUIStyle CreateBubbleStyle()

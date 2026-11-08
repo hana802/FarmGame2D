@@ -132,7 +132,7 @@ namespace FarmGame2D.World
             CreateNoticeEntrance("West Home Entrance", new Vector2(-11.5f, 7.75f), "서쪽 집에 들어가기", "문이 잠겨 있습니다. 집주인을 먼저 만나보세요.", townRoot);
             CreateNoticeEntrance("East Home Entrance", new Vector2(11.5f, 7.75f), "동쪽 집에 들어가기", "문이 잠겨 있습니다. 집주인을 먼저 만나보세요.", townRoot);
             CreateInteractable<QuestBoardInteractable>("Quest Board", new Vector2(0f, 3.15f), new Vector2(3.2f, 1.5f), Color.clear, townRoot);
-            var villageRoutes = CreateVillageRouteNetwork();
+            var villageRoutes = VillageRouteMap.CreateMainStreet();
 
             var guide = CreateNpc("Guide", new Vector2(3f, 3.5f), new Color(0.8f, 0.58f, 0.25f), townRoot);
             ApplyNpcArt(guide, 0);
@@ -196,6 +196,36 @@ namespace FarmGame2D.World
                 "농장이 넓어질수록 물 주는 동선도 미리 생각해 두는 게 좋아요."
             }, 5);
             ConfigureNpcMovement(florist, villageRoutes, 11, 0.7f, seed + 55, new Vector2(5.8f, 5.4f), "원예가 태오");
+
+            var baker = CreateNpc("Baker Yuna", new Vector2(-3.6f, -0.8f), new Color(0.6f, 0.55f, 0.34f), townRoot);
+            ApplyNpcArt(baker, 1);
+            baker.Configure("제빵사 유나", new[]
+            {
+                "아침마다 빵 굽는 냄새가 광장까지 퍼지면 하루가 제대로 시작된 기분이에요.",
+                "밀을 수확했다면 조금 남겨 두세요. 언젠가 농장 빵을 함께 구워 보고 싶거든요.",
+                "비 오는 날엔 따뜻한 빵이 더 잘 팔려요. 사람 마음이란 참 솔직하죠?",
+                "순자 어르신께 새로 구운 빵을 가져다드려야 하는데, 만나면 제 안부도 전해 주세요.",
+                "소라는 일하다가 끼니를 자주 잊어요. 광장에서 만나면 빵부터 챙겨 주려고요.",
+                "계절 과일을 넣은 빵도 좋아해요. 봄 딸기와 가을 호박은 특히 잘 어울려요.",
+                "오늘은 무슨 일을 하고 있어요? 너무 바빠도 잠깐 쉬어 가는 건 잊지 마세요.",
+                "마을 게시판에 식재료 부탁을 올릴 때가 있어요. 마음이 내킬 때만 도와줘도 괜찮아요."
+            }, 6);
+            ConfigureNpcMovement(baker, villageRoutes, 7, 0.66f, seed + 66, new Vector2(-5.8f, 6.1f), "제빵사 유나");
+
+            var rancher = CreateNpc("Rancher Sora", new Vector2(3.6f, -0.8f), new Color(0.68f, 0.34f, 0.28f), townRoot);
+            ApplyPlayerStyleNpcArt(rancher, CharacterChoice.Female);
+            rancher.Configure("목장 관리인 소라", new[]
+            {
+                "동물들은 생각보다 표정이 풍부해요. 매일 보다 보면 기분이 눈에 보일 정도라니까요.",
+                "같은 동물이 둘 이상이면 편안한 환경에서 새끼가 태어날 수도 있어요. 서두르진 마세요.",
+                "닭은 호기심이 많아서 잠깐 한눈팔면 엉뚱한 곳까지 따라와요. 그게 또 귀엽지만요.",
+                "소는 덩치가 커도 아주 섬세해요. 천천히 다가가면 먼저 곁을 내어 줄 거예요.",
+                "유나가 또 끼니를 챙기라며 빵을 쥐여 줬어요. 덕분에 오늘도 든든하네요.",
+                "광장 길목은 동물도 사람도 함께 쓰는 곳이에요. 길을 막지 않게 제가 잘 살펴볼게요.",
+                "농장 일은 어때요? 힘에 부치는 날엔 동물들 옆에서 잠깐 쉬어도 괜찮아요.",
+                "새끼가 태어난 날은 꼭 알려 주세요. 제일 먼저 달려가서 건강한지 봐 줄게요."
+            }, 7);
+            ConfigureNpcMovement(rancher, villageRoutes, 9, 0.74f, seed + 77, new Vector2(9.3f, 5.5f), "목장 관리인 소라");
 
             var water = CreateWorldArt("Pond", WorldArtKind.Pond, new Vector2(-11.5f, 1.3f), townRoot, 2, new Vector2(4.5f, 2.4f));
             waterRenderer = water.GetComponent<SpriteRenderer>();
@@ -509,13 +539,24 @@ namespace FarmGame2D.World
 
         private static void ApplyNpcArt(DialogueInteractable npc, int characterRowFromTop, int column = 0)
         {
-            var renderer = npc.GetComponent<SpriteRenderer>();
             var artSprite = GameArtCatalog.GetNpcSprite(characterRowFromTop, column);
+            ApplyCharacterArt(npc, artSprite);
+        }
+
+        private static void ApplyPlayerStyleNpcArt(DialogueInteractable npc, CharacterChoice choice)
+        {
+            var artSprite = GameArtCatalog.GetPlayerSprite(choice, 3, 0);
+            ApplyCharacterArt(npc, artSprite);
+        }
+
+        private static void ApplyCharacterArt(DialogueInteractable npc, Sprite artSprite)
+        {
             if (artSprite == null)
             {
                 return;
             }
 
+            var renderer = npc.GetComponent<SpriteRenderer>();
             renderer.sprite = artSprite;
             renderer.color = Color.white;
             npc.transform.localScale = Vector3.one;
@@ -526,45 +567,6 @@ namespace FarmGame2D.World
             {
                 interactionCollider.size = new Vector2(0.8f, 1f);
             }
-        }
-
-        private static VillageWaypointNetwork CreateVillageRouteNetwork()
-        {
-            var points = new[]
-            {
-                new Vector2(-3.6f, 3.5f),
-                new Vector2(-6f, 3.5f),
-                new Vector2(-10f, 5.7f),
-                new Vector2(3.6f, 3.5f),
-                new Vector2(6f, 3.5f),
-                new Vector2(10f, 5.7f),
-                new Vector2(0f, 6f),
-                new Vector2(-3.6f, -0.8f),
-                new Vector2(0f, -0.8f),
-                new Vector2(3.6f, -0.8f),
-                new Vector2(-6f, 0f),
-                new Vector2(6f, 0f),
-                new Vector2(-11.5f, 7.2f),
-                new Vector2(11.5f, 7.2f)
-            };
-            var links = new[]
-            {
-                new[] { 1, 6, 7 },
-                new[] { 0, 2, 10 },
-                new[] { 1, 12 },
-                new[] { 4, 6, 9 },
-                new[] { 3, 5, 11 },
-                new[] { 4, 13 },
-                new[] { 0, 3 },
-                new[] { 0, 8, 10 },
-                new[] { 7, 9 },
-                new[] { 3, 8, 11 },
-                new[] { 1, 7 },
-                new[] { 4, 9 },
-                new[] { 2 },
-                new[] { 5 }
-            };
-            return new VillageWaypointNetwork(points, links);
         }
 
         private static void ConfigureNpcMovement(

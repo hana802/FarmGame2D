@@ -118,16 +118,32 @@ namespace FarmGame2D.Tests
                 "Villagers need a social agent so they can stop and talk to one another.");
             var fisher = GameObject.Find("Fisher Minseo");
             var florist = GameObject.Find("Florist Taeo");
+            var baker = GameObject.Find("Baker Yuna");
+            var rancher = GameObject.Find("Rancher Sora");
             Assert.That(fisher, Is.Not.Null);
             Assert.That(florist, Is.Not.Null);
+            Assert.That(baker, Is.Not.Null);
+            Assert.That(rancher, Is.Not.Null);
+            Assert.That(baker.GetComponent<WanderingMover>(), Is.Not.Null);
+            Assert.That(rancher.GetComponent<WanderingMover>(), Is.Not.Null);
+            Assert.That(baker.GetComponent<NpcSocialAgent>(), Is.Not.Null);
+            Assert.That(rancher.GetComponent<NpcSocialAgent>(), Is.Not.Null);
             var minseoPortrait = GameArtCatalog.GetNpcPortrait(4);
             var taeoPortrait = GameArtCatalog.GetNpcPortrait(5);
+            var yunaPortrait = GameArtCatalog.GetNpcPortrait(6);
+            var soraPortrait = GameArtCatalog.GetNpcPortrait(7);
             Assert.That(minseoPortrait, Is.Not.Null);
             Assert.That(taeoPortrait, Is.Not.Null);
+            Assert.That(yunaPortrait, Is.Not.Null);
+            Assert.That(soraPortrait, Is.Not.Null);
             Assert.That(minseoPortrait.name, Is.EqualTo("npc_portrait_minseo"));
             Assert.That(taeoPortrait.name, Is.EqualTo("npc_portrait_taeo"));
+            Assert.That(yunaPortrait.name, Is.EqualTo("npc_portrait_yuna"));
+            Assert.That(soraPortrait.name, Is.EqualTo("npc_portrait_sora"));
             Assert.That(minseoPortrait.texture, Is.Not.SameAs(taeoPortrait.texture),
                 "Romance candidates need distinct, dedicated dialogue portraits.");
+            Assert.That(yunaPortrait.texture, Is.Not.SameAs(soraPortrait.texture),
+                "New female villagers need distinct, dedicated dialogue portraits.");
             Assert.That(guide.transform.localScale, Is.EqualTo(Vector3.one),
                 "NPC artwork must use the same world scale as the player instead of inheriting prototype block scale.");
             GameClockController.Instance.SetTime(GameSession.Instance.Data.day, 12, 0);
@@ -210,7 +226,15 @@ namespace FarmGame2D.Tests
             GameSession.Instance.Data.money = 9999;
             GameSession.Instance.PurchaseChicken();
             GameSession.Instance.PurchaseCow();
+            var chickensBeforeSale = GameSession.Instance.Data.ownedChickens;
+            var moneyBeforeChickenSale = GameSession.Instance.Data.money;
+            Assert.That(GameSession.Instance.SellChicken(), Is.True);
             yield return null;
+
+            Assert.That(GameSession.Instance.Data.ownedChickens, Is.EqualTo(chickensBeforeSale - 1));
+            Assert.That(GameSession.Instance.Data.money, Is.EqualTo(moneyBeforeChickenSale + 100));
+            Assert.That(GameSession.Instance.SellChicken(), Is.False, "The last chicken must remain on the farm.");
+            Assert.That(GameSession.Instance.Data.ownedChickens, Is.EqualTo(1));
 
             var chickenHerd = GameObject.Find("Chicken Herd").GetComponent<FarmAnimalHerd>();
             var cowHerd = GameObject.Find("Cow Herd").GetComponent<FarmAnimalHerd>();

@@ -46,6 +46,31 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
+        public void QuestBoardOffers_RotateEveryThreeDaysAndKeepActiveQuest()
+        {
+            var data = GameSaveData.CreateNew(FarmFieldLayout.PlotCount, 1234);
+            data.day = 1;
+            var firstCycle = StarterQuestProgress.GetBoardOffers(data);
+            data.day = 3;
+            var thirdDay = StarterQuestProgress.GetBoardOffers(data);
+
+            Assert.That(firstCycle, Has.Length.EqualTo(3));
+            Assert.That(thirdDay, Has.Length.EqualTo(3));
+            Assert.That(thirdDay[0].Id, Is.EqualTo(firstCycle[0].Id));
+            Assert.That(StarterQuestProgress.GetDaysUntilBoardRefresh(data.day), Is.EqualTo(1));
+
+            data.activeQuestId = (int)firstCycle[0].Id;
+            data.day = 4;
+            var refreshed = StarterQuestProgress.GetBoardOffers(data);
+
+            Assert.That(refreshed, Has.Length.EqualTo(3));
+            Assert.That(refreshed[0].Id, Is.Not.EqualTo(firstCycle[0].Id));
+            Assert.That(refreshed, Has.Some.Matches<StarterQuestStatus>(quest => quest.Id == firstCycle[0].Id),
+                "An active quest must remain visible after the three-day board refresh.");
+            Assert.That(StarterQuestProgress.GetDaysUntilBoardRefresh(data.day), Is.EqualTo(3));
+        }
+
+        [Test]
         public void FreeformPlot_PositionSurvivesNormalization()
         {
             var data = GameSaveData.CreateNew(FarmFieldLayout.PlotCount, 99);
@@ -437,6 +462,19 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
+        public void InteractionPrompt_IsCompactAndLivesAboveBottomHotbar()
+        {
+            var layout = HudLayout.CalculateInteractionPromptLayout();
+
+            Assert.That(layout.Panel.center.x, Is.EqualTo(HudLayout.ReferenceWidth * 0.5f).Within(0.01f));
+            Assert.That(layout.Panel.yMin, Is.GreaterThanOrEqualTo(HudLayout.ReferenceHeight - 140f));
+            Assert.That(layout.Panel.yMax, Is.LessThan(HudLayout.ReferenceHeight - 70f));
+            Assert.That(layout.Panel.height, Is.LessThanOrEqualTo(48f));
+            Assert.That(layout.Keycap.xMin, Is.GreaterThan(layout.Panel.xMin));
+            Assert.That(layout.Text.xMax, Is.LessThan(layout.Panel.xMax));
+        }
+
+        [Test]
         public void DialogueLayout_SeparatesPortraitNameAndBody()
         {
             var layout = HudLayout.CalculateDialogueLayout();
@@ -519,6 +557,8 @@ namespace FarmGame2D.Tests
         [TestCase(3, "npc_portrait_doyun")]
         [TestCase(4, "npc_portrait_minseo")]
         [TestCase(5, "npc_portrait_taeo")]
+        [TestCase(6, "npc_portrait_yuna")]
+        [TestCase(7, "npc_portrait_sora")]
         public void VillageNpcPortraits_UseDedicatedHighResolutionArt(int portraitId, string expectedName)
         {
             var portrait = GameArtCatalog.GetNpcPortrait(portraitId);
@@ -541,6 +581,20 @@ namespace FarmGame2D.Tests
             Assert.That(layout.QuestBody.yMax, Is.LessThanOrEqualTo(layout.SaveButton.yMin),
                 "Quest lines must clear the phone action buttons.");
             Assert.That(layout.CloseButton.yMax, Is.LessThanOrEqualTo(layout.Panel.yMax - 18f));
+        }
+
+        [Test]
+        public void QuestBoardLayout_KeepsTextAndButtonsInsideArtworkSlots()
+        {
+            var layout = HudLayout.CalculateQuestBoardLayout();
+
+            Assert.That(layout.Title.xMin, Is.GreaterThanOrEqualTo(layout.Panel.xMin + 220f));
+            Assert.That(layout.Title.yMin, Is.GreaterThanOrEqualTo(layout.Panel.yMin + 50f));
+            Assert.That(layout.Title.yMax, Is.LessThanOrEqualTo(layout.Status.yMin));
+            Assert.That(layout.Status.yMax, Is.LessThanOrEqualTo(layout.Refresh.yMin));
+            Assert.That(layout.Refresh.yMax, Is.LessThanOrEqualTo(layout.GetQuestButton(0).yMin));
+            Assert.That(layout.GetQuestButton(2).yMax, Is.LessThan(layout.CloseButton.yMin));
+            Assert.That(layout.CloseButton.yMax, Is.LessThanOrEqualTo(layout.Panel.yMax - 50f));
         }
 
         [Test]
@@ -617,6 +671,15 @@ namespace FarmGame2D.Tests
             Assert.That(confirmation.Confirm(_ => purchaseCount++), Is.True);
             Assert.That(purchaseCount, Is.EqualTo(1));
             Assert.That(confirmation.Pending.HasValue, Is.False);
+        }
+
+        [Test]
+        public void ShopPurchaseConfirmation_UsesSaleCopyForChickenSale()
+        {
+            var request = new ShopPurchaseRequest(ShopPurchaseKind.ChickenSale, "닭 1마리");
+
+            Assert.That(ShopPurchaseConfirmation.GetPrompt(request),
+                Is.EqualTo("\"닭 1마리\"를 판매하시겠습니까?"));
         }
 
         [Test]
