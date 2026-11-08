@@ -258,6 +258,18 @@ namespace FarmGame2D.Tests
             Assert.That(miningNode.GetComponent<SpriteRenderer>().sprite.name, Is.EqualTo("world_MiningRock"));
             Assert.That(miningNode.GetComponent<SpriteRenderer>().sprite.texture.width, Is.GreaterThan(1),
                 "Mining nodes must use illustrated rock art instead of prototype blocks.");
+            var depletionPresentation = miningNode.GetComponent<MiningNodeDepletionPresentation>();
+            Assert.That(depletionPresentation, Is.Not.Null);
+            Assert.That(depletionPresentation.CracksVisible, Is.False);
+            Assert.That(depletionPresentation.RockAlpha, Is.EqualTo(1f).Within(0.01f));
+            GameSession.Instance.Data.hasPickaxe = true;
+            GameSession.Instance.SelectTool(FarmTool.Pickaxe);
+            GameSession.Instance.MineNode(0);
+            yield return null;
+            Assert.That(depletionPresentation.CracksVisible, Is.True,
+                "A mined node should show a visible cracked-rock overlay until it regrows.");
+            Assert.That(depletionPresentation.RockAlpha, Is.LessThan(0.7f),
+                "A mined node should become visibly translucent until it regrows.");
             var miningRenderers = Object.FindObjectsByType<MiningNodeInteractable>(FindObjectsSortMode.None);
             for (var treeIndex = 1; treeIndex <= 18; treeIndex++)
             {

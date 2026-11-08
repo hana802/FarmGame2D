@@ -149,6 +149,7 @@ namespace FarmGame2D.Interactions
     {
         private int nodeId;
         private UnityEngine.SpriteRenderer nodeRenderer;
+        private FarmGame2D.World.MiningNodeDepletionPresentation depletionPresentation;
 
         public override string Prompt
         {
@@ -171,6 +172,9 @@ namespace FarmGame2D.Interactions
         {
             nodeId = id;
             nodeRenderer = GetComponent<UnityEngine.SpriteRenderer>();
+            depletionPresentation = GetComponent<FarmGame2D.World.MiningNodeDepletionPresentation>()
+                ?? gameObject.AddComponent<FarmGame2D.World.MiningNodeDepletionPresentation>();
+            depletionPresentation.Initialize(nodeRenderer);
             if (GameSession.Instance != null)
             {
                 GameSession.Instance.StateChanged += Refresh;
@@ -200,9 +204,8 @@ namespace FarmGame2D.Interactions
                 return;
             }
 
-            nodeRenderer.color = session.Data.miningNodes[nodeId].IsAvailable
-                ? GetOreColor(session.Data.miningNodes[nodeId].ore)
-                : new UnityEngine.Color(0.32f, 0.3f, 0.28f);
+            var node = session.Data.miningNodes[nodeId];
+            depletionPresentation.SetState(!node.IsAvailable, GetOreColor(node.ore));
         }
 
         private static UnityEngine.Color GetOreColor(GameItem ore)
