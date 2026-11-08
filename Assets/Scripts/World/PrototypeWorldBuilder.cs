@@ -131,7 +131,7 @@ namespace FarmGame2D.World
             CreateArtInteractable<SellBoxInteractable>("Selling Box", WorldArtKind.SellingBox, new Vector2(9.35f, 6.05f), new Vector2(1.2f, 0.85f), townRoot);
             CreateNoticeEntrance("West Home Entrance", new Vector2(-11.5f, 7.75f), "서쪽 집에 들어가기", "문이 잠겨 있습니다. 집주인을 먼저 만나보세요.", townRoot);
             CreateNoticeEntrance("East Home Entrance", new Vector2(11.5f, 7.75f), "동쪽 집에 들어가기", "문이 잠겨 있습니다. 집주인을 먼저 만나보세요.", townRoot);
-            CreateInteractable<QuestBoardInteractable>("Quest Board", new Vector2(0f, 4.2f), new Vector2(1.4f, 1f), Color.clear, townRoot);
+            CreateInteractable<QuestBoardInteractable>("Quest Board", new Vector2(0f, 3.15f), new Vector2(3.2f, 1.5f), Color.clear, townRoot);
             var villageRoutes = CreateVillageRouteNetwork();
 
             var guide = CreateNpc("Guide", new Vector2(3f, 3.5f), new Color(0.8f, 0.58f, 0.25f), townRoot);
@@ -429,16 +429,9 @@ namespace FarmGame2D.World
 
         private static void CreateVillageSquareBlockers(Transform square)
         {
-            // The square artwork contains solid furniture. Keep the open stone paths walkable,
-            // while preventing characters from clipping through the noticeboard and benches.
+            // Decorative benches and planters remain walkable so they cannot seal the narrow
+            // approach to the board. Only the noticeboard itself is a solid obstacle.
             CreateSolidCollider("Village Square Noticeboard Blocker", square, new Vector2(0f, 3.15f), new Vector2(2.15f, 0.72f));
-            CreateSolidCollider("Village Square Left Bench Blocker", square, new Vector2(-1.65f, 1.55f), new Vector2(1.2f, 0.48f));
-            CreateSolidCollider("Village Square Right Bench Blocker", square, new Vector2(1.65f, 1.55f), new Vector2(1.2f, 0.48f));
-            CreateSolidCollider("Village Square Flower Bed Blocker", square, new Vector2(0f, 1.45f), new Vector2(0.9f, 0.85f));
-            CreateSolidCollider("Village Square Upper Left Planter Blocker", square, new Vector2(-1.35f, 2.45f), new Vector2(0.82f, 0.56f));
-            CreateSolidCollider("Village Square Upper Right Planter Blocker", square, new Vector2(1.35f, 2.45f), new Vector2(0.82f, 0.56f));
-            CreateSolidCollider("Village Square Lower Left Planter Blocker", square, new Vector2(-1.4f, 0.35f), new Vector2(0.9f, 0.58f));
-            CreateSolidCollider("Village Square Lower Right Planter Blocker", square, new Vector2(1.4f, 0.35f), new Vector2(0.9f, 0.58f));
         }
 
         private static void CreateVillageSquareNoticeboardArt(Transform square)

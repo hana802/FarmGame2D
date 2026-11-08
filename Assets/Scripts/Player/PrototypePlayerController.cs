@@ -20,10 +20,9 @@ namespace FarmGame2D.Player
         private int displayedRow = -1;
         private int displayedFrame = -1;
         private int facingRow = 3;
-        private float nearbyPromptVisibleUntil;
 
         public string NearbyPrompt { get; private set; }
-        public string VisibleNearbyPrompt => Time.unscaledTime < nearbyPromptVisibleUntil ? NearbyPrompt : string.Empty;
+        public string VisibleNearbyPrompt => NearbyPrompt;
         public HeldItemPresenter HeldItemPresenter => heldItemPresenter;
 
         private void Awake()
@@ -65,7 +64,6 @@ namespace FarmGame2D.Player
                 UpdateCharacterVisual(false);
                 UpdateHeldItem();
                 NearbyPrompt = string.Empty;
-                nearbyPromptVisibleUntil = 0f;
                 return;
             }
 
@@ -175,7 +173,6 @@ namespace FarmGame2D.Player
             }
 
             NearbyPrompt = nextPrompt;
-            nearbyPromptVisibleUntil = string.IsNullOrEmpty(nextPrompt) ? 0f : Time.unscaledTime + 1f;
         }
 
         private void UpdateHeldItem()
@@ -219,7 +216,6 @@ namespace FarmGame2D.Player
             body.position = destination;
             transform.position = destination;
             NearbyPrompt = string.Empty;
-            nearbyPromptVisibleUntil = 0f;
         }
 
         private InteractableBehaviour FindNearestInteractable()

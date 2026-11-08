@@ -266,6 +266,12 @@ namespace FarmGame2D.Tests
             var questBoard = GameObject.Find("Quest Board").GetComponent<QuestBoardInteractable>();
             Assert.That(questBoard.GetComponent<Collider2D>().isTrigger, Is.True,
                 "The interaction area in front of the noticeboard must not block movement.");
+            Assert.That(questBoard.GetComponent<Collider2D>().bounds.min.y, Is.LessThanOrEqualTo(2.6f),
+                "The quest-board interaction area must extend down to the player's approach path.");
+            player.Teleport(new Vector2(0f, 2.65f));
+            yield return new WaitForSeconds(1.25f);
+            Assert.That(player.VisibleNearbyPrompt, Does.Contain("의뢰 게시판"),
+                "The E interaction hint must remain visible while the player stays near the board.");
             questBoard.Interact(player);
             Assert.That(GameSession.Instance.QuestBoardOpen, Is.True);
             Assert.That(StarterQuestProgress.GetAll(GameSession.Instance.Data), Has.Length.EqualTo(5));
@@ -305,13 +311,20 @@ namespace FarmGame2D.Tests
             Assert.That(squareNoticeboardBlocker, Is.Not.Null,
                 "The village noticeboard needs a physical blocker so NPCs cannot walk through it.");
             Assert.That(squareNoticeboardBlocker.GetComponent<BoxCollider2D>().isTrigger, Is.False);
-            Assert.That(GameObject.Find("Village Square Left Bench Blocker"), Is.Not.Null);
-            Assert.That(GameObject.Find("Village Square Right Bench Blocker"), Is.Not.Null);
-            Assert.That(GameObject.Find("Village Square Flower Bed Blocker"), Is.Not.Null);
-            var lowerRightPlanter = GameObject.Find("Village Square Lower Right Planter Blocker")
-                .GetComponent<BoxCollider2D>();
-            Assert.That(lowerRightPlanter.bounds.max.x, Is.LessThanOrEqualTo(1.9f),
-                "The lower-right planter collider must not protrude into the side approach and trap the player on its corner.");
+            foreach (var decorationBlocker in new[]
+                     {
+                         "Village Square Left Bench Blocker",
+                         "Village Square Right Bench Blocker",
+                         "Village Square Flower Bed Blocker",
+                         "Village Square Upper Left Planter Blocker",
+                         "Village Square Upper Right Planter Blocker",
+                         "Village Square Lower Left Planter Blocker",
+                         "Village Square Lower Right Planter Blocker"
+                     })
+            {
+                Assert.That(GameObject.Find(decorationBlocker), Is.Null,
+                    $"{decorationBlocker} must not block the route to the quest board.");
+            }
 
             var farmHouseTexture = farmHouse.GetComponent<SpriteRenderer>().sprite.texture;
             Assert.That(GameObject.Find("West Home").GetComponent<SpriteRenderer>().sprite.texture, Is.Not.SameAs(farmHouseTexture));
