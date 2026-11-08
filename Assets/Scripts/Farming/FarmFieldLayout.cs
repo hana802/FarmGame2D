@@ -7,7 +7,7 @@ namespace FarmGame2D.Farming
     {
         public const int Columns = 6;
         public const int Rows = 4;
-        public const int PlotCount = Columns * Rows;
+        public const int PlotCount = 0;
 
         public static Vector2 GetWorldPosition(int gridX, int gridY)
         {
@@ -35,26 +35,9 @@ namespace FarmGame2D.Farming
             return false;
         }
 
-        public static void EnsurePlots(List<FarmPlotData> plots)
+        public static void RemoveLegacyPlots(List<FarmPlotData> plots)
         {
-            for (var index = 0; index < Mathf.Min(plots.Count, PlotCount); index++)
-            {
-                if (!plots[index].freeform)
-                {
-                    plots[index].gridX = index % Columns;
-                    plots[index].gridY = index / Columns;
-                }
-            }
-
-            while (plots.Count < PlotCount)
-            {
-                var index = plots.Count;
-                plots.Add(new FarmPlotData
-                {
-                    gridX = index % Columns,
-                    gridY = index / Columns
-                });
-            }
+            plots.RemoveAll(plot => plot == null || !plot.freeform);
         }
     }
 }

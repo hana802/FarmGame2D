@@ -25,6 +25,7 @@ namespace FarmGame2D.World
         private int lastSummerRemarkDay = -1;
         private float remarkVisibleUntil;
         private string remarkText = string.Empty;
+        private bool? wasOutdoors;
 
         public Season CurrentSeason => currentSeason;
         public SpriteRenderer LightingRenderer => lightingRenderer;
@@ -161,9 +162,19 @@ namespace FarmGame2D.World
                 ConfigureWeather(currentSeason);
             }
 
-            var outdoors = player == null || player.position.x < 30f;
+            var outdoors = player == null || !WorldAreaProfile.IsInterior(player.position);
+            if (!outdoors && wasOutdoors != false)
+            {
+                weatherParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            }
+            else if (outdoors && wasOutdoors == false && currentWeather.EmissionRate > 0f)
+            {
+                weatherParticles.Play();
+            }
+
             var emission = weatherParticles.emission;
             emission.rateOverTime = outdoors ? currentWeather.EmissionRate : 0f;
+            wasOutdoors = outdoors;
         }
 
         private void ConfigureWeather(Season season)

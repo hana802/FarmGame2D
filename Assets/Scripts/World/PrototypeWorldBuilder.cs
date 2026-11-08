@@ -83,23 +83,9 @@ namespace FarmGame2D.World
                 202,
                 farmRoot);
 
-            for (var index = 0; index < session.Data.farmPlots.Count; index++)
-            {
-                var plotData = session.Data.farmPlots[index];
-                var plot = PrototypeSpriteFactory.CreateBlock(
-                    $"Wheat Plot {index + 1}",
-                    FarmFieldLayout.GetWorldPosition(plotData),
-                    new Vector2(1.1f, 1.1f),
-                    Color.white,
-                    farmRoot,
-                    true);
-                plot.GetComponent<BoxCollider2D>().isTrigger = true;
-                plot.AddComponent<FarmPlotView>().Configure(index);
-            }
-
             var freeformField = new GameObject("Freeform Farm Field").AddComponent<FreeformFarmField>();
             freeformField.transform.SetParent(farmRoot);
-            freeformField.Configure(session, groundTilemap, roadTilemap, farmRoot, session.Data.farmPlots.Count);
+            freeformField.Configure(session, groundTilemap, roadTilemap, farmRoot);
 
             BuildFarmHouseInterior();
         }
@@ -152,7 +138,7 @@ namespace FarmGame2D.World
             guide.Configure("안내자 하람", new[]
             {
                 "I로 가방을 열어 도구를 고르세요. 호미는 Space로 앞의 땅을 갈고, E로 작물과 사물을 다룹니다. P는 휴대폰입니다.",
-                "호미로 땅을 간 뒤 씨앗을 들고 심어 보세요. 마지막에는 물뿌리개로 물을 주면 됩니다.",
+                "호미로 땅을 간 뒤 씨앗을 심고 물을 주세요. 빈 밭은 삽을 들고 E를 누르면 다시 잔디로 되돌릴 수 있어요.",
                 "씨앗은 계절에 맞아야 잘 자라요. 상점에서 지금 계절의 씨앗을 확인해 보세요.",
                 "작물은 하루아침에 자라지 않아요. 물을 준 뒤 집에서 자고 다음 날 다시 살펴보세요.",
                 "판매 상자는 씨앗·동물 상점 오른쪽에 있어요. 수확물을 들고 멀리 돌아갈 필요가 없답니다.",
@@ -194,7 +180,7 @@ namespace FarmGame2D.World
                 "낚시는 서두르지 않는 게 중요해요. 찌가 움직일 때까지 기다려 보세요.",
                 "잡은 물고기는 판매 상자에 넣어도 되고 가방에 간직해도 돼요.",
                 "바닷물 색이 계절마다 조금씩 달라지는 걸 알고 있었나요?"
-            }, 1);
+            }, 4);
             ConfigureNpcMovement(fisher, villageRoutes, 10, 0.68f, seed + 44, new Vector2(-11.5f, 2.5f), "어부 민서");
 
             var florist = CreateNpc("Florist Taeo", new Vector2(5f, 0f), new Color(0.64f, 0.45f, 0.72f), townRoot);
@@ -207,7 +193,7 @@ namespace FarmGame2D.World
                 "게시판 의뢰는 순서가 없어요. 마음에 드는 일을 먼저 골라 보세요.",
                 "봄 딸기 향은 마을 광장까지 퍼지는 것 같아요.",
                 "농장이 넓어질수록 물 주는 동선도 미리 생각해 두는 게 좋아요."
-            }, 0);
+            }, 5);
             ConfigureNpcMovement(florist, villageRoutes, 11, 0.7f, seed + 55, new Vector2(5.8f, 5.4f), "원예가 태오");
 
             var water = CreateWorldArt("Pond", WorldArtKind.Pond, new Vector2(-11.5f, 1.3f), townRoot, 2, new Vector2(4.5f, 2.4f));

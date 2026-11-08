@@ -90,6 +90,12 @@ namespace FarmGame2D.Art
 
         public static Sprite GetNpcPortrait(int characterRowFromTop)
         {
+            var dedicatedPortrait = GetDedicatedNpcPortrait(characterRowFromTop);
+            if (dedicatedPortrait != null)
+            {
+                return dedicatedPortrait;
+            }
+
             npcSheet ??= LoadTexture("Art/NPCs/village_npcs_spritesheet_concept_v1");
             if (npcSheet == null)
             {
@@ -109,6 +115,43 @@ namespace FarmGame2D.Art
             return sprite;
         }
 
+        private static Sprite GetDedicatedNpcPortrait(int portraitId)
+        {
+            var resourcePath = portraitId switch
+            {
+                4 => "Art/NPCs/romance_minseo_portrait_v1",
+                5 => "Art/NPCs/romance_taeo_portrait_v1",
+                _ => null
+            };
+            if (resourcePath == null)
+            {
+                return null;
+            }
+
+            var cacheKey = 100 + portraitId;
+            if (npcPortraits.TryGetValue(cacheKey, out var cached))
+            {
+                return cached;
+            }
+
+            var texture = LoadTexture(resourcePath);
+            if (texture == null)
+            {
+                return null;
+            }
+
+            var sprite = Sprite.Create(
+                texture,
+                new Rect(0f, 0f, texture.width, texture.height),
+                new Vector2(0.5f, 0.5f),
+                texture.width,
+                0,
+                SpriteMeshType.FullRect);
+            sprite.name = portraitId == 4 ? "npc_portrait_minseo" : "npc_portrait_taeo";
+            npcPortraits[cacheKey] = sprite;
+            return sprite;
+        }
+
         public static Sprite GetHeldToolSprite(FarmTool tool)
         {
             if (heldToolSprites.TryGetValue(tool, out var cached))
@@ -121,6 +164,13 @@ namespace FarmGame2D.Art
                 var fishingRod = CreateFishingRodSprite();
                 heldToolSprites[tool] = fishingRod;
                 return fishingRod;
+            }
+
+            if (tool == FarmTool.Shovel)
+            {
+                var shovel = CreateShovelSprite();
+                heldToolSprites[tool] = shovel;
+                return shovel;
             }
 
             var (path, rect) = tool switch
@@ -176,6 +226,49 @@ namespace FarmGame2D.Art
             texture.SetPixel(9, 3, new Color(0.92f, 0.24f, 0.18f));
             texture.Apply();
             return Sprite.Create(texture, new Rect(0, 0, 12, 20), new Vector2(0.35f, 0.2f), 16f, 0, SpriteMeshType.FullRect);
+        }
+
+        private static Sprite CreateShovelSprite()
+        {
+            var texture = new Texture2D(12, 20)
+            {
+                filterMode = FilterMode.Point,
+                wrapMode = TextureWrapMode.Clamp,
+                name = "held_shovel_v1"
+            };
+            var pixels = new Color[12 * 20];
+            texture.SetPixels(pixels);
+
+            var outline = new Color(0.16f, 0.1f, 0.08f);
+            var wood = new Color(0.55f, 0.29f, 0.11f);
+            var metal = new Color(0.65f, 0.7f, 0.67f);
+            for (var y = 7; y < 17; y++)
+            {
+                texture.SetPixel(5, y, outline);
+                texture.SetPixel(6, y, wood);
+            }
+
+            for (var x = 4; x <= 7; x++)
+            {
+                texture.SetPixel(x, 17, outline);
+                texture.SetPixel(x, 18, wood);
+            }
+
+            for (var y = 2; y <= 6; y++)
+            {
+                var inset = y == 2 ? 1 : 0;
+                for (var x = 3 + inset; x <= 8 - inset; x++)
+                {
+                    texture.SetPixel(x, y, x == 3 + inset || x == 8 - inset ? outline : metal);
+                }
+            }
+
+            texture.SetPixel(4, 1, outline);
+            texture.SetPixel(5, 1, metal);
+            texture.SetPixel(6, 1, metal);
+            texture.SetPixel(7, 1, outline);
+            texture.Apply();
+            return Sprite.Create(texture, new Rect(0, 0, 12, 20), new Vector2(0.5f, 0.2f), 16f, 0, SpriteMeshType.FullRect);
         }
 
         private static Sprite GetOrCreate(

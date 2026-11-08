@@ -1,0 +1,678 @@
+fileFormatVersion: 2
+guid: 7452183106f7aa24aa1c23d4bf43ef81
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3509887524612478117
+    second: farm_dog_v1_0
+  - first:
+      213: 911367570962609270
+    second: farm_dog_v1_1
+  - first:
+      213: 8530041511191155630
+    second: farm_dog_v1_2
+  - first:
+      213: -4259860562304231510
+    second: farm_dog_v1_3
+  - first:
+      213: -2757542057598860374
+    second: farm_dog_v1_4
+  - first:
+      213: -7647834798056076243
+    second: farm_dog_v1_5
+  - first:
+      213: 9167844438040201018
+    second: farm_dog_v1_6
+  - first:
+      213: -8188166795235778233
+    second: farm_dog_v1_7
+  - first:
+      213: 4460863630670267671
+    second: farm_dog_v1_8
+  - first:
+      213: -5660245938653442413
+    second: farm_dog_v1_9
+  - first:
+      213: -7016383610723505846
+    second: farm_dog_v1_10
+  - first:
+      213: -8294436768909008209
+    second: farm_dog_v1_11
+  - first:
+      213: -6511938143422959489
+    second: farm_dog_v1_12
+  - first:
+      213: 1021798948545711419
+    second: farm_dog_v1_13
+  - first:
+      213: 7652707500487208121
+    second: farm_dog_v1_14
+  - first:
+      213: 7431549952333172864
+    second: farm_dog_v1_15
+  - first:
+      213: -270406849483711236
+    second: farm_dog_v1_16
+  - first:
+      213: 9040235206231254076
+    second: farm_dog_v1_17
+  - first:
+      213: 1610178908735565442
+    second: farm_dog_v1_18
+  - first:
+      213: 1514324790557747061
+    second: farm_dog_v1_19
+  - first:
+      213: -7885997033542394448
+    second: farm_dog_v1_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: farm_dog_v1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1519
+        height: 1005
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5be5ed74ef5a4fc0800000000000000
+      internalID: -3509887524612478117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_1
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 985
+        width: 33
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67479072af3d5ac00800000000000000
+      internalID: 911367570962609270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_2
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 939
+        width: 17
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea392e17f8bc06670800000000000000
+      internalID: 8530041511191155630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_3
+      rect:
+        serializedVersion: 2
+        x: 808
+        y: 913
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa71927636fe1e4c0800000000000000
+      internalID: -4259860562304231510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_4
+      rect:
+        serializedVersion: 2
+        x: 830
+        y: 911
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa3ce93db1e3bb9d0800000000000000
+      internalID: -2757542057598860374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_5
+      rect:
+        serializedVersion: 2
+        x: 838
+        y: 897
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2c0ff865ce6dd590800000000000000
+      internalID: -7647834798056076243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_6
+      rect:
+        serializedVersion: 2
+        x: 1032
+        y: 911
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a374d6d61f9ba3f70800000000000000
+      internalID: 9167844438040201018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_7
+      rect:
+        serializedVersion: 2
+        x: 919
+        y: 895
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 741a258bea9cd5e80800000000000000
+      internalID: -8188166795235778233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_8
+      rect:
+        serializedVersion: 2
+        x: 1246
+        y: 655
+        width: 19
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7158f8166db28ed30800000000000000
+      internalID: 4460863630670267671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_9
+      rect:
+        serializedVersion: 2
+        x: 1286
+        y: 671
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39ec63dde44c271b0800000000000000
+      internalID: -5660245938653442413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_10
+      rect:
+        serializedVersion: 2
+        x: 1268
+        y: 591
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a49e3fac74cc0ae90800000000000000
+      internalID: -7016383610723505846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_11
+      rect:
+        serializedVersion: 2
+        x: 1276
+        y: 611
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa26d3954bd34ec80800000000000000
+      internalID: -8294436768909008209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_12
+      rect:
+        serializedVersion: 2
+        x: 1286
+        y: 534
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7035f1a2c2f0a5a0800000000000000
+      internalID: -6511938143422959489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_13
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 427
+        width: 32
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3d4fefdab82e2e00800000000000000
+      internalID: 1021798948545711419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_14
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 383
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bce1880de0e33a60800000000000000
+      internalID: 7652707500487208121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_15
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 351
+        width: 15
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 080d36fbe4b222760800000000000000
+      internalID: 7431549952333172864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_16
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 379
+        width: 17
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfcd0bf27625f3cf0800000000000000
+      internalID: -270406849483711236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_17
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 299
+        width: 18
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c34e469d50e557d70800000000000000
+      internalID: 9040235206231254076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_18
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 119
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28e6208bf21885610800000000000000
+      internalID: 1610178908735565442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_19
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 71
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57723cfaf56f30510800000000000000
+      internalID: 1514324790557747061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_dog_v1_20
+      rect:
+        serializedVersion: 2
+        x: 1230
+        y: 61
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bddbe3da7f4f8290800000000000000
+      internalID: -7885997033542394448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      farm_dog_v1_0: -3509887524612478117
+      farm_dog_v1_1: 911367570962609270
+      farm_dog_v1_10: -7016383610723505846
+      farm_dog_v1_11: -8294436768909008209
+      farm_dog_v1_12: -6511938143422959489
+      farm_dog_v1_13: 1021798948545711419
+      farm_dog_v1_14: 7652707500487208121
+      farm_dog_v1_15: 7431549952333172864
+      farm_dog_v1_16: -270406849483711236
+      farm_dog_v1_17: 9040235206231254076
+      farm_dog_v1_18: 1610178908735565442
+      farm_dog_v1_19: 1514324790557747061
+      farm_dog_v1_2: 8530041511191155630
+      farm_dog_v1_20: -7885997033542394448
+      farm_dog_v1_3: -4259860562304231510
+      farm_dog_v1_4: -2757542057598860374
+      farm_dog_v1_5: -7647834798056076243
+      farm_dog_v1_6: 9167844438040201018
+      farm_dog_v1_7: -8188166795235778233
+      farm_dog_v1_8: 4460863630670267671
+      farm_dog_v1_9: -5660245938653442413
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

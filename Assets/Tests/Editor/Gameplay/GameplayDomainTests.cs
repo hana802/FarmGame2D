@@ -53,8 +53,16 @@ namespace FarmGame2D.Tests
 
             GameSaveDataNormalizer.Normalize(data);
 
-            Assert.That(data.farmPlots, Has.Count.EqualTo(FarmFieldLayout.PlotCount + 1));
-            Assert.That(FarmFieldLayout.GetWorldPosition(data.farmPlots[^1]), Is.EqualTo(new Vector2(14.5f, -3.5f)));
+            Assert.That(data.farmPlots, Has.Count.EqualTo(1));
+            Assert.That(FarmFieldLayout.GetWorldPosition(data.farmPlots[0]), Is.EqualTo(new Vector2(14.5f, -3.5f)));
+        }
+
+        [Test]
+        public void NewGame_StartsWithoutPrebuiltFarmPlots()
+        {
+            var data = GameSaveData.CreateNew(24, 99);
+
+            Assert.That(data.farmPlots, Is.Empty);
         }
 
         [Test]
@@ -108,16 +116,24 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
-        public void SaveNormalizer_ExpandsLegacyFarmAndCreatesMiningNodes()
+        public void SaveNormalizer_RemovesLegacyFarmAndPreservesFreeformPlots()
         {
             var data = GameSaveData.CreateNew(6, 1234);
+            data.farmPlots.Add(new FarmPlotData { gridX = 0, gridY = 0, state = SoilState.Tilled });
+            data.farmPlots.Add(new FarmPlotData
+            {
+                freeform = true,
+                worldX = 4.5f,
+                worldY = -8.5f,
+                state = SoilState.Tilled
+            });
 
             GameSaveDataNormalizer.Normalize(data);
 
-            Assert.That(data.farmPlots, Has.Count.EqualTo(FarmFieldLayout.PlotCount));
+            Assert.That(data.farmPlots, Has.Count.EqualTo(1));
+            Assert.That(data.farmPlots[0].freeform, Is.True);
+            Assert.That(FarmFieldLayout.GetWorldPosition(data.farmPlots[0]), Is.EqualTo(new Vector2(4.5f, -8.5f)));
             Assert.That(data.miningNodes, Has.Count.EqualTo(6));
-            Assert.That(data.farmPlots[23].gridX, Is.EqualTo(5));
-            Assert.That(data.farmPlots[23].gridY, Is.EqualTo(3));
         }
 
         [Test]
@@ -351,15 +367,40 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
-        public void NpcSpeechBubble_UsesWhiteBackgroundAndDarkText()
+        public void NpcSpeechBubble_UsesWarmPixelFrameAndCompactText()
         {
             var darkBase = new GUIStyle();
             darkBase.normal.background = Texture2D.blackTexture;
 
             var style = NpcSpeechBubblePresentation.CreateStyle(darkBase, null);
 
-            Assert.That(style.normal.background, Is.SameAs(Texture2D.whiteTexture));
+            Assert.That(style.normal.background, Is.Not.SameAs(Texture2D.whiteTexture));
             Assert.That(style.normal.textColor.grayscale, Is.LessThan(0.5f));
+            Assert.That(style.fontSize, Is.EqualTo(11));
+            Assert.That(style.border.left, Is.GreaterThanOrEqualTo(3));
+            Assert.That(style.padding.left, Is.GreaterThan(style.padding.top));
+        }
+
+        [TestCase("안내자 하람: 안녕하세요!", "안녕하세요!")]
+        [TestCase("주민 순자: 오늘은 어때요?", "오늘은 어때요?")]
+        [TestCase("이름 없는 대사", "이름 없는 대사")]
+        public void NpcSpeechBubble_ShowsOnlyTheSpokenLine(string source, string expected)
+        {
+            Assert.That(NpcSpeechBubblePresentation.GetSpokenLine(source), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void NpcSpeechBubble_StaysInsideTheVisibleScreen()
+        {
+            var result = NpcSpeechBubblePresentation.KeepOnScreen(
+                new Rect(-40f, -20f, 184f, 58f),
+                1280f,
+                720f);
+
+            Assert.That(result.x, Is.EqualTo(8f));
+            Assert.That(result.y, Is.EqualTo(8f));
+            Assert.That(result.xMax, Is.LessThanOrEqualTo(1272f));
+            Assert.That(result.yMax, Is.LessThanOrEqualTo(712f));
         }
 
         [Test]
@@ -425,6 +466,9 @@ namespace FarmGame2D.Tests
             Assert.That(layout.Description.yMin, Is.GreaterThanOrEqualTo(layout.Panel.yMin + 115f),
                 "The description must sit below the header border inside the white content area.");
             Assert.That(layout.ToolButtonsY, Is.GreaterThanOrEqualTo(layout.Description.yMax + 10f));
+            Assert.That(layout.ShovelButton.y, Is.EqualTo(layout.HoeButton.y));
+            Assert.That(layout.ShovelButton.xMin, Is.GreaterThan(layout.HoeButton.xMax));
+            Assert.That(layout.FishingRodButton.xMax, Is.LessThanOrEqualTo(layout.Panel.xMax - 48f));
             Assert.That(layout.GetSeedButton(0).yMin, Is.GreaterThanOrEqualTo(layout.HoeButton.yMax + 18f));
             Assert.That(layout.FirstStatsY, Is.GreaterThanOrEqualTo(layout.GetSeedButton(6).yMax + 8f));
             Assert.That(layout.GetStatsLabel(0, 0).yMax, Is.LessThanOrEqualTo(layout.CloseButton.yMin),

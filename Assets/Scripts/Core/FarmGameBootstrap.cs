@@ -42,6 +42,15 @@ namespace FarmGame2D.Core
             var playerObject = player.gameObject;
             playerObject.GetComponent<SpriteRenderer>().sortingOrder = 10;
 
+            var dog = FindAnyObjectByType<DogCompanionController>();
+            if (dog == null)
+            {
+                dog = new GameObject("Farm Dog").AddComponent<DogCompanionController>();
+                dog.gameObject.AddComponent<FarmGame2D.Interactions.DogInteractable>();
+            }
+
+            dog.Configure(player.transform);
+
             var camera = Camera.main;
             if (camera == null)
             {

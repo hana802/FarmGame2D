@@ -177,6 +177,9 @@ namespace FarmGame2D.Core
 
             switch (SelectedTool)
             {
+                case FarmTool.Shovel:
+                    RemoveFreeformPlot(index);
+                    return;
                 case FarmTool.Hoe when plot.state == SoilState.Empty:
                     plot.state = SoilState.Tilled;
                     Message = "호미로 새 밭을 만들었습니다.";
@@ -261,6 +264,19 @@ namespace FarmGame2D.Core
             Data.cowFedToday = true;
             Message = "소들에게 사료를 주었습니다. 내일 우유를 얻을 수 있습니다.";
             NotifyChanged();
+        }
+
+        public void PetDog()
+        {
+            Data.dogAffection = Mathf.Min(999, Data.dogAffection + 1);
+            Message = Data.dogAffection switch
+            {
+                1 => "강아지를 쓰다듬었습니다. 꼬리를 세차게 흔듭니다!",
+                5 => "강아지가 아주 가까운 친구가 되었습니다!",
+                _ => $"강아지가 기뻐합니다. 친밀도 {Data.dogAffection}"
+            };
+            NotifyChanged();
+            SaveSilently();
         }
 
         public void PurchaseSeed(GameItem seed)
@@ -452,6 +468,35 @@ namespace FarmGame2D.Core
                 worldY = position.y
             });
             Message = "호미로 새 밭을 만들었습니다.";
+            NotifyChanged();
+            SaveSilently();
+            return true;
+        }
+
+        public bool RemoveFreeformPlot(int index)
+        {
+            if (index < 0 || index >= Data.farmPlots.Count)
+            {
+                return false;
+            }
+
+            var plot = Data.farmPlots[index];
+            if (!plot.freeform)
+            {
+                Message = "기본 지형은 삽으로 없앨 수 없습니다.";
+                NotifyChanged();
+                return false;
+            }
+
+            if (plot.state != SoilState.Tilled)
+            {
+                Message = "작물이 있는 밭은 먼저 수확해야 없앨 수 있습니다.";
+                NotifyChanged();
+                return false;
+            }
+
+            Data.farmPlots.RemoveAt(index);
+            Message = "삽으로 밭을 다시 잔디로 되돌렸습니다.";
             NotifyChanged();
             SaveSilently();
             return true;
@@ -718,6 +763,7 @@ namespace FarmGame2D.Core
 
             Data.chickenFedToday = false;
             Data.cowFedToday = false;
+            ProcessDogMorningCare();
 
             AnimalBreedingRules.AdvanceJuveniles(Data.chickenJuvenileDays);
             AnimalBreedingRules.AdvanceJuveniles(Data.cowJuvenileDays);
@@ -750,8 +796,51 @@ namespace FarmGame2D.Core
             }
 
             juveniles.Add(AnimalBreedingRules.JuvenileDays);
-            var birthMessage = chickens ? "병아리가 태어났습니다!" : "송아지가 태어났습니다!";
-            lastMorningEvent = string.IsNullOrEmpty(lastMorningEvent) ? birthMessage : $"{lastMorningEvent} {birthMessage}";
+            AppendMorningEvent(chickens ? "병아리가 태어났습니다!" : "송아지가 태어났습니다!");
+        }
+
+        private void ProcessDogMorningCare()
+        {
+            if (Data.dogLastCareDay >= Data.day)
+            {
+                return;
+            }
+
+            var plan = DogCompanionRules.PlanMorningCare(
+                Data.inventory.Count(GameItem.Feed),
+                Data.ownedChickens,
+                Data.ownedCows);
+            if (plan.FeedSpent > 0)
+            {
+                Data.inventory.TrySpend(GameItem.Feed, plan.FeedSpent);
+            }
+
+            Data.chickenFedToday = plan.ChickensFed;
+            Data.cowFedToday = plan.CowsFed;
+            Data.dogLastCareDay = Data.day;
+            if (plan.ChickensFed && plan.CowsFed)
+            {
+                AppendMorningEvent("강아지가 닭과 소에게 아침 사료를 주었습니다.");
+            }
+            else if (plan.ChickensFed)
+            {
+                AppendMorningEvent("강아지가 닭에게 아침 사료를 주었습니다.");
+            }
+            else if (plan.CowsFed)
+            {
+                AppendMorningEvent("강아지가 소에게 아침 사료를 주었습니다.");
+            }
+            else
+            {
+                AppendMorningEvent("강아지가 사료가 부족하다고 알려줍니다.");
+            }
+        }
+
+        private void AppendMorningEvent(string eventMessage)
+        {
+            lastMorningEvent = string.IsNullOrEmpty(lastMorningEvent)
+                ? eventMessage
+                : $"{lastMorningEvent} {eventMessage}";
         }
 
         private void Plant(FarmPlotData plot)
@@ -1000,6 +1089,7 @@ namespace FarmGame2D.Core
                 FarmTool.WateringCan => "물뿌리개",
                 FarmTool.Pickaxe => "곡괭이",
                 FarmTool.FishingRod => "낚싯대",
+                FarmTool.Shovel => "삽",
                 _ => tool.ToString()
             };
         }

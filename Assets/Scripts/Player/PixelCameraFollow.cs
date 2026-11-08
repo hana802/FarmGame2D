@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.U2D;
+using FarmGame2D.World;
 
 namespace FarmGame2D.Player
 {
@@ -7,26 +8,29 @@ namespace FarmGame2D.Player
     public sealed class PixelCameraFollow : MonoBehaviour
     {
         private Transform target;
+        private Camera worldCamera;
+        private PixelPerfectCamera pixelPerfect;
+
+        public bool IsInteriorView { get; private set; }
+        public int ReferenceHeight => pixelPerfect == null ? 0 : pixelPerfect.refResolutionY;
 
         public void Configure(Transform followTarget)
         {
             target = followTarget;
-            var camera = GetComponent<Camera>();
-            camera.orthographic = true;
-            camera.orthographicSize = 6.75f;
-            camera.backgroundColor = new Color(0.08f, 0.12f, 0.1f);
+            worldCamera = GetComponent<Camera>();
+            worldCamera.orthographic = true;
+            worldCamera.backgroundColor = new Color(0.08f, 0.12f, 0.1f);
 
-            var pixelPerfect = GetComponent<PixelPerfectCamera>();
+            pixelPerfect = GetComponent<PixelPerfectCamera>();
             if (pixelPerfect == null)
             {
                 pixelPerfect = gameObject.AddComponent<PixelPerfectCamera>();
             }
 
             pixelPerfect.assetsPPU = 32;
-            pixelPerfect.refResolutionX = 480;
-            pixelPerfect.refResolutionY = 270;
             pixelPerfect.upscaleRT = true;
             pixelPerfect.pixelSnapping = true;
+            ApplyViewForPosition(target.position);
         }
 
         private void LateUpdate()
@@ -36,10 +40,29 @@ namespace FarmGame2D.Player
                 return;
             }
 
+            ApplyViewForPosition(target.position);
+
             const float pixelsPerUnit = 32f;
-            var x = Mathf.Round(target.position.x * pixelsPerUnit) / pixelsPerUnit;
-            var y = Mathf.Round(target.position.y * pixelsPerUnit) / pixelsPerUnit;
+            var focusPosition = IsInteriorView
+                ? WorldAreaProfile.FarmhouseInteriorCenter
+                : (Vector2)target.position;
+            var x = Mathf.Round(focusPosition.x * pixelsPerUnit) / pixelsPerUnit;
+            var y = Mathf.Round(focusPosition.y * pixelsPerUnit) / pixelsPerUnit;
             transform.position = new Vector3(x, y, -10f);
+        }
+
+        private void ApplyViewForPosition(Vector2 position)
+        {
+            IsInteriorView = WorldAreaProfile.IsInterior(position);
+            worldCamera.orthographicSize = IsInteriorView
+                ? WorldAreaProfile.InteriorCameraSize
+                : WorldAreaProfile.OutdoorCameraSize;
+            pixelPerfect.refResolutionX = IsInteriorView
+                ? WorldAreaProfile.InteriorReferenceWidth
+                : WorldAreaProfile.OutdoorReferenceWidth;
+            pixelPerfect.refResolutionY = IsInteriorView
+                ? WorldAreaProfile.InteriorReferenceHeight
+                : WorldAreaProfile.OutdoorReferenceHeight;
         }
     }
 }

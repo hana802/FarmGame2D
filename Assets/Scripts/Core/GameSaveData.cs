@@ -8,7 +8,7 @@ namespace FarmGame2D.Core
     [Serializable]
     public sealed class GameSaveData
     {
-        public const int CurrentVersion = 4;
+        public const int CurrentVersion = 6;
 
         public int version = CurrentVersion;
         public int worldSeed;
@@ -30,6 +30,8 @@ namespace FarmGame2D.Core
         public List<int> chickenJuvenileDays = new();
         public List<int> cowJuvenileDays = new();
         public bool cowFedToday;
+        public int dogAffection;
+        public int dogLastCareDay;
         public bool hasPickaxe;
         public int wheatHarvested;
         public bool harvestQuestCompleted;
@@ -51,11 +53,6 @@ namespace FarmGame2D.Core
             data.inventory.Add(GameItem.PotatoSeed, 6);
             data.inventory.Add(GameItem.StrawberrySeed, 3);
             data.inventory.Add(GameItem.Feed, 3);
-
-            for (var index = 0; index < plotCount; index++)
-            {
-                data.farmPlots.Add(new FarmPlotData());
-            }
 
             return data;
         }

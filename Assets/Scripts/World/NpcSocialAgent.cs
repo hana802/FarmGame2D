@@ -286,8 +286,16 @@ namespace FarmGame2D.World
             }
 
             bubbleStyle ??= CreateBubbleStyle();
-            var rect = new Rect(screen.x - 95f, Screen.height - screen.y - 38f, 190f, 42f);
-            GUI.Box(rect, bubbleText, bubbleStyle);
+            var spokenLine = NpcSpeechBubblePresentation.GetSpokenLine(bubbleText);
+            var width = 184f;
+            var height = NpcSpeechBubblePresentation.CalculateHeight(bubbleStyle, spokenLine, width);
+            var x = screen.x - (width * 0.5f);
+            var y = Screen.height - screen.y - height - 8f;
+            var rect = NpcSpeechBubblePresentation.KeepOnScreen(
+                new Rect(x, y, width, height),
+                Screen.width,
+                Screen.height);
+            NpcSpeechBubblePresentation.Draw(rect, spokenLine, bubbleStyle);
         }
 
         private static GUIStyle CreateBubbleStyle()

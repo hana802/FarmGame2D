@@ -1,4 +1,5 @@
 using System.Collections;
+using FarmGame2D.Art;
 using FarmGame2D.Core;
 using FarmGame2D.Interactions;
 using FarmGame2D.Farming;
@@ -43,6 +44,39 @@ namespace FarmGame2D.Tests
                 "Selected farm tool must be visible in the player's hand.");
             Assert.That(player.HeldItemPresenter.DisplayedTool, Is.EqualTo(FarmTool.Hoe));
 
+            var dog = Object.FindFirstObjectByType<DogCompanionController>();
+            Assert.That(dog, Is.Not.Null, "The farm needs a companion dog.");
+            Assert.That(dog.FollowTarget, Is.EqualTo(player.transform));
+            Assert.That(dog.DogRenderer.sprite.name, Is.EqualTo("world_Dog"));
+            Assert.That(dog.DogRenderer.sprite.texture.width, Is.GreaterThan(1));
+            var dogInteraction = dog.GetComponent<DogInteractable>();
+            Assert.That(dogInteraction, Is.Not.Null);
+            Assert.That(dogInteraction.Prompt, Is.EqualTo("강아지 쓰다듬기"));
+            var affectionBeforePetting = GameSession.Instance.Data.dogAffection;
+            dogInteraction.Interact(player);
+            Assert.That(GameSession.Instance.Data.dogAffection, Is.EqualTo(affectionBeforePetting + 1));
+            Assert.That(dog.IsCelebrating, Is.True);
+            Assert.That(Object.FindObjectsByType<DogHeartEffect>(FindObjectsSortMode.None).Length, Is.EqualTo(3));
+            var celebrationStartOffset = (Vector2)(dog.transform.position - player.transform.position);
+            yield return new WaitForSeconds(0.35f);
+            var celebrationMidOffset = (Vector2)(dog.transform.position - player.transform.position);
+            Assert.That(Quaternion.Angle(dog.DogRenderer.transform.localRotation, Quaternion.identity), Is.LessThan(0.1f),
+                "The dog sprite must stay upright instead of spinning like a top.");
+            Assert.That(Vector2.Angle(celebrationStartOffset, celebrationMidOffset), Is.GreaterThan(20f),
+                "Petting should make the dog run around the player, changing its orbit angle.");
+            Assert.That(celebrationMidOffset.magnitude, Is.InRange(0.75f, 1.5f),
+                "The celebration should keep the dog on a readable circle around the player.");
+            yield return new WaitForSeconds(2.2f);
+            Assert.That(dog.IsCelebrating, Is.False);
+
+            var dogStartDistance = Vector2.Distance(dog.transform.position, player.transform.position);
+            dog.transform.position = player.transform.position + new Vector3(3f, 0f, 0f);
+            var dogPlacedDistance = Vector2.Distance(dog.transform.position, player.transform.position);
+            yield return new WaitForSeconds(0.5f);
+            Assert.That(Vector2.Distance(dog.transform.position, player.transform.position), Is.LessThan(dogPlacedDistance),
+                "The companion dog should follow the player instead of staying behind.");
+            Assert.That(dogStartDistance, Is.LessThan(2f));
+
             GameSession.Instance.SelectTool(FarmTool.WateringCan);
             yield return null;
             Assert.That(player.HeldItemPresenter.DisplayedTool, Is.EqualTo(FarmTool.WateringCan));
@@ -82,8 +116,18 @@ namespace FarmGame2D.Tests
                 "NPC movement must use the physics engine instead of writing directly to the transform.");
             Assert.That(guide.GetComponent("NpcSocialAgent"), Is.Not.Null,
                 "Villagers need a social agent so they can stop and talk to one another.");
-            Assert.That(GameObject.Find("Fisher Minseo"), Is.Not.Null);
-            Assert.That(GameObject.Find("Florist Taeo"), Is.Not.Null);
+            var fisher = GameObject.Find("Fisher Minseo");
+            var florist = GameObject.Find("Florist Taeo");
+            Assert.That(fisher, Is.Not.Null);
+            Assert.That(florist, Is.Not.Null);
+            var minseoPortrait = GameArtCatalog.GetNpcPortrait(4);
+            var taeoPortrait = GameArtCatalog.GetNpcPortrait(5);
+            Assert.That(minseoPortrait, Is.Not.Null);
+            Assert.That(taeoPortrait, Is.Not.Null);
+            Assert.That(minseoPortrait.name, Is.EqualTo("npc_portrait_minseo"));
+            Assert.That(taeoPortrait.name, Is.EqualTo("npc_portrait_taeo"));
+            Assert.That(minseoPortrait.texture, Is.Not.SameAs(taeoPortrait.texture),
+                "Romance candidates need distinct, dedicated dialogue portraits.");
             Assert.That(guide.transform.localScale, Is.EqualTo(Vector3.one),
                 "NPC artwork must use the same world scale as the player instead of inheriting prototype block scale.");
             GameClockController.Instance.SetTime(GameSession.Instance.Data.day, 12, 0);
@@ -139,22 +183,33 @@ namespace FarmGame2D.Tests
             Assert.That(sellingBox.transform.position.x, Is.GreaterThan(seedShop.transform.position.x));
             Assert.That(Vector2.Distance(sellingBox.transform.position, seedShop.transform.position), Is.LessThan(4f));
 
-            var firstFarmPlot = GameObject.Find("Wheat Plot 1");
-            Assert.That(firstFarmPlot, Is.Not.Null);
-            var farmPlotSprite = firstFarmPlot.GetComponent<SpriteRenderer>().sprite;
-            var savedFarmPlotState = GameSession.Instance.Data.farmPlots[0].state;
-            Assert.That(farmPlotSprite.name, Is.EqualTo($"farm_plot_{savedFarmPlotState}"));
-            Assert.That(farmPlotSprite.texture.width, Is.GreaterThan(1),
-                "Farm plots must use state artwork instead of prototype color blocks.");
-            Assert.That(GameSession.Instance.Data.farmPlots, Has.Count.EqualTo(24),
-                "The farm should expose a 6 by 4 freely tillable field.");
-            Assert.That(GameObject.Find("Wheat Plot 24"), Is.Not.Null);
+            Assert.That(GameSession.Instance.Data.farmPlots, Is.Empty,
+                "A new farm should not include prebuilt plots.");
+            Assert.That(GameObject.Find("Wheat Plot 1"), Is.Null);
             Assert.That(Object.FindFirstObjectByType<FreeformFarmField>(), Is.Not.Null);
             var plotCountBeforeExpansion = GameSession.Instance.Data.farmPlots.Count;
             Assert.That(GameSession.Instance.AddFreeformPlot(new Vector2(14.5f, -3.5f)), Is.True);
             yield return null;
             Assert.That(GameSession.Instance.Data.farmPlots.Count, Is.EqualTo(plotCountBeforeExpansion + 1));
-            Assert.That(GameObject.Find($"Free Plot {plotCountBeforeExpansion + 1}"), Is.Not.Null);
+            var freePlot = GameObject.Find($"Free Plot {plotCountBeforeExpansion + 1}");
+            Assert.That(freePlot, Is.Not.Null);
+            Assert.That(freePlot.transform.localScale.x, Is.EqualTo(0.9f).Within(0.001f));
+            Assert.That(freePlot.transform.localScale.y, Is.EqualTo(0.9f).Within(0.001f));
+            Assert.That(freePlot.GetComponent<SpriteRenderer>().sprite.name, Is.EqualTo("farm_plot_Tilled"));
+            GameSession.Instance.SelectTool(FarmTool.Shovel);
+            yield return null;
+            Assert.That(player.HeldItemPresenter.DisplayedTool, Is.EqualTo(FarmTool.Shovel));
+            Assert.That(player.HeldItemPresenter.ItemRenderer.sprite, Is.Not.Null);
+            GameSession.Instance.UsePlot(0);
+            yield return null;
+            Assert.That(GameSession.Instance.Data.farmPlots, Is.Empty);
+            Assert.That(GameObject.Find("Free Plot 1"), Is.Null);
+
+            Assert.That(GameSession.Instance.AddFreeformPlot(new Vector2(14.5f, -3.5f)), Is.True);
+            GameSession.Instance.Data.farmPlots[0].Plant(GameItem.PotatoSeed);
+            GameSession.Instance.UsePlot(0);
+            Assert.That(GameSession.Instance.Data.farmPlots, Has.Count.EqualTo(1),
+                "The shovel must not remove a plot while a crop is planted.");
             GameSession.Instance.Data.money = 9999;
             GameSession.Instance.PurchaseChicken();
             GameSession.Instance.PurchaseCow();
@@ -278,6 +333,25 @@ namespace FarmGame2D.Tests
                 "Town buildings must explain what happens at their front door instead of allowing wall penetration.");
             entrance.Interact(player);
             Assert.That(player.transform.position.x, Is.EqualTo(40f).Within(0.1f));
+            yield return null;
+            var interiorCamera = Camera.main;
+            Assert.That(interiorCamera.orthographicSize, Is.LessThanOrEqualTo(3.6f),
+                "Entering the farmhouse should switch to a close interior camera so the room fills the screen.");
+            Assert.That(interiorCamera.transform.position.y, Is.EqualTo(WorldAreaProfile.FarmhouseInteriorCenter.y).Within(0.1f),
+                "The interior camera should frame the room center instead of following the player at the doorway.");
+            Assert.That(interiorCamera.GetComponent<PixelCameraFollow>().ReferenceHeight,
+                Is.EqualTo(WorldAreaProfile.InteriorReferenceHeight),
+                "The farmhouse should use a closer pixel-perfect reference resolution.");
+            var interiorLeftEdge = interiorCamera.ViewportToWorldPoint(new Vector3(0f, 0.5f, 0f)).x;
+            Assert.That(interiorLeftEdge, Is.GreaterThan(29f),
+                "The indoor camera must not reveal the outdoor ocean tilemap at the left edge.");
+            var farmhouseExit = GameObject.Find("Farm House Exit").GetComponent<DoorInteractable>();
+            farmhouseExit.Interact(player);
+            yield return null;
+            Assert.That(interiorCamera.orthographicSize, Is.EqualTo(6.75f).Within(0.01f),
+                "Leaving the farmhouse should restore the outdoor camera view.");
+            Assert.That(interiorCamera.GetComponent<PixelCameraFollow>().ReferenceHeight,
+                Is.EqualTo(WorldAreaProfile.OutdoorReferenceHeight));
 
             var guideDialogue = guide.GetComponent<DialogueInteractable>();
             Assert.That(guideDialogue.DialogueCount, Is.GreaterThanOrEqualTo(5));
@@ -289,6 +363,13 @@ namespace FarmGame2D.Tests
             guideDialogue.Interact(player);
             Assert.That(GameSession.Instance.Message, Is.Not.EqualTo(firstGuideLine),
                 "Talking to an NPC repeatedly should reveal more than one line.");
+
+            fisher.GetComponent<DialogueInteractable>().Interact(player);
+            Assert.That(GameSession.Instance.ActivePortraitRow, Is.EqualTo(4));
+            Assert.That(GameSession.Instance.ActiveSpeaker, Is.EqualTo("어부 민서"));
+            florist.GetComponent<DialogueInteractable>().Interact(player);
+            Assert.That(GameSession.Instance.ActivePortraitRow, Is.EqualTo(5));
+            Assert.That(GameSession.Instance.ActiveSpeaker, Is.EqualTo("원예가 태오"));
         }
     }
 }

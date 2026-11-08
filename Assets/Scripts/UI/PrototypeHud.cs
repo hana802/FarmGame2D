@@ -126,9 +126,12 @@ namespace FarmGame2D.UI
 
         private void DrawHotbar(GameSession session)
         {
-            var label = session.SelectedTool == FarmTool.Hoe
-                ? "[I] 가방   [Space] 앞의 땅 갈기   [E] 상호작용"
-                : $"[I] 가방 열기   들고 있음: {GetToolLabel(session.SelectedTool)}";
+            var label = session.SelectedTool switch
+            {
+                FarmTool.Hoe => "[I] 가방   [Space] 앞의 땅 갈기   [E] 상호작용",
+                FarmTool.Shovel => "[I] 가방   [E] 빈 밭 없애기",
+                _ => $"[I] 가방 열기   들고 있음: {GetToolLabel(session.SelectedTool)}"
+            };
             var rect = new Rect((HudLayout.ReferenceWidth - 430f) / 2f, HudLayout.ReferenceHeight - 70f, 430f, 54f);
             farmSkin.DrawButtonBackground(rect, true);
             GUI.Label(rect, label, centeredStyle);
@@ -144,6 +147,11 @@ namespace FarmGame2D.UI
             if (farmSkin.DrawButton(layout.HoeButton, "호미"))
             {
                 session.SelectTool(FarmTool.Hoe);
+            }
+
+            if (farmSkin.DrawButton(layout.ShovelButton, "삽"))
+            {
+                session.SelectTool(FarmTool.Shovel);
             }
 
             if (farmSkin.DrawButton(layout.SeedsButton, ItemCatalog.GetLabel(session.SelectedSeed), true))
@@ -594,6 +602,7 @@ namespace FarmGame2D.UI
                 FarmTool.WateringCan => "물뿌리개",
                 FarmTool.Pickaxe => "곡괭이",
                 FarmTool.FishingRod => "낚싯대",
+                FarmTool.Shovel => "삽",
                 _ => tool.ToString()
             };
         }

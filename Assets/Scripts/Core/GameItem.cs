@@ -35,7 +35,8 @@ namespace FarmGame2D.Core
         Seeds,
         WateringCan,
         Pickaxe,
-        FishingRod
+        FishingRod,
+        Shovel
     }
 
     public enum CharacterChoice

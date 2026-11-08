@@ -2,6 +2,7 @@ using FarmGame2D.Core;
 using FarmGame2D.Interactions;
 using FarmGame2D.Player;
 using FarmGame2D.World;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -13,15 +14,14 @@ namespace FarmGame2D.Farming
         private Tilemap ground;
         private Tilemap road;
         private Transform plotParent;
-        private int visibleCount;
+        private readonly List<GameObject> visiblePlots = new();
 
-        public void Configure(GameSession gameSession, Tilemap groundTiles, Tilemap roadTiles, Transform parent, int existingCount)
+        public void Configure(GameSession gameSession, Tilemap groundTiles, Tilemap roadTiles, Transform parent)
         {
             session = gameSession;
             ground = groundTiles;
             road = roadTiles;
             plotParent = parent;
-            visibleCount = existingCount;
             session.StateChanged += Synchronize;
             Synchronize();
         }
@@ -77,14 +77,33 @@ namespace FarmGame2D.Farming
 
         private void Synchronize()
         {
-            while (visibleCount < session.Data.farmPlots.Count)
+            if (visiblePlots.Count > session.Data.farmPlots.Count)
             {
-                CreatePlot(visibleCount);
-                visibleCount++;
+                RebuildPlots();
+                return;
+            }
+
+            while (visiblePlots.Count < session.Data.farmPlots.Count)
+            {
+                visiblePlots.Add(CreatePlot(visiblePlots.Count));
             }
         }
 
-        private void CreatePlot(int index)
+        private void RebuildPlots()
+        {
+            foreach (var plot in visiblePlots)
+            {
+                Destroy(plot);
+            }
+
+            visiblePlots.Clear();
+            for (var index = 0; index < session.Data.farmPlots.Count; index++)
+            {
+                visiblePlots.Add(CreatePlot(index));
+            }
+        }
+
+        private GameObject CreatePlot(int index)
         {
             var plotData = session.Data.farmPlots[index];
             var plot = PrototypeSpriteFactory.CreateBlock(
@@ -92,6 +111,7 @@ namespace FarmGame2D.Farming
                 Color.white, plotParent, true);
             plot.GetComponent<BoxCollider2D>().isTrigger = true;
             plot.AddComponent<FarmPlotView>().Configure(index);
+            return plot;
         }
     }
 }

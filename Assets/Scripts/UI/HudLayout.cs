@@ -40,6 +40,7 @@ namespace FarmGame2D.UI
             Rect title,
             Rect description,
             Rect hoeButton,
+            Rect shovelButton,
             Rect seedsButton,
             Rect wateringCanButton,
             Rect pickaxeButton,
@@ -52,6 +53,7 @@ namespace FarmGame2D.UI
             Title = title;
             Description = description;
             HoeButton = hoeButton;
+            ShovelButton = shovelButton;
             SeedsButton = seedsButton;
             WateringCanButton = wateringCanButton;
             PickaxeButton = pickaxeButton;
@@ -65,6 +67,7 @@ namespace FarmGame2D.UI
         public Rect Title { get; }
         public Rect Description { get; }
         public Rect HoeButton { get; }
+        public Rect ShovelButton { get; }
         public Rect SeedsButton { get; }
         public Rect WateringCanButton { get; }
         public Rect PickaxeButton { get; }
@@ -201,11 +204,12 @@ namespace FarmGame2D.UI
                 new Rect(panel.x + 87f, panel.y + 24f, 128f, 128f),
                 new Rect(panel.x + 235f, panel.y + 58f, panel.width - 275f, 50f),
                 new Rect(panel.x + 55f, panel.y + 132f, panel.width - 110f, 32f),
-                new Rect(panel.x + 48f, panel.y + 178f, 126f, 44f),
-                new Rect(panel.x + 198f, panel.y + 178f, 126f, 44f),
-                new Rect(panel.x + 348f, panel.y + 178f, 126f, 44f),
-                new Rect(panel.x + 498f, panel.y + 178f, 126f, 44f),
-                new Rect(panel.x + 648f, panel.y + 178f, 126f, 44f),
+                new Rect(panel.x + 48f, panel.y + 178f, 112f, 44f),
+                new Rect(panel.x + 168f, panel.y + 178f, 112f, 44f),
+                new Rect(panel.x + 288f, panel.y + 178f, 112f, 44f),
+                new Rect(panel.x + 408f, panel.y + 178f, 112f, 44f),
+                new Rect(panel.x + 528f, panel.y + 178f, 112f, 44f),
+                new Rect(panel.x + 648f, panel.y + 178f, 112f, 44f),
                 panel.y + 382f,
                 new Rect(panel.x + 220f, panel.y + 447f, 380f, 40f));
         }

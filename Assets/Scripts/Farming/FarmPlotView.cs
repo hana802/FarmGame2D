@@ -43,13 +43,21 @@ namespace FarmGame2D.Farming
                 return "밭 확인";
             }
 
-            return session.Data.farmPlots[plotIndex].state switch
+            var plot = session.Data.farmPlots[plotIndex];
+            if (session.SelectedTool == FarmTool.Shovel)
+            {
+                return plot.state == SoilState.Tilled
+                    ? "삽으로 밭 없애기"
+                    : "작물이 있어 밭을 없앨 수 없음";
+            }
+
+            return plot.state switch
             {
                 SoilState.Empty => "호미로 새 밭 만들기",
                 SoilState.Tilled => $"{ItemCatalog.GetLabel(session.SelectedSeed)} 심기",
-                SoilState.Planted => $"{GetCropLabel(session.Data.farmPlots[plotIndex])}에 물 주기",
+                SoilState.Planted => $"{GetCropLabel(plot)}에 물 주기",
                 SoilState.Watered => "물이 충분합니다",
-                SoilState.Ready => $"{GetCropLabel(session.Data.farmPlots[plotIndex])} 수확",
+                SoilState.Ready => $"{GetCropLabel(plot)} 수확",
                 _ => "밭 확인"
             };
         }

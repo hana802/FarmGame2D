@@ -36,7 +36,7 @@ namespace FarmGame2D.Core
                 data.eggReady = false;
             }
 
-            FarmFieldLayout.EnsurePlots(data.farmPlots);
+            FarmFieldLayout.RemoveLegacyPlots(data.farmPlots);
             while (data.miningNodes.Count < MiningOres.Length)
             {
                 var id = data.miningNodes.Count;
