@@ -116,6 +116,39 @@ namespace FarmGame2D.UI
         public Rect Message { get; }
     }
 
+    public readonly struct ShopHudLayout
+    {
+        public ShopHudLayout(Rect panel, Rect title, Rect balance, float firstProductY, Rect closeButton)
+        {
+            Panel = panel;
+            Title = title;
+            Balance = balance;
+            FirstProductY = firstProductY;
+            CloseButton = closeButton;
+        }
+
+        public Rect Panel { get; }
+        public Rect Title { get; }
+        public Rect Balance { get; }
+        public float FirstProductY { get; }
+        public Rect CloseButton { get; }
+
+        public Rect GetProductButton(int index)
+        {
+            return new Rect(Panel.x + 45f, FirstProductY + (index * 58f), 530f, 48f);
+        }
+
+        public Rect GetHalfWidthButton(int row, bool right)
+        {
+            return new Rect(Panel.x + (right ? 325f : 45f), FirstProductY + (row * 58f), 250f, 48f);
+        }
+
+        public Rect GetInfoLabel(int row, float height)
+        {
+            return new Rect(Panel.x + 55f, FirstProductY + (row * 58f), 510f, height);
+        }
+    }
+
     public static class HudLayout
     {
         public const float ReferenceWidth = 1280f;
@@ -177,6 +210,17 @@ namespace FarmGame2D.UI
             return new ToastHudLayout(
                 panel,
                 new Rect(panel.x + 140f, panel.y + 12f, panel.width - 172f, 48f));
+        }
+
+        public static ShopHudLayout CalculateShopLayout()
+        {
+            var panel = new Rect((ReferenceWidth - 620f) * 0.5f, 92f, 620f, 550f);
+            return new ShopHudLayout(
+                panel,
+                new Rect(panel.x + 140f, panel.y + 58f, 440f, 38f),
+                new Rect(panel.x + 45f, panel.y + 104f, 530f, 30f),
+                panel.y + 146f,
+                new Rect(panel.x + 240f, panel.y + 490f, 140f, 42f));
         }
 
         private static Rect ScaleDialogueSlot(Rect panel, Rect atlasSlot)

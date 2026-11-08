@@ -362,80 +362,80 @@ namespace FarmGame2D.UI
 
         private void DrawShop(GameSession session)
         {
-            var rect = new Rect((HudLayout.ReferenceWidth - 620f) / 2f, 92f, 620f, 550f);
-            farmSkin.DrawWindow(rect);
+            var layout = HudLayout.CalculateShopLayout();
+            farmSkin.DrawWindow(layout.Panel);
             var title = session.ActiveShop == ShopKind.Mining ? "광물 상점" : "씨앗·동물 상점";
-            GUI.Label(new Rect(rect.x + 35f, rect.y + 20f, 550f, 42f), title, titleStyle);
-            GUI.Label(new Rect(rect.x + 45f, rect.y + 72f, 530f, 32f), $"{GetSeasonLabel(session.CurrentSeason)} · 보유 금액 {session.Data.money}G", centeredStyle);
+            GUI.Label(layout.Title, title, titleStyle);
+            GUI.Label(layout.Balance, $"{GetSeasonLabel(session.CurrentSeason)} · 보유 금액 {session.Data.money}G", centeredStyle);
 
             if (session.ActiveShop == ShopKind.Mining)
             {
-                DrawMiningShop(session, rect);
+                DrawMiningShop(session, layout);
             }
             else
             {
-                DrawFarmShop(session, rect);
+                DrawFarmShop(session, layout);
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 240f, rect.y + 490f, 140f, 42f), "닫기"))
+            if (farmSkin.DrawButton(layout.CloseButton, "닫기"))
             {
                 session.OpenShop(session.ActiveShop);
             }
         }
 
-        private void DrawFarmShop(GameSession session, Rect rect)
+        private void DrawFarmShop(GameSession session, ShopHudLayout layout)
         {
             var crops = CropCatalog.GetForSeason(session.CurrentSeason);
             for (var index = 0; index < crops.Count; index++)
             {
                 var crop = crops[index];
-                if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 120f + (index * 58f), 530f, 48f), $"{crop.Label} 씨앗 5개 — {crop.PackPrice}G"))
+                if (farmSkin.DrawButton(layout.GetProductButton(index), $"{crop.Label} 씨앗 5개 — {crop.PackPrice}G"))
                 {
                     session.PurchaseSeed(crop.Seed);
                 }
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 245f, 250f, 48f), "동물 사료 3개 — 15G", true))
+            if (farmSkin.DrawButton(layout.GetHalfWidthButton(2, false), "동물 사료 3개 — 15G", true))
             {
                 session.PurchaseFeed();
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 325f, rect.y + 245f, 250f, 48f), "닭 1마리 — 150G"))
+            if (farmSkin.DrawButton(layout.GetHalfWidthButton(2, true), "닭 1마리 — 150G"))
             {
                 session.PurchaseChicken();
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 310f, 530f, 48f), "소 1마리 — 350G", true))
+            if (farmSkin.DrawButton(layout.GetProductButton(3), "소 1마리 — 350G", true))
             {
                 session.PurchaseCow();
             }
 
-            GUI.Label(new Rect(rect.x + 55f, rect.y + 380f, 510f, 70f), $"현재 보유: 닭 {session.Data.ownedChickens}마리 · 소 {session.Data.ownedCows}마리\n먹이를 주면 다음 날 달걀과 우유를 얻습니다.", centeredStyle);
+            GUI.Label(layout.GetInfoLabel(4, 70f), $"현재 보유: 닭 {session.Data.ownedChickens}마리 · 소 {session.Data.ownedCows}마리\n먹이를 주면 다음 날 달걀과 우유를 얻습니다.", centeredStyle);
         }
 
-        private void DrawMiningShop(GameSession session, Rect rect)
+        private void DrawMiningShop(GameSession session, ShopHudLayout layout)
         {
-            if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 120f, 530f, 48f), session.Data.hasPickaxe ? "곡괭이 — 구입 완료" : "곡괭이 — 120G"))
+            if (farmSkin.DrawButton(layout.GetProductButton(0), session.Data.hasPickaxe ? "곡괭이 — 구입 완료" : "곡괭이 — 120G"))
             {
                 session.PurchasePickaxe();
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 185f, 250f, 48f), "돌 5개 — 30G", true))
+            if (farmSkin.DrawButton(layout.GetHalfWidthButton(1, false), "돌 5개 — 30G", true))
             {
                 session.PurchaseOre(GameItem.Stone, 5, 30);
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 325f, rect.y + 185f, 250f, 48f), "구리 광석 3개 — 75G"))
+            if (farmSkin.DrawButton(layout.GetHalfWidthButton(1, true), "구리 광석 3개 — 75G"))
             {
                 session.PurchaseOre(GameItem.CopperOre, 3, 75);
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 250f, 530f, 48f), "철 광석 2개 — 110G", true))
+            if (farmSkin.DrawButton(layout.GetProductButton(2), "철 광석 2개 — 110G", true))
             {
                 session.PurchaseOre(GameItem.IronOre, 2, 110);
             }
 
-            GUI.Label(new Rect(rect.x + 55f, rect.y + 330f, 510f, 90f), "곡괭이를 가방에서 선택한 뒤 마을 서남쪽 광맥을 캐세요.\n채굴한 광물은 판매 상자에 넣거나 이곳에서 바로 구입할 수 있습니다.", centeredStyle);
+            GUI.Label(layout.GetInfoLabel(3, 90f), "곡괭이를 가방에서 선택한 뒤 마을 서남쪽 광맥을 캐세요.\n채굴한 광물은 판매 상자에 넣거나 이곳에서 바로 구입할 수 있습니다.", centeredStyle);
         }
 
         private void EnsureStyles()

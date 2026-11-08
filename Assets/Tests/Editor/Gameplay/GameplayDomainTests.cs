@@ -465,6 +465,22 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
+        public void ShopLayout_KeepsHeaderTextInsideArtworkSafeArea()
+        {
+            var layout = HudLayout.CalculateShopLayout();
+
+            Assert.That(layout.Title.xMin, Is.GreaterThanOrEqualTo(layout.Panel.xMin + 120f),
+                "The shop title must clear the illustrated decoration on the left side of the header.");
+            Assert.That(layout.Title.yMin, Is.GreaterThanOrEqualTo(layout.Panel.yMin + 58f),
+                "The shop title must sit below the illustrated top frame.");
+            Assert.That(layout.Balance.yMin, Is.GreaterThanOrEqualTo(layout.Title.yMax + 6f),
+                "The balance line must not overlap the title.");
+            Assert.That(layout.GetProductButton(0).yMin, Is.GreaterThanOrEqualTo(layout.Balance.yMax + 10f),
+                "The first product must start below the balance line.");
+            Assert.That(layout.CloseButton.yMax, Is.LessThanOrEqualTo(layout.Panel.yMax - 18f));
+        }
+
+        [Test]
         public void CharacterChoice_UsesRequestedHeaderAndPrompt()
         {
             Assert.That(PrototypeHud.CharacterChoiceHeader, Is.EqualTo("선택해주세요."));
