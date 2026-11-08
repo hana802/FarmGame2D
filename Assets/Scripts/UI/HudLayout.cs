@@ -201,7 +201,7 @@ namespace FarmGame2D.UI
             var panel = new Rect((ReferenceWidth - 820f) * 0.5f, 70f, 820f, 550f);
             return new InventoryHudLayout(
                 panel,
-                new Rect(panel.x + 87f, panel.y + 24f, 128f, 128f),
+                new Rect(panel.x + 99f, panel.y + 36f, 104f, 104f),
                 new Rect(panel.x + 235f, panel.y + 58f, panel.width - 275f, 50f),
                 new Rect(panel.x + 55f, panel.y + 132f, panel.width - 110f, 32f),
                 new Rect(panel.x + 48f, panel.y + 178f, 112f, 44f),

@@ -161,14 +161,11 @@ namespace FarmGame2D.Tests
                 Is.EqualTo(WorldDepthSorter.CalculateOrder(farmHouse.transform.position.y, WorldDepthSorter.BuildingDepthOffset)),
                 "Building depth must cover the player when walking behind the roof while still allowing the player in front at the door.");
 
-            foreach (var structureName in new[] { "Village Square", "Chicken Coop" })
-            {
-                var structure = GameObject.Find(structureName);
-                Assert.That(
-                    structure.GetComponent<SpriteRenderer>().sortingOrder,
-                    Is.EqualTo(WorldDepthSorter.CalculateOrder(structure.transform.position.y, WorldDepthSorter.BuildingDepthOffset)),
-                    $"{structureName} must cover characters walking behind its roof or noticeboard.");
-            }
+            var chickenCoopStructure = GameObject.Find("Chicken Coop");
+            Assert.That(
+                chickenCoopStructure.GetComponent<SpriteRenderer>().sortingOrder,
+                Is.EqualTo(WorldDepthSorter.CalculateOrder(chickenCoopStructure.transform.position.y, WorldDepthSorter.BuildingDepthOffset)),
+                "Chicken Coop must cover characters walking behind its roof.");
 
             var sellingBox = GameObject.Find("Selling Box");
             Assert.That(sellingBox, Is.Not.Null);
@@ -248,10 +245,30 @@ namespace FarmGame2D.Tests
                 }
             }
             Assert.That(GameObject.Find("General Store Entrance").GetComponent<ShopInteractable>(), Is.Not.Null);
+            var villageSquare = GameObject.Find("Village Square");
+            Assert.That(villageSquare, Is.Not.Null);
+            Assert.That(villageSquare.GetComponent<SpriteRenderer>().sortingOrder, Is.EqualTo(2),
+                "The blue plaza artwork must render as walkable ground beneath the player.");
+            Assert.That(villageSquare.GetComponent<Collider2D>(), Is.Null,
+                "The plaza floor itself must not block the player.");
+            var boardArt = GameObject.Find("Village Square Noticeboard Art");
+            Assert.That(boardArt, Is.Not.Null,
+                "The red noticeboard artwork must be separated from the walkable plaza layer.");
+            Assert.That(boardArt.GetComponent<SpriteRenderer>().sprite.name,
+                Is.EqualTo("world_VillageSquareNoticeboard"));
+            Assert.That(boardArt.GetComponent<SpriteRenderer>().sortingOrder,
+                Is.EqualTo(WorldDepthSorter.CalculateOrder(villageSquare.transform.position.y + 3.15f,
+                    WorldDepthSorter.BuildingDepthOffset)),
+                "Only the red noticeboard section should use foreground depth sorting.");
+            Assert.That(GameObject.Find("Village Square Noticeboard Blocker").GetComponent<BoxCollider2D>().isTrigger,
+                Is.False, "The physical noticeboard must remain solid.");
             Assert.That(GameObject.Find("Quest Board").GetComponent<QuestBoardInteractable>(), Is.Not.Null);
             var questBoard = GameObject.Find("Quest Board").GetComponent<QuestBoardInteractable>();
+            Assert.That(questBoard.GetComponent<Collider2D>().isTrigger, Is.True,
+                "The interaction area in front of the noticeboard must not block movement.");
             questBoard.Interact(player);
             Assert.That(GameSession.Instance.QuestBoardOpen, Is.True);
+            Assert.That(StarterQuestProgress.GetAll(GameSession.Instance.Data), Has.Length.EqualTo(5));
             GameSession.Instance.CloseQuestBoard();
 
             var fishingSpot = GameObject.Find("Pond Fishing Spot").GetComponent<FishingSpotInteractable>();

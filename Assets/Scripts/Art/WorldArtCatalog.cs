@@ -39,6 +39,7 @@ namespace FarmGame2D.Art
     {
         private static readonly Dictionary<WorldArtKind, Sprite> sprites = new();
         private static readonly Dictionary<WorldTileKind, Tile> tiles = new();
+        private static Sprite villageSquareNoticeboard;
 
         public static Sprite GetSprite(WorldArtKind kind)
         {
@@ -67,6 +68,30 @@ namespace FarmGame2D.Art
             sprite.name = $"world_{kind}";
             sprites[kind] = sprite;
             return sprite;
+        }
+
+        public static Sprite GetVillageSquareNoticeboardSprite()
+        {
+            if (villageSquareNoticeboard != null)
+            {
+                return villageSquareNoticeboard;
+            }
+
+            var square = GetSprite(WorldArtKind.VillageSquare);
+            if (square == null)
+            {
+                return null;
+            }
+
+            villageSquareNoticeboard = Sprite.Create(
+                square.texture,
+                new Rect(548f, 620f, 440f, 347f),
+                new Vector2(0.5f, 0.5f),
+                square.pixelsPerUnit,
+                0,
+                SpriteMeshType.FullRect);
+            villageSquareNoticeboard.name = "world_VillageSquareNoticeboard";
+            return villageSquareNoticeboard;
         }
 
         public static Tile GetTile(WorldTileKind kind)

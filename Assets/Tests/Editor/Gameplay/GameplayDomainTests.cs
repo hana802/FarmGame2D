@@ -494,6 +494,10 @@ namespace FarmGame2D.Tests
             Assert.That(layout.Portrait.xMax, Is.LessThan(layout.Title.xMin));
             Assert.That(layout.Portrait.yMin, Is.GreaterThan(layout.Panel.yMin));
             Assert.That(layout.Portrait.yMax, Is.LessThan(layout.ToolButtonsY));
+            Assert.That(layout.Portrait.width, Is.LessThanOrEqualTo(104f),
+                "The player portrait must stay inside the illustrated profile frame.");
+            Assert.That(layout.Portrait.height, Is.LessThanOrEqualTo(104f),
+                "The player portrait must not spill into the inventory content area.");
             Assert.That(layout.CloseButton.center.x, Is.EqualTo(layout.Panel.center.x).Within(0.01f));
             Assert.That(layout.CloseButton.width, Is.GreaterThanOrEqualTo(370f),
                 "One close button must cover both baked footer slots.");
@@ -508,6 +512,21 @@ namespace FarmGame2D.Tests
             Assert.That(portrait, Is.Not.Null);
             Assert.That(portrait.rect.width, Is.EqualTo(128f));
             Assert.That(portrait.rect.height, Is.EqualTo(128f));
+        }
+
+        [TestCase(0, "npc_portrait_haram")]
+        [TestCase(2, "npc_portrait_sunja")]
+        [TestCase(3, "npc_portrait_doyun")]
+        [TestCase(4, "npc_portrait_minseo")]
+        [TestCase(5, "npc_portrait_taeo")]
+        public void VillageNpcPortraits_UseDedicatedHighResolutionArt(int portraitId, string expectedName)
+        {
+            var portrait = GameArtCatalog.GetNpcPortrait(portraitId);
+
+            Assert.That(portrait, Is.Not.Null);
+            Assert.That(portrait.name, Is.EqualTo(expectedName));
+            Assert.That(portrait.texture.width, Is.GreaterThanOrEqualTo(1024));
+            Assert.That(portrait.texture.height, Is.GreaterThanOrEqualTo(1024));
         }
 
         [Test]

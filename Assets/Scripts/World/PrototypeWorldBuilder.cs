@@ -119,7 +119,8 @@ namespace FarmGame2D.World
             CreateBuildingArt("Seed And Feed Shop", WorldArtKind.SeedFeedShop, new Vector2(5.8f, 6.7f), townRoot, 4.2f, 1f);
             CreateBuildingArt("West Home", WorldArtKind.WestCottage, new Vector2(-11.5f, 8.2f), townRoot, 3.7f, 0.9f);
             CreateBuildingArt("East Home", WorldArtKind.EastCottage, new Vector2(11.5f, 8.2f), townRoot, 3.7f, 0.9f);
-            var villageSquare = CreateDepthSortedStructureArt("Village Square", WorldArtKind.VillageSquare, new Vector2(0f, 0.5f), townRoot);
+            var villageSquare = CreateWorldArt("Village Square", WorldArtKind.VillageSquare, new Vector2(0f, 0.5f), townRoot, 2);
+            CreateVillageSquareNoticeboardArt(villageSquare.transform);
             CreateVillageSquareBlockers(villageSquare.transform);
 
             CreateNoticeEntrance("Town Hall Entrance", new Vector2(0f, 10.55f), "시청에 들어가기", "시청 내부는 아직 준비 중입니다.", townRoot);
@@ -438,6 +439,27 @@ namespace FarmGame2D.World
             CreateSolidCollider("Village Square Upper Right Planter Blocker", square, new Vector2(1.35f, 2.45f), new Vector2(0.82f, 0.56f));
             CreateSolidCollider("Village Square Lower Left Planter Blocker", square, new Vector2(-1.4f, 0.35f), new Vector2(0.9f, 0.58f));
             CreateSolidCollider("Village Square Lower Right Planter Blocker", square, new Vector2(1.4f, 0.35f), new Vector2(0.9f, 0.58f));
+        }
+
+        private static void CreateVillageSquareNoticeboardArt(Transform square)
+        {
+            var squareSprite = square.GetComponent<SpriteRenderer>().sprite;
+            var boardSprite = WorldArtCatalog.GetVillageSquareNoticeboardSprite();
+            if (squareSprite == null || boardSprite == null)
+            {
+                return;
+            }
+
+            var squareAnchor = squareSprite.rect.position + squareSprite.pivot;
+            var boardCenter = boardSprite.rect.position + boardSprite.pivot;
+            var boardArt = new GameObject("Village Square Noticeboard Art");
+            boardArt.transform.SetParent(square, false);
+            boardArt.transform.localPosition = (boardCenter - squareAnchor) / squareSprite.pixelsPerUnit;
+            var renderer = boardArt.AddComponent<SpriteRenderer>();
+            renderer.sprite = boardSprite;
+            renderer.sortingOrder = WorldDepthSorter.CalculateOrder(
+                square.position.y + 3.15f,
+                WorldDepthSorter.BuildingDepthOffset);
         }
 
         private static void CreateNoticeEntrance(

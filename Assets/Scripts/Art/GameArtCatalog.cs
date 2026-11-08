@@ -117,11 +117,14 @@ namespace FarmGame2D.Art
 
         private static Sprite GetDedicatedNpcPortrait(int portraitId)
         {
-            var resourcePath = portraitId switch
+            var (resourcePath, spriteName) = portraitId switch
             {
-                4 => "Art/NPCs/romance_minseo_portrait_v1",
-                5 => "Art/NPCs/romance_taeo_portrait_v1",
-                _ => null
+                0 => ("Art/NPCs/guide_haram_portrait_v1", "npc_portrait_haram"),
+                2 => ("Art/NPCs/resident_sunja_portrait_v1", "npc_portrait_sunja"),
+                3 => ("Art/NPCs/resident_doyun_portrait_v1", "npc_portrait_doyun"),
+                4 => ("Art/NPCs/romance_minseo_portrait_v1", "npc_portrait_minseo"),
+                5 => ("Art/NPCs/romance_taeo_portrait_v1", "npc_portrait_taeo"),
+                _ => (null, null)
             };
             if (resourcePath == null)
             {
@@ -147,7 +150,7 @@ namespace FarmGame2D.Art
                 texture.width,
                 0,
                 SpriteMeshType.FullRect);
-            sprite.name = portraitId == 4 ? "npc_portrait_minseo" : "npc_portrait_taeo";
+            sprite.name = spriteName;
             npcPortraits[cacheKey] = sprite;
             return sprite;
         }
