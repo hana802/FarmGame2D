@@ -16,6 +16,7 @@ namespace FarmGame2D.Art
         private static readonly int[] NpcFrameLefts = { 80, 240, 400, 560, 816, 976, 1136, 1296 };
 
         private static readonly Dictionary<int, Sprite> playerSprites = new();
+        private static readonly Dictionary<CharacterChoice, Sprite> playerPortraits = new();
         private static readonly Dictionary<int, Sprite> npcSprites = new();
         private static readonly Dictionary<int, Sprite> npcPortraits = new();
         private static readonly Dictionary<FarmTool, Sprite> heldToolSprites = new();
@@ -44,6 +45,32 @@ namespace FarmGame2D.Art
             var frameLefts = choice == CharacterChoice.Female ? FemaleFrameLefts : MaleFrameLefts;
             var rect = new Rect(frameLefts[safeFrame], CharacterRowBottoms[row], PlayerFrameWidth, PlayerFrameHeight);
             return GetOrCreate(playerSprites, key, playerSheet, rect, new Vector2(0.5f, 0.12f));
+        }
+
+        public static Sprite GetPlayerPortrait(CharacterChoice choice)
+        {
+            if (choice == CharacterChoice.None)
+            {
+                return null;
+            }
+
+            playerSheet ??= LoadTexture("Art/Characters/player_pair_spritesheet_concept_v1");
+            if (playerSheet == null)
+            {
+                return null;
+            }
+
+            if (playerPortraits.TryGetValue(choice, out var cached))
+            {
+                return cached;
+            }
+
+            var frameLefts = choice == CharacterChoice.Female ? FemaleFrameLefts : MaleFrameLefts;
+            var rect = new Rect(frameLefts[0] + 16f, CharacterRowBottoms[3] + 76f, 128f, 128f);
+            var portrait = Sprite.Create(playerSheet, rect, new Vector2(0.5f, 0.5f), PixelsPerUnit, 0, SpriteMeshType.FullRect);
+            portrait.name = $"player_portrait_{choice}";
+            playerPortraits[choice] = portrait;
+            return portrait;
         }
 
         public static Sprite GetNpcSprite(int characterRowFromTop, int column = 0)

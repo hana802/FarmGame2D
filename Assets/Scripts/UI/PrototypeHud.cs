@@ -9,6 +9,8 @@ namespace FarmGame2D.UI
     public sealed class PrototypeHud : MonoBehaviour
     {
         public const string ShopTitle = "상점";
+        public const string InventoryTitle = "가방";
+        public const int InventoryTitleFontSize = 30;
 
         public const string CharacterChoiceHeader = "선택해주세요.";
         public const string CharacterChoicePrompt = "당신의 성별을 골라주세요";
@@ -18,12 +20,15 @@ namespace FarmGame2D.UI
         private GUIStyle smallStyle;
         private GUIStyle centeredStyle;
         private GUIStyle titleStyle;
+        private GUIStyle inventoryTitleStyle;
         private GUIStyle speakerStyle;
         private GUIStyle dialogueBodyStyle;
         private GUIStyle panelStyle;
         private Font koreanFont;
         private FarmGuiSkin farmSkin;
         private readonly HudMessageVisibility messageVisibility = new();
+        private readonly ShopPurchaseConfirmation shopPurchaseConfirmation = new();
+        private Vector2 shopScrollPosition;
         private string cloudCodeInput = string.Empty;
         private string cloudPinInput = string.Empty;
 
@@ -133,7 +138,8 @@ namespace FarmGame2D.UI
         {
             var layout = HudLayout.CalculateInventoryLayout();
             farmSkin.DrawWindow(layout.Panel);
-            GUI.Label(layout.Title, "농장 가방", titleStyle);
+            farmSkin.DrawSprite(layout.Portrait, GameArtCatalog.GetPlayerPortrait(session.Data.characterChoice));
+            GUI.Label(layout.Title, InventoryTitle, inventoryTitleStyle);
 
             if (farmSkin.DrawButton(layout.HoeButton, "호미"))
             {
@@ -184,7 +190,7 @@ namespace FarmGame2D.UI
                 $"돌 {session.Data.inventory.Count(GameItem.Stone)} · 구리 {session.Data.inventory.Count(GameItem.CopperOre)} · 철 {session.Data.inventory.Count(GameItem.IronOre)} · 금 {session.Data.inventory.Count(GameItem.GoldOre)}\n물고기 {fishCount} · 잡초 {session.Data.inventory.Count(GameItem.Weed)} · 돈 {session.Data.money}G",
                 smallStyle);
 
-            if (farmSkin.DrawTextButton(layout.CloseButton, "가방 닫기 (I)"))
+            if (farmSkin.DrawButton(layout.CloseButton, "닫기"))
             {
                 session.ToggleInventory();
             }
@@ -368,6 +374,9 @@ namespace FarmGame2D.UI
             farmSkin.DrawWindow(layout.Panel);
             GUI.Label(layout.Title, ShopTitle, titleStyle);
 
+            var previousEnabled = GUI.enabled;
+            GUI.enabled = previousEnabled && !shopPurchaseConfirmation.Pending.HasValue;
+
             if (session.ActiveShop == ShopKind.Mining)
             {
                 DrawMiningShop(session, layout);
@@ -379,63 +388,136 @@ namespace FarmGame2D.UI
 
             if (farmSkin.DrawButton(layout.CloseButton, "닫기"))
             {
+                shopPurchaseConfirmation.Cancel();
                 session.OpenShop(session.ActiveShop);
             }
+
+            GUI.enabled = previousEnabled;
+            DrawPurchaseConfirmation(session, layout);
         }
 
         private void DrawFarmShop(GameSession session, ShopHudLayout layout)
         {
             var crops = CropCatalog.GetForSeason(session.CurrentSeason);
+            var productRows = crops.Count + 3;
+            BeginShopScroll(layout, productRows, 72f);
+            var row = 0;
             for (var index = 0; index < crops.Count; index++)
             {
                 var crop = crops[index];
-                if (farmSkin.DrawButton(layout.GetProductButton(index), $"{crop.Label} 씨앗 5개 — {crop.PackPrice}G"))
+                var displayName = $"{crop.Label} 씨앗 5개";
+                if (farmSkin.DrawButton(layout.GetScrollableProductButton(row), $"{displayName} — {crop.PackPrice}G"))
                 {
-                    session.PurchaseSeed(crop.Seed);
+                    shopPurchaseConfirmation.Request(new ShopPurchaseRequest(
+                        ShopPurchaseKind.Seed,
+                        displayName,
+                        crop.Seed));
                 }
+
+                row++;
             }
 
-            if (farmSkin.DrawButton(layout.GetHalfWidthButton(2, false), "동물 사료 3개 — 15G", true))
+            if (farmSkin.DrawButton(layout.GetScrollableProductButton(row++), "동물 사료 3개 — 15G", true))
             {
-                session.PurchaseFeed();
+                shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Feed, "동물 사료 3개"));
             }
 
-            if (farmSkin.DrawButton(layout.GetHalfWidthButton(2, true), "닭 1마리 — 150G"))
+            if (farmSkin.DrawButton(layout.GetScrollableProductButton(row++), "닭 1마리 — 150G"))
             {
-                session.PurchaseChicken();
+                shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Chicken, "닭 1마리"));
             }
 
-            if (farmSkin.DrawButton(layout.GetProductButton(3), "소 1마리 — 350G", true))
+            if (farmSkin.DrawButton(layout.GetScrollableProductButton(row++), "소 1마리 — 350G", true))
             {
-                session.PurchaseCow();
+                shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Cow, "소 1마리"));
             }
 
-            GUI.Label(layout.GetInfoLabel(4, 64f), $"현재 보유: 닭 {session.Data.ownedChickens}마리 · 소 {session.Data.ownedCows}마리\n먹이를 주면 다음 날 달걀과 우유를 얻습니다.", centeredStyle);
+            GUI.Label(layout.GetScrollableInfoLabel(row, 64f), $"현재 보유: 닭 {session.Data.ownedChickens}마리 · 소 {session.Data.ownedCows}마리\n먹이를 주면 다음 날 달걀과 우유를 얻습니다.", centeredStyle);
+            GUI.EndScrollView();
         }
 
         private void DrawMiningShop(GameSession session, ShopHudLayout layout)
         {
-            if (farmSkin.DrawButton(layout.GetProductButton(0), session.Data.hasPickaxe ? "곡괭이 — 구입 완료" : "곡괭이 — 120G"))
+            const int productRows = 4;
+            BeginShopScroll(layout, productRows, 92f);
+            if (farmSkin.DrawButton(layout.GetScrollableProductButton(0), session.Data.hasPickaxe ? "곡괭이 — 구입 완료" : "곡괭이 — 120G"))
             {
-                session.PurchasePickaxe();
+                shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Pickaxe, "곡괭이"));
             }
 
-            if (farmSkin.DrawButton(layout.GetHalfWidthButton(1, false), "돌 5개 — 30G", true))
+            if (farmSkin.DrawButton(layout.GetScrollableProductButton(1), "돌 5개 — 30G", true))
             {
-                session.PurchaseOre(GameItem.Stone, 5, 30);
+                shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Ore, "돌 5개", GameItem.Stone, 5, 30));
             }
 
-            if (farmSkin.DrawButton(layout.GetHalfWidthButton(1, true), "구리 광석 3개 — 75G"))
+            if (farmSkin.DrawButton(layout.GetScrollableProductButton(2), "구리 광석 3개 — 75G"))
             {
-                session.PurchaseOre(GameItem.CopperOre, 3, 75);
+                shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Ore, "구리 광석 3개", GameItem.CopperOre, 3, 75));
             }
 
-            if (farmSkin.DrawButton(layout.GetProductButton(2), "철 광석 2개 — 110G", true))
+            if (farmSkin.DrawButton(layout.GetScrollableProductButton(3), "철 광석 2개 — 110G", true))
             {
-                session.PurchaseOre(GameItem.IronOre, 2, 110);
+                shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Ore, "철 광석 2개", GameItem.IronOre, 2, 110));
             }
 
-            GUI.Label(layout.GetInfoLabel(3, 90f), "곡괭이를 가방에서 선택한 뒤 마을 서남쪽 광맥을 캐세요.\n채굴한 광물은 판매 상자에 넣거나 이곳에서 바로 구입할 수 있습니다.", centeredStyle);
+            GUI.Label(layout.GetScrollableInfoLabel(productRows, 84f), "곡괭이를 가방에서 선택한 뒤 마을 서남쪽 광맥을 캐세요.\n채굴한 광물은 판매 상자에 넣거나 이곳에서 바로 구입할 수 있습니다.", centeredStyle);
+            GUI.EndScrollView();
+        }
+
+        private void BeginShopScroll(ShopHudLayout layout, int productRows, float infoHeight)
+        {
+            var content = new Rect(
+                0f,
+                0f,
+                layout.ProductsViewport.width - 18f,
+                layout.GetContentHeight(productRows, infoHeight));
+            shopScrollPosition = GUI.BeginScrollView(layout.ProductsViewport, shopScrollPosition, content, false, true);
+        }
+
+        private void DrawPurchaseConfirmation(GameSession session, ShopHudLayout layout)
+        {
+            if (!shopPurchaseConfirmation.Pending.HasValue)
+            {
+                return;
+            }
+
+            var request = shopPurchaseConfirmation.Pending.Value;
+            farmSkin.DrawBanner(layout.ConfirmationPanel);
+            GUI.Label(layout.ConfirmationMessage, ShopPurchaseConfirmation.GetPrompt(request.DisplayName), centeredStyle);
+            if (farmSkin.DrawButton(layout.CancelButton, "취소", true))
+            {
+                shopPurchaseConfirmation.Cancel();
+            }
+
+            if (farmSkin.DrawButton(layout.PurchaseButton, "구매"))
+            {
+                shopPurchaseConfirmation.Confirm(confirmed => ExecutePurchase(session, confirmed));
+            }
+        }
+
+        private static void ExecutePurchase(GameSession session, ShopPurchaseRequest request)
+        {
+            switch (request.Kind)
+            {
+                case ShopPurchaseKind.Seed:
+                    session.PurchaseSeed(request.Item);
+                    break;
+                case ShopPurchaseKind.Feed:
+                    session.PurchaseFeed();
+                    break;
+                case ShopPurchaseKind.Chicken:
+                    session.PurchaseChicken();
+                    break;
+                case ShopPurchaseKind.Cow:
+                    session.PurchaseCow();
+                    break;
+                case ShopPurchaseKind.Pickaxe:
+                    session.PurchasePickaxe();
+                    break;
+                case ShopPurchaseKind.Ore:
+                    session.PurchaseOre(request.Item, request.Quantity, request.Price);
+                    break;
+            }
         }
 
         private void EnsureStyles()
@@ -461,6 +543,10 @@ namespace FarmGame2D.UI
                 fontSize = 24,
                 fontStyle = FontStyle.Bold,
                 alignment = TextAnchor.MiddleCenter
+            };
+            inventoryTitleStyle ??= new GUIStyle(titleStyle)
+            {
+                fontSize = InventoryTitleFontSize
             };
             speakerStyle ??= new GUIStyle(bodyStyle)
             {

@@ -431,11 +431,39 @@ namespace FarmGame2D.Tests
                 "The final inventory row must clear the close button.");
             Assert.That(layout.GetStatsLabel(0, 0).yMax, Is.LessThanOrEqualTo(layout.Panel.yMin + 432f),
                 "Owned-item text must clear the illustrated body/footer divider.");
-            Assert.That(layout.CloseButton.xMin, Is.InRange(layout.Panel.xMin + 225f, layout.Panel.xMin + 255f),
-                "The close action must use the illustrated lower-left button slot.");
+            Assert.That(layout.CloseButton.center.x, Is.EqualTo(layout.Panel.center.x).Within(0.01f),
+                "The close action must be centered over both illustrated footer slots.");
+            Assert.That(layout.CloseButton.width, Is.GreaterThanOrEqualTo(370f));
             Assert.That(layout.CloseButton.yMin, Is.InRange(layout.Panel.yMin + 442f, layout.Panel.yMin + 462f),
                 "The close action must sit inside the illustrated footer slot.");
             Assert.That(layout.CloseButton.yMax, Is.LessThanOrEqualTo(layout.Panel.yMax - 18f));
+        }
+
+        [Test]
+        public void InventoryPresentation_UsesProfileHeaderAndSingleFooterAction()
+        {
+            var layout = HudLayout.CalculateInventoryLayout();
+
+            Assert.That(PrototypeHud.InventoryTitle, Is.EqualTo("가방"));
+            Assert.That(PrototypeHud.InventoryTitleFontSize, Is.GreaterThanOrEqualTo(30));
+            Assert.That(layout.Portrait.xMin, Is.GreaterThan(layout.Panel.xMin + 70f));
+            Assert.That(layout.Portrait.xMax, Is.LessThan(layout.Title.xMin));
+            Assert.That(layout.Portrait.yMin, Is.GreaterThan(layout.Panel.yMin));
+            Assert.That(layout.Portrait.yMax, Is.LessThan(layout.ToolButtonsY));
+            Assert.That(layout.CloseButton.center.x, Is.EqualTo(layout.Panel.center.x).Within(0.01f));
+            Assert.That(layout.CloseButton.width, Is.GreaterThanOrEqualTo(370f),
+                "One close button must cover both baked footer slots.");
+        }
+
+        [TestCase(CharacterChoice.Male)]
+        [TestCase(CharacterChoice.Female)]
+        public void PlayerPortrait_UsesFaceCrop(CharacterChoice choice)
+        {
+            var portrait = GameArtCatalog.GetPlayerPortrait(choice);
+
+            Assert.That(portrait, Is.Not.Null);
+            Assert.That(portrait.rect.width, Is.EqualTo(128f));
+            Assert.That(portrait.rect.height, Is.EqualTo(128f));
         }
 
         [Test]
@@ -473,7 +501,7 @@ namespace FarmGame2D.Tests
                 "The shop title must clear the illustrated decoration on the left side of the header.");
             Assert.That(layout.Title.yMin, Is.GreaterThanOrEqualTo(layout.Panel.yMin + 58f),
                 "The shop title must sit below the illustrated top frame.");
-            Assert.That(layout.GetProductButton(0).yMin, Is.GreaterThanOrEqualTo(layout.Title.yMax + 24f),
+            Assert.That(layout.ProductsViewport.yMin, Is.GreaterThanOrEqualTo(layout.Title.yMax + 24f),
                 "The first product must start below the header.");
             Assert.That(layout.CloseButton.yMax, Is.LessThanOrEqualTo(layout.Panel.yMax - 18f));
         }
@@ -491,6 +519,41 @@ namespace FarmGame2D.Tests
                 "One close button must cover both baked footer slots.");
             Assert.That(layout.CloseButton.yMin, Is.InRange(layout.Panel.yMin + 440f, layout.Panel.yMin + 462f),
                 "The close button must sit over the two illustrated footer slots.");
+        }
+
+        [Test]
+        public void ShopLayout_ProvidesScrollableProductsAndConfirmationActions()
+        {
+            var layout = HudLayout.CalculateShopLayout();
+
+            Assert.That(layout.GetContentHeight(5, 72f), Is.GreaterThan(layout.ProductsViewport.height));
+            Assert.That(layout.ProductsViewport.yMax, Is.LessThan(layout.CloseButton.yMin));
+            Assert.That(layout.ConfirmationMessage.xMin, Is.GreaterThan(layout.ConfirmationPanel.xMin));
+            Assert.That(layout.CancelButton.yMin, Is.GreaterThan(layout.ConfirmationMessage.yMax));
+            Assert.That(layout.CancelButton.xMax, Is.LessThan(layout.PurchaseButton.xMin));
+            Assert.That(layout.CancelButton.center.y, Is.EqualTo(layout.PurchaseButton.center.y).Within(0.01f));
+        }
+
+        [Test]
+        public void ShopPurchaseConfirmation_WaitsForExplicitPurchaseAndSupportsCancel()
+        {
+            var confirmation = new ShopPurchaseConfirmation();
+            var request = new ShopPurchaseRequest(ShopPurchaseKind.Seed, "감자 씨앗 5개", GameItem.PotatoSeed);
+            var purchaseCount = 0;
+
+            confirmation.Request(request);
+
+            Assert.That(purchaseCount, Is.Zero, "Selecting a product must not purchase it immediately.");
+            Assert.That(ShopPurchaseConfirmation.GetPrompt(request.DisplayName),
+                Is.EqualTo("\"감자 씨앗 5개\"를 구매하시겠습니까?"));
+            confirmation.Cancel();
+            Assert.That(confirmation.Confirm(_ => purchaseCount++), Is.False);
+            Assert.That(purchaseCount, Is.Zero);
+
+            confirmation.Request(request);
+            Assert.That(confirmation.Confirm(_ => purchaseCount++), Is.True);
+            Assert.That(purchaseCount, Is.EqualTo(1));
+            Assert.That(confirmation.Pending.HasValue, Is.False);
         }
 
         [Test]

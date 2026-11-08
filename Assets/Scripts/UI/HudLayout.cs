@@ -36,6 +36,7 @@ namespace FarmGame2D.UI
     {
         public InventoryHudLayout(
             Rect panel,
+            Rect portrait,
             Rect title,
             Rect description,
             Rect hoeButton,
@@ -47,6 +48,7 @@ namespace FarmGame2D.UI
             Rect closeButton)
         {
             Panel = panel;
+            Portrait = portrait;
             Title = title;
             Description = description;
             HoeButton = hoeButton;
@@ -59,6 +61,7 @@ namespace FarmGame2D.UI
         }
 
         public Rect Panel { get; }
+        public Rect Portrait { get; }
         public Rect Title { get; }
         public Rect Description { get; }
         public Rect HoeButton { get; }
@@ -118,32 +121,48 @@ namespace FarmGame2D.UI
 
     public readonly struct ShopHudLayout
     {
-        public ShopHudLayout(Rect panel, Rect title, float firstProductY, Rect closeButton)
+        public ShopHudLayout(
+            Rect panel,
+            Rect title,
+            Rect productsViewport,
+            Rect closeButton,
+            Rect confirmationPanel,
+            Rect confirmationMessage,
+            Rect cancelButton,
+            Rect purchaseButton)
         {
             Panel = panel;
             Title = title;
-            FirstProductY = firstProductY;
+            ProductsViewport = productsViewport;
             CloseButton = closeButton;
+            ConfirmationPanel = confirmationPanel;
+            ConfirmationMessage = confirmationMessage;
+            CancelButton = cancelButton;
+            PurchaseButton = purchaseButton;
         }
 
         public Rect Panel { get; }
         public Rect Title { get; }
-        public float FirstProductY { get; }
+        public Rect ProductsViewport { get; }
         public Rect CloseButton { get; }
+        public Rect ConfirmationPanel { get; }
+        public Rect ConfirmationMessage { get; }
+        public Rect CancelButton { get; }
+        public Rect PurchaseButton { get; }
 
-        public Rect GetProductButton(int index)
+        public Rect GetScrollableProductButton(int row)
         {
-            return new Rect(Panel.x + 45f, FirstProductY + (index * 58f), 530f, 48f);
+            return new Rect(8f, 4f + (row * 58f), ProductsViewport.width - 34f, 48f);
         }
 
-        public Rect GetHalfWidthButton(int row, bool right)
+        public Rect GetScrollableInfoLabel(int row, float height)
         {
-            return new Rect(Panel.x + (right ? 325f : 45f), FirstProductY + (row * 58f), 250f, 48f);
+            return new Rect(18f, 4f + (row * 58f), ProductsViewport.width - 54f, height);
         }
 
-        public Rect GetInfoLabel(int row, float height)
+        public float GetContentHeight(int productRows, float infoHeight)
         {
-            return new Rect(Panel.x + 55f, FirstProductY + (row * 58f), 510f, height);
+            return Mathf.Max(ProductsViewport.height, 8f + (productRows * 58f) + infoHeight);
         }
     }
 
@@ -179,7 +198,8 @@ namespace FarmGame2D.UI
             var panel = new Rect((ReferenceWidth - 820f) * 0.5f, 70f, 820f, 550f);
             return new InventoryHudLayout(
                 panel,
-                new Rect(panel.x + 235f, panel.y + 60f, panel.width - 275f, 38f),
+                new Rect(panel.x + 87f, panel.y + 24f, 128f, 128f),
+                new Rect(panel.x + 235f, panel.y + 58f, panel.width - 275f, 50f),
                 new Rect(panel.x + 55f, panel.y + 132f, panel.width - 110f, 32f),
                 new Rect(panel.x + 48f, panel.y + 178f, 126f, 44f),
                 new Rect(panel.x + 198f, panel.y + 178f, 126f, 44f),
@@ -187,7 +207,7 @@ namespace FarmGame2D.UI
                 new Rect(panel.x + 498f, panel.y + 178f, 126f, 44f),
                 new Rect(panel.x + 648f, panel.y + 178f, 126f, 44f),
                 panel.y + 382f,
-                new Rect(panel.x + 235f, panel.y + 449f, 170f, 36f));
+                new Rect(panel.x + 220f, panel.y + 447f, 380f, 40f));
         }
 
         public static PhoneHudLayout CalculatePhoneLayout()
@@ -216,8 +236,12 @@ namespace FarmGame2D.UI
             return new ShopHudLayout(
                 panel,
                 new Rect(panel.x + 120f, panel.y + 58f, 380f, 38f),
-                panel.y + 146f,
-                new Rect(panel.x + 170f, panel.y + 446f, 280f, 44f));
+                new Rect(panel.x + 45f, panel.y + 130f, 530f, 286f),
+                new Rect(panel.x + 170f, panel.y + 446f, 280f, 44f),
+                new Rect(panel.x + 80f, panel.y + 178f, 460f, 188f),
+                new Rect(panel.x + 170f, panel.y + 198f, 340f, 76f),
+                new Rect(panel.x + 150f, panel.y + 292f, 135f, 48f),
+                new Rect(panel.x + 335f, panel.y + 292f, 135f, 48f));
         }
 
         private static Rect ScaleDialogueSlot(Rect panel, Rect atlasSlot)
