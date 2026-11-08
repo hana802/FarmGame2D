@@ -6,21 +6,29 @@ namespace FarmGame2D.Interactions
     public sealed class DialogueInteractable : InteractableBehaviour
     {
         private string speaker = "주민";
-        private string line = "좋은 하루예요.";
+        private NpcDialogueSequence dialogue = new(new[] { "좋은 하루예요." });
         private int portraitRow = -1;
 
         public override string Prompt => $"{speaker}와 대화";
+        public int DialogueCount => dialogue.Count;
 
-        public void Configure(string speakerName, string dialogue, int npcPortraitRow = -1)
+        public void Configure(string speakerName, string line, int npcPortraitRow = -1)
+        {
+            Configure(speakerName, new[] { line }, npcPortraitRow);
+        }
+
+        public void Configure(string speakerName, string[] lines, int npcPortraitRow = -1)
         {
             speaker = speakerName;
-            line = dialogue;
+            dialogue = new NpcDialogueSequence(lines);
             portraitRow = npcPortraitRow;
         }
 
         public override void Interact(PrototypePlayerController player)
         {
-            GameSession.Instance?.ShowDialogue(speaker, line, portraitRow);
+            GetComponent<FarmGame2D.World.NpcSocialAgent>()?.CancelConversation();
+            GetComponent<FarmGame2D.World.WanderingMover>()?.Pause(4f);
+            GameSession.Instance?.ShowDialogue(speaker, dialogue.TakeNext(), portraitRow);
         }
     }
 
@@ -49,11 +57,20 @@ namespace FarmGame2D.Interactions
 
     public sealed class ShopInteractable : InteractableBehaviour
     {
-        public override string Prompt => "씨앗·사료 상점 열기";
+        private ShopKind shopKind = ShopKind.SeedsAndAnimals;
+
+        public override string Prompt => shopKind == ShopKind.Mining
+            ? "광물 상점 열기"
+            : "씨앗·동물 상점 열기";
+
+        public void Configure(ShopKind kind)
+        {
+            shopKind = kind;
+        }
 
         public override void Interact(PrototypePlayerController player)
         {
-            GameSession.Instance?.ToggleShop();
+            GameSession.Instance?.OpenShop(shopKind);
         }
     }
 
@@ -88,7 +105,7 @@ namespace FarmGame2D.Interactions
 
     public sealed class SellBoxInteractable : InteractableBehaviour
     {
-        public override string Prompt => "밀과 달걀 모두 판매";
+        public override string Prompt => "농산물과 광물 모두 판매";
 
         public override void Interact(PrototypePlayerController player)
         {
@@ -102,7 +119,91 @@ namespace FarmGame2D.Interactions
 
         public override void Interact(PrototypePlayerController player)
         {
+            GetComponent<FarmGame2D.World.WanderingMover>()?.Pause(1.5f);
             GameSession.Instance?.InteractChicken();
+        }
+    }
+
+    public sealed class CowInteractable : InteractableBehaviour
+    {
+        public override string Prompt => "소 돌보기";
+
+        public override void Interact(PrototypePlayerController player)
+        {
+            GetComponent<FarmGame2D.World.WanderingMover>()?.Pause(1.5f);
+            GameSession.Instance?.InteractCow();
+        }
+    }
+
+    public sealed class MiningNodeInteractable : InteractableBehaviour
+    {
+        private int nodeId;
+        private UnityEngine.SpriteRenderer nodeRenderer;
+
+        public override string Prompt
+        {
+            get
+            {
+                var session = GameSession.Instance;
+                if (session == null || nodeId >= session.Data.miningNodes.Count)
+                {
+                    return "광맥 확인";
+                }
+
+                var node = session.Data.miningNodes[nodeId];
+                return node.IsAvailable
+                    ? $"곡괭이로 {ItemCatalog.GetLabel(node.ore)} 캐기"
+                    : $"광맥 재생까지 {node.regrowDaysRemaining}일";
+            }
+        }
+
+        public void Configure(int id)
+        {
+            nodeId = id;
+            nodeRenderer = GetComponent<UnityEngine.SpriteRenderer>();
+            if (GameSession.Instance != null)
+            {
+                GameSession.Instance.StateChanged += Refresh;
+            }
+
+            Refresh();
+        }
+
+        private void OnDestroy()
+        {
+            if (GameSession.Instance != null)
+            {
+                GameSession.Instance.StateChanged -= Refresh;
+            }
+        }
+
+        public override void Interact(PrototypePlayerController player)
+        {
+            GameSession.Instance?.MineNode(nodeId);
+        }
+
+        private void Refresh()
+        {
+            var session = GameSession.Instance;
+            if (nodeRenderer == null || session == null || nodeId >= session.Data.miningNodes.Count)
+            {
+                return;
+            }
+
+            nodeRenderer.color = session.Data.miningNodes[nodeId].IsAvailable
+                ? GetOreColor(session.Data.miningNodes[nodeId].ore)
+                : new UnityEngine.Color(0.32f, 0.3f, 0.28f);
+        }
+
+        private static UnityEngine.Color GetOreColor(GameItem ore)
+        {
+            return ore switch
+            {
+                GameItem.CopperOre => new UnityEngine.Color(0.72f, 0.38f, 0.2f),
+                GameItem.IronOre => new UnityEngine.Color(0.55f, 0.62f, 0.68f),
+                GameItem.GoldOre => new UnityEngine.Color(0.95f, 0.72f, 0.18f),
+                _ => new UnityEngine.Color(0.46f, 0.44f, 0.42f)
+            };
         }
     }
 

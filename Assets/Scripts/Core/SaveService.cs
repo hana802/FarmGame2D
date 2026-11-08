@@ -7,8 +7,20 @@ namespace FarmGame2D.Core
     public sealed class SaveService
     {
         private const string FileName = "farmgame2d-save.json";
+        private readonly string explicitSavePath;
 
-        public string SavePath => Path.Combine(Application.persistentDataPath, FileName);
+        public SaveService()
+        {
+        }
+
+        public SaveService(string savePath)
+        {
+            explicitSavePath = savePath;
+        }
+
+        public string SavePath => string.IsNullOrWhiteSpace(explicitSavePath)
+            ? Path.Combine(Application.persistentDataPath, FileName)
+            : explicitSavePath;
 
         public bool TryLoad(out GameSaveData data)
         {
@@ -20,8 +32,7 @@ namespace FarmGame2D.Core
 
             try
             {
-                data = JsonUtility.FromJson<GameSaveData>(File.ReadAllText(SavePath));
-                return data != null && data.version == 1;
+                return TryDeserialize(File.ReadAllText(SavePath), out data);
             }
             catch (Exception exception)
             {
@@ -30,10 +41,57 @@ namespace FarmGame2D.Core
             }
         }
 
+        public bool TryDeserialize(string json, out GameSaveData data)
+        {
+            data = null;
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return false;
+            }
+
+            try
+            {
+                data = JsonUtility.FromJson<GameSaveData>(json);
+                return data != null
+                    && data.version >= 1
+                    && data.version <= GameSaveData.CurrentVersion;
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning($"Save parse failed: {exception.Message}");
+                return false;
+            }
+        }
+
+        public bool TrySerialize(GameSaveData data, out string json)
+        {
+            json = string.Empty;
+            if (data == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                json = JsonUtility.ToJson(data, true);
+                return !string.IsNullOrWhiteSpace(json);
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning($"Save serialization failed: {exception.Message}");
+                return false;
+            }
+        }
+
         public bool TrySave(GameSaveData data)
         {
             try
             {
+                if (!TrySerialize(data, out var json))
+                {
+                    return false;
+                }
+
                 var directory = Path.GetDirectoryName(SavePath);
                 if (!string.IsNullOrEmpty(directory))
                 {
@@ -41,7 +99,7 @@ namespace FarmGame2D.Core
                 }
 
                 var temporaryPath = SavePath + ".tmp";
-                File.WriteAllText(temporaryPath, JsonUtility.ToJson(data, true));
+                File.WriteAllText(temporaryPath, json);
                 File.Copy(temporaryPath, SavePath, true);
                 File.Delete(temporaryPath);
                 return true;

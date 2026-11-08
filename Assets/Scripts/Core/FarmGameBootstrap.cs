@@ -58,6 +58,14 @@ namespace FarmGame2D.Core
 
             cameraFollow.Configure(player.transform);
 
+            var atmosphere = camera.GetComponent<SeasonalAtmosphereController>();
+            if (atmosphere == null)
+            {
+                atmosphere = camera.gameObject.AddComponent<SeasonalAtmosphereController>();
+            }
+
+            atmosphere.Configure(player.transform);
+
             if (FindAnyObjectByType<PrototypeHud>() == null)
             {
                 new GameObject("Prototype HUD").AddComponent<PrototypeHud>().Configure(player);

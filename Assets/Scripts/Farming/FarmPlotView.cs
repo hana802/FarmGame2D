@@ -1,3 +1,4 @@
+using FarmGame2D.Art;
 using FarmGame2D.Core;
 using FarmGame2D.Interactions;
 using FarmGame2D.Player;
@@ -44,11 +45,11 @@ namespace FarmGame2D.Farming
 
             return session.Data.farmPlots[plotIndex].state switch
             {
-                SoilState.Empty => "밭 갈기",
-                SoilState.Tilled => "밀 씨앗 심기",
-                SoilState.Planted => "물 주기",
+                SoilState.Empty => "호미로 새 밭 만들기",
+                SoilState.Tilled => $"{ItemCatalog.GetLabel(session.SelectedSeed)} 심기",
+                SoilState.Planted => $"{GetCropLabel(session.Data.farmPlots[plotIndex])}에 물 주기",
                 SoilState.Watered => "물이 충분합니다",
-                SoilState.Ready => "밀 수확",
+                SoilState.Ready => $"{GetCropLabel(session.Data.farmPlots[plotIndex])} 수확",
                 _ => "밭 확인"
             };
         }
@@ -60,7 +61,31 @@ namespace FarmGame2D.Farming
                 return;
             }
 
-            plotRenderer.color = GameSession.Instance.Data.farmPlots[plotIndex].state switch
+            if (plotIndex >= GameSession.Instance.Data.farmPlots.Count)
+            {
+                return;
+            }
+
+            var state = GameSession.Instance.Data.farmPlots[plotIndex].state;
+            var stateSprite = FarmPlotArtCatalog.GetSprite(state);
+            if (stateSprite != null)
+            {
+                plotRenderer.sprite = stateSprite;
+                plotRenderer.color = Color.white;
+                return;
+            }
+
+            plotRenderer.color = GetFallbackColor(state);
+        }
+
+        private static string GetCropLabel(FarmPlotData plot)
+        {
+            return CropCatalog.TryGetBySeed(plot.plantedSeed, out var crop) ? crop.Label : "작물";
+        }
+
+        private static Color GetFallbackColor(SoilState state)
+        {
+            return state switch
             {
                 SoilState.Empty => new Color(0.55f, 0.38f, 0.2f),
                 SoilState.Tilled => new Color(0.35f, 0.2f, 0.12f),

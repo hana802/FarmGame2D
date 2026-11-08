@@ -6,14 +6,32 @@ namespace FarmGame2D.Core
         Wheat,
         Feed,
         Egg,
-        Weed
+        Weed,
+        PotatoSeed,
+        Potato,
+        StrawberrySeed,
+        Strawberry,
+        TomatoSeed,
+        Tomato,
+        CornSeed,
+        Corn,
+        PumpkinSeed,
+        Pumpkin,
+        SweetPotatoSeed,
+        SweetPotato,
+        Milk,
+        Stone,
+        CopperOre,
+        IronOre,
+        GoldOre
     }
 
     public enum FarmTool
     {
         Hoe,
         Seeds,
-        WateringCan
+        WateringCan,
+        Pickaxe
     }
 
     public enum CharacterChoice
@@ -29,5 +47,11 @@ namespace FarmGame2D.Core
         Summer,
         Autumn,
         Winter
+    }
+
+    public enum ShopKind
+    {
+        SeedsAndAnimals,
+        Mining
     }
 }

@@ -11,7 +11,10 @@ namespace FarmGame2D.World
     public sealed class PrototypeWorldBuilder : MonoBehaviour
     {
         private readonly List<SpriteRenderer> trees = new();
+        private static readonly BoundsInt IslandGroundBounds = new(-18, -16, 0, 37, 35, 1);
+        private static readonly BoundsInt IslandOceanBounds = new(-28, -26, 0, 57, 55, 1);
         private Tilemap groundTilemap;
+        private Tilemap oceanTilemap;
         private SpriteRenderer waterRenderer;
 
         public void Build(GameSession session)
@@ -20,6 +23,7 @@ namespace FarmGame2D.World
             BuildFarm(session);
             BuildMainStreetTown(session.Data.worldSeed);
             BuildWeeds(session);
+            BuildMiningArea(session);
             BuildBoundaries();
             session.StateChanged += RefreshSeason;
             RefreshSeason();
@@ -39,9 +43,11 @@ namespace FarmGame2D.World
             gridObject.transform.SetParent(transform);
             gridObject.AddComponent<Grid>();
 
+            oceanTilemap = CreateTilemap(gridObject.transform, "Island Ocean", -10);
             groundTilemap = CreateTilemap(gridObject.transform, "Seasonal Ground", 0);
             var roadTilemap = CreateTilemap(gridObject.transform, "Main Street", 1);
-            FillRectangle(groundTilemap, new BoundsInt(-18, -16, 0, 37, 35, 1), WorldArtCatalog.GetTile(WorldTileKind.Grass));
+            FillRectangle(oceanTilemap, IslandOceanBounds, WorldArtCatalog.GetTile(WorldTileKind.Ocean));
+            FillRectangle(groundTilemap, IslandGroundBounds, WorldArtCatalog.GetTile(WorldTileKind.Grass));
 
             var roadTile = WorldArtCatalog.GetTile(WorldTileKind.StonePath);
             FillRectangle(roadTilemap, new BoundsInt(-1, -16, 0, 3, 30, 1), roadTile);
@@ -54,20 +60,33 @@ namespace FarmGame2D.World
             var farmRoot = new GameObject("Farm").transform;
             farmRoot.SetParent(transform);
             CreateBuildingArt("Farm House", WorldArtKind.FarmHouse, new Vector2(6f, -12f), farmRoot, 4.6f, 1.1f);
-            CreateWorldArt("Chicken Coop", WorldArtKind.ChickenCoop, new Vector2(-6.3f, -9.6f), farmRoot, 3, new Vector2(3.1f, 0.85f), new Vector2(0f, 1.05f));
+            CreateDepthSortedStructureArt("Chicken Coop", WorldArtKind.ChickenCoop, new Vector2(-6.3f, -9.6f), farmRoot, new Vector2(3.1f, 0.85f), new Vector2(0f, 1.05f));
 
             var entrance = CreateInteractable<DoorInteractable>("Farm House Door", new Vector2(6f, -12.25f), new Vector2(1.1f, 0.55f), Color.clear, farmRoot);
             entrance.Configure(new Vector2(40f, -11.2f), "집에 들어가기", "농장 집 안으로 들어왔습니다.");
-            CreateInteractable<SellBoxInteractable>("Selling Box", new Vector2(3.5f, -7.5f), Vector2.one, new Color(0.4f, 0.2f, 0.08f), farmRoot);
-            CreateArtInteractable<ChickenInteractable>("Chicken", WorldArtKind.Chicken, new Vector2(-6.1f, -12.4f), new Vector2(0.8f, 0.8f), farmRoot);
+            CreateAnimalHerd(
+                "Chicken Herd",
+                session,
+                FarmAnimalKind.Chicken,
+                new WanderArea(new Vector2(-6.2f, -12.35f), new Vector2(1.8f, 0.9f)),
+                0.7f,
+                101,
+                farmRoot);
+            CreateAnimalHerd(
+                "Cow Herd",
+                session,
+                FarmAnimalKind.Cow,
+                new WanderArea(new Vector2(-9.8f, -11.2f), new Vector2(1.4f, 1.25f)),
+                0.42f,
+                202,
+                farmRoot);
 
             for (var index = 0; index < session.Data.farmPlots.Count; index++)
             {
-                var column = index % 3;
-                var row = index / 3;
+                var plotData = session.Data.farmPlots[index];
                 var plot = PrototypeSpriteFactory.CreateBlock(
                     $"Wheat Plot {index + 1}",
-                    new Vector2(-4.5f + (column * 1.4f), -10.5f + (row * 1.4f)),
+                    FarmFieldLayout.GetWorldPosition(plotData.gridX, plotData.gridY),
                     new Vector2(1.1f, 1.1f),
                     Color.white,
                     farmRoot,
@@ -108,25 +127,57 @@ namespace FarmGame2D.World
             CreateBuildingArt("Seed And Feed Shop", WorldArtKind.SeedFeedShop, new Vector2(5.8f, 6.7f), townRoot, 4.2f, 1f);
             CreateBuildingArt("West Home", WorldArtKind.WestCottage, new Vector2(-11.5f, 8.2f), townRoot, 3.7f, 0.9f);
             CreateBuildingArt("East Home", WorldArtKind.EastCottage, new Vector2(11.5f, 8.2f), townRoot, 3.7f, 0.9f);
-            CreateWorldArt("Village Square", WorldArtKind.VillageSquare, new Vector2(0f, 0.5f), townRoot, 2);
+            var villageSquare = CreateDepthSortedStructureArt("Village Square", WorldArtKind.VillageSquare, new Vector2(0f, 0.5f), townRoot);
+            CreateVillageSquareBlockers(villageSquare.transform);
 
             CreateNoticeEntrance("Town Hall Entrance", new Vector2(0f, 10.55f), "시청에 들어가기", "시청 내부는 아직 준비 중입니다.", townRoot);
-            CreateNoticeEntrance("General Store Entrance", new Vector2(-5.8f, 6.25f), "잡화점에 들어가기", "잡화점 내부는 아직 준비 중입니다.", townRoot);
-            CreateInteractable<ShopInteractable>("Seed And Feed Shop Entrance", new Vector2(5.8f, 6.25f), new Vector2(1.2f, 0.55f), Color.clear, townRoot);
+            var miningShop = CreateInteractable<ShopInteractable>("General Store Entrance", new Vector2(-5.8f, 6.25f), new Vector2(1.2f, 0.55f), Color.clear, townRoot);
+            miningShop.Configure(ShopKind.Mining);
+            var farmShop = CreateInteractable<ShopInteractable>("Seed And Feed Shop Entrance", new Vector2(5.8f, 6.25f), new Vector2(1.2f, 0.55f), Color.clear, townRoot);
+            farmShop.Configure(ShopKind.SeedsAndAnimals);
+            CreateArtInteractable<SellBoxInteractable>("Selling Box", WorldArtKind.SellingBox, new Vector2(9.35f, 6.05f), new Vector2(1.2f, 0.85f), townRoot);
             CreateNoticeEntrance("West Home Entrance", new Vector2(-11.5f, 7.75f), "서쪽 집에 들어가기", "문이 잠겨 있습니다. 집주인을 먼저 만나보세요.", townRoot);
             CreateNoticeEntrance("East Home Entrance", new Vector2(11.5f, 7.75f), "동쪽 집에 들어가기", "문이 잠겨 있습니다. 집주인을 먼저 만나보세요.", townRoot);
             var board = CreateInteractable<DialogueInteractable>("Quest Board", new Vector2(0f, 4.2f), new Vector2(1.4f, 1f), Color.clear, townRoot);
-            board.Configure("광장 게시판", "밀 3개를 수확하면 100G를 드립니다. 휴대폰에서 진행도를 확인하세요.");
+            board.Configure("광장 게시판", "초보 농부 퀘스트 3개가 준비되어 있습니다. 휴대폰에서 전체 진행도를 확인하세요.");
+            var villageRoutes = CreateVillageRouteNetwork();
 
             var guide = CreateNpc("Guide", new Vector2(3f, 3.5f), new Color(0.8f, 0.58f, 0.25f), townRoot);
             ApplyNpcArt(guide, 0);
-            guide.Configure("안내자 하람", "I로 가방을 열어 도구를 꺼내고, E로 밭과 물건을 사용하세요. P는 휴대폰입니다.", 0);
+            guide.Configure("안내자 하람", new[]
+            {
+                "I로 가방을 열어 씨앗과 도구를 고르고, E로 땅을 갈거나 광맥을 캐세요. P는 휴대폰입니다.",
+                "호미로 땅을 간 뒤 씨앗을 들고 심어 보세요. 마지막에는 물뿌리개로 물을 주면 됩니다.",
+                "씨앗은 계절에 맞아야 잘 자라요. 상점에서 지금 계절의 씨앗을 확인해 보세요.",
+                "작물은 하루아침에 자라지 않아요. 물을 준 뒤 집에서 자고 다음 날 다시 살펴보세요.",
+                "판매 상자는 씨앗·동물 상점 오른쪽에 있어요. 수확물을 들고 멀리 돌아갈 필요가 없답니다.",
+                "광산에서는 곡괭이가 필요해요. 먼저 서쪽 광물 상점에서 준비하는 게 좋습니다."
+            }, 0);
+            ConfigureNpcMovement(guide, villageRoutes, 6, 0.72f, seed + 11, new Vector2(0f, 9.5f), "안내자 하람");
             var elder = CreateNpc("Elder", new Vector2(-7f, 5f), new Color(0.55f, 0.38f, 0.42f), townRoot);
             ApplyNpcArt(elder, 2);
-            elder.Configure("주민 순자", "계절마다 나무와 들판의 색이 달라진답니다.", 2);
+            elder.Configure("주민 순자", new[]
+            {
+                "계절마다 나무와 들판의 색이 달라진답니다.",
+                "봄에는 감자와 딸기가 잘 자라요. 밭을 너무 빽빽하게만 쓰지 마세요.",
+                "여름 햇볕에는 토마토와 옥수수가 힘을 내지요.",
+                "가을 호박은 기다린 만큼 든든한 수확을 안겨 준답니다.",
+                "겨울에도 밀은 심을 수 있어요. 빈 밭이라고 너무 걱정하지 마세요.",
+                "동물들은 매일 살펴봐 주면 좋은 선물을 건네곤 한답니다."
+            }, 2);
+            ConfigureNpcMovement(elder, villageRoutes, 12, 0.6f, seed + 22, new Vector2(-11.5f, 7.2f), "주민 순자");
             var villager = CreateNpc("Young Villager", new Vector2(8f, 5f), new Color(0.35f, 0.48f, 0.62f), townRoot);
             ApplyNpcArt(villager, 3);
-            villager.Configure("주민 도윤", "수확한 밀과 달걀은 농장의 판매 상자에 넣어보세요.", 3);
+            villager.Configure("주민 도윤", new[]
+            {
+                "작물, 축산물, 광석은 상점 옆 판매 상자에 한꺼번에 넣을 수 있어요.",
+                "판매 상자는 씨앗·동물 상점 오른쪽에 있어요. 이제 밭 주변이 훨씬 넓어졌죠?",
+                "돈이 모이면 닭부터 키워 보세요. 달걀은 꾸준히 팔기 좋아요.",
+                "광석도 판매할 수 있지만 필요한 물건을 만들 날을 위해 조금 남겨 두는 것도 좋아요.",
+                "가방에서 씨앗 종류를 바꿀 수 있어요. 계절 표시를 꼭 확인하세요.",
+                "마을 사람들에게 자주 말을 걸어 보세요. 그날그날 다른 이야기를 들을 수 있을 거예요."
+            }, 3);
+            ConfigureNpcMovement(villager, villageRoutes, 13, 0.75f, seed + 33, new Vector2(11.5f, 7.2f), "주민 도윤");
 
             var water = CreateWorldArt("Pond", WorldArtKind.Pond, new Vector2(-11.5f, 1.3f), townRoot, 2, new Vector2(4.5f, 2.4f));
             waterRenderer = water.GetComponent<SpriteRenderer>();
@@ -141,7 +192,7 @@ namespace FarmGame2D.World
             {
                 var x = random.Next(-16, 17);
                 var y = random.Next(-14, 17);
-                if (!CanPlaceTree(new Vector2(x, y)))
+                if (!WorldPlacementRules.CanPlaceTree(new Vector2(x, y)))
                 {
                     continue;
                 }
@@ -192,34 +243,30 @@ namespace FarmGame2D.World
             }
         }
 
-        private static bool CanPlaceTree(Vector2 position)
+        private void BuildMiningArea(GameSession session)
         {
-            if (Mathf.Abs(position.x) < 3f || (position.y < -6f && position.x > -7f && position.x < 11f))
+            var miningRoot = new GameObject("Mining Area").transform;
+            miningRoot.SetParent(transform);
+            var positions = new[]
             {
-                return false;
-            }
-
-            var reservedAreas = new[]
-            {
-                new Bounds(new Vector3(-12f, -2f), new Vector3(4f, 4f)),
-                new Bounds(new Vector3(-11f, 2f), new Vector3(7f, 5f)),
-                new Bounds(new Vector3(0f, 1.2f), new Vector3(10f, 9f)),
-                new Bounds(new Vector3(0f, 11f), new Vector3(8f, 6f)),
-                new Bounds(new Vector3(-5.8f, 6.7f), new Vector3(6f, 5f)),
-                new Bounds(new Vector3(5.8f, 6.7f), new Vector3(6f, 5f)),
-                new Bounds(new Vector3(-11.5f, 8.2f), new Vector3(5.5f, 5f)),
-                new Bounds(new Vector3(11.5f, 8.2f), new Vector3(5.5f, 5f))
+                new Vector2(-15f, -11.5f),
+                new Vector2(-13.2f, -11.8f),
+                new Vector2(-11.5f, -10.2f),
+                new Vector2(-15.3f, -8.8f),
+                new Vector2(-13.4f, -8.4f),
+                new Vector2(-11.2f, -7.8f)
             };
 
-            foreach (var area in reservedAreas)
+            for (var index = 0; index < session.Data.miningNodes.Count && index < positions.Length; index++)
             {
-                if (area.Contains(position))
-                {
-                    return false;
-                }
+                var rock = CreateArtInteractable<MiningNodeInteractable>(
+                    $"Mining Node {index + 1}",
+                    WorldArtKind.MiningRock,
+                    positions[index],
+                    new Vector2(1.1f, 0.9f),
+                    miningRoot);
+                rock.Configure(index);
             }
-
-            return true;
         }
 
         private void BuildBoundaries()
@@ -239,6 +286,10 @@ namespace FarmGame2D.World
 
             var palette = GetSeasonPalette(GameSession.Instance.CurrentSeason);
             groundTilemap.color = palette.ground;
+            if (oceanTilemap != null)
+            {
+                oceanTilemap.color = Color.Lerp(Color.white, palette.water, 0.25f);
+            }
             if (waterRenderer != null)
             {
                 waterRenderer.color = palette.water;
@@ -254,10 +305,10 @@ namespace FarmGame2D.World
         {
             return season switch
             {
-                Season.Spring => (Color.white, Color.white, new Color(0.9f, 1f, 1f)),
-                Season.Summer => (new Color(0.9f, 1f, 0.88f), new Color(0.82f, 0.98f, 0.78f), new Color(0.85f, 0.97f, 1f)),
-                Season.Autumn => (new Color(1f, 0.82f, 0.58f), new Color(1f, 0.68f, 0.36f), new Color(0.9f, 0.94f, 1f)),
-                Season.Winter => (new Color(0.9f, 0.95f, 1f), new Color(0.78f, 0.9f, 1f), new Color(0.85f, 0.95f, 1f)),
+                Season.Spring => (new Color(1f, 0.94f, 0.96f), new Color(1f, 0.82f, 0.9f), new Color(0.82f, 0.96f, 1f)),
+                Season.Summer => (new Color(0.78f, 1f, 0.68f), new Color(0.62f, 0.94f, 0.52f), new Color(0.72f, 0.94f, 1f)),
+                Season.Autumn => (new Color(1f, 0.72f, 0.38f), new Color(1f, 0.46f, 0.16f), new Color(0.86f, 0.9f, 1f)),
+                Season.Winter => (new Color(0.8f, 0.9f, 1f), new Color(0.66f, 0.78f, 0.9f), new Color(0.78f, 0.92f, 1f)),
                 _ => (Color.white, Color.green, Color.cyan)
             };
         }
@@ -294,7 +345,9 @@ namespace FarmGame2D.World
             target.transform.position = position;
             var renderer = target.AddComponent<SpriteRenderer>();
             renderer.sprite = WorldArtCatalog.GetSprite(artKind);
-            renderer.sortingOrder = sortingOrder;
+            renderer.sortingOrder = sortingOrder >= 3
+                ? WorldDepthSorter.CalculateOrder(position.y, sortingOrder - 3)
+                : sortingOrder;
 
             if (colliderSize.HasValue)
             {
@@ -314,7 +367,11 @@ namespace FarmGame2D.World
             float footprintWidth,
             float doorWidth)
         {
-            var building = CreateWorldArt(name, artKind, position, parent, 3);
+            var building = CreateDepthSortedStructureArt(
+                name,
+                artKind,
+                position,
+                parent);
             var sideWidth = (footprintWidth - doorWidth) * 0.5f;
             var sideOffset = (doorWidth + sideWidth) * 0.5f;
             CreateSolidCollider($"{name} Wall Left", building.transform, new Vector2(-sideOffset, 0.4f), new Vector2(sideWidth, 0.8f));
@@ -323,12 +380,44 @@ namespace FarmGame2D.World
             return building;
         }
 
+        private static GameObject CreateDepthSortedStructureArt(
+            string name,
+            WorldArtKind artKind,
+            Vector2 position,
+            Transform parent,
+            Vector2? colliderSize = null,
+            Vector2? colliderOffset = null)
+        {
+            return CreateWorldArt(
+                name,
+                artKind,
+                position,
+                parent,
+                3 + WorldDepthSorter.BuildingDepthOffset,
+                colliderSize,
+                colliderOffset);
+        }
+
         private static void CreateSolidCollider(string name, Transform parent, Vector2 localPosition, Vector2 size)
         {
             var blocker = new GameObject(name);
             blocker.transform.SetParent(parent, false);
             blocker.transform.localPosition = localPosition;
             blocker.AddComponent<BoxCollider2D>().size = size;
+        }
+
+        private static void CreateVillageSquareBlockers(Transform square)
+        {
+            // The square artwork contains solid furniture. Keep the open stone paths walkable,
+            // while preventing characters from clipping through the noticeboard and benches.
+            CreateSolidCollider("Village Square Noticeboard Blocker", square, new Vector2(0f, 3.15f), new Vector2(2.15f, 0.72f));
+            CreateSolidCollider("Village Square Left Bench Blocker", square, new Vector2(-1.65f, 1.55f), new Vector2(1.2f, 0.48f));
+            CreateSolidCollider("Village Square Right Bench Blocker", square, new Vector2(1.65f, 1.55f), new Vector2(1.2f, 0.48f));
+            CreateSolidCollider("Village Square Flower Bed Blocker", square, new Vector2(0f, 1.45f), new Vector2(0.9f, 0.85f));
+            CreateSolidCollider("Village Square Upper Left Planter Blocker", square, new Vector2(-1.35f, 2.45f), new Vector2(0.82f, 0.56f));
+            CreateSolidCollider("Village Square Upper Right Planter Blocker", square, new Vector2(1.35f, 2.45f), new Vector2(0.82f, 0.56f));
+            CreateSolidCollider("Village Square Lower Left Planter Blocker", square, new Vector2(-1.55f, 0.35f), new Vector2(0.95f, 0.58f));
+            CreateSolidCollider("Village Square Lower Right Planter Blocker", square, new Vector2(1.55f, 0.35f), new Vector2(0.95f, 0.58f));
         }
 
         private static void CreateNoticeEntrance(
@@ -369,6 +458,20 @@ namespace FarmGame2D.World
             return CreateInteractable<DialogueInteractable>(name, position, new Vector2(0.8f, 1f), color, parent);
         }
 
+        private static void CreateAnimalHerd(
+            string name,
+            GameSession session,
+            FarmAnimalKind kind,
+            WanderArea area,
+            float speed,
+            int separationGroup,
+            Transform parent)
+        {
+            var herdObject = new GameObject(name);
+            herdObject.transform.SetParent(parent);
+            herdObject.AddComponent<FarmAnimalHerd>().Configure(session, kind, area, speed, separationGroup);
+        }
+
         private static void ApplyNpcArt(DialogueInteractable npc, int characterRowFromTop)
         {
             var renderer = npc.GetComponent<SpriteRenderer>();
@@ -381,12 +484,68 @@ namespace FarmGame2D.World
             renderer.sprite = artSprite;
             renderer.color = Color.white;
             npc.transform.localScale = Vector3.one;
+            npc.gameObject.AddComponent<WorldDepthSorter>().Configure(2);
 
             var interactionCollider = npc.GetComponent<BoxCollider2D>();
             if (interactionCollider != null)
             {
                 interactionCollider.size = new Vector2(0.8f, 1f);
             }
+        }
+
+        private static VillageWaypointNetwork CreateVillageRouteNetwork()
+        {
+            var points = new[]
+            {
+                new Vector2(-3.6f, 3.5f),
+                new Vector2(-6f, 3.5f),
+                new Vector2(-10f, 5.7f),
+                new Vector2(3.6f, 3.5f),
+                new Vector2(6f, 3.5f),
+                new Vector2(10f, 5.7f),
+                new Vector2(0f, 6f),
+                new Vector2(-3.6f, -0.8f),
+                new Vector2(0f, -0.8f),
+                new Vector2(3.6f, -0.8f),
+                new Vector2(-6f, 0f),
+                new Vector2(6f, 0f),
+                new Vector2(-11.5f, 7.2f),
+                new Vector2(11.5f, 7.2f)
+            };
+            var links = new[]
+            {
+                new[] { 1, 6, 7 },
+                new[] { 0, 2, 10 },
+                new[] { 1, 12 },
+                new[] { 4, 6, 9 },
+                new[] { 3, 5, 11 },
+                new[] { 4, 13 },
+                new[] { 0, 3 },
+                new[] { 0, 8, 10 },
+                new[] { 7, 9 },
+                new[] { 3, 8, 11 },
+                new[] { 1, 7 },
+                new[] { 4, 9 },
+                new[] { 2 },
+                new[] { 5 }
+            };
+            return new VillageWaypointNetwork(points, links);
+        }
+
+        private static void ConfigureNpcMovement(
+            DialogueInteractable npc,
+            VillageWaypointNetwork routeNetwork,
+            int homeNode,
+            float speed,
+            int seed,
+            Vector2 nightAnchor,
+            string displayName)
+        {
+            var mover = npc.gameObject.AddComponent<WanderingMover>();
+            mover.Configure(new WanderArea(new Vector2(0f, 4f), new Vector2(12.5f, 4.5f)), speed, seed, 301, 0.5f, 1.8f);
+            mover.ConfigureRoute(routeNetwork, homeNode);
+            mover.ConfigureNightAnchor(nightAnchor);
+            npc.gameObject.AddComponent<NpcSocialAgent>().Configure(displayName, seed + 901);
         }
     }
 }

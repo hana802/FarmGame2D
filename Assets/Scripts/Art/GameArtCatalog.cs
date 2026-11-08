@@ -94,6 +94,7 @@ namespace FarmGame2D.Art
                 FarmTool.Hoe => ("Art/Items/held_hoe_v1", new Rect(528f, 269f, 513f, 467f)),
                 FarmTool.Seeds => ("Art/Items/held_seeds_v1", new Rect(571f, 292f, 360f, 425f)),
                 FarmTool.WateringCan => ("Art/Items/held_watering_can_v1", new Rect(547f, 324f, 441f, 357f)),
+                FarmTool.Pickaxe => ("Art/Items/held_hoe_v1", new Rect(528f, 269f, 513f, 467f)),
                 _ => (string.Empty, default)
             };
 

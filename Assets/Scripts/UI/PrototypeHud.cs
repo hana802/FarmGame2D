@@ -8,7 +8,8 @@ namespace FarmGame2D.UI
 {
     public sealed class PrototypeHud : MonoBehaviour
     {
-        public const string CharacterChoiceTitle = "당신의 성별을 골라주세요";
+        public const string CharacterChoiceHeader = "선택해주세요.";
+        public const string CharacterChoicePrompt = "당신의 성별을 골라주세요";
 
         private PrototypePlayerController player;
         private GUIStyle bodyStyle;
@@ -21,6 +22,8 @@ namespace FarmGame2D.UI
         private Font koreanFont;
         private FarmGuiSkin farmSkin;
         private readonly HudMessageVisibility messageVisibility = new();
+        private string cloudCodeInput = string.Empty;
+        private string cloudPinInput = string.Empty;
 
         public bool HasArtSkin => farmSkin?.IsReady == true;
 
@@ -100,10 +103,10 @@ namespace FarmGame2D.UI
 
         private void DrawQuest(GameSession session)
         {
-            var progress = Mathf.Min(session.Data.wheatHarvested, 3);
-            var quest = session.Data.harvestQuestCompleted
-                ? "완료: 첫 밀 수확"
-                : $"퀘스트: 밀 3개 수확 ({progress}/3)";
+            var current = StarterQuestProgress.GetCurrent(session.Data);
+            var quest = current.Id == StarterQuestId.Complete
+                ? "완료: 초보 퀘스트 3개"
+                : $"퀘스트: {current.Title} ({current.Current}/{current.Target})";
             var rect = new Rect(14f, 14f, 340f, 104f);
             farmSkin.DrawBanner(rect);
             GUI.Label(new Rect(rect.x + 90f, rect.y + 22f, rect.width - 120f, 62f), quest, panelStyle);
@@ -119,35 +122,51 @@ namespace FarmGame2D.UI
 
         private void DrawInventory(GameSession session)
         {
-            var rect = new Rect((HudLayout.ReferenceWidth - 560f) / 2f, 128f, 560f, 440f);
-            farmSkin.DrawWindow(rect);
-            GUI.Label(new Rect(rect.x + 150f, rect.y + 10f, rect.width - 300f, 42f), "농장 가방", titleStyle);
-            GUI.Label(new Rect(rect.x + 48f, rect.y + 66f, rect.width - 96f, 30f), "꺼낼 도구나 씨앗을 선택하세요.", centeredStyle);
+            var layout = HudLayout.CalculateInventoryLayout();
+            farmSkin.DrawWindow(layout.Panel);
+            GUI.Label(layout.Title, "농장 가방", titleStyle);
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 35f, rect.y + 112f, 150f, 48f), "호미"))
+            if (farmSkin.DrawButton(layout.HoeButton, "호미"))
             {
                 session.SelectTool(FarmTool.Hoe);
             }
 
-            var seedCount = session.Data.inventory.Count(GameItem.WheatSeed);
-            if (farmSkin.DrawButton(new Rect(rect.x + 205f, rect.y + 112f, 150f, 48f), $"밀 씨앗 ×{seedCount}", true))
+            if (farmSkin.DrawButton(layout.SeedsButton, ItemCatalog.GetLabel(session.SelectedSeed), true))
             {
-                session.SelectTool(FarmTool.Seeds);
+                session.SelectSeed(session.SelectedSeed);
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 375f, rect.y + 112f, 150f, 48f), "물뿌리개"))
+            if (farmSkin.DrawButton(layout.WateringCanButton, "물뿌리개"))
             {
                 session.SelectTool(FarmTool.WateringCan);
             }
 
-            GUI.Label(new Rect(rect.x + 55f, rect.y + 190f, 210f, 38f), $"밀 씨앗   {seedCount}개", bodyStyle);
-            GUI.Label(new Rect(rect.x + 295f, rect.y + 190f, 210f, 38f), $"수확한 밀   {session.Data.inventory.Count(GameItem.Wheat)}개", bodyStyle);
-            GUI.Label(new Rect(rect.x + 55f, rect.y + 240f, 210f, 38f), $"닭 사료   {session.Data.inventory.Count(GameItem.Feed)}개", bodyStyle);
-            GUI.Label(new Rect(rect.x + 295f, rect.y + 240f, 210f, 38f), $"달걀   {session.Data.inventory.Count(GameItem.Egg)}개", bodyStyle);
-            GUI.Label(new Rect(rect.x + 55f, rect.y + 290f, 210f, 38f), $"잡초   {session.Data.inventory.Count(GameItem.Weed)}개", bodyStyle);
-            GUI.Label(new Rect(rect.x + 295f, rect.y + 290f, 210f, 38f), $"돈   {session.Data.money}G", bodyStyle);
+            if (farmSkin.DrawButton(layout.PickaxeButton, session.Data.hasPickaxe ? "곡괭이" : "곡괭이 (미보유)"))
+            {
+                session.SelectTool(FarmTool.Pickaxe);
+            }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 200f, rect.y + 360f, 160f, 48f), "가방 닫기 (I)"))
+            var seedIndex = 0;
+            foreach (var crop in CropCatalog.GetAll())
+            {
+                var count = session.Data.inventory.Count(crop.Seed);
+                var label = $"{crop.Label} 씨앗 ×{count} · {GetSeasonLabel(crop.Season)}";
+                if (farmSkin.DrawButton(layout.GetSeedButton(seedIndex), label, crop.Seed == session.SelectedSeed))
+                {
+                    session.SelectSeed(crop.Seed);
+                }
+
+                seedIndex++;
+            }
+
+            GUI.Label(layout.GetStatsLabel(0, 0),
+                $"사료 {session.Data.inventory.Count(GameItem.Feed)} · 달걀 {session.Data.inventory.Count(GameItem.Egg)} · 우유 {session.Data.inventory.Count(GameItem.Milk)}\n닭 {session.Data.ownedChickens}마리 · 소 {session.Data.ownedCows}마리",
+                smallStyle);
+            GUI.Label(layout.GetStatsLabel(1, 0),
+                $"돌 {session.Data.inventory.Count(GameItem.Stone)} · 구리 {session.Data.inventory.Count(GameItem.CopperOre)} · 철 {session.Data.inventory.Count(GameItem.IronOre)} · 금 {session.Data.inventory.Count(GameItem.GoldOre)}\n잡초 {session.Data.inventory.Count(GameItem.Weed)} · 돈 {session.Data.money}G",
+                smallStyle);
+
+            if (farmSkin.DrawTextButton(layout.CloseButton, "가방 닫기 (I)"))
             {
                 session.ToggleInventory();
             }
@@ -157,9 +176,9 @@ namespace FarmGame2D.UI
         {
             if (session.ActivePortraitRow < 0)
             {
-                var toast = new Rect((HudLayout.ReferenceWidth - 620f) / 2f, 132f, 620f, 72f);
-                farmSkin.DrawBanner(toast);
-                GUI.Label(new Rect(toast.x + 48f, toast.y + 12f, toast.width - 96f, 48f), session.Message, centeredStyle);
+                var toastLayout = HudLayout.CalculateToastLayout();
+                farmSkin.DrawBanner(toastLayout.Panel);
+                GUI.Label(toastLayout.Message, session.Message, centeredStyle);
                 return;
             }
 
@@ -188,8 +207,8 @@ namespace FarmGame2D.UI
         {
             var rect = new Rect((HudLayout.ReferenceWidth - 420f) / 2f, (HudLayout.ReferenceHeight - 210f) / 2f, 420f, 210f);
             farmSkin.DrawWindow(rect);
-            GUI.Label(new Rect(rect.x + 32f, rect.y + 20f, 356f, 42f), CharacterChoiceTitle, titleStyle);
-            GUI.Label(new Rect(rect.x + 38f, rect.y + 70f, 344f, 38f), "외형만 다르며 능력 차이는 없습니다.", bodyStyle);
+            GUI.Label(new Rect(rect.x + 105f, rect.y + 20f, 280f, 42f), CharacterChoiceHeader, titleStyle);
+            GUI.Label(new Rect(rect.x + 38f, rect.y + 70f, 344f, 38f), CharacterChoicePrompt, centeredStyle);
             if (farmSkin.DrawButton(new Rect(rect.x + 35f, rect.y + 125f, 160f, 52f), "남성형 (M)"))
             {
                 session.ChooseCharacter(CharacterChoice.Male);
@@ -203,48 +222,162 @@ namespace FarmGame2D.UI
 
         private void DrawPhone(GameSession session)
         {
-            var rect = new Rect((HudLayout.ReferenceWidth - 400f) / 2f, 150f, 400f, 350f);
-            farmSkin.DrawWindow(rect);
-            GUI.Label(new Rect(rect.x + 35f, rect.y + 18f, 330f, 40f), "농장 휴대폰", titleStyle);
-            GUI.Label(new Rect(rect.x + 42f, rect.y + 72f, 316f, 88f),
-                $"퀘스트: 밀 수확 {Mathf.Min(session.Data.wheatHarvested, 3)}/3\n첫 수확: {(session.Data.firstHarvestAchievement ? "달성" : "미달성")}\n첫 달걀: {(session.Data.firstEggAchievement ? "달성" : "미달성")}", bodyStyle);
+            var layout = HudLayout.CalculatePhoneLayout();
+            farmSkin.DrawWindow(layout.Panel);
+            GUI.Label(layout.Title, "농장 휴대폰", titleStyle);
+            var quests = StarterQuestProgress.GetAll(session.Data);
+            GUI.Label(layout.QuestBody,
+                $"{FormatQuestLine(quests[0])}\n{FormatQuestLine(quests[1])}\n{FormatQuestLine(quests[2])}", bodyStyle);
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 40f, rect.y + 190f, 140f, 48f), "저장"))
+            if (farmSkin.DrawButton(layout.SaveButton, "저장"))
             {
                 session.Save(false);
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 220f, rect.y + 190f, 140f, 48f), "불러오기", true))
+            if (farmSkin.DrawButton(layout.LoadButton, "불러오기", true))
             {
                 session.Load();
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 130f, rect.y + 270f, 140f, 48f), "닫기 (P)"))
+            if (farmSkin.DrawButton(layout.CloseButton, "닫기 (P)"))
             {
                 session.TogglePhone();
             }
+
+            DrawCloudSync(session, layout.Panel);
+        }
+
+        private void DrawCloudSync(GameSession session, Rect phonePanel)
+        {
+            var panel = new Rect(phonePanel.x + phonePanel.width + 12f, phonePanel.y, 400f, 350f);
+            farmSkin.DrawWindow(panel);
+            GUI.Label(new Rect(panel.x + 90f, panel.y + 34f, 270f, 40f), "브라우저 동기화", titleStyle);
+
+            var previousEnabled = GUI.enabled;
+            GUI.enabled = !session.CloudSyncBusy;
+            if (session.CloudSyncLinked)
+            {
+                var connectionText = session.CloudLoadRequired
+                    ? "다른 브라우저의 저장이 있습니다.\n최신 저장 받기를 먼저 눌러 주세요."
+                    : string.IsNullOrEmpty(session.NewlyCreatedCloudPin)
+                    ? $"연결된 코드  {session.CloudSyncCode}\n저장을 누르면 클라우드에도 저장됩니다."
+                    : $"연결 코드  {session.CloudSyncCode}\nPIN  {session.NewlyCreatedCloudPin}  · 지금 메모해 두세요";
+                GUI.Label(new Rect(panel.x + 42f, panel.y + 102f, 316f, 62f),
+                    connectionText, centeredStyle);
+
+                if (farmSkin.DrawButton(new Rect(panel.x + 40f, panel.y + 184f, 150f, 46f), "최신 저장 받기", true))
+                {
+                    session.LoadCloudSave();
+                }
+
+                if (farmSkin.DrawButton(new Rect(panel.x + 210f, panel.y + 184f, 150f, 46f), "연결 해제"))
+                {
+                    session.DisconnectCloudSave();
+                }
+
+                GUI.Label(new Rect(panel.x + 42f, panel.y + 240f, 316f, 50f),
+                    "다른 브라우저에서는 같은 코드와 PIN을 입력하세요.", centeredStyle);
+            }
+            else
+            {
+                GUI.Label(new Rect(panel.x + 40f, panel.y + 92f, 320f, 38f),
+                    "계정 없이 코드와 PIN으로 이어서 할 수 있어요.", centeredStyle);
+                if (farmSkin.DrawButton(new Rect(panel.x + 95f, panel.y + 132f, 210f, 42f), "새 동기화 코드 만들기", true))
+                {
+                    session.CreateCloudSave();
+                }
+
+                GUI.Label(new Rect(panel.x + 42f, panel.y + 188f, 88f, 34f), "코드", bodyStyle);
+                cloudCodeInput = GUI.TextField(new Rect(panel.x + 126f, panel.y + 188f, 232f, 34f),
+                    cloudCodeInput.ToUpperInvariant(), 10);
+                GUI.Label(new Rect(panel.x + 42f, panel.y + 232f, 88f, 34f), "PIN", bodyStyle);
+                cloudPinInput = GUI.PasswordField(new Rect(panel.x + 126f, panel.y + 232f, 232f, 34f),
+                    cloudPinInput, '●', 6);
+                if (farmSkin.DrawButton(new Rect(panel.x + 120f, panel.y + 278f, 160f, 42f), "기존 저장 연결"))
+                {
+                    session.ConnectCloudSave(cloudCodeInput, cloudPinInput);
+                }
+            }
+
+            GUI.enabled = previousEnabled;
         }
 
         private void DrawShop(GameSession session)
         {
-            var rect = new Rect((HudLayout.ReferenceWidth - 420f) / 2f, 180f, 420f, 300f);
+            var rect = new Rect((HudLayout.ReferenceWidth - 620f) / 2f, 92f, 620f, 550f);
             farmSkin.DrawWindow(rect);
-            GUI.Label(new Rect(rect.x + 35f, rect.y + 20f, 350f, 42f), "씨앗·사료 상점", titleStyle);
-            GUI.Label(new Rect(rect.x + 45f, rect.y + 72f, 330f, 32f), $"보유 금액: {session.Data.money}G", bodyStyle);
-            if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 115f, 330f, 46f), "밀 씨앗 5개 — 20G"))
+            var title = session.ActiveShop == ShopKind.Mining ? "광물 상점" : "씨앗·동물 상점";
+            GUI.Label(new Rect(rect.x + 35f, rect.y + 20f, 550f, 42f), title, titleStyle);
+            GUI.Label(new Rect(rect.x + 45f, rect.y + 72f, 530f, 32f), $"{GetSeasonLabel(session.CurrentSeason)} · 보유 금액 {session.Data.money}G", centeredStyle);
+
+            if (session.ActiveShop == ShopKind.Mining)
             {
-                session.PurchaseSeeds();
+                DrawMiningShop(session, rect);
+            }
+            else
+            {
+                DrawFarmShop(session, rect);
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 172f, 330f, 46f), "닭 사료 3개 — 15G", true))
+            if (farmSkin.DrawButton(new Rect(rect.x + 240f, rect.y + 490f, 140f, 42f), "닫기"))
+            {
+                session.OpenShop(session.ActiveShop);
+            }
+        }
+
+        private void DrawFarmShop(GameSession session, Rect rect)
+        {
+            var crops = CropCatalog.GetForSeason(session.CurrentSeason);
+            for (var index = 0; index < crops.Count; index++)
+            {
+                var crop = crops[index];
+                if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 120f + (index * 58f), 530f, 48f), $"{crop.Label} 씨앗 5개 — {crop.PackPrice}G"))
+                {
+                    session.PurchaseSeed(crop.Seed);
+                }
+            }
+
+            if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 245f, 250f, 48f), "동물 사료 3개 — 15G", true))
             {
                 session.PurchaseFeed();
             }
 
-            if (farmSkin.DrawButton(new Rect(rect.x + 150f, rect.y + 238f, 120f, 38f), "닫기"))
+            if (farmSkin.DrawButton(new Rect(rect.x + 325f, rect.y + 245f, 250f, 48f), "닭 1마리 — 150G"))
             {
-                session.ToggleShop();
+                session.PurchaseChicken();
             }
+
+            if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 310f, 530f, 48f), "소 1마리 — 350G", true))
+            {
+                session.PurchaseCow();
+            }
+
+            GUI.Label(new Rect(rect.x + 55f, rect.y + 380f, 510f, 70f), $"현재 보유: 닭 {session.Data.ownedChickens}마리 · 소 {session.Data.ownedCows}마리\n먹이를 주면 다음 날 달걀과 우유를 얻습니다.", centeredStyle);
+        }
+
+        private void DrawMiningShop(GameSession session, Rect rect)
+        {
+            if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 120f, 530f, 48f), session.Data.hasPickaxe ? "곡괭이 — 구입 완료" : "곡괭이 — 120G"))
+            {
+                session.PurchasePickaxe();
+            }
+
+            if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 185f, 250f, 48f), "돌 5개 — 30G", true))
+            {
+                session.PurchaseOre(GameItem.Stone, 5, 30);
+            }
+
+            if (farmSkin.DrawButton(new Rect(rect.x + 325f, rect.y + 185f, 250f, 48f), "구리 광석 3개 — 75G"))
+            {
+                session.PurchaseOre(GameItem.CopperOre, 3, 75);
+            }
+
+            if (farmSkin.DrawButton(new Rect(rect.x + 45f, rect.y + 250f, 530f, 48f), "철 광석 2개 — 110G", true))
+            {
+                session.PurchaseOre(GameItem.IronOre, 2, 110);
+            }
+
+            GUI.Label(new Rect(rect.x + 55f, rect.y + 330f, 510f, 90f), "곡괭이를 가방에서 선택한 뒤 마을 서남쪽 광맥을 캐세요.\n채굴한 광물은 판매 상자에 넣거나 이곳에서 바로 구입할 수 있습니다.", centeredStyle);
         }
 
         private void EnsureStyles()
@@ -313,10 +446,17 @@ namespace FarmGame2D.UI
             return tool switch
             {
                 FarmTool.Hoe => "호미",
-                FarmTool.Seeds => "밀 씨앗",
+                FarmTool.Seeds => "씨앗",
                 FarmTool.WateringCan => "물뿌리개",
+                FarmTool.Pickaxe => "곡괭이",
                 _ => tool.ToString()
             };
+        }
+
+        private static string FormatQuestLine(StarterQuestStatus quest)
+        {
+            var marker = quest.Completed ? "완료" : "진행";
+            return $"[{marker}] {quest.Title} {quest.Current}/{quest.Target}";
         }
     }
 }

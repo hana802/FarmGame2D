@@ -1,0 +1,782 @@
+fileFormatVersion: 2
+guid: 78cff5fb3bebdfe4f89f160572e70ea8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5011893118961364813
+    second: farm_plot_empty_v1_0
+  - first:
+      213: -8819533197630564510
+    second: farm_plot_empty_v1_1
+  - first:
+      213: -6303396900736995908
+    second: farm_plot_empty_v1_2
+  - first:
+      213: -8204370807684440182
+    second: farm_plot_empty_v1_3
+  - first:
+      213: -2466561067119103640
+    second: farm_plot_empty_v1_4
+  - first:
+      213: -8795892727017814549
+    second: farm_plot_empty_v1_5
+  - first:
+      213: -6644960234699380614
+    second: farm_plot_empty_v1_6
+  - first:
+      213: -8322290681873217941
+    second: farm_plot_empty_v1_7
+  - first:
+      213: 3688261240608582362
+    second: farm_plot_empty_v1_8
+  - first:
+      213: -8784538065270194474
+    second: farm_plot_empty_v1_9
+  - first:
+      213: 3961985257695352009
+    second: farm_plot_empty_v1_10
+  - first:
+      213: 1623738079267738667
+    second: farm_plot_empty_v1_11
+  - first:
+      213: -5718260877562799431
+    second: farm_plot_empty_v1_12
+  - first:
+      213: 8835778370909546857
+    second: farm_plot_empty_v1_13
+  - first:
+      213: -8592714647419911999
+    second: farm_plot_empty_v1_14
+  - first:
+      213: -2489389523231674392
+    second: farm_plot_empty_v1_15
+  - first:
+      213: 325343452134944843
+    second: farm_plot_empty_v1_16
+  - first:
+      213: 2841753240557661454
+    second: farm_plot_empty_v1_17
+  - first:
+      213: 420797785777567024
+    second: farm_plot_empty_v1_18
+  - first:
+      213: 1150185058810414595
+    second: farm_plot_empty_v1_19
+  - first:
+      213: 8675090350257108237
+    second: farm_plot_empty_v1_20
+  - first:
+      213: 1156064633566717610
+    second: farm_plot_empty_v1_21
+  - first:
+      213: -8274258417509903229
+    second: farm_plot_empty_v1_22
+  - first:
+      213: -1526045219449090592
+    second: farm_plot_empty_v1_23
+  - first:
+      213: 6693933547676874871
+    second: farm_plot_empty_v1_24
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1227
+        height: 1234
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4faaefcc32dd8540800000000000000
+      internalID: 5011893118961364813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_1
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 1195
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 267177ed849ba9580800000000000000
+      internalID: -8819533197630564510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_2
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 1190
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbde5456ae5d588a0800000000000000
+      internalID: -6303396900736995908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_3
+      rect:
+        serializedVersion: 2
+        x: 1071
+        y: 1128
+        width: 124
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8f52621838342e80800000000000000
+      internalID: -8204370807684440182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_4
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 1062
+        width: 12
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 861be8127c305cdd0800000000000000
+      internalID: -2466561067119103640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_5
+      rect:
+        serializedVersion: 2
+        x: 1198
+        y: 955
+        width: 33
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be549abda26bee580800000000000000
+      internalID: -8795892727017814549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_6
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 942
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a78a5208fdb58c3a0800000000000000
+      internalID: -6644960234699380614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_7
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 917
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b66476dd7b8418c80800000000000000
+      internalID: -8322290681873217941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_8
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 190
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adae05d9e065f2330800000000000000
+      internalID: 3688261240608582362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_9
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 126
+        width: 20
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6de3caf0c2d071680800000000000000
+      internalID: -8784538065270194474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_10
+      rect:
+        serializedVersion: 2
+        x: 1222
+        y: 136
+        width: 17
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c41442b99ccbf630800000000000000
+      internalID: 3961985257695352009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_11
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 112
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b24570f1e2da88610800000000000000
+      internalID: 1623738079267738667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_12
+      rect:
+        serializedVersion: 2
+        x: 1139
+        y: 95
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ba1bdb4708a4a0b0800000000000000
+      internalID: -5718260877562799431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_13
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 67
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 969a4284d9dfe9a70800000000000000
+      internalID: 8835778370909546857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_14
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 65
+        width: 9
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c08d38ed8b80c880800000000000000
+      internalID: -8592714647419911999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_15
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 63
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ef62300b69e37dd0800000000000000
+      internalID: -2489389523231674392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_16
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 63
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b40b08e552ad38400800000000000000
+      internalID: 325343452134944843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_17
+      rect:
+        serializedVersion: 2
+        x: 1067
+        y: 37
+        width: 27
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0d21ca148fef6720800000000000000
+      internalID: 2841753240557661454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_18
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 38
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 035fa8f4b59f6d500800000000000000
+      internalID: 420797785777567024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_19
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 23
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3064b50973746ff00800000000000000
+      internalID: 1150185058810414595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_20
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 17
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d057e7106bc146870800000000000000
+      internalID: 8675090350257108237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_21
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 18
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa6e22db8aa2b0010800000000000000
+      internalID: 1156064633566717610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_22
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 17
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3845984eecdeb2d80800000000000000
+      internalID: -8274258417509903229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_23
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 15
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0edcd8f45f562dae0800000000000000
+      internalID: -1526045219449090592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_empty_v1_24
+      rect:
+        serializedVersion: 2
+        x: 1029
+        y: 0
+        width: 33
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 778b95b7811a5ec50800000000000000
+      internalID: 6693933547676874871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      farm_plot_empty_v1_0: 5011893118961364813
+      farm_plot_empty_v1_1: -8819533197630564510
+      farm_plot_empty_v1_10: 3961985257695352009
+      farm_plot_empty_v1_11: 1623738079267738667
+      farm_plot_empty_v1_12: -5718260877562799431
+      farm_plot_empty_v1_13: 8835778370909546857
+      farm_plot_empty_v1_14: -8592714647419911999
+      farm_plot_empty_v1_15: -2489389523231674392
+      farm_plot_empty_v1_16: 325343452134944843
+      farm_plot_empty_v1_17: 2841753240557661454
+      farm_plot_empty_v1_18: 420797785777567024
+      farm_plot_empty_v1_19: 1150185058810414595
+      farm_plot_empty_v1_2: -6303396900736995908
+      farm_plot_empty_v1_20: 8675090350257108237
+      farm_plot_empty_v1_21: 1156064633566717610
+      farm_plot_empty_v1_22: -8274258417509903229
+      farm_plot_empty_v1_23: -1526045219449090592
+      farm_plot_empty_v1_24: 6693933547676874871
+      farm_plot_empty_v1_3: -8204370807684440182
+      farm_plot_empty_v1_4: -2466561067119103640
+      farm_plot_empty_v1_5: -8795892727017814549
+      farm_plot_empty_v1_6: -6644960234699380614
+      farm_plot_empty_v1_7: -8322290681873217941
+      farm_plot_empty_v1_8: 3688261240608582362
+      farm_plot_empty_v1_9: -8784538065270194474
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

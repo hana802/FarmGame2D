@@ -32,6 +32,87 @@ namespace FarmGame2D.UI
         public Rect Body { get; }
     }
 
+    public readonly struct InventoryHudLayout
+    {
+        public InventoryHudLayout(
+            Rect panel,
+            Rect title,
+            Rect description,
+            Rect hoeButton,
+            Rect seedsButton,
+            Rect wateringCanButton,
+            Rect pickaxeButton,
+            float firstStatsY,
+            Rect closeButton)
+        {
+            Panel = panel;
+            Title = title;
+            Description = description;
+            HoeButton = hoeButton;
+            SeedsButton = seedsButton;
+            WateringCanButton = wateringCanButton;
+            PickaxeButton = pickaxeButton;
+            FirstStatsY = firstStatsY;
+            CloseButton = closeButton;
+        }
+
+        public Rect Panel { get; }
+        public Rect Title { get; }
+        public Rect Description { get; }
+        public Rect HoeButton { get; }
+        public Rect SeedsButton { get; }
+        public Rect WateringCanButton { get; }
+        public Rect PickaxeButton { get; }
+        public float ToolButtonsY => HoeButton.y;
+        public float FirstStatsY { get; }
+        public Rect CloseButton { get; }
+
+        public Rect GetStatsLabel(int column, int row)
+        {
+            var x = Panel.x + (column == 0 ? 48f : 420f);
+            return new Rect(x, FirstStatsY + (row * 44f), 352f, 42f);
+        }
+
+        public Rect GetSeedButton(int index)
+        {
+            var column = index % 2;
+            var row = index / 2;
+            return new Rect(Panel.x + 48f + (column * 372f), Panel.y + 240f + (row * 34f), 344f, 30f);
+        }
+    }
+
+    public readonly struct PhoneHudLayout
+    {
+        public PhoneHudLayout(Rect panel, Rect title, Rect questBody, Rect saveButton, Rect loadButton, Rect closeButton)
+        {
+            Panel = panel;
+            Title = title;
+            QuestBody = questBody;
+            SaveButton = saveButton;
+            LoadButton = loadButton;
+            CloseButton = closeButton;
+        }
+
+        public Rect Panel { get; }
+        public Rect Title { get; }
+        public Rect QuestBody { get; }
+        public Rect SaveButton { get; }
+        public Rect LoadButton { get; }
+        public Rect CloseButton { get; }
+    }
+
+    public readonly struct ToastHudLayout
+    {
+        public ToastHudLayout(Rect panel, Rect message)
+        {
+            Panel = panel;
+            Message = message;
+        }
+
+        public Rect Panel { get; }
+        public Rect Message { get; }
+    }
+
     public static class HudLayout
     {
         public const float ReferenceWidth = 1280f;
@@ -57,6 +138,41 @@ namespace FarmGame2D.UI
                 ScaleDialogueSlot(panel, new Rect(80f, 107f, 201f, 193f)),
                 ScaleDialogueSlot(panel, new Rect(362f, 27f, 335f, 50f)),
                 ScaleDialogueSlot(panel, new Rect(355f, 118f, 1170f, 165f)));
+        }
+
+        public static InventoryHudLayout CalculateInventoryLayout()
+        {
+            var panel = new Rect((ReferenceWidth - 820f) * 0.5f, 70f, 820f, 550f);
+            return new InventoryHudLayout(
+                panel,
+                new Rect(panel.x + 235f, panel.y + 60f, panel.width - 275f, 38f),
+                new Rect(panel.x + 55f, panel.y + 132f, panel.width - 110f, 32f),
+                new Rect(panel.x + 48f, panel.y + 178f, 168f, 44f),
+                new Rect(panel.x + 234f, panel.y + 178f, 168f, 44f),
+                new Rect(panel.x + 420f, panel.y + 178f, 168f, 44f),
+                new Rect(panel.x + 606f, panel.y + 178f, 168f, 44f),
+                panel.y + 382f,
+                new Rect(panel.x + 235f, panel.y + 449f, 170f, 36f));
+        }
+
+        public static PhoneHudLayout CalculatePhoneLayout()
+        {
+            var panel = new Rect((ReferenceWidth - 400f) * 0.5f, 150f, 400f, 350f);
+            return new PhoneHudLayout(
+                panel,
+                new Rect(panel.x + 130f, panel.y + 34f, 230f, 40f),
+                new Rect(panel.x + 45f, panel.y + 105f, 310f, 82f),
+                new Rect(panel.x + 40f, panel.y + 195f, 140f, 48f),
+                new Rect(panel.x + 220f, panel.y + 195f, 140f, 48f),
+                new Rect(panel.x + 130f, panel.y + 270f, 140f, 48f));
+        }
+
+        public static ToastHudLayout CalculateToastLayout()
+        {
+            var panel = new Rect((ReferenceWidth - 620f) * 0.5f, 132f, 620f, 72f);
+            return new ToastHudLayout(
+                panel,
+                new Rect(panel.x + 140f, panel.y + 12f, panel.width - 172f, 48f));
         }
 
         private static Rect ScaleDialogueSlot(Rect panel, Rect atlasSlot)

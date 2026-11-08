@@ -36,7 +36,7 @@ namespace FarmGame2D.Player
             playerCollider.size = new Vector2(0.5f, 0.32f);
             playerCollider.offset = new Vector2(0f, 0.14f);
             spriteRenderer = GetComponent<SpriteRenderer>();
-            spriteRenderer.sortingOrder = 10;
+            gameObject.AddComponent<WorldDepthSorter>().Configure(4);
             heldItemPresenter = gameObject.AddComponent<HeldItemPresenter>();
             transform.localScale = Vector3.one;
         }
@@ -127,18 +127,7 @@ namespace FarmGame2D.Player
 
         private void UpdateFacingDirection()
         {
-            if (moveInput.sqrMagnitude <= 0.01f)
-            {
-                return;
-            }
-
-            if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y))
-            {
-                facingRow = moveInput.x < 0f ? 2 : 1;
-                return;
-            }
-
-            facingRow = moveInput.y > 0f ? 0 : 3;
+            facingRow = PlayerMotionPresentation.GetFacingRow(moveInput, facingRow);
         }
 
         private void UpdateCharacterVisual(bool force)
@@ -186,7 +175,7 @@ namespace FarmGame2D.Player
         {
             var session = GameSession.Instance;
             var available = session.SelectedTool != FarmTool.Seeds
-                || session.Data.inventory.Count(GameItem.WheatSeed) > 0;
+                || session.Data.inventory.Count(session.SelectedSeed) > 0;
             heldItemPresenter.Present(session.SelectedTool, facingRow, moveInput.sqrMagnitude > 0.01f, available);
         }
 

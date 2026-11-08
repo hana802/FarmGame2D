@@ -1,0 +1,3070 @@
+fileFormatVersion: 2
+guid: c28b126c148a8ea4197eb0e07bde517b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7059363528942735946
+    second: farm_plot_planted_v1_0
+  - first:
+      213: 5748691927954030806
+    second: farm_plot_planted_v1_1
+  - first:
+      213: -870120223803173096
+    second: farm_plot_planted_v1_2
+  - first:
+      213: -4334659634703052801
+    second: farm_plot_planted_v1_3
+  - first:
+      213: 7093404836920423445
+    second: farm_plot_planted_v1_4
+  - first:
+      213: -922946233971559827
+    second: farm_plot_planted_v1_5
+  - first:
+      213: 3455625736238203686
+    second: farm_plot_planted_v1_6
+  - first:
+      213: 3763856893157294862
+    second: farm_plot_planted_v1_7
+  - first:
+      213: -4950648975755355245
+    second: farm_plot_planted_v1_8
+  - first:
+      213: -6031867903347878327
+    second: farm_plot_planted_v1_9
+  - first:
+      213: 8454481311407211701
+    second: farm_plot_planted_v1_10
+  - first:
+      213: 6593850991813510197
+    second: farm_plot_planted_v1_11
+  - first:
+      213: -9054658647523888286
+    second: farm_plot_planted_v1_12
+  - first:
+      213: 5866420625900797452
+    second: farm_plot_planted_v1_13
+  - first:
+      213: -3562685908273024856
+    second: farm_plot_planted_v1_14
+  - first:
+      213: 1054438312551789751
+    second: farm_plot_planted_v1_15
+  - first:
+      213: 1013587513810258801
+    second: farm_plot_planted_v1_16
+  - first:
+      213: -1116725399576170466
+    second: farm_plot_planted_v1_17
+  - first:
+      213: 7872161025546705861
+    second: farm_plot_planted_v1_18
+  - first:
+      213: -5250595459692368512
+    second: farm_plot_planted_v1_19
+  - first:
+      213: -1278425629605390841
+    second: farm_plot_planted_v1_20
+  - first:
+      213: 3819006920556351892
+    second: farm_plot_planted_v1_21
+  - first:
+      213: 2022318945609899804
+    second: farm_plot_planted_v1_22
+  - first:
+      213: 4059287250820589061
+    second: farm_plot_planted_v1_23
+  - first:
+      213: -7131213036896102766
+    second: farm_plot_planted_v1_24
+  - first:
+      213: 1944652545675764092
+    second: farm_plot_planted_v1_25
+  - first:
+      213: 3434899591495893540
+    second: farm_plot_planted_v1_26
+  - first:
+      213: -7780945803393081641
+    second: farm_plot_planted_v1_27
+  - first:
+      213: 7956565867927068400
+    second: farm_plot_planted_v1_28
+  - first:
+      213: -809306381033441825
+    second: farm_plot_planted_v1_29
+  - first:
+      213: 2516578664128072523
+    second: farm_plot_planted_v1_30
+  - first:
+      213: -1373433458175441311
+    second: farm_plot_planted_v1_31
+  - first:
+      213: -6228144589171276567
+    second: farm_plot_planted_v1_32
+  - first:
+      213: 6814420443555408472
+    second: farm_plot_planted_v1_33
+  - first:
+      213: 5083329581625416451
+    second: farm_plot_planted_v1_34
+  - first:
+      213: 5144332012649660430
+    second: farm_plot_planted_v1_35
+  - first:
+      213: 740644085302081597
+    second: farm_plot_planted_v1_36
+  - first:
+      213: -8723507780195849531
+    second: farm_plot_planted_v1_37
+  - first:
+      213: 1570371283760678099
+    second: farm_plot_planted_v1_38
+  - first:
+      213: 7354860827744259320
+    second: farm_plot_planted_v1_39
+  - first:
+      213: 1844814347100998268
+    second: farm_plot_planted_v1_40
+  - first:
+      213: -8094600848675009702
+    second: farm_plot_planted_v1_41
+  - first:
+      213: -3714201698976530249
+    second: farm_plot_planted_v1_42
+  - first:
+      213: -2985413611364866815
+    second: farm_plot_planted_v1_43
+  - first:
+      213: -3855603910569348416
+    second: farm_plot_planted_v1_44
+  - first:
+      213: -3723645491816301130
+    second: farm_plot_planted_v1_45
+  - first:
+      213: 2814163249831997391
+    second: farm_plot_planted_v1_46
+  - first:
+      213: -7662623557595013966
+    second: farm_plot_planted_v1_47
+  - first:
+      213: -7015176613735431552
+    second: farm_plot_planted_v1_48
+  - first:
+      213: 4119382320107526949
+    second: farm_plot_planted_v1_49
+  - first:
+      213: -3010618155616606472
+    second: farm_plot_planted_v1_50
+  - first:
+      213: 3354099725665295695
+    second: farm_plot_planted_v1_51
+  - first:
+      213: 3943828745840157233
+    second: farm_plot_planted_v1_52
+  - first:
+      213: -1353910970138923042
+    second: farm_plot_planted_v1_53
+  - first:
+      213: -1342509493381174178
+    second: farm_plot_planted_v1_54
+  - first:
+      213: -6529560675576021214
+    second: farm_plot_planted_v1_55
+  - first:
+      213: 1373398058181423914
+    second: farm_plot_planted_v1_56
+  - first:
+      213: -7437228260992455340
+    second: farm_plot_planted_v1_57
+  - first:
+      213: -4309355391389425276
+    second: farm_plot_planted_v1_58
+  - first:
+      213: 2618570742508543680
+    second: farm_plot_planted_v1_59
+  - first:
+      213: 1843102563587017421
+    second: farm_plot_planted_v1_60
+  - first:
+      213: 8184047229922179500
+    second: farm_plot_planted_v1_61
+  - first:
+      213: 3868343622219138378
+    second: farm_plot_planted_v1_62
+  - first:
+      213: 6023779076896624906
+    second: farm_plot_planted_v1_63
+  - first:
+      213: -2855749310071013752
+    second: farm_plot_planted_v1_64
+  - first:
+      213: -161636860328054654
+    second: farm_plot_planted_v1_65
+  - first:
+      213: 789894593426915907
+    second: farm_plot_planted_v1_66
+  - first:
+      213: -8895727851766083752
+    second: farm_plot_planted_v1_67
+  - first:
+      213: 241326118597001933
+    second: farm_plot_planted_v1_68
+  - first:
+      213: -557938831920577889
+    second: farm_plot_planted_v1_69
+  - first:
+      213: 6552334261537857075
+    second: farm_plot_planted_v1_70
+  - first:
+      213: 9064573545402704638
+    second: farm_plot_planted_v1_71
+  - first:
+      213: 1772334170262561792
+    second: farm_plot_planted_v1_72
+  - first:
+      213: 3584763709766348764
+    second: farm_plot_planted_v1_73
+  - first:
+      213: -6081961770110637841
+    second: farm_plot_planted_v1_74
+  - first:
+      213: 115690830744691407
+    second: farm_plot_planted_v1_75
+  - first:
+      213: 7003204478978494319
+    second: farm_plot_planted_v1_76
+  - first:
+      213: 4099428706780637215
+    second: farm_plot_planted_v1_77
+  - first:
+      213: -2321409775749495782
+    second: farm_plot_planted_v1_78
+  - first:
+      213: -65134262231363198
+    second: farm_plot_planted_v1_79
+  - first:
+      213: -4286687271202233315
+    second: farm_plot_planted_v1_80
+  - first:
+      213: 8134904142852941716
+    second: farm_plot_planted_v1_81
+  - first:
+      213: 9064055128040165714
+    second: farm_plot_planted_v1_82
+  - first:
+      213: 1867292407567607154
+    second: farm_plot_planted_v1_83
+  - first:
+      213: -739217051443529569
+    second: farm_plot_planted_v1_84
+  - first:
+      213: 4132830838606124233
+    second: farm_plot_planted_v1_85
+  - first:
+      213: 3706602099791192988
+    second: farm_plot_planted_v1_86
+  - first:
+      213: 8955113092071196602
+    second: farm_plot_planted_v1_87
+  - first:
+      213: -6362507071845638055
+    second: farm_plot_planted_v1_88
+  - first:
+      213: -913616038789740883
+    second: farm_plot_planted_v1_89
+  - first:
+      213: -2643974686285472643
+    second: farm_plot_planted_v1_90
+  - first:
+      213: 7412244861132633226
+    second: farm_plot_planted_v1_91
+  - first:
+      213: -1578706960573904926
+    second: farm_plot_planted_v1_92
+  - first:
+      213: -294391349714714957
+    second: farm_plot_planted_v1_93
+  - first:
+      213: 751395756176442735
+    second: farm_plot_planted_v1_94
+  - first:
+      213: -4544091777709995769
+    second: farm_plot_planted_v1_95
+  - first:
+      213: -2987661456041694261
+    second: farm_plot_planted_v1_96
+  - first:
+      213: 2583990295527731964
+    second: farm_plot_planted_v1_97
+  - first:
+      213: 7927859176302032046
+    second: farm_plot_planted_v1_98
+  - first:
+      213: 1492949780686851218
+    second: farm_plot_planted_v1_99
+  - first:
+      213: 8097778022966881904
+    second: farm_plot_planted_v1_100
+  - first:
+      213: -219725702778999091
+    second: farm_plot_planted_v1_101
+  - first:
+      213: 5577876222085560112
+    second: farm_plot_planted_v1_102
+  - first:
+      213: -791423479344816013
+    second: farm_plot_planted_v1_103
+  - first:
+      213: -6803831896821988756
+    second: farm_plot_planted_v1_104
+  - first:
+      213: 8840060903165934680
+    second: farm_plot_planted_v1_105
+  - first:
+      213: -2410614726178216852
+    second: farm_plot_planted_v1_106
+  - first:
+      213: 3252128109456224181
+    second: farm_plot_planted_v1_107
+  - first:
+      213: -9067973460799036743
+    second: farm_plot_planted_v1_108
+  - first:
+      213: -3046044153565573397
+    second: farm_plot_planted_v1_109
+  - first:
+      213: 8596642637991739227
+    second: farm_plot_planted_v1_110
+  - first:
+      213: 774280763956871351
+    second: farm_plot_planted_v1_111
+  - first:
+      213: 2444922130557880057
+    second: farm_plot_planted_v1_112
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1146
+        width: 114
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bd2505c54a180e90800000000000000
+      internalID: -7059363528942735946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_1
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 1146
+        width: 122
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d00bd0c9d477cf40800000000000000
+      internalID: 5748691927954030806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_2
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 1106
+        width: 190
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 817145c3446bce3f0800000000000000
+      internalID: -870120223803173096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_3
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 1094
+        width: 455
+        height: 159
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fffcc4b370238d3c0800000000000000
+      internalID: -4334659634703052801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_4
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 1181
+        width: 88
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 514fda0ed16d07260800000000000000
+      internalID: 7093404836920423445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_5
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 1203
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6237594a490133f0800000000000000
+      internalID: -922946233971559827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_6
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 1160
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6230d256c49d4ff20800000000000000
+      internalID: 3455625736238203686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_7
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 1140
+        width: 27
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e03cb0e07e7eb3430800000000000000
+      internalID: 3763856893157294862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_8
+      rect:
+        serializedVersion: 2
+        x: 973
+        y: 1171
+        width: 23
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39b53787cf2cb4bb0800000000000000
+      internalID: -4950648975755355245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_9
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 1112
+        width: 115
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9469ed0a9108a4ca0800000000000000
+      internalID: -6031867903347878327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_10
+      rect:
+        serializedVersion: 2
+        x: 1101
+        y: 1154
+        width: 25
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b40b9e75f9545570800000000000000
+      internalID: 8454481311407211701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_11
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 1100
+        width: 118
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 534c6e49a80128b50800000000000000
+      internalID: 6593850991813510197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_12
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 1157
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2637be70fe3675280800000000000000
+      internalID: -9054658647523888286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_13
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 1148
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0e77d54a76b96150800000000000000
+      internalID: 5866420625900797452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_14
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 1146
+        width: 22
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a0b817da0cce8ec0800000000000000
+      internalID: -3562685908273024856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_15
+      rect:
+        serializedVersion: 2
+        x: 964
+        y: 1155
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b436310f0e12ae00800000000000000
+      internalID: 1054438312551789751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_16
+      rect:
+        serializedVersion: 2
+        x: 973
+        y: 1154
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17b8e6d397cf01e00800000000000000
+      internalID: 1013587513810258801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_17
+      rect:
+        serializedVersion: 2
+        x: 1075
+        y: 1058
+        width: 90
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e103b9e6a289080f0800000000000000
+      internalID: -1116725399576170466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_18
+      rect:
+        serializedVersion: 2
+        x: 1128
+        y: 1139
+        width: 31
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cbd2668eb88f3d60800000000000000
+      internalID: 7872161025546705861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_19
+      rect:
+        serializedVersion: 2
+        x: 1178
+        y: 1141
+        width: 39
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08de1cd8f332227b0800000000000000
+      internalID: -5250595459692368512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_20
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 1130
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7069d9bc9ae124ee0800000000000000
+      internalID: -1278425629605390841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_21
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 1129
+        width: 29
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 491158e6f86dff430800000000000000
+      internalID: 3819006920556351892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_22
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 1140
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1fde97cd58b01c10800000000000000
+      internalID: 2022318945609899804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_23
+      rect:
+        serializedVersion: 2
+        x: 1155
+        y: 1136
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 506ee626f3c755830800000000000000
+      internalID: 4059287250820589061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_24
+      rect:
+        serializedVersion: 2
+        x: 1163
+        y: 1130
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2965c269687d80d90800000000000000
+      internalID: -7131213036896102766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_25
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 1132
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c712094ef2bccfa10800000000000000
+      internalID: 1944652545675764092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_26
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 1126
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4224f36caf63baf20800000000000000
+      internalID: 3434899591495893540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_27
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 1122
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7de503c5407840490800000000000000
+      internalID: -7780945803393081641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 978
+        width: 61
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fe5acd40866b6e60800000000000000
+      internalID: 7956565867927068400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_29
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1237
+        height: 1110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd57b046224c4c4f0800000000000000
+      internalID: -809306381033441825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_30
+      rect:
+        serializedVersion: 2
+        x: 1035
+        y: 1110
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4b4eac26feace220800000000000000
+      internalID: 2516578664128072523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_31
+      rect:
+        serializedVersion: 2
+        x: 1162
+        y: 1064
+        width: 92
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16601daeb8590fce0800000000000000
+      internalID: -1373433458175441311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_32
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 1026
+        width: 66
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e4cca88e7f2199a0800000000000000
+      internalID: -6228144589171276567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_33
+      rect:
+        serializedVersion: 2
+        x: 1109
+        y: 1042
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85aa7400a4fa19e50800000000000000
+      internalID: 6814420443555408472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_34
+      rect:
+        serializedVersion: 2
+        x: 1163
+        y: 1018
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30b9405625d9b8640800000000000000
+      internalID: 5083329581625416451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_35
+      rect:
+        serializedVersion: 2
+        x: 1172
+        y: 1034
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0047aca5b6546740800000000000000
+      internalID: 5144332012649660430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_36
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 1020
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d38bc691fdb474a00800000000000000
+      internalID: 740644085302081597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_37
+      rect:
+        serializedVersion: 2
+        x: 1117
+        y: 947
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cae11e94efdfe680800000000000000
+      internalID: -8723507780195849531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_38
+      rect:
+        serializedVersion: 2
+        x: 1125
+        y: 953
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d48706cc541bc510800000000000000
+      internalID: 1570371283760678099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_39
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 905
+        width: 16
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fcc12284f6b11660800000000000000
+      internalID: 7354860827744259320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_40
+      rect:
+        serializedVersion: 2
+        x: 1165
+        y: 938
+        width: 58
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7acf7bdfd81a9910800000000000000
+      internalID: 1844814347100998268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_41
+      rect:
+        serializedVersion: 2
+        x: 1123
+        y: 843
+        width: 46
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5b86284a633aaf80800000000000000
+      internalID: -8094600848675009702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_42
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 889
+        width: 71
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b00a54cb31847cc0800000000000000
+      internalID: -3714201698976530249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_43
+      rect:
+        serializedVersion: 2
+        x: 1162
+        y: 883
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1052bfa432ea196d0800000000000000
+      internalID: -2985413611364866815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_44
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 620
+        width: 69
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c238e3dba42e7ac0800000000000000
+      internalID: -3855603910569348416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_45
+      rect:
+        serializedVersion: 2
+        x: 1129
+        y: 680
+        width: 40
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bdfdc66724f25cc0800000000000000
+      internalID: -3723645491816301130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_46
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 668
+        width: 26
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcfe13ec09aed0720800000000000000
+      internalID: 2814163249831997391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_47
+      rect:
+        serializedVersion: 2
+        x: 1190
+        y: 680
+        width: 51
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bc52020974e8a590800000000000000
+      internalID: -7662623557595013966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_48
+      rect:
+        serializedVersion: 2
+        x: 1139
+        y: 666
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0820cada90615ae90800000000000000
+      internalID: -7015176613735431552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_49
+      rect:
+        serializedVersion: 2
+        x: 1145
+        y: 670
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52b980c056cfa2930800000000000000
+      internalID: 4119382320107526949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_50
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 646
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f661280db22836d0800000000000000
+      internalID: -3010618155616606472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_51
+      rect:
+        serializedVersion: 2
+        x: 1139
+        y: 642
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4dd3810ee72c8e20800000000000000
+      internalID: 3354099725665295695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_52
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 628
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 132e6ca595b4bb630800000000000000
+      internalID: 3943828745840157233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_53
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 614
+        width: 18
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edf6d5f5521f53de0800000000000000
+      internalID: -1353910970138923042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_54
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 574
+        width: 26
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5cec6b8ab27e5de0800000000000000
+      internalID: -1342509493381174178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_55
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 590
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22f7ee029275265a0800000000000000
+      internalID: -6529560675576021214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_56
+      rect:
+        serializedVersion: 2
+        x: 1133
+        y: 535
+        width: 46
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a237d11e14a4f0310800000000000000
+      internalID: 1373398058181423914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_57
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 499
+        width: 24
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45d6c0efc48a9c890800000000000000
+      internalID: -7437228260992455340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_58
+      rect:
+        serializedVersion: 2
+        x: 1141
+        y: 465
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 481a15d7a181234c0800000000000000
+      internalID: -4309355391389425276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_59
+      rect:
+        serializedVersion: 2
+        x: 1196
+        y: 326
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ced37e6738075420800000000000000
+      internalID: 2618570742508543680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_60
+      rect:
+        serializedVersion: 2
+        x: 1155
+        y: 312
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dca47333404049910800000000000000
+      internalID: 1843102563587017421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_61
+      rect:
+        serializedVersion: 2
+        x: 1189
+        y: 304
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca9f78c3893939170800000000000000
+      internalID: 8184047229922179500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_62
+      rect:
+        serializedVersion: 2
+        x: 1214
+        y: 224
+        width: 35
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a45058f670e1fa530800000000000000
+      internalID: 3868343622219138378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_63
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 304
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a019ad3b723c89350800000000000000
+      internalID: 6023779076896624906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_64
+      rect:
+        serializedVersion: 2
+        x: 1155
+        y: 288
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88e76a502275e58d0800000000000000
+      internalID: -2855749310071013752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_65
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 272
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2807985c120c1cdf0800000000000000
+      internalID: -161636860328054654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_66
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 248
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 342863b92f446fa00800000000000000
+      internalID: 789894593426915907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_67
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 256
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85f0fe086a60c8480800000000000000
+      internalID: -8895727851766083752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_68
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 226
+        width: 5
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc28ff583dc595300800000000000000
+      internalID: 241326118597001933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_69
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 232
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f924af4a69dc148f0800000000000000
+      internalID: -557938831920577889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_70
+      rect:
+        serializedVersion: 2
+        x: 1131
+        y: 211
+        width: 12
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33ed59c8b419eea50800000000000000
+      internalID: 6552334261537857075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_71
+      rect:
+        serializedVersion: 2
+        x: 1139
+        y: 214
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef2a1260d95dbcd70800000000000000
+      internalID: 9064573545402704638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_72
+      rect:
+        serializedVersion: 2
+        x: 1157
+        y: 215
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00469c1a988989810800000000000000
+      internalID: 1772334170262561792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_73
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 164
+        width: 39
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdfa554e993afb130800000000000000
+      internalID: 3584763709766348764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_74
+      rect:
+        serializedVersion: 2
+        x: 1139
+        y: 168
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe8ac036ef7889ba0800000000000000
+      internalID: -6081961770110637841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_75
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 136
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc2ae4692340b9100800000000000000
+      internalID: 115690830744691407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_76
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 126
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6f00fa7e51603160800000000000000
+      internalID: 7003204478978494319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_77
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 119
+        width: 34
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f18e2b960b814e830800000000000000
+      internalID: 4099428706780637215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_78
+      rect:
+        serializedVersion: 2
+        x: 790
+        y: 136
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a14055abb12b8cfd0800000000000000
+      internalID: -2321409775749495782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_79
+      rect:
+        serializedVersion: 2
+        x: 1165
+        y: 146
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2811efccbb8981ff0800000000000000
+      internalID: -65134262231363198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_80
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 131
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d146dc083a0a284c0800000000000000
+      internalID: -4286687271202233315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_81
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 111
+        width: 18
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4976a94a73cf4e070800000000000000
+      internalID: 8134904142852941716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_82
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 117
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25154639d1ef9cd70800000000000000
+      internalID: 9064055128040165714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_83
+      rect:
+        serializedVersion: 2
+        x: 587
+        y: 109
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 275e9d42d84f9e910800000000000000
+      internalID: 1867292407567607154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_84
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 101
+        width: 22
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f98fbcc1206cdb5f0800000000000000
+      internalID: -739217051443529569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_85
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 89
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c4d5e340c3ca5930800000000000000
+      internalID: 4132830838606124233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_86
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 97
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9365c9a8fe707330800000000000000
+      internalID: 3706602099791192988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_87
+      rect:
+        serializedVersion: 2
+        x: 884
+        y: 81
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab78a5839e3f64c70800000000000000
+      internalID: 8955113092071196602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_88
+      rect:
+        serializedVersion: 2
+        x: 906
+        y: 83
+        width: 9
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 950eab53785d3b7a0800000000000000
+      internalID: -6362507071845638055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_89
+      rect:
+        serializedVersion: 2
+        x: 914
+        y: 91
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da686d2ad0f2253f0800000000000000
+      internalID: -913616038789740883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_90
+      rect:
+        serializedVersion: 2
+        x: 932
+        y: 77
+        width: 26
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7c54dcf707be4bd0800000000000000
+      internalID: -2643974686285472643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_91
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 65
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a847600fd659dd660800000000000000
+      internalID: 7412244861132633226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_92
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 77
+        width: 39
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e74e8a326e471ae0800000000000000
+      internalID: -1578706960573904926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_93
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 27
+        width: 68
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3be7e4f80ac1aebf0800000000000000
+      internalID: -294391349714714957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_94
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 53
+        width: 23
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6502ac857e7d6a00800000000000000
+      internalID: 751395756176442735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_95
+      rect:
+        serializedVersion: 2
+        x: 918
+        y: 81
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70982d29a9420f0c0800000000000000
+      internalID: -4544091777709995769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_96
+      rect:
+        serializedVersion: 2
+        x: 1059
+        y: 66
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcb228b2cb1b986d0800000000000000
+      internalID: -2987661456041694261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_97
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 71
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf2bcf3bb7d2cd320800000000000000
+      internalID: 2583990295527731964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_98
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 59
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea4bdc0dae9650e60800000000000000
+      internalID: 7927859176302032046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_99
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 59
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29c46516ae508b410800000000000000
+      internalID: 1492949780686851218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_100
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 49
+        width: 16
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07ee7e04536116070800000000000000
+      internalID: 8097778022966881904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_101
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 61
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcea5d133a063fcf0800000000000000
+      internalID: -219725702778999091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_102
+      rect:
+        serializedVersion: 2
+        x: 866
+        y: 51
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 037f1820fd8986d40800000000000000
+      internalID: 5577876222085560112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_103
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 47
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 370afb6e98c4405f0800000000000000
+      internalID: -791423479344816013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_104
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 43
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c62047620fee391a0800000000000000
+      internalID: -6803831896821988756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_105
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 33
+        width: 12
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85c36060e843eaa70800000000000000
+      internalID: 8840060903165934680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_106
+      rect:
+        serializedVersion: 2
+        x: 884
+        y: 31
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6462d3bda6cb8ed0800000000000000
+      internalID: -2410614726178216852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_107
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 23
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bf6338f841e12d20800000000000000
+      internalID: 3252128109456224181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_108
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 13
+        width: 37
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b2676c7e26182280800000000000000
+      internalID: -9067973460799036743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_109
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 17
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bee81902bf64ab5d0800000000000000
+      internalID: -3046044153565573397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_110
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 15
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5f797aaee86d4770800000000000000
+      internalID: 8596642637991739227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_111
+      rect:
+        serializedVersion: 2
+        x: 904
+        y: 18
+        width: 11
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b04114a04cceba00800000000000000
+      internalID: 774280763956871351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_planted_v1_112
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 7
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f6c46759bb1ee120800000000000000
+      internalID: 2444922130557880057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      farm_plot_planted_v1_0: -7059363528942735946
+      farm_plot_planted_v1_1: 5748691927954030806
+      farm_plot_planted_v1_10: 8454481311407211701
+      farm_plot_planted_v1_100: 8097778022966881904
+      farm_plot_planted_v1_101: -219725702778999091
+      farm_plot_planted_v1_102: 5577876222085560112
+      farm_plot_planted_v1_103: -791423479344816013
+      farm_plot_planted_v1_104: -6803831896821988756
+      farm_plot_planted_v1_105: 8840060903165934680
+      farm_plot_planted_v1_106: -2410614726178216852
+      farm_plot_planted_v1_107: 3252128109456224181
+      farm_plot_planted_v1_108: -9067973460799036743
+      farm_plot_planted_v1_109: -3046044153565573397
+      farm_plot_planted_v1_11: 6593850991813510197
+      farm_plot_planted_v1_110: 8596642637991739227
+      farm_plot_planted_v1_111: 774280763956871351
+      farm_plot_planted_v1_112: 2444922130557880057
+      farm_plot_planted_v1_12: -9054658647523888286
+      farm_plot_planted_v1_13: 5866420625900797452
+      farm_plot_planted_v1_14: -3562685908273024856
+      farm_plot_planted_v1_15: 1054438312551789751
+      farm_plot_planted_v1_16: 1013587513810258801
+      farm_plot_planted_v1_17: -1116725399576170466
+      farm_plot_planted_v1_18: 7872161025546705861
+      farm_plot_planted_v1_19: -5250595459692368512
+      farm_plot_planted_v1_2: -870120223803173096
+      farm_plot_planted_v1_20: -1278425629605390841
+      farm_plot_planted_v1_21: 3819006920556351892
+      farm_plot_planted_v1_22: 2022318945609899804
+      farm_plot_planted_v1_23: 4059287250820589061
+      farm_plot_planted_v1_24: -7131213036896102766
+      farm_plot_planted_v1_25: 1944652545675764092
+      farm_plot_planted_v1_26: 3434899591495893540
+      farm_plot_planted_v1_27: -7780945803393081641
+      farm_plot_planted_v1_28: 7956565867927068400
+      farm_plot_planted_v1_29: -809306381033441825
+      farm_plot_planted_v1_3: -4334659634703052801
+      farm_plot_planted_v1_30: 2516578664128072523
+      farm_plot_planted_v1_31: -1373433458175441311
+      farm_plot_planted_v1_32: -6228144589171276567
+      farm_plot_planted_v1_33: 6814420443555408472
+      farm_plot_planted_v1_34: 5083329581625416451
+      farm_plot_planted_v1_35: 5144332012649660430
+      farm_plot_planted_v1_36: 740644085302081597
+      farm_plot_planted_v1_37: -8723507780195849531
+      farm_plot_planted_v1_38: 1570371283760678099
+      farm_plot_planted_v1_39: 7354860827744259320
+      farm_plot_planted_v1_4: 7093404836920423445
+      farm_plot_planted_v1_40: 1844814347100998268
+      farm_plot_planted_v1_41: -8094600848675009702
+      farm_plot_planted_v1_42: -3714201698976530249
+      farm_plot_planted_v1_43: -2985413611364866815
+      farm_plot_planted_v1_44: -3855603910569348416
+      farm_plot_planted_v1_45: -3723645491816301130
+      farm_plot_planted_v1_46: 2814163249831997391
+      farm_plot_planted_v1_47: -7662623557595013966
+      farm_plot_planted_v1_48: -7015176613735431552
+      farm_plot_planted_v1_49: 4119382320107526949
+      farm_plot_planted_v1_5: -922946233971559827
+      farm_plot_planted_v1_50: -3010618155616606472
+      farm_plot_planted_v1_51: 3354099725665295695
+      farm_plot_planted_v1_52: 3943828745840157233
+      farm_plot_planted_v1_53: -1353910970138923042
+      farm_plot_planted_v1_54: -1342509493381174178
+      farm_plot_planted_v1_55: -6529560675576021214
+      farm_plot_planted_v1_56: 1373398058181423914
+      farm_plot_planted_v1_57: -7437228260992455340
+      farm_plot_planted_v1_58: -4309355391389425276
+      farm_plot_planted_v1_59: 2618570742508543680
+      farm_plot_planted_v1_6: 3455625736238203686
+      farm_plot_planted_v1_60: 1843102563587017421
+      farm_plot_planted_v1_61: 8184047229922179500
+      farm_plot_planted_v1_62: 3868343622219138378
+      farm_plot_planted_v1_63: 6023779076896624906
+      farm_plot_planted_v1_64: -2855749310071013752
+      farm_plot_planted_v1_65: -161636860328054654
+      farm_plot_planted_v1_66: 789894593426915907
+      farm_plot_planted_v1_67: -8895727851766083752
+      farm_plot_planted_v1_68: 241326118597001933
+      farm_plot_planted_v1_69: -557938831920577889
+      farm_plot_planted_v1_7: 3763856893157294862
+      farm_plot_planted_v1_70: 6552334261537857075
+      farm_plot_planted_v1_71: 9064573545402704638
+      farm_plot_planted_v1_72: 1772334170262561792
+      farm_plot_planted_v1_73: 3584763709766348764
+      farm_plot_planted_v1_74: -6081961770110637841
+      farm_plot_planted_v1_75: 115690830744691407
+      farm_plot_planted_v1_76: 7003204478978494319
+      farm_plot_planted_v1_77: 4099428706780637215
+      farm_plot_planted_v1_78: -2321409775749495782
+      farm_plot_planted_v1_79: -65134262231363198
+      farm_plot_planted_v1_8: -4950648975755355245
+      farm_plot_planted_v1_80: -4286687271202233315
+      farm_plot_planted_v1_81: 8134904142852941716
+      farm_plot_planted_v1_82: 9064055128040165714
+      farm_plot_planted_v1_83: 1867292407567607154
+      farm_plot_planted_v1_84: -739217051443529569
+      farm_plot_planted_v1_85: 4132830838606124233
+      farm_plot_planted_v1_86: 3706602099791192988
+      farm_plot_planted_v1_87: 8955113092071196602
+      farm_plot_planted_v1_88: -6362507071845638055
+      farm_plot_planted_v1_89: -913616038789740883
+      farm_plot_planted_v1_9: -6031867903347878327
+      farm_plot_planted_v1_90: -2643974686285472643
+      farm_plot_planted_v1_91: 7412244861132633226
+      farm_plot_planted_v1_92: -1578706960573904926
+      farm_plot_planted_v1_93: -294391349714714957
+      farm_plot_planted_v1_94: 751395756176442735
+      farm_plot_planted_v1_95: -4544091777709995769
+      farm_plot_planted_v1_96: -2987661456041694261
+      farm_plot_planted_v1_97: 2583990295527731964
+      farm_plot_planted_v1_98: 7927859176302032046
+      farm_plot_planted_v1_99: 1492949780686851218
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

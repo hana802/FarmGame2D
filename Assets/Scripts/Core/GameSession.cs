@@ -1,29 +1,38 @@
 using System;
 using FarmGame2D.Farming;
 using FarmGame2D.TimeSystem;
+using FarmGame2D.World;
 using UnityEngine;
 
 namespace FarmGame2D.Core
 {
     public sealed class GameSession : MonoBehaviour
     {
-        private const int PlotCount = 6;
-        private const int HarvestQuestTarget = 3;
-
         private readonly SaveService saveService = new();
+        private readonly CloudSaveClient cloudSaveClient = new();
         private Transform playerTransform;
         private int processedDay;
         private string message = "안내자를 찾아가 농장 생활을 시작하세요.";
         private string activeSpeaker = string.Empty;
         private int activePortraitRow = -1;
         private float messageDisplaySeconds = 1f;
+        private bool cloudSyncBusy;
+        private bool hadLocalSaveAtStartup;
+        private bool cloudLoadRequired;
 
         public static GameSession Instance { get; private set; }
         public GameSaveData Data { get; private set; }
         public FarmTool SelectedTool { get; private set; } = FarmTool.Hoe;
+        public GameItem SelectedSeed { get; private set; } = GameItem.PotatoSeed;
+        public ShopKind ActiveShop { get; private set; } = ShopKind.SeedsAndAnimals;
         public bool PhoneOpen { get; private set; }
         public bool ShopOpen { get; private set; }
         public bool InventoryOpen { get; private set; }
+        public bool CloudSyncBusy => cloudSyncBusy;
+        public bool CloudSyncLinked => cloudSaveClient.IsLinked;
+        public string CloudSyncCode => cloudSaveClient.SyncCode;
+        public string NewlyCreatedCloudPin { get; private set; } = string.Empty;
+        public bool CloudLoadRequired => cloudLoadRequired;
         public string Message
         {
             get => message;
@@ -53,10 +62,12 @@ namespace FarmGame2D.Core
             }
 
             Instance = this;
-            Data = saveService.TryLoad(out var loaded)
+            hadLocalSaveAtStartup = saveService.TryLoad(out var loaded);
+            Data = hadLocalSaveAtStartup
                 ? loaded
-                : GameSaveData.CreateNew(PlotCount, UnityEngine.Random.Range(10000, 999999));
+                : GameSaveData.CreateNew(FarmFieldLayout.PlotCount, UnityEngine.Random.Range(10000, 999999));
             EnsurePlotCount();
+            SelectFirstOwnedSeed();
             processedDay = Data.day;
             DontDestroyOnLoad(gameObject);
         }
@@ -71,6 +82,10 @@ namespace FarmGame2D.Core
 
             clock.SetTime(Data.day, Data.hour, Data.minute);
             clock.TimeChanged += HandleTimeChanged;
+            if (!Application.isBatchMode)
+            {
+                BeginAutomaticDeviceSync();
+            }
         }
 
         private void OnDestroy()
@@ -78,6 +93,22 @@ namespace FarmGame2D.Core
             if (GameClockController.Instance != null)
             {
                 GameClockController.Instance.TimeChanged -= HandleTimeChanged;
+            }
+        }
+
+        private void OnApplicationPause(bool paused)
+        {
+            if (paused && Data != null)
+            {
+                SaveSilently();
+            }
+        }
+
+        private void OnApplicationQuit()
+        {
+            if (Data != null)
+            {
+                SaveSilently();
             }
         }
 
@@ -145,14 +176,14 @@ namespace FarmGame2D.Core
             {
                 case FarmTool.Hoe when plot.state == SoilState.Empty:
                     plot.state = SoilState.Tilled;
-                    Message = "땅을 갈았습니다.";
+                    Message = "호미로 새 밭을 만들었습니다.";
                     break;
                 case FarmTool.Seeds when plot.state == SoilState.Tilled:
                     Plant(plot);
                     break;
                 case FarmTool.WateringCan when plot.state == SoilState.Planted:
                     plot.state = SoilState.Watered;
-                    Message = "밀에 물을 주었습니다.";
+                    Message = $"{GetCropLabel(plot)}에 물을 주었습니다.";
                     break;
                 default:
                     Message = "지금 선택한 도구로는 할 수 없습니다.";
@@ -164,12 +195,14 @@ namespace FarmGame2D.Core
 
         public void InteractChicken()
         {
-            if (Data.eggReady)
+            if (Data.readyEggs > 0)
             {
-                Data.eggReady = false;
-                Data.inventory.Add(GameItem.Egg, 1);
+                var collected = Data.readyEggs;
+                Data.readyEggs = 0;
+                Data.inventory.Add(GameItem.Egg, collected);
                 Data.firstEggAchievement = true;
-                Message = "달걀을 1개 모았습니다. 도전 과제: 첫 달걀!";
+                Message = $"달걀을 {collected}개 모았습니다. 도전 과제: 첫 달걀!";
+                CompleteCurrentStarterQuest();
                 NotifyChanged();
                 return;
             }
@@ -180,9 +213,9 @@ namespace FarmGame2D.Core
                 return;
             }
 
-            if (!Data.inventory.TrySpend(GameItem.Feed, 1))
+            if (!Data.inventory.TrySpend(GameItem.Feed, Data.ownedChickens))
             {
-                Message = "사료가 없습니다. 마을 상점에서 구입하세요.";
+                Message = $"닭 {Data.ownedChickens}마리에게 줄 사료가 부족합니다.";
                 return;
             }
 
@@ -191,9 +224,51 @@ namespace FarmGame2D.Core
             NotifyChanged();
         }
 
-        public void PurchaseSeeds()
+        public void InteractCow()
         {
-            Purchase(GameItem.WheatSeed, 5, 20, "밀 씨앗 5개");
+            if (Data.ownedCows <= 0)
+            {
+                Message = "아직 소가 없습니다. 씨앗·동물 상점에서 구입할 수 있습니다.";
+                NotifyChanged();
+                return;
+            }
+
+            if (Data.readyMilk > 0)
+            {
+                var collected = Data.readyMilk;
+                Data.readyMilk = 0;
+                Data.inventory.Add(GameItem.Milk, collected);
+                Message = $"우유를 {collected}개 모았습니다.";
+                NotifyChanged();
+                return;
+            }
+
+            if (Data.cowFedToday)
+            {
+                Message = "소들은 오늘 이미 먹이를 먹었습니다.";
+                return;
+            }
+
+            if (!Data.inventory.TrySpend(GameItem.Feed, Data.ownedCows))
+            {
+                Message = $"소 {Data.ownedCows}마리에게 줄 사료가 부족합니다.";
+                return;
+            }
+
+            Data.cowFedToday = true;
+            Message = "소들에게 사료를 주었습니다. 내일 우유를 얻을 수 있습니다.";
+            NotifyChanged();
+        }
+
+        public void PurchaseSeed(GameItem seed)
+        {
+            if (!CropCatalog.TryGetBySeed(seed, out var crop) || crop.Season != CurrentSeason)
+            {
+                Message = "지금 계절에는 판매하지 않는 씨앗입니다.";
+                return;
+            }
+
+            Purchase(seed, 5, crop.PackPrice, $"{crop.Label} 씨앗 5개");
         }
 
         public void PurchaseFeed()
@@ -201,22 +276,78 @@ namespace FarmGame2D.Core
             Purchase(GameItem.Feed, 3, 15, "사료 3개");
         }
 
-        public void SellAllProduce()
+        public void PurchaseChicken()
         {
-            var wheat = Data.inventory.Count(GameItem.Wheat);
-            var eggs = Data.inventory.Count(GameItem.Egg);
-            if (wheat == 0 && eggs == 0)
+            if (PurchaseWithoutItem(150, "닭 1마리"))
             {
-                Message = "판매할 밀이나 달걀이 없습니다.";
+                Data.ownedChickens++;
+                NotifyChanged();
+                SaveSilently();
+            }
+        }
+
+        public void PurchaseCow()
+        {
+            if (PurchaseWithoutItem(350, "소 1마리"))
+            {
+                Data.ownedCows++;
+                NotifyChanged();
+                SaveSilently();
+            }
+        }
+
+        public void PurchasePickaxe()
+        {
+            if (Data.hasPickaxe)
+            {
+                Message = "이미 곡괭이를 가지고 있습니다.";
                 return;
             }
 
-            Data.inventory.TrySpend(GameItem.Wheat, wheat);
-            Data.inventory.TrySpend(GameItem.Egg, eggs);
-            var income = (wheat * 15) + (eggs * 25);
+            if (PurchaseWithoutItem(120, "곡괭이"))
+            {
+                Data.hasPickaxe = true;
+                NotifyChanged();
+                SaveSilently();
+            }
+        }
+
+        public void PurchaseOre(GameItem ore, int quantity, int price)
+        {
+            if (ore != GameItem.Stone && ore != GameItem.CopperOre && ore != GameItem.IronOre)
+            {
+                return;
+            }
+
+            Purchase(ore, quantity, price, $"{ItemCatalog.GetLabel(ore)} {quantity}개");
+        }
+
+        public void SellAllProduce()
+        {
+            var income = 0;
+            foreach (GameItem item in Enum.GetValues(typeof(GameItem)))
+            {
+                var price = ItemCatalog.GetSellPrice(item);
+                var quantity = Data.inventory.Count(item);
+                if (price <= 0 || quantity <= 0)
+                {
+                    continue;
+                }
+
+                Data.inventory.TrySpend(item, quantity);
+                income += quantity * price;
+            }
+
+            if (income == 0)
+            {
+                Message = "판매할 농산물이나 광물이 없습니다.";
+                return;
+            }
+
             Data.money += income;
-            Message = $"판매 상자에 넣어 {income}G를 받았습니다.";
+            Message = $"농산물과 광물을 판매해 {income}G를 받았습니다.";
             NotifyChanged();
+            SaveSilently();
         }
 
         public void Sleep()
@@ -242,7 +373,14 @@ namespace FarmGame2D.Core
 
         public void ToggleShop()
         {
-            ShopOpen = !ShopOpen;
+            OpenShop(ShopKind.SeedsAndAnimals);
+        }
+
+        public void OpenShop(ShopKind shop)
+        {
+            var shouldOpen = !ShopOpen || ActiveShop != shop;
+            ActiveShop = shop;
+            ShopOpen = shouldOpen;
             PhoneOpen = false;
             InventoryOpen = false;
             NotifyChanged();
@@ -279,6 +417,11 @@ namespace FarmGame2D.Core
                 ? automatic ? "자동 저장했습니다." : "휴대폰 저장을 완료했습니다."
                 : "저장에 실패했습니다. 저장 폴더 권한을 확인하세요.";
             NotifyChanged();
+
+            if (saved && cloudSaveClient.IsLinked)
+            {
+                UploadCloudSave();
+            }
         }
 
         public void Load()
@@ -289,24 +432,161 @@ namespace FarmGame2D.Core
                 return;
             }
 
-            Data = loaded;
-            EnsurePlotCount();
-            processedDay = Data.day;
-            if (playerTransform != null)
+            ApplyLoadedData(loaded, "저장 데이터를 불러왔습니다.");
+        }
+
+        public void CreateCloudSave()
+        {
+            if (cloudSyncBusy)
             {
-                playerTransform.position = new Vector3(Data.playerX, Data.playerY, 0f);
+                ShowCloudMessage("동기화 작업이 진행 중입니다.");
+                return;
             }
 
-            GameClockController.Instance?.SetTime(Data.day, Data.hour, Data.minute);
-            Message = "저장 데이터를 불러왔습니다.";
-            NotifyChanged();
+            CapturePlayerPosition();
+            if (!saveService.TrySave(Data) || !saveService.TrySerialize(Data, out var json))
+            {
+                ShowCloudMessage("현재 저장 데이터를 준비하지 못했습니다.");
+                return;
+            }
+
+            cloudSyncBusy = true;
+            ShowCloudMessage("새 동기화 코드를 만드는 중입니다…");
+            StartCoroutine(cloudSaveClient.Create(json, result =>
+            {
+                cloudSyncBusy = false;
+                if (!result.Success)
+                {
+                    ShowCloudMessage(result.Message);
+                    return;
+                }
+
+                NewlyCreatedCloudPin = result.Pin;
+                ShowCloudMessage("동기화 코드와 PIN을 만들었습니다. 오른쪽 패널에서 확인하세요.", 6f);
+            }));
+        }
+
+        public void ConnectCloudSave(string code, string pin)
+        {
+            if (cloudSyncBusy)
+            {
+                ShowCloudMessage("동기화 작업이 진행 중입니다.");
+                return;
+            }
+
+            cloudSyncBusy = true;
+            ShowCloudMessage("클라우드 저장을 확인하는 중입니다…");
+            StartCoroutine(cloudSaveClient.LinkAndLoad(code, pin, result =>
+            {
+                cloudSyncBusy = false;
+                if (!result.Success)
+                {
+                    ShowCloudMessage(result.Message);
+                    return;
+                }
+
+                NewlyCreatedCloudPin = string.Empty;
+                ApplyCloudSave(result.SaveJson, "이 브라우저에 클라우드 저장을 연결했습니다.");
+            }));
+        }
+
+        public void LoadCloudSave()
+        {
+            if (cloudSyncBusy)
+            {
+                ShowCloudMessage("동기화 작업이 진행 중입니다.");
+                return;
+            }
+
+            cloudSyncBusy = true;
+            ShowCloudMessage("클라우드 저장을 불러오는 중입니다…");
+            if (!saveService.TrySerialize(Data, out var fallbackJson))
+            {
+                cloudSyncBusy = false;
+                ShowCloudMessage("현재 저장 데이터를 준비하지 못했습니다.");
+                return;
+            }
+
+            StartCoroutine(cloudSaveClient.Load(fallbackJson, result =>
+            {
+                cloudSyncBusy = false;
+                if (!result.Success)
+                {
+                    ShowCloudMessage(result.Message);
+                    return;
+                }
+
+                ApplyCloudSave(result.SaveJson, "클라우드의 최신 저장을 불러왔습니다.");
+            }));
+        }
+
+        public void DisconnectCloudSave()
+        {
+            if (cloudSyncBusy)
+            {
+                ShowCloudMessage("동기화 작업이 끝난 뒤 연결을 해제해 주세요.");
+                return;
+            }
+
+            cloudSaveClient.Disconnect();
+            NewlyCreatedCloudPin = string.Empty;
+            ShowCloudMessage("이 브라우저의 클라우드 연결만 해제했습니다. 저장 데이터는 지워지지 않습니다.");
         }
 
         public void SelectTool(FarmTool tool)
         {
+            if (tool == FarmTool.Pickaxe && !Data.hasPickaxe)
+            {
+                Message = "광물 상점에서 곡괭이를 먼저 구입하세요.";
+                return;
+            }
+
             SelectedTool = tool;
             InventoryOpen = false;
             Message = $"가방에서 {GetToolLabel(tool)}를 꺼냈습니다.";
+            NotifyChanged();
+        }
+
+        public void SelectSeed(GameItem seed)
+        {
+            if (!ItemCatalog.IsSeed(seed) || Data.inventory.Count(seed) <= 0)
+            {
+                Message = "가방에 그 씨앗이 없습니다.";
+                return;
+            }
+
+            SelectedSeed = seed;
+            SelectedTool = FarmTool.Seeds;
+            InventoryOpen = false;
+            Message = $"{ItemCatalog.GetLabel(seed)}을 꺼냈습니다.";
+            NotifyChanged();
+        }
+
+        public void MineNode(int nodeId)
+        {
+            if (SelectedTool != FarmTool.Pickaxe || !Data.hasPickaxe)
+            {
+                Message = "곡괭이를 선택해야 광맥을 캘 수 있습니다.";
+                NotifyChanged();
+                return;
+            }
+
+            if (nodeId < 0 || nodeId >= Data.miningNodes.Count)
+            {
+                return;
+            }
+
+            var node = Data.miningNodes[nodeId];
+            if (!node.IsAvailable)
+            {
+                Message = $"광맥이 다시 생기려면 {node.regrowDaysRemaining}일 남았습니다.";
+                NotifyChanged();
+                return;
+            }
+
+            node.Mine();
+            Data.inventory.Add(node.ore, 1);
+            Message = $"{ItemCatalog.GetLabel(node.ore)}을 채굴했습니다.";
             NotifyChanged();
         }
 
@@ -321,6 +601,7 @@ namespace FarmGame2D.Core
             Data.pulledWeedIds.Add(weedId);
             Data.inventory.Add(GameItem.Weed, 1);
             Message = "잡초를 뽑아 가방에 넣었습니다.";
+            CompleteCurrentStarterQuest();
             NotifyChanged();
             return true;
         }
@@ -347,39 +628,74 @@ namespace FarmGame2D.Core
                 plot.AdvanceDay();
             }
 
-            Data.eggReady = Data.chickenFedToday;
+            if (Data.chickenFedToday)
+            {
+                Data.readyEggs += Data.ownedChickens;
+            }
+
+            if (Data.cowFedToday)
+            {
+                Data.readyMilk += Data.ownedCows;
+            }
+
             Data.chickenFedToday = false;
+            Data.cowFedToday = false;
+
+            foreach (var node in Data.miningNodes)
+            {
+                node.AdvanceDay();
+            }
         }
 
         private void Plant(FarmPlotData plot)
         {
-            if (!Data.inventory.TrySpend(GameItem.WheatSeed, 1))
+            if (!CropCatalog.TryGetBySeed(SelectedSeed, out var crop))
             {
-                Message = "밀 씨앗이 없습니다.";
+                Message = "심을 씨앗을 가방에서 선택하세요.";
                 return;
             }
 
-            plot.state = SoilState.Planted;
-            plot.growthDays = 0;
-            Message = "밀 씨앗을 심었습니다.";
+            if (crop.Season != CurrentSeason)
+            {
+                Message = $"{crop.Label}은(는) {GetSeasonLabel(crop.Season)}에 심을 수 있습니다.";
+                return;
+            }
+
+            if (!Data.inventory.TrySpend(SelectedSeed, 1))
+            {
+                Message = $"{ItemCatalog.GetLabel(SelectedSeed)}이 없습니다.";
+                return;
+            }
+
+            plot.Plant(SelectedSeed);
+            Message = $"{crop.Label} 씨앗을 심었습니다.";
         }
 
         private void Harvest(FarmPlotData plot)
         {
-            plot.Reset();
-            Data.inventory.Add(GameItem.Wheat, 1);
+            var produce = CropCatalog.TryGetBySeed(plot.plantedSeed, out var crop)
+                ? crop.Produce
+                : GameItem.Wheat;
+            plot.ResetToTilled();
+            Data.inventory.Add(produce, 1);
             Data.wheatHarvested++;
             Data.firstHarvestAchievement = true;
-            Message = "밀을 수확했습니다. 도전 과제: 첫 수확!";
+            Message = $"{ItemCatalog.GetLabel(produce)}을 수확했습니다. 도전 과제: 첫 수확!";
 
-            if (!Data.harvestQuestCompleted && Data.wheatHarvested >= HarvestQuestTarget)
-            {
-                Data.harvestQuestCompleted = true;
-                Data.money += 100;
-                Message = "퀘스트 완료: 밀 3개 수확! 보상 100G";
-            }
+            CompleteCurrentStarterQuest();
 
             NotifyChanged();
+        }
+
+        private void CompleteCurrentStarterQuest()
+        {
+            var completion = StarterQuestProgress.TryCompleteCurrent(Data);
+            if (!completion.HasCompletion)
+            {
+                return;
+            }
+
+            Message = $"퀘스트 완료: {completion.Title}! 보상 {completion.Reward}G";
         }
 
         private void Purchase(GameItem item, int quantity, int price, string label)
@@ -394,6 +710,20 @@ namespace FarmGame2D.Core
             Data.inventory.Add(item, quantity);
             Message = $"{label}를 구입했습니다.";
             NotifyChanged();
+            SaveSilently();
+        }
+
+        private bool PurchaseWithoutItem(int price, string label)
+        {
+            if (Data.money < price)
+            {
+                Message = "돈이 부족합니다.";
+                return false;
+            }
+
+            Data.money -= price;
+            Message = $"{label}을(를) 구입했습니다.";
+            return true;
         }
 
         private void AdvanceToNextSeason()
@@ -405,12 +735,20 @@ namespace FarmGame2D.Core
 
         private void EnsurePlotCount()
         {
-            Data.inventory ??= new InventoryModel();
-            Data.pulledWeedIds ??= new System.Collections.Generic.List<int>();
-            Data.farmPlots ??= new System.Collections.Generic.List<FarmPlotData>();
-            while (Data.farmPlots.Count < PlotCount)
+            GameSaveDataNormalizer.Normalize(Data);
+        }
+
+        private void SelectFirstOwnedSeed()
+        {
+            foreach (var crop in CropCatalog.GetAll())
             {
-                Data.farmPlots.Add(new FarmPlotData());
+                if (Data.inventory.Count(crop.Seed) <= 0)
+                {
+                    continue;
+                }
+
+                SelectedSeed = crop.Seed;
+                return;
             }
         }
 
@@ -425,6 +763,122 @@ namespace FarmGame2D.Core
             Data.playerY = playerTransform.position.y;
         }
 
+        private void SaveSilently()
+        {
+            if (Application.isBatchMode)
+            {
+                return;
+            }
+
+            CapturePlayerPosition();
+            if (saveService.TrySave(Data) && cloudSaveClient.IsLinked)
+            {
+                UploadCloudSave(false);
+            }
+        }
+
+        private void UploadCloudSave(bool showProgress = true)
+        {
+            if (cloudLoadRequired)
+            {
+                if (showProgress)
+                {
+                    ShowCloudMessage("다른 브라우저의 저장이 있습니다. 먼저 최신 저장을 받아 주세요.");
+                }
+                return;
+            }
+
+            if (cloudSyncBusy || !cloudSaveClient.IsLinked || !saveService.TrySerialize(Data, out var json))
+            {
+                return;
+            }
+
+            cloudSyncBusy = true;
+            if (showProgress)
+            {
+                ShowCloudMessage("기기에 저장했습니다. 클라우드에도 올리는 중입니다…");
+            }
+
+            StartCoroutine(cloudSaveClient.Save(json, result =>
+            {
+                cloudSyncBusy = false;
+                if (result.Success)
+                {
+                    if (showProgress)
+                    {
+                        ShowCloudMessage("기기와 클라우드에 모두 저장했습니다.");
+                    }
+                    return;
+                }
+
+                ShowCloudMessage(result.Message);
+            }));
+        }
+
+        private void BeginAutomaticDeviceSync()
+        {
+            if (cloudSyncBusy || !saveService.TrySerialize(Data, out var json))
+            {
+                return;
+            }
+
+            cloudSyncBusy = true;
+            StartCoroutine(cloudSaveClient.AutoConnect(json, result =>
+            {
+                cloudSyncBusy = false;
+                if (!result.Success)
+                {
+                    Debug.LogWarning($"Automatic cloud sync unavailable: {result.Message}");
+                    return;
+                }
+
+                NewlyCreatedCloudPin = result.Pin ?? string.Empty;
+                if (!hadLocalSaveAtStartup && !string.IsNullOrWhiteSpace(result.SaveJson))
+                {
+                    ApplyCloudSave(result.SaveJson, "같은 기기의 저장을 자동으로 불러왔습니다.");
+                }
+                else if (hadLocalSaveAtStartup && !string.IsNullOrWhiteSpace(result.SaveJson))
+                {
+                    cloudLoadRequired = true;
+                }
+            }));
+        }
+
+        private void ApplyCloudSave(string json, string successMessage)
+        {
+            if (!saveService.TryDeserialize(json, out var loaded))
+            {
+                ShowCloudMessage("클라우드 저장 데이터가 손상되어 불러오지 못했습니다.");
+                return;
+            }
+
+            ApplyLoadedData(loaded, successMessage);
+            cloudLoadRequired = false;
+            saveService.TrySave(Data);
+        }
+
+        private void ApplyLoadedData(GameSaveData loaded, string successMessage)
+        {
+            Data = loaded;
+            EnsurePlotCount();
+            SelectFirstOwnedSeed();
+            processedDay = Data.day;
+            if (playerTransform != null)
+            {
+                playerTransform.position = new Vector3(Data.playerX, Data.playerY, 0f);
+            }
+
+            GameClockController.Instance?.SetTime(Data.day, Data.hour, Data.minute);
+            ShowCloudMessage(successMessage);
+        }
+
+        private void ShowCloudMessage(string text, float seconds = 5f)
+        {
+            Message = text;
+            messageDisplaySeconds = seconds;
+            NotifyChanged();
+        }
+
         private void NotifyChanged()
         {
             StateChanged?.Invoke();
@@ -435,9 +889,27 @@ namespace FarmGame2D.Core
             return tool switch
             {
                 FarmTool.Hoe => "호미",
-                FarmTool.Seeds => "밀 씨앗",
+                FarmTool.Seeds => "씨앗",
                 FarmTool.WateringCan => "물뿌리개",
+                FarmTool.Pickaxe => "곡괭이",
                 _ => tool.ToString()
+            };
+        }
+
+        private static string GetCropLabel(FarmPlotData plot)
+        {
+            return CropCatalog.TryGetBySeed(plot.plantedSeed, out var crop) ? crop.Label : "작물";
+        }
+
+        private static string GetSeasonLabel(Season season)
+        {
+            return season switch
+            {
+                Season.Spring => "봄",
+                Season.Summer => "여름",
+                Season.Autumn => "가을",
+                Season.Winter => "겨울",
+                _ => season.ToString()
             };
         }
     }

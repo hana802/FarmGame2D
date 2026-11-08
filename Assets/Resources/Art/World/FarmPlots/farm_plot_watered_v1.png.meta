@@ -1,0 +1,3018 @@
+fileFormatVersion: 2
+guid: 5e95969f234cde5469059d5538d5d4f4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3130915529655277225
+    second: farm_plot_watered_v1_0
+  - first:
+      213: 1703618149596252187
+    second: farm_plot_watered_v1_1
+  - first:
+      213: -6060184985465361747
+    second: farm_plot_watered_v1_2
+  - first:
+      213: -8216398703327511508
+    second: farm_plot_watered_v1_3
+  - first:
+      213: 7490667367969755470
+    second: farm_plot_watered_v1_4
+  - first:
+      213: 2252522831499559615
+    second: farm_plot_watered_v1_5
+  - first:
+      213: 8678413171578686474
+    second: farm_plot_watered_v1_6
+  - first:
+      213: 5247127221784341650
+    second: farm_plot_watered_v1_7
+  - first:
+      213: -989127336388677299
+    second: farm_plot_watered_v1_8
+  - first:
+      213: -24526073528006169
+    second: farm_plot_watered_v1_9
+  - first:
+      213: -7602743418442627626
+    second: farm_plot_watered_v1_10
+  - first:
+      213: 1000914475932348794
+    second: farm_plot_watered_v1_11
+  - first:
+      213: -7918107438520146706
+    second: farm_plot_watered_v1_12
+  - first:
+      213: -6944861285546081182
+    second: farm_plot_watered_v1_13
+  - first:
+      213: -914306847098892998
+    second: farm_plot_watered_v1_14
+  - first:
+      213: -6502971239461251121
+    second: farm_plot_watered_v1_15
+  - first:
+      213: 8504496058654370084
+    second: farm_plot_watered_v1_16
+  - first:
+      213: -1367410295328763889
+    second: farm_plot_watered_v1_17
+  - first:
+      213: 8334025412641011915
+    second: farm_plot_watered_v1_18
+  - first:
+      213: -1885822605958247525
+    second: farm_plot_watered_v1_19
+  - first:
+      213: 6380556813394616852
+    second: farm_plot_watered_v1_20
+  - first:
+      213: -3421456867400523740
+    second: farm_plot_watered_v1_21
+  - first:
+      213: 8361385442970662440
+    second: farm_plot_watered_v1_22
+  - first:
+      213: 7674381301910945461
+    second: farm_plot_watered_v1_23
+  - first:
+      213: 4149845831526946891
+    second: farm_plot_watered_v1_24
+  - first:
+      213: 6162143272507095183
+    second: farm_plot_watered_v1_25
+  - first:
+      213: 7563138431246316016
+    second: farm_plot_watered_v1_26
+  - first:
+      213: -2481698617661450074
+    second: farm_plot_watered_v1_27
+  - first:
+      213: 1166867084851234267
+    second: farm_plot_watered_v1_28
+  - first:
+      213: -739868233256149736
+    second: farm_plot_watered_v1_29
+  - first:
+      213: -9125660054173321572
+    second: farm_plot_watered_v1_30
+  - first:
+      213: 2492238179361145084
+    second: farm_plot_watered_v1_31
+  - first:
+      213: 5457819160343554847
+    second: farm_plot_watered_v1_32
+  - first:
+      213: 1985644246620889554
+    second: farm_plot_watered_v1_33
+  - first:
+      213: 8915065869657397502
+    second: farm_plot_watered_v1_34
+  - first:
+      213: -1120015951359072944
+    second: farm_plot_watered_v1_35
+  - first:
+      213: -8998966737179493000
+    second: farm_plot_watered_v1_36
+  - first:
+      213: 1915274434707124824
+    second: farm_plot_watered_v1_37
+  - first:
+      213: -6769446499400843507
+    second: farm_plot_watered_v1_38
+  - first:
+      213: 8780683196085405125
+    second: farm_plot_watered_v1_39
+  - first:
+      213: -6164305572841813702
+    second: farm_plot_watered_v1_40
+  - first:
+      213: 4398006866389572687
+    second: farm_plot_watered_v1_41
+  - first:
+      213: -486835412526681256
+    second: farm_plot_watered_v1_42
+  - first:
+      213: 7866854547812163940
+    second: farm_plot_watered_v1_43
+  - first:
+      213: -7183726402006084001
+    second: farm_plot_watered_v1_44
+  - first:
+      213: -1470834636538538344
+    second: farm_plot_watered_v1_45
+  - first:
+      213: 6002925570230871848
+    second: farm_plot_watered_v1_46
+  - first:
+      213: -3556203226976216460
+    second: farm_plot_watered_v1_47
+  - first:
+      213: 8319410067589595957
+    second: farm_plot_watered_v1_48
+  - first:
+      213: -6081259232486315052
+    second: farm_plot_watered_v1_49
+  - first:
+      213: -1719392342842314522
+    second: farm_plot_watered_v1_50
+  - first:
+      213: 3303968394096946622
+    second: farm_plot_watered_v1_51
+  - first:
+      213: 654532731805354241
+    second: farm_plot_watered_v1_52
+  - first:
+      213: -8616194310959680533
+    second: farm_plot_watered_v1_53
+  - first:
+      213: -8298734616306230970
+    second: farm_plot_watered_v1_54
+  - first:
+      213: 8907055374121176312
+    second: farm_plot_watered_v1_55
+  - first:
+      213: -8814627216541949753
+    second: farm_plot_watered_v1_56
+  - first:
+      213: -6309325770124665714
+    second: farm_plot_watered_v1_57
+  - first:
+      213: -4123132877009577396
+    second: farm_plot_watered_v1_58
+  - first:
+      213: -6811748381093733833
+    second: farm_plot_watered_v1_59
+  - first:
+      213: 7726439992856863714
+    second: farm_plot_watered_v1_60
+  - first:
+      213: -2644401159313490210
+    second: farm_plot_watered_v1_61
+  - first:
+      213: -8933246144336099929
+    second: farm_plot_watered_v1_62
+  - first:
+      213: 3635444390138295141
+    second: farm_plot_watered_v1_63
+  - first:
+      213: -7048624906009839559
+    second: farm_plot_watered_v1_64
+  - first:
+      213: 3644584801560484317
+    second: farm_plot_watered_v1_65
+  - first:
+      213: -5917542785798906970
+    second: farm_plot_watered_v1_66
+  - first:
+      213: -5421568377252407671
+    second: farm_plot_watered_v1_67
+  - first:
+      213: -2429207130204198279
+    second: farm_plot_watered_v1_68
+  - first:
+      213: -7759710633027564167
+    second: farm_plot_watered_v1_69
+  - first:
+      213: -1468702468189735091
+    second: farm_plot_watered_v1_70
+  - first:
+      213: 4576580799492821182
+    second: farm_plot_watered_v1_71
+  - first:
+      213: 8114920617352939720
+    second: farm_plot_watered_v1_72
+  - first:
+      213: 6456646378242058904
+    second: farm_plot_watered_v1_73
+  - first:
+      213: -7253631574429947626
+    second: farm_plot_watered_v1_74
+  - first:
+      213: 2370243198887766115
+    second: farm_plot_watered_v1_75
+  - first:
+      213: -323216279016870582
+    second: farm_plot_watered_v1_76
+  - first:
+      213: -8952074191782034370
+    second: farm_plot_watered_v1_77
+  - first:
+      213: -1106134838297214679
+    second: farm_plot_watered_v1_78
+  - first:
+      213: 7757407739436192823
+    second: farm_plot_watered_v1_79
+  - first:
+      213: 7481471679776107738
+    second: farm_plot_watered_v1_80
+  - first:
+      213: -8107319210559861284
+    second: farm_plot_watered_v1_81
+  - first:
+      213: -1921046109543688350
+    second: farm_plot_watered_v1_82
+  - first:
+      213: 1267743542891831492
+    second: farm_plot_watered_v1_83
+  - first:
+      213: -4148688687396820738
+    second: farm_plot_watered_v1_84
+  - first:
+      213: -5304383294305308137
+    second: farm_plot_watered_v1_85
+  - first:
+      213: -2817273195175412632
+    second: farm_plot_watered_v1_86
+  - first:
+      213: 2709038358424051981
+    second: farm_plot_watered_v1_87
+  - first:
+      213: 2195482913703303077
+    second: farm_plot_watered_v1_88
+  - first:
+      213: -480169425353308553
+    second: farm_plot_watered_v1_89
+  - first:
+      213: -1056710526487738851
+    second: farm_plot_watered_v1_90
+  - first:
+      213: 2557807673853156815
+    second: farm_plot_watered_v1_91
+  - first:
+      213: -5794243166620427141
+    second: farm_plot_watered_v1_92
+  - first:
+      213: 4097651383680300039
+    second: farm_plot_watered_v1_93
+  - first:
+      213: -3160990449407901725
+    second: farm_plot_watered_v1_94
+  - first:
+      213: 6845684642824166929
+    second: farm_plot_watered_v1_95
+  - first:
+      213: -1187093236427534295
+    second: farm_plot_watered_v1_96
+  - first:
+      213: 5888799591174630732
+    second: farm_plot_watered_v1_97
+  - first:
+      213: -2441455311702314598
+    second: farm_plot_watered_v1_98
+  - first:
+      213: 4613520042297791793
+    second: farm_plot_watered_v1_99
+  - first:
+      213: -6313899821557543114
+    second: farm_plot_watered_v1_100
+  - first:
+      213: -5993921089572604828
+    second: farm_plot_watered_v1_101
+  - first:
+      213: -3576102225896617181
+    second: farm_plot_watered_v1_102
+  - first:
+      213: 5605947446485462822
+    second: farm_plot_watered_v1_103
+  - first:
+      213: -6405009133362426247
+    second: farm_plot_watered_v1_104
+  - first:
+      213: 7745699712958988020
+    second: farm_plot_watered_v1_105
+  - first:
+      213: 4850591400111768147
+    second: farm_plot_watered_v1_106
+  - first:
+      213: 1232010751964532744
+    second: farm_plot_watered_v1_107
+  - first:
+      213: 2660939825530626258
+    second: farm_plot_watered_v1_108
+  - first:
+      213: -6267215066296775851
+    second: farm_plot_watered_v1_109
+  - first:
+      213: 8612766475785554647
+    second: farm_plot_watered_v1_110
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_0
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 1243
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 759a4210ae0cc84d0800000000000000
+      internalID: -3130915529655277225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_1
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 1221
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b18c79f4ea774a710800000000000000
+      internalID: 1703618149596252187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_2
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 1211
+        width: 36
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: daa6e2c2dd5e5eba0800000000000000
+      internalID: -6060184985465361747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_3
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 1193
+        width: 21
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2cfe2369ec79fd80800000000000000
+      internalID: -8216398703327511508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_4
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 1213
+        width: 41
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e41927ea84234f760800000000000000
+      internalID: 7490667367969755470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_5
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 1156
+        width: 105
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb20df3b491924f10800000000000000
+      internalID: 2252522831499559615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_6
+      rect:
+        serializedVersion: 2
+        x: 731
+        y: 1144
+        width: 84
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0cc402accaef6870800000000000000
+      internalID: 8678413171578686474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_7
+      rect:
+        serializedVersion: 2
+        x: 860
+        y: 1209
+        width: 19
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29cecb1686a81d840800000000000000
+      internalID: 5247127221784341650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_8
+      rect:
+        serializedVersion: 2
+        x: 1083
+        y: 1205
+        width: 47
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d41bcec9de9e542f0800000000000000
+      internalID: -989127336388677299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_9
+      rect:
+        serializedVersion: 2
+        x: 1190
+        y: 1106
+        width: 45
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e9c0a38aadd8aff0800000000000000
+      internalID: -24526073528006169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_10
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 1205
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d5c9495421ad7690800000000000000
+      internalID: -7602743418442627626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_11
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 1162
+        width: 14
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a717e7ca966f3ed00800000000000000
+      internalID: 1000914475932348794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_12
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 1172
+        width: 23
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee4e0a19c3b3d1290800000000000000
+      internalID: -7918107438520146706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_13
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 1191
+        width: 39
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 264c9acc475ee9f90800000000000000
+      internalID: -6944861285546081182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_14
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1201
+        width: 20
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3d86fa44cabf43f0800000000000000
+      internalID: -914306847098892998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_15
+      rect:
+        serializedVersion: 2
+        x: 1035
+        y: 1160
+        width: 17
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc79457ac1ec0c5a0800000000000000
+      internalID: -6502971239461251121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_16
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 1164
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 429adc94b1a060670800000000000000
+      internalID: 8504496058654370084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_17
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 1175
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0097bcc49bf50de0800000000000000
+      internalID: -1367410295328763889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_18
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 1132
+        width: 50
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc8bb8d05f768a370800000000000000
+      internalID: 8334025412641011915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_19
+      rect:
+        serializedVersion: 2
+        x: 842
+        y: 1156
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9b0576d45634d5e0800000000000000
+      internalID: -1885822605958247525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_20
+      rect:
+        serializedVersion: 2
+        x: 853
+        y: 1159
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 412a59bbd9a4c8850800000000000000
+      internalID: 6380556813394616852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_21
+      rect:
+        serializedVersion: 2
+        x: 973
+        y: 1162
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42065445b1b8480d0800000000000000
+      internalID: -3421456867400523740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_22
+      rect:
+        serializedVersion: 2
+        x: 1051
+        y: 1160
+        width: 29
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 826736682cb990470800000000000000
+      internalID: 8361385442970662440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_23
+      rect:
+        serializedVersion: 2
+        x: 1151
+        y: 1173
+        width: 24
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5be3d4b2221e08a60800000000000000
+      internalID: 7674381301910945461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1124
+        width: 49
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b489cc40cc6379930800000000000000
+      internalID: 4149845831526946891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_25
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 1112
+        width: 70
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8839dc68a4548550800000000000000
+      internalID: 6162143272507095183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_26
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 1131
+        width: 57
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f1ba8df45aa5f860800000000000000
+      internalID: 7563138431246316016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_27
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 1138
+        width: 33
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a816be714c3f8dd0800000000000000
+      internalID: -2481698617661450074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_28
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 1146
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd547ac6e6b813010800000000000000
+      internalID: 1166867084851234267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_29
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 1132
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81ddb2803c57bb5f0800000000000000
+      internalID: -739868233256149736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_30
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 1149
+        width: 39
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c96f602d7842b5180800000000000000
+      internalID: -9125660054173321572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_31
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 1142
+        width: 17
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf0cc707b65369220800000000000000
+      internalID: 2492238179361145084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_32
+      rect:
+        serializedVersion: 2
+        x: 1091
+        y: 1114
+        width: 43
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1b299c0c911ebb40800000000000000
+      internalID: 5457819160343554847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_33
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 0
+        width: 1157
+        height: 1127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d1e2220cec6e8b10800000000000000
+      internalID: 1985644246620889554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_34
+      rect:
+        serializedVersion: 2
+        x: 1131
+        y: 1124
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef85326ac2da8bb70800000000000000
+      internalID: 8915065869657397502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_35
+      rect:
+        serializedVersion: 2
+        x: 1148
+        y: 1100
+        width: 27
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 055a8742d67e470f0800000000000000
+      internalID: -1120015951359072944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_36
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 1110
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87d3cdc5e6f3d1380800000000000000
+      internalID: -8998966737179493000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_37
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 988
+        width: 122
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 852fa1863fb649a10800000000000000
+      internalID: 1915274434707124824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_38
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 1084
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0f733d56481e02a0800000000000000
+      internalID: -6769446499400843507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_39
+      rect:
+        serializedVersion: 2
+        x: 1119
+        y: 1012
+        width: 118
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c589e348d04bd970800000000000000
+      internalID: 8780683196085405125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_40
+      rect:
+        serializedVersion: 2
+        x: 1196
+        y: 1014
+        width: 13
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a398dcbcdbcf37aa0800000000000000
+      internalID: -6164305572841813702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_41
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 939
+        width: 62
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4c11ee71fbd80d30800000000000000
+      internalID: 4398006866389572687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_42
+      rect:
+        serializedVersion: 2
+        x: 1131
+        y: 915
+        width: 22
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 853344c85c96e39f0800000000000000
+      internalID: -486835412526681256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_43
+      rect:
+        serializedVersion: 2
+        x: 1196
+        y: 929
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 461a206e78eac2d60800000000000000
+      internalID: 7866854547812163940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_44
+      rect:
+        serializedVersion: 2
+        x: 1214
+        y: 939
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5615dcf5e64e4c90800000000000000
+      internalID: -7183726402006084001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 781
+        width: 83
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89697cdd0bb869be0800000000000000
+      internalID: -1470834636538538344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_46
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 837
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82768b2500dae4350800000000000000
+      internalID: 6002925570230871848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_47
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 803
+        width: 25
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47a1cf2b104d5aec0800000000000000
+      internalID: -3556203226976216460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_48
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 858
+        width: 17
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5338c7bd06b747370800000000000000
+      internalID: 8319410067589595957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_49
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 787
+        width: 20
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dba69ca2f60b9ba0800000000000000
+      internalID: -6081259232486315052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_50
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 817
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e07b5f16cd7328e0800000000000000
+      internalID: -1719392342842314522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_51
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 811
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebd244fcfbd0add20800000000000000
+      internalID: 3303968394096946622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_52
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 740
+        width: 86
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 109cf1d3d0e551900800000000000000
+      internalID: 654532731805354241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_53
+      rect:
+        serializedVersion: 2
+        x: 1178
+        y: 787
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be3b18bbce02d6880800000000000000
+      internalID: -8616194310959680533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_54
+      rect:
+        serializedVersion: 2
+        x: 1186
+        y: 825
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64954d5c5d8f4dc80800000000000000
+      internalID: -8298734616306230970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_55
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 712
+        width: 75
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fc0a31dba73c9b70800000000000000
+      internalID: 8907055374121176312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_56
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 729
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c0e68a9f372ca580800000000000000
+      internalID: -8814627216541949753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_57
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 682
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8c508be3a5c078a0800000000000000
+      internalID: -6309325770124665714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_58
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 489
+        width: 71
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4a1c106e70b7c6c0800000000000000
+      internalID: -4123132877009577396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_59
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 411
+        width: 83
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73ad09500fec771a0800000000000000
+      internalID: -6811748381093733833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_60
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 495
+        width: 15
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e3ea90bc34d93b60800000000000000
+      internalID: 7726439992856863714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_61
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 511
+        width: 13
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edefc7ff7233d4bd0800000000000000
+      internalID: -2644401159313490210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_62
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 515
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a508bb46fbb60480800000000000000
+      internalID: -8933246144336099929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_63
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 502
+        width: 21
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56331e25961b37230800000000000000
+      internalID: 3635444390138295141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_64
+      rect:
+        serializedVersion: 2
+        x: 1176
+        y: 650
+        width: 33
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 938ff424ef04e2e90800000000000000
+      internalID: -7048624906009839559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_65
+      rect:
+        serializedVersion: 2
+        x: 1206
+        y: 648
+        width: 17
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd9dcc2319a249230800000000000000
+      internalID: 3644584801560484317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_66
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 473
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6abd745503aa0eda0800000000000000
+      internalID: -5917542785798906970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_67
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 419
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 986116c1948b2c4b0800000000000000
+      internalID: -5421568377252407671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_68
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 423
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97a255e4cf8b94ed0800000000000000
+      internalID: -2429207130204198279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_69
+      rect:
+        serializedVersion: 2
+        x: 1196
+        y: 418
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97d029eba48ff4490800000000000000
+      internalID: -7759710633027564167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_70
+      rect:
+        serializedVersion: 2
+        x: 1214
+        y: 417
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d47bfcef2ee1e9be0800000000000000
+      internalID: -1468702468189735091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_71
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 392
+        width: 14
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb094a74df7438f30800000000000000
+      internalID: 4576580799492821182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_72
+      rect:
+        serializedVersion: 2
+        x: 1206
+        y: 401
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c8c0d98e4dfd9070800000000000000
+      internalID: 8114920617352939720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_73
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 355
+        width: 49
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89a2e671cad9a9950800000000000000
+      internalID: 6456646378242058904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_74
+      rect:
+        serializedVersion: 2
+        x: 1196
+        y: 386
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 619ab82b38ce55b90800000000000000
+      internalID: -7253631574429947626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_75
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 356
+        width: 28
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 368adfc91abc4e020800000000000000
+      internalID: 2370243198887766115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_76
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 237
+        width: 47
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4d6397b184b38bf0800000000000000
+      internalID: -323216279016870582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_77
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 241
+        width: 52
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e34c3e3e3f7d3c380800000000000000
+      internalID: -8952074191782034370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_78
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 295
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9214c91a93836a0f0800000000000000
+      internalID: -1106134838297214679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_79
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 167
+        width: 84
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 734d5fe0d39d7ab60800000000000000
+      internalID: 7757407739436192823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_80
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 254
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adc233eaad683d760800000000000000
+      internalID: 7481471679776107738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_81
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 262
+        width: 21
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdd01e5e1240d7f80800000000000000
+      internalID: -8107319210559861284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_82
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 256
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2679083ddb21755e0800000000000000
+      internalID: -1921046109543688350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_83
+      rect:
+        serializedVersion: 2
+        x: 1210
+        y: 249
+        width: 24
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c0ec54190ee79110800000000000000
+      internalID: 1267743542891831492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_84
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 152
+        width: 31
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef8e7089e95ec66c0800000000000000
+      internalID: -4148688687396820738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_85
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 214
+        width: 15
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7127a666f7b0366b0800000000000000
+      internalID: -5304383294305308137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_86
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 224
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86cf65e94f807e8d0800000000000000
+      internalID: -2817273195175412632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_87
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 192
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d01e5cca800789520800000000000000
+      internalID: 2709038358424051981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_88
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 200
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a799bde31ce77e10800000000000000
+      internalID: 2195482913703303077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_89
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 188
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77600d1a3781659f0800000000000000
+      internalID: -480169425353308553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_90
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 192
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d164846ff5fc551f0800000000000000
+      internalID: -1056710526487738851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_91
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 163
+        width: 23
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcd19cb07882f7320800000000000000
+      internalID: 2557807673853156815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_92
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 162
+        width: 14
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7cda570a86b69fa0800000000000000
+      internalID: -5794243166620427141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_93
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 166
+        width: 6
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 704f6a12938cdd830800000000000000
+      internalID: 4097651383680300039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_94
+      rect:
+        serializedVersion: 2
+        x: 1123
+        y: 130
+        width: 34
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3efb3a41fe7e124d0800000000000000
+      internalID: -3160990449407901725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_95
+      rect:
+        serializedVersion: 2
+        x: 1133
+        y: 156
+        width: 16
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11e91e3a9e1c00f50800000000000000
+      internalID: 6845684642824166929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_96
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 94
+        width: 64
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 920d77fadf8968fe0800000000000000
+      internalID: -1187093236427534295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_97
+      rect:
+        serializedVersion: 2
+        x: 1105
+        y: 111
+        width: 25
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4ded69270839b150800000000000000
+      internalID: 5888799591174630732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_98
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 53
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a913ef254553e1ed0800000000000000
+      internalID: -2441455311702314598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_99
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 26
+        width: 33
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1351e45f804860040800000000000000
+      internalID: 4613520042297791793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_100
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 15
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63f09a490958068a0800000000000000
+      internalID: -6313899821557543114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_101
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 17
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4647d44b68051dca0800000000000000
+      internalID: -5993921089572604828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_102
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 21
+        width: 31
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32bc2f8f8f12f5ec0800000000000000
+      internalID: -3576102225896617181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_103
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 17
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62f264140835ccd40800000000000000
+      internalID: 5605947446485462822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_104
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 18
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97eccced026dc17a0800000000000000
+      internalID: -6405009133362426247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_105
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 15
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fef3c7b9d04e7b60800000000000000
+      internalID: 7745699712958988020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_106
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 17
+        width: 61
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3520a3acd23c05340800000000000000
+      internalID: 4850591400111768147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_107
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 15
+        width: 33
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 800de4e504bf81110800000000000000
+      internalID: 1232010751964532744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_108
+      rect:
+        serializedVersion: 2
+        x: 823
+        y: 19
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d0617d4cae8de420800000000000000
+      internalID: 2660939825530626258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_109
+      rect:
+        serializedVersion: 2
+        x: 844
+        y: 15
+        width: 29
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55b87623a116609a0800000000000000
+      internalID: -6267215066296775851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_watered_v1_110
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 21
+        width: 17
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7da47923a71b68770800000000000000
+      internalID: 8612766475785554647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      farm_plot_watered_v1_0: -3130915529655277225
+      farm_plot_watered_v1_1: 1703618149596252187
+      farm_plot_watered_v1_10: -7602743418442627626
+      farm_plot_watered_v1_100: -6313899821557543114
+      farm_plot_watered_v1_101: -5993921089572604828
+      farm_plot_watered_v1_102: -3576102225896617181
+      farm_plot_watered_v1_103: 5605947446485462822
+      farm_plot_watered_v1_104: -6405009133362426247
+      farm_plot_watered_v1_105: 7745699712958988020
+      farm_plot_watered_v1_106: 4850591400111768147
+      farm_plot_watered_v1_107: 1232010751964532744
+      farm_plot_watered_v1_108: 2660939825530626258
+      farm_plot_watered_v1_109: -6267215066296775851
+      farm_plot_watered_v1_11: 1000914475932348794
+      farm_plot_watered_v1_110: 8612766475785554647
+      farm_plot_watered_v1_12: -7918107438520146706
+      farm_plot_watered_v1_13: -6944861285546081182
+      farm_plot_watered_v1_14: -914306847098892998
+      farm_plot_watered_v1_15: -6502971239461251121
+      farm_plot_watered_v1_16: 8504496058654370084
+      farm_plot_watered_v1_17: -1367410295328763889
+      farm_plot_watered_v1_18: 8334025412641011915
+      farm_plot_watered_v1_19: -1885822605958247525
+      farm_plot_watered_v1_2: -6060184985465361747
+      farm_plot_watered_v1_20: 6380556813394616852
+      farm_plot_watered_v1_21: -3421456867400523740
+      farm_plot_watered_v1_22: 8361385442970662440
+      farm_plot_watered_v1_23: 7674381301910945461
+      farm_plot_watered_v1_24: 4149845831526946891
+      farm_plot_watered_v1_25: 6162143272507095183
+      farm_plot_watered_v1_26: 7563138431246316016
+      farm_plot_watered_v1_27: -2481698617661450074
+      farm_plot_watered_v1_28: 1166867084851234267
+      farm_plot_watered_v1_29: -739868233256149736
+      farm_plot_watered_v1_3: -8216398703327511508
+      farm_plot_watered_v1_30: -9125660054173321572
+      farm_plot_watered_v1_31: 2492238179361145084
+      farm_plot_watered_v1_32: 5457819160343554847
+      farm_plot_watered_v1_33: 1985644246620889554
+      farm_plot_watered_v1_34: 8915065869657397502
+      farm_plot_watered_v1_35: -1120015951359072944
+      farm_plot_watered_v1_36: -8998966737179493000
+      farm_plot_watered_v1_37: 1915274434707124824
+      farm_plot_watered_v1_38: -6769446499400843507
+      farm_plot_watered_v1_39: 8780683196085405125
+      farm_plot_watered_v1_4: 7490667367969755470
+      farm_plot_watered_v1_40: -6164305572841813702
+      farm_plot_watered_v1_41: 4398006866389572687
+      farm_plot_watered_v1_42: -486835412526681256
+      farm_plot_watered_v1_43: 7866854547812163940
+      farm_plot_watered_v1_44: -7183726402006084001
+      farm_plot_watered_v1_45: -1470834636538538344
+      farm_plot_watered_v1_46: 6002925570230871848
+      farm_plot_watered_v1_47: -3556203226976216460
+      farm_plot_watered_v1_48: 8319410067589595957
+      farm_plot_watered_v1_49: -6081259232486315052
+      farm_plot_watered_v1_5: 2252522831499559615
+      farm_plot_watered_v1_50: -1719392342842314522
+      farm_plot_watered_v1_51: 3303968394096946622
+      farm_plot_watered_v1_52: 654532731805354241
+      farm_plot_watered_v1_53: -8616194310959680533
+      farm_plot_watered_v1_54: -8298734616306230970
+      farm_plot_watered_v1_55: 8907055374121176312
+      farm_plot_watered_v1_56: -8814627216541949753
+      farm_plot_watered_v1_57: -6309325770124665714
+      farm_plot_watered_v1_58: -4123132877009577396
+      farm_plot_watered_v1_59: -6811748381093733833
+      farm_plot_watered_v1_6: 8678413171578686474
+      farm_plot_watered_v1_60: 7726439992856863714
+      farm_plot_watered_v1_61: -2644401159313490210
+      farm_plot_watered_v1_62: -8933246144336099929
+      farm_plot_watered_v1_63: 3635444390138295141
+      farm_plot_watered_v1_64: -7048624906009839559
+      farm_plot_watered_v1_65: 3644584801560484317
+      farm_plot_watered_v1_66: -5917542785798906970
+      farm_plot_watered_v1_67: -5421568377252407671
+      farm_plot_watered_v1_68: -2429207130204198279
+      farm_plot_watered_v1_69: -7759710633027564167
+      farm_plot_watered_v1_7: 5247127221784341650
+      farm_plot_watered_v1_70: -1468702468189735091
+      farm_plot_watered_v1_71: 4576580799492821182
+      farm_plot_watered_v1_72: 8114920617352939720
+      farm_plot_watered_v1_73: 6456646378242058904
+      farm_plot_watered_v1_74: -7253631574429947626
+      farm_plot_watered_v1_75: 2370243198887766115
+      farm_plot_watered_v1_76: -323216279016870582
+      farm_plot_watered_v1_77: -8952074191782034370
+      farm_plot_watered_v1_78: -1106134838297214679
+      farm_plot_watered_v1_79: 7757407739436192823
+      farm_plot_watered_v1_8: -989127336388677299
+      farm_plot_watered_v1_80: 7481471679776107738
+      farm_plot_watered_v1_81: -8107319210559861284
+      farm_plot_watered_v1_82: -1921046109543688350
+      farm_plot_watered_v1_83: 1267743542891831492
+      farm_plot_watered_v1_84: -4148688687396820738
+      farm_plot_watered_v1_85: -5304383294305308137
+      farm_plot_watered_v1_86: -2817273195175412632
+      farm_plot_watered_v1_87: 2709038358424051981
+      farm_plot_watered_v1_88: 2195482913703303077
+      farm_plot_watered_v1_89: -480169425353308553
+      farm_plot_watered_v1_9: -24526073528006169
+      farm_plot_watered_v1_90: -1056710526487738851
+      farm_plot_watered_v1_91: 2557807673853156815
+      farm_plot_watered_v1_92: -5794243166620427141
+      farm_plot_watered_v1_93: 4097651383680300039
+      farm_plot_watered_v1_94: -3160990449407901725
+      farm_plot_watered_v1_95: 6845684642824166929
+      farm_plot_watered_v1_96: -1187093236427534295
+      farm_plot_watered_v1_97: 5888799591174630732
+      farm_plot_watered_v1_98: -2441455311702314598
+      farm_plot_watered_v1_99: 4613520042297791793
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

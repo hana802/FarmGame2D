@@ -1,0 +1,3824 @@
+fileFormatVersion: 2
+guid: 83db13fbcac3b684abead823c83ba310
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7398899286879642423
+    second: farm_plot_tilled_v1_0
+  - first:
+      213: -3113149081120857157
+    second: farm_plot_tilled_v1_1
+  - first:
+      213: 7176640144841167728
+    second: farm_plot_tilled_v1_2
+  - first:
+      213: 2031485559126241191
+    second: farm_plot_tilled_v1_3
+  - first:
+      213: 4608305305600199587
+    second: farm_plot_tilled_v1_4
+  - first:
+      213: 5282132367239704462
+    second: farm_plot_tilled_v1_5
+  - first:
+      213: -4554212478700803493
+    second: farm_plot_tilled_v1_6
+  - first:
+      213: 5218736612741308665
+    second: farm_plot_tilled_v1_7
+  - first:
+      213: -668954270879856238
+    second: farm_plot_tilled_v1_8
+  - first:
+      213: 9166678766866983262
+    second: farm_plot_tilled_v1_9
+  - first:
+      213: -3592337132456836918
+    second: farm_plot_tilled_v1_10
+  - first:
+      213: -8325433894209199996
+    second: farm_plot_tilled_v1_11
+  - first:
+      213: -8147292188559237953
+    second: farm_plot_tilled_v1_12
+  - first:
+      213: 4479764680047403814
+    second: farm_plot_tilled_v1_13
+  - first:
+      213: 4090198253643750042
+    second: farm_plot_tilled_v1_14
+  - first:
+      213: -2097445700600921976
+    second: farm_plot_tilled_v1_15
+  - first:
+      213: -8451173533860177523
+    second: farm_plot_tilled_v1_16
+  - first:
+      213: -8868519157448666642
+    second: farm_plot_tilled_v1_17
+  - first:
+      213: -2761939371280483300
+    second: farm_plot_tilled_v1_18
+  - first:
+      213: 114849480743688267
+    second: farm_plot_tilled_v1_19
+  - first:
+      213: 5055204146937453689
+    second: farm_plot_tilled_v1_20
+  - first:
+      213: 7335877900239752402
+    second: farm_plot_tilled_v1_21
+  - first:
+      213: 2271087877095157864
+    second: farm_plot_tilled_v1_22
+  - first:
+      213: 325501068399479194
+    second: farm_plot_tilled_v1_23
+  - first:
+      213: 3085428625103964529
+    second: farm_plot_tilled_v1_24
+  - first:
+      213: -3787190812425868767
+    second: farm_plot_tilled_v1_25
+  - first:
+      213: -5731670139656772107
+    second: farm_plot_tilled_v1_26
+  - first:
+      213: 2311066157626986832
+    second: farm_plot_tilled_v1_27
+  - first:
+      213: 4334196785089415107
+    second: farm_plot_tilled_v1_28
+  - first:
+      213: -5669789568592766333
+    second: farm_plot_tilled_v1_29
+  - first:
+      213: 2718804774043381856
+    second: farm_plot_tilled_v1_30
+  - first:
+      213: 276569593582131582
+    second: farm_plot_tilled_v1_31
+  - first:
+      213: 2503035756932000119
+    second: farm_plot_tilled_v1_32
+  - first:
+      213: -3092550337154304148
+    second: farm_plot_tilled_v1_33
+  - first:
+      213: 5941789787536325674
+    second: farm_plot_tilled_v1_34
+  - first:
+      213: 5679927417066437025
+    second: farm_plot_tilled_v1_35
+  - first:
+      213: -8439277390527618402
+    second: farm_plot_tilled_v1_36
+  - first:
+      213: 5978718545980503531
+    second: farm_plot_tilled_v1_37
+  - first:
+      213: 6864226908916823347
+    second: farm_plot_tilled_v1_38
+  - first:
+      213: -8507033273473429854
+    second: farm_plot_tilled_v1_39
+  - first:
+      213: -2227786541641455643
+    second: farm_plot_tilled_v1_40
+  - first:
+      213: 3156265315849432210
+    second: farm_plot_tilled_v1_41
+  - first:
+      213: 8157903458070382893
+    second: farm_plot_tilled_v1_42
+  - first:
+      213: 6701586803425023581
+    second: farm_plot_tilled_v1_43
+  - first:
+      213: 2669075568250717296
+    second: farm_plot_tilled_v1_44
+  - first:
+      213: -6048680222089570283
+    second: farm_plot_tilled_v1_45
+  - first:
+      213: -3766316799596212538
+    second: farm_plot_tilled_v1_46
+  - first:
+      213: -5488528230430119339
+    second: farm_plot_tilled_v1_47
+  - first:
+      213: 930137803967252139
+    second: farm_plot_tilled_v1_48
+  - first:
+      213: -8028990861364855505
+    second: farm_plot_tilled_v1_49
+  - first:
+      213: 923114444231183778
+    second: farm_plot_tilled_v1_50
+  - first:
+      213: -2285743727847921965
+    second: farm_plot_tilled_v1_51
+  - first:
+      213: -3301580316913499120
+    second: farm_plot_tilled_v1_52
+  - first:
+      213: -5792268951988928020
+    second: farm_plot_tilled_v1_53
+  - first:
+      213: 3444921633005846755
+    second: farm_plot_tilled_v1_54
+  - first:
+      213: 8235696475933092133
+    second: farm_plot_tilled_v1_55
+  - first:
+      213: 2733295128307418964
+    second: farm_plot_tilled_v1_56
+  - first:
+      213: 1092622917761768709
+    second: farm_plot_tilled_v1_57
+  - first:
+      213: 7916818559407409847
+    second: farm_plot_tilled_v1_58
+  - first:
+      213: 2558550415782239104
+    second: farm_plot_tilled_v1_59
+  - first:
+      213: -6895902857044313639
+    second: farm_plot_tilled_v1_60
+  - first:
+      213: 6301329737529161179
+    second: farm_plot_tilled_v1_61
+  - first:
+      213: -8390323056055301578
+    second: farm_plot_tilled_v1_62
+  - first:
+      213: 6351046221805547748
+    second: farm_plot_tilled_v1_63
+  - first:
+      213: 573297193939661197
+    second: farm_plot_tilled_v1_64
+  - first:
+      213: -6118121169542706332
+    second: farm_plot_tilled_v1_65
+  - first:
+      213: 6706820953368524058
+    second: farm_plot_tilled_v1_66
+  - first:
+      213: 1973458434488210553
+    second: farm_plot_tilled_v1_67
+  - first:
+      213: 3068589407526675456
+    second: farm_plot_tilled_v1_68
+  - first:
+      213: 1643260557568252451
+    second: farm_plot_tilled_v1_69
+  - first:
+      213: 788464430919132355
+    second: farm_plot_tilled_v1_70
+  - first:
+      213: 1186033208605070797
+    second: farm_plot_tilled_v1_71
+  - first:
+      213: 5096972296384886129
+    second: farm_plot_tilled_v1_72
+  - first:
+      213: 1949098869161316791
+    second: farm_plot_tilled_v1_73
+  - first:
+      213: -1154350720241219433
+    second: farm_plot_tilled_v1_74
+  - first:
+      213: 3961747628968126459
+    second: farm_plot_tilled_v1_75
+  - first:
+      213: -6827482159138148612
+    second: farm_plot_tilled_v1_76
+  - first:
+      213: 814366179078445278
+    second: farm_plot_tilled_v1_77
+  - first:
+      213: 7411806134432675995
+    second: farm_plot_tilled_v1_78
+  - first:
+      213: -4725978417305606622
+    second: farm_plot_tilled_v1_79
+  - first:
+      213: 6238435765540249142
+    second: farm_plot_tilled_v1_80
+  - first:
+      213: 3118355827842942210
+    second: farm_plot_tilled_v1_81
+  - first:
+      213: -2302852915350299973
+    second: farm_plot_tilled_v1_82
+  - first:
+      213: -1786312865758962297
+    second: farm_plot_tilled_v1_83
+  - first:
+      213: -2845483786199035064
+    second: farm_plot_tilled_v1_84
+  - first:
+      213: -2818722332821522537
+    second: farm_plot_tilled_v1_85
+  - first:
+      213: -5879940872213439088
+    second: farm_plot_tilled_v1_86
+  - first:
+      213: 2388427647978825020
+    second: farm_plot_tilled_v1_87
+  - first:
+      213: -5944348495445037849
+    second: farm_plot_tilled_v1_88
+  - first:
+      213: -7837425613009266786
+    second: farm_plot_tilled_v1_89
+  - first:
+      213: -522706613151319606
+    second: farm_plot_tilled_v1_90
+  - first:
+      213: -1036312874818398070
+    second: farm_plot_tilled_v1_91
+  - first:
+      213: 4903404045262760584
+    second: farm_plot_tilled_v1_92
+  - first:
+      213: -4570374669407308519
+    second: farm_plot_tilled_v1_93
+  - first:
+      213: -5879532060804501309
+    second: farm_plot_tilled_v1_94
+  - first:
+      213: 7326736053141104067
+    second: farm_plot_tilled_v1_95
+  - first:
+      213: -2836860088204742449
+    second: farm_plot_tilled_v1_96
+  - first:
+      213: -79563772970754092
+    second: farm_plot_tilled_v1_97
+  - first:
+      213: -6513154607731266797
+    second: farm_plot_tilled_v1_98
+  - first:
+      213: -8649399444306562168
+    second: farm_plot_tilled_v1_99
+  - first:
+      213: 7169711614737644444
+    second: farm_plot_tilled_v1_100
+  - first:
+      213: -4808412048594673038
+    second: farm_plot_tilled_v1_101
+  - first:
+      213: -3811197716098976744
+    second: farm_plot_tilled_v1_102
+  - first:
+      213: 2608808222684816609
+    second: farm_plot_tilled_v1_103
+  - first:
+      213: -8824432382202168458
+    second: farm_plot_tilled_v1_104
+  - first:
+      213: -4054330939299898981
+    second: farm_plot_tilled_v1_105
+  - first:
+      213: -1795249207966388497
+    second: farm_plot_tilled_v1_106
+  - first:
+      213: -4552411483472689934
+    second: farm_plot_tilled_v1_107
+  - first:
+      213: 5664590780057882038
+    second: farm_plot_tilled_v1_108
+  - first:
+      213: -769153766905250889
+    second: farm_plot_tilled_v1_109
+  - first:
+      213: 1075630971559280245
+    second: farm_plot_tilled_v1_110
+  - first:
+      213: -4871609671808814176
+    second: farm_plot_tilled_v1_111
+  - first:
+      213: 5975762855045152026
+    second: farm_plot_tilled_v1_112
+  - first:
+      213: 6880495207929838755
+    second: farm_plot_tilled_v1_113
+  - first:
+      213: -5034801431583894461
+    second: farm_plot_tilled_v1_114
+  - first:
+      213: 3206970840904709463
+    second: farm_plot_tilled_v1_115
+  - first:
+      213: 66955223109740056
+    second: farm_plot_tilled_v1_116
+  - first:
+      213: -2594317373169933703
+    second: farm_plot_tilled_v1_117
+  - first:
+      213: 8498577636565301050
+    second: farm_plot_tilled_v1_118
+  - first:
+      213: -6208427133389482818
+    second: farm_plot_tilled_v1_119
+  - first:
+      213: -9176776607255813816
+    second: farm_plot_tilled_v1_120
+  - first:
+      213: 252827843070203011
+    second: farm_plot_tilled_v1_121
+  - first:
+      213: -2817374398227320512
+    second: farm_plot_tilled_v1_122
+  - first:
+      213: -1140550606393402877
+    second: farm_plot_tilled_v1_123
+  - first:
+      213: 8456014748798636022
+    second: farm_plot_tilled_v1_124
+  - first:
+      213: 8724288003730000944
+    second: farm_plot_tilled_v1_125
+  - first:
+      213: 9106053067072862563
+    second: farm_plot_tilled_v1_126
+  - first:
+      213: -8911654760264603151
+    second: farm_plot_tilled_v1_127
+  - first:
+      213: -8523560991514946668
+    second: farm_plot_tilled_v1_128
+  - first:
+      213: -9182166564130702286
+    second: farm_plot_tilled_v1_129
+  - first:
+      213: 1348680516997139132
+    second: farm_plot_tilled_v1_130
+  - first:
+      213: -5170070740379239497
+    second: farm_plot_tilled_v1_131
+  - first:
+      213: 5942828912763380547
+    second: farm_plot_tilled_v1_132
+  - first:
+      213: 2478820584487314535
+    second: farm_plot_tilled_v1_133
+  - first:
+      213: -5256557252782174158
+    second: farm_plot_tilled_v1_134
+  - first:
+      213: -8613668854905564687
+    second: farm_plot_tilled_v1_135
+  - first:
+      213: -8407078717946414127
+    second: farm_plot_tilled_v1_136
+  - first:
+      213: -3998784876646192473
+    second: farm_plot_tilled_v1_137
+  - first:
+      213: 949496630073725973
+    second: farm_plot_tilled_v1_138
+  - first:
+      213: 412234397231770949
+    second: farm_plot_tilled_v1_139
+  - first:
+      213: -3047613400073772486
+    second: farm_plot_tilled_v1_140
+  - first:
+      213: 893558641720175357
+    second: farm_plot_tilled_v1_141
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_0
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 1179
+        width: 142
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7332a5b43bb2ea660800000000000000
+      internalID: 7398899286879642423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_1
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 1193
+        width: 91
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb325f6a76fdbc4d0800000000000000
+      internalID: -3113149081120857157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_2
+      rect:
+        serializedVersion: 2
+        x: 662
+        y: 1242
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 073d012303c889360800000000000000
+      internalID: 7176640144841167728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_3
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 1146
+        width: 53
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7af2e0e4a59413c10800000000000000
+      internalID: 2031485559126241191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1050
+        width: 100
+        height: 176
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ab09d4724df3ff30800000000000000
+      internalID: 4608305305600199587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_5
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 1205
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8f6aede667ed4940800000000000000
+      internalID: 5282132367239704462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_6
+      rect:
+        serializedVersion: 2
+        x: 808
+        y: 1209
+        width: 22
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5a236f31ef2cc0c0800000000000000
+      internalID: -4554212478700803493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_7
+      rect:
+        serializedVersion: 2
+        x: 878
+        y: 1213
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f065ca9c4dac6840800000000000000
+      internalID: 5218736612741308665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_8
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 1221
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 299c93982a567b6f0800000000000000
+      internalID: -668954270879856238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_9
+      rect:
+        serializedVersion: 2
+        x: 1029
+        y: 1210
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e59e83575c5963f70800000000000000
+      internalID: 9166678766866983262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_10
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 1173
+        width: 27
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac0077a3964752ec0800000000000000
+      internalID: -3592337132456836918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_11
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 1128
+        width: 88
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 480e9a6bbfd167c80800000000000000
+      internalID: -8325433894209199996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_12
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 1205
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbc9c93bbe00fee80800000000000000
+      internalID: -8147292188559237953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_13
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 1187
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 623219fdd325b2e30800000000000000
+      internalID: 4479764680047403814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_14
+      rect:
+        serializedVersion: 2
+        x: 1045
+        y: 1205
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9adb5114ad43c830800000000000000
+      internalID: 4090198253643750042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_15
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 1140
+        width: 20
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88003008f3064e2e0800000000000000
+      internalID: -2097445700600921976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_16
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 1189
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d89d41b727667ba80800000000000000
+      internalID: -8451173533860177523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_17
+      rect:
+        serializedVersion: 2
+        x: 458
+        y: 1173
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee1968050d0bce480800000000000000
+      internalID: -8868519157448666642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_18
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 1158
+        width: 40
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1c39a376ce9ba9d0800000000000000
+      internalID: -2761939371280483300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_19
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 1140
+        width: 63
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b489d568ef6089100800000000000000
+      internalID: 114849480743688267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_20
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 1142
+        width: 42
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97cd9455361b72640800000000000000
+      internalID: 5055204146937453689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_21
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 1130
+        width: 55
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dccd6745164ec560800000000000000
+      internalID: 7335877900239752402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_22
+      rect:
+        serializedVersion: 2
+        x: 922
+        y: 1171
+        width: 38
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 860f3f73466848f10800000000000000
+      internalID: 2271087877095157864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_23
+      rect:
+        serializedVersion: 2
+        x: 1025
+        y: 1170
+        width: 31
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9906f34f79648400800000000000000
+      internalID: 325501068399479194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_24
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 1162
+        width: 28
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 179c42bbcf4a1da20800000000000000
+      internalID: 3085428625103964529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_25
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 1146
+        width: 9
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12aabb08502317bc0800000000000000
+      internalID: -3787190812425868767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_26
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 1170
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f56b0c20640570b0800000000000000
+      internalID: -5731670139656772107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_27
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 1150
+        width: 48
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05198c10d6e821020800000000000000
+      internalID: 2311066157626986832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_28
+      rect:
+        serializedVersion: 2
+        x: 956
+        y: 1164
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c705e13309262c30800000000000000
+      internalID: 4334196785089415107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_29
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 1154
+        width: 25
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38a10dc5d6cd051b0800000000000000
+      internalID: -5669789568592766333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_30
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 1124
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 060fd7289822bb520800000000000000
+      internalID: 2718804774043381856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_31
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 1159
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e79132d749296d300800000000000000
+      internalID: 276569593582131582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_32
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 1156
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 779680062c19cb220800000000000000
+      internalID: 2503035756932000119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_33
+      rect:
+        serializedVersion: 2
+        x: 1017
+        y: 1080
+        width: 111
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6737e77add0515d0800000000000000
+      internalID: -3092550337154304148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_34
+      rect:
+        serializedVersion: 2
+        x: 727
+        y: 1124
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2c7520b45a757250800000000000000
+      internalID: 5941789787536325674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_35
+      rect:
+        serializedVersion: 2
+        x: 735
+        y: 1120
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a93f3c64e723de40800000000000000
+      internalID: 5679927417066437025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_36
+      rect:
+        serializedVersion: 2
+        x: 1140
+        y: 1130
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e92ad903de9a1ea80800000000000000
+      internalID: -8439277390527618402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_37
+      rect:
+        serializedVersion: 2
+        x: 1145
+        y: 1136
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be5353947dca8f250800000000000000
+      internalID: 5978718545980503531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_38
+      rect:
+        serializedVersion: 2
+        x: 1155
+        y: 1108
+        width: 26
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3353aa36102a24f50800000000000000
+      internalID: 6864226908916823347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_39
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1253
+        height: 1117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ae003a5f42f0f980800000000000000
+      internalID: -8507033273473429854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_40
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 1112
+        width: 24
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e7a01691ff4511e0800000000000000
+      internalID: -2227786541641455643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_41
+      rect:
+        serializedVersion: 2
+        x: 1117
+        y: 1092
+        width: 50
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29c6718059e4dcb20800000000000000
+      internalID: 3156265315849432210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_42
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 1066
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d29473209f1b63170800000000000000
+      internalID: 8157903458070382893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_43
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 1076
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d561891f0b1d00d50800000000000000
+      internalID: 6701586803425023581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_44
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 1058
+        width: 24
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 074024486167a0520800000000000000
+      internalID: 2669075568250717296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_45
+      rect:
+        serializedVersion: 2
+        x: 1096
+        y: 1076
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5189b62a265ce0ca0800000000000000
+      internalID: -6048680222089570283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_46
+      rect:
+        serializedVersion: 2
+        x: 1137
+        y: 1048
+        width: 28
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ce4b7853da5bbbc0800000000000000
+      internalID: -3766316799596212538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_47
+      rect:
+        serializedVersion: 2
+        x: 1162
+        y: 1018
+        width: 77
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55a628567a4d4d3b0800000000000000
+      internalID: -5488528230430119339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_48
+      rect:
+        serializedVersion: 2
+        x: 1135
+        y: 1012
+        width: 32
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba641a5976388ec00800000000000000
+      internalID: 930137803967252139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_49
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 984
+        width: 61
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2d7d7bd95b439090800000000000000
+      internalID: -8028990861364855505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_50
+      rect:
+        serializedVersion: 2
+        x: 1139
+        y: 972
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ad8e6732bf8fcc00800000000000000
+      internalID: 923114444231183778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_51
+      rect:
+        serializedVersion: 2
+        x: 1163
+        y: 937
+        width: 24
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d62c0e90386740e0800000000000000
+      internalID: -2285743727847921965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_52
+      rect:
+        serializedVersion: 2
+        x: 1190
+        y: 425
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01403fcb13e6e22d0800000000000000
+      internalID: -3301580316913499120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_53
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 246
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce10d21b31abd9fa0800000000000000
+      internalID: -5792268951988928020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_54
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 232
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e04f5629f1decf20800000000000000
+      internalID: 3444921633005846755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_55
+      rect:
+        serializedVersion: 2
+        x: 1142
+        y: 228
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 529aded6f421b4270800000000000000
+      internalID: 8235696475933092133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_56
+      rect:
+        serializedVersion: 2
+        x: 1190
+        y: 232
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 457c115007d9ee520800000000000000
+      internalID: 2733295128307418964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_57
+      rect:
+        serializedVersion: 2
+        x: 1059
+        y: 152
+        width: 51
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50d14a631c6c92f00800000000000000
+      internalID: 1092622917761768709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_58
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 195
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bac2b0e8803edd60800000000000000
+      internalID: 7916818559407409847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_59
+      rect:
+        serializedVersion: 2
+        x: 1129
+        y: 185
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08bd0a02c0cc18320800000000000000
+      internalID: 2558550415782239104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_60
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 168
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d9b54833e4dc40a0800000000000000
+      internalID: -6895902857044313639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_61
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 154
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd5f70aa202d27750800000000000000
+      internalID: 6301329737529161179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_62
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 136
+        width: 11
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63acd0562a59f8b80800000000000000
+      internalID: -8390323056055301578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_63
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 142
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e07ec2b3e2732850800000000000000
+      internalID: 6351046221805547748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_64
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 115
+        width: 19
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d81708ba2c2c4f700800000000000000
+      internalID: 573297193939661197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_65
+      rect:
+        serializedVersion: 2
+        x: 971
+        y: 128
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46b0c942631181ba0800000000000000
+      internalID: -6118121169542706332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_66
+      rect:
+        serializedVersion: 2
+        x: 1075
+        y: 117
+        width: 25
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a157da17f1a631d50800000000000000
+      internalID: 6706820953368524058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_67
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 124
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9741ba68df1236b10800000000000000
+      internalID: 1973458434488210553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_68
+      rect:
+        serializedVersion: 2
+        x: 1206
+        y: 121
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 004672ddec1d59a20800000000000000
+      internalID: 3068589407526675456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_69
+      rect:
+        serializedVersion: 2
+        x: 1212
+        y: 118
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32a144f45c80ec610800000000000000
+      internalID: 1643260557568252451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_70
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 103
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c427f2f83031fa00800000000000000
+      internalID: 788464430919132355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_71
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 103
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc5d8ba5be2a57010800000000000000
+      internalID: 1186033208605070797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_72
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 109
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17537047c451cb640800000000000000
+      internalID: 5096972296384886129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_73
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 111
+        width: 22
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b1d97048179c0b10800000000000000
+      internalID: 1949098869161316791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_74
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 115
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7984ecdc22ceaffe0800000000000000
+      internalID: -1154350720241219433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_75
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 111
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf724627a74faf630800000000000000
+      internalID: 3961747628968126459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_76
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 99
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfee04a5629ef31a0800000000000000
+      internalID: -6827482159138148612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_77
+      rect:
+        serializedVersion: 2
+        x: 987
+        y: 74
+        width: 63
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed81015a9b53d4b00800000000000000
+      internalID: 814366179078445278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_78
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 107
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b98bbeae8660cd660800000000000000
+      internalID: 7411806134432675995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_79
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 93
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22626543ba3f96eb0800000000000000
+      internalID: -4725978417305606622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_80
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 95
+        width: 23
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63e5e1fa640639650800000000000000
+      internalID: 6238435765540249142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_81
+      rect:
+        serializedVersion: 2
+        x: 737
+        y: 95
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20509d98a10a64b20800000000000000
+      internalID: 3118355827842942210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_82
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 93
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bba929a797f9a00e0800000000000000
+      internalID: -2302852915350299973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_83
+      rect:
+        serializedVersion: 2
+        x: 907
+        y: 103
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78d1ab2b9edb537e0800000000000000
+      internalID: -1786312865758962297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_84
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 79
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 843197d829fc288d0800000000000000
+      internalID: -2845483786199035064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_85
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 79
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79776b7f8f2e1e8d0800000000000000
+      internalID: -2818722332821522537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_86
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 93
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09dda631ee0466ea0800000000000000
+      internalID: -5879940872213439088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_87
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 78
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c35ef799a46652120800000000000000
+      internalID: 2388427647978825020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_88
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 77
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7eceed3b98e618da0800000000000000
+      internalID: -5944348495445037849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_89
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 77
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e97d80fedeedb3390800000000000000
+      internalID: -7837425613009266786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_90
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 79
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac93e51da19feb8f0800000000000000
+      internalID: -522706613151319606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_91
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 79
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8819445ee64e91f0800000000000000
+      internalID: -1036312874818398070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_92
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 77
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88aa914fff36c0440800000000000000
+      internalID: 4903404045262760584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_93
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 70
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 915b88bf374c290c0800000000000000
+      internalID: -4570374669407308519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_94
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 79
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c03a36edb4b76ea0800000000000000
+      internalID: -5879532060804501309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_95
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 61
+        width: 38
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c5e5822f9bcda560800000000000000
+      internalID: 7326736053141104067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_96
+      rect:
+        serializedVersion: 2
+        x: 697
+        y: 60
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc0b215b7c271a8d0800000000000000
+      internalID: -2836860088204742449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_97
+      rect:
+        serializedVersion: 2
+        x: 742
+        y: 85
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4df96178b2555eef0800000000000000
+      internalID: -79563772970754092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_98
+      rect:
+        serializedVersion: 2
+        x: 846
+        y: 61
+        width: 27
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31baaf67460ac95a0800000000000000
+      internalID: -6513154607731266797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_99
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 67
+        width: 37
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88375a9280927f780800000000000000
+      internalID: -8649399444306562168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_100
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 69
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9bfd621abeef7360800000000000000
+      internalID: 7169711614737644444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_101
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 49
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2726ec5c7b6154db0800000000000000
+      internalID: -4808412048594673038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_102
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 63
+        width: 34
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 814f32baed7eb1bc0800000000000000
+      internalID: -3811197716098976744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_103
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 13
+        width: 49
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e42f38a149543420800000000000000
+      internalID: 2608808222684816609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_104
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 53
+        width: 31
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67bb2629081598580800000000000000
+      internalID: -8824432382202168458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_105
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 65
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b995721dd7f1cb7c0800000000000000
+      internalID: -4054330939299898981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_106
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 39
+        width: 33
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: feeacd36b5ef517e0800000000000000
+      internalID: -1795249207966388497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_107
+      rect:
+        serializedVersion: 2
+        x: 1117
+        y: 53
+        width: 26
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f4833020e592d0c0800000000000000
+      internalID: -4552411483472689934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_108
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 17
+        width: 69
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bd8d4b5d4bac9e40800000000000000
+      internalID: 5664590780057882038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_109
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 30
+        width: 21
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bb75f169ba6355f0800000000000000
+      internalID: -769153766905250889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_110
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 33
+        width: 12
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57ef2317ba86dee00800000000000000
+      internalID: 1075630971559280245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_111
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 59
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a37a7b70d0946cb0800000000000000
+      internalID: -4871609671808814176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_112
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 55
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1db0fcd7ac2ee250800000000000000
+      internalID: 5975762855045152026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_113
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 33
+        width: 35
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ac7f6befed6c7f50800000000000000
+      internalID: 6880495207929838755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_114
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 53
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34450d306cac02ab0800000000000000
+      internalID: -5034801431583894461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_115
+      rect:
+        serializedVersion: 2
+        x: 1021
+        y: 53
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75539211df2718c20800000000000000
+      internalID: 3206970840904709463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_116
+      rect:
+        serializedVersion: 2
+        x: 1131
+        y: 47
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8162051bb6fdde000800000000000000
+      internalID: 66955223109740056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_117
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 36
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 972e49928122ffbd0800000000000000
+      internalID: -2594317373169933703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_118
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 49
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a37bd83455301f570800000000000000
+      internalID: 8498577636565301050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_119
+      rect:
+        serializedVersion: 2
+        x: 932
+        y: 47
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb45c647a6c37d9a0800000000000000
+      internalID: -6208427133389482818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_120
+      rect:
+        serializedVersion: 2
+        x: 932
+        y: 14
+        width: 44
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 841276ddb4a85a080800000000000000
+      internalID: -9176776607255813816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_121
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 34
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 384178f6599328300800000000000000
+      internalID: 252827843070203011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_122
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 37
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 041716279eca6e8d0800000000000000
+      internalID: -2817374398227320512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_123
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 29
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30a90913443fb20f0800000000000000
+      internalID: -1140550606393402877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_124
+      rect:
+        serializedVersion: 2
+        x: 412
+        y: 0
+        width: 97
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ff4b95bc9cc95570800000000000000
+      internalID: 8456014748798636022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_125
+      rect:
+        serializedVersion: 2
+        x: 569
+        y: 21
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03c478457b5e21970800000000000000
+      internalID: 8724288003730000944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_126
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 0
+        width: 162
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 369fbb0c4033f5e70800000000000000
+      internalID: 9106053067072862563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_127
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 35
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f962852631735480800000000000000
+      internalID: -8911654760264603151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_128
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 29
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 493106f107a36b980800000000000000
+      internalID: -8523560991514946668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_129
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 23
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23c358cb824629080800000000000000
+      internalID: -9182166564130702286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_130
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 23
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbaca1bd8c977b210800000000000000
+      internalID: 1348680516997139132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_131
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 27
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bbfd08cd083048b0800000000000000
+      internalID: -5170070740379239497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_132
+      rect:
+        serializedVersion: 2
+        x: 508
+        y: 17
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 343ae22e86b297250800000000000000
+      internalID: 5942828912763380547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_133
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 19
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 764ea40303a866220800000000000000
+      internalID: 2478820584487314535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_134
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 19
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2305a6e6705fc07b0800000000000000
+      internalID: -5256557252782174158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_135
+      rect:
+        serializedVersion: 2
+        x: 870
+        y: 25
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f1128a40d9167880800000000000000
+      internalID: -8613668854905564687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_136
+      rect:
+        serializedVersion: 2
+        x: 1109
+        y: 21
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dbbe0ad27e045b80800000000000000
+      internalID: -8407078717946414127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_137
+      rect:
+        serializedVersion: 2
+        x: 1119
+        y: 17
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aaac4657567188c0800000000000000
+      internalID: -3998784876646192473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_138
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 9
+        width: 27
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51499f6872a4d2d00800000000000000
+      internalID: 949496630073725973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_139
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 15
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54d623b000d88b500800000000000000
+      internalID: 412234397231770949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_140
+      rect:
+        serializedVersion: 2
+        x: 587
+        y: 12
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a32e1e372c3b4b5d0800000000000000
+      internalID: -3047613400073772486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_plot_tilled_v1_141
+      rect:
+        serializedVersion: 2
+        x: 836
+        y: 15
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfa26b1b9de866c00800000000000000
+      internalID: 893558641720175357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      farm_plot_tilled_v1_0: 7398899286879642423
+      farm_plot_tilled_v1_1: -3113149081120857157
+      farm_plot_tilled_v1_10: -3592337132456836918
+      farm_plot_tilled_v1_100: 7169711614737644444
+      farm_plot_tilled_v1_101: -4808412048594673038
+      farm_plot_tilled_v1_102: -3811197716098976744
+      farm_plot_tilled_v1_103: 2608808222684816609
+      farm_plot_tilled_v1_104: -8824432382202168458
+      farm_plot_tilled_v1_105: -4054330939299898981
+      farm_plot_tilled_v1_106: -1795249207966388497
+      farm_plot_tilled_v1_107: -4552411483472689934
+      farm_plot_tilled_v1_108: 5664590780057882038
+      farm_plot_tilled_v1_109: -769153766905250889
+      farm_plot_tilled_v1_11: -8325433894209199996
+      farm_plot_tilled_v1_110: 1075630971559280245
+      farm_plot_tilled_v1_111: -4871609671808814176
+      farm_plot_tilled_v1_112: 5975762855045152026
+      farm_plot_tilled_v1_113: 6880495207929838755
+      farm_plot_tilled_v1_114: -5034801431583894461
+      farm_plot_tilled_v1_115: 3206970840904709463
+      farm_plot_tilled_v1_116: 66955223109740056
+      farm_plot_tilled_v1_117: -2594317373169933703
+      farm_plot_tilled_v1_118: 8498577636565301050
+      farm_plot_tilled_v1_119: -6208427133389482818
+      farm_plot_tilled_v1_12: -8147292188559237953
+      farm_plot_tilled_v1_120: -9176776607255813816
+      farm_plot_tilled_v1_121: 252827843070203011
+      farm_plot_tilled_v1_122: -2817374398227320512
+      farm_plot_tilled_v1_123: -1140550606393402877
+      farm_plot_tilled_v1_124: 8456014748798636022
+      farm_plot_tilled_v1_125: 8724288003730000944
+      farm_plot_tilled_v1_126: 9106053067072862563
+      farm_plot_tilled_v1_127: -8911654760264603151
+      farm_plot_tilled_v1_128: -8523560991514946668
+      farm_plot_tilled_v1_129: -9182166564130702286
+      farm_plot_tilled_v1_13: 4479764680047403814
+      farm_plot_tilled_v1_130: 1348680516997139132
+      farm_plot_tilled_v1_131: -5170070740379239497
+      farm_plot_tilled_v1_132: 5942828912763380547
+      farm_plot_tilled_v1_133: 2478820584487314535
+      farm_plot_tilled_v1_134: -5256557252782174158
+      farm_plot_tilled_v1_135: -8613668854905564687
+      farm_plot_tilled_v1_136: -8407078717946414127
+      farm_plot_tilled_v1_137: -3998784876646192473
+      farm_plot_tilled_v1_138: 949496630073725973
+      farm_plot_tilled_v1_139: 412234397231770949
+      farm_plot_tilled_v1_14: 4090198253643750042
+      farm_plot_tilled_v1_140: -3047613400073772486
+      farm_plot_tilled_v1_141: 893558641720175357
+      farm_plot_tilled_v1_15: -2097445700600921976
+      farm_plot_tilled_v1_16: -8451173533860177523
+      farm_plot_tilled_v1_17: -8868519157448666642
+      farm_plot_tilled_v1_18: -2761939371280483300
+      farm_plot_tilled_v1_19: 114849480743688267
+      farm_plot_tilled_v1_2: 7176640144841167728
+      farm_plot_tilled_v1_20: 5055204146937453689
+      farm_plot_tilled_v1_21: 7335877900239752402
+      farm_plot_tilled_v1_22: 2271087877095157864
+      farm_plot_tilled_v1_23: 325501068399479194
+      farm_plot_tilled_v1_24: 3085428625103964529
+      farm_plot_tilled_v1_25: -3787190812425868767
+      farm_plot_tilled_v1_26: -5731670139656772107
+      farm_plot_tilled_v1_27: 2311066157626986832
+      farm_plot_tilled_v1_28: 4334196785089415107
+      farm_plot_tilled_v1_29: -5669789568592766333
+      farm_plot_tilled_v1_3: 2031485559126241191
+      farm_plot_tilled_v1_30: 2718804774043381856
+      farm_plot_tilled_v1_31: 276569593582131582
+      farm_plot_tilled_v1_32: 2503035756932000119
+      farm_plot_tilled_v1_33: -3092550337154304148
+      farm_plot_tilled_v1_34: 5941789787536325674
+      farm_plot_tilled_v1_35: 5679927417066437025
+      farm_plot_tilled_v1_36: -8439277390527618402
+      farm_plot_tilled_v1_37: 5978718545980503531
+      farm_plot_tilled_v1_38: 6864226908916823347
+      farm_plot_tilled_v1_39: -8507033273473429854
+      farm_plot_tilled_v1_4: 4608305305600199587
+      farm_plot_tilled_v1_40: -2227786541641455643
+      farm_plot_tilled_v1_41: 3156265315849432210
+      farm_plot_tilled_v1_42: 8157903458070382893
+      farm_plot_tilled_v1_43: 6701586803425023581
+      farm_plot_tilled_v1_44: 2669075568250717296
+      farm_plot_tilled_v1_45: -6048680222089570283
+      farm_plot_tilled_v1_46: -3766316799596212538
+      farm_plot_tilled_v1_47: -5488528230430119339
+      farm_plot_tilled_v1_48: 930137803967252139
+      farm_plot_tilled_v1_49: -8028990861364855505
+      farm_plot_tilled_v1_5: 5282132367239704462
+      farm_plot_tilled_v1_50: 923114444231183778
+      farm_plot_tilled_v1_51: -2285743727847921965
+      farm_plot_tilled_v1_52: -3301580316913499120
+      farm_plot_tilled_v1_53: -5792268951988928020
+      farm_plot_tilled_v1_54: 3444921633005846755
+      farm_plot_tilled_v1_55: 8235696475933092133
+      farm_plot_tilled_v1_56: 2733295128307418964
+      farm_plot_tilled_v1_57: 1092622917761768709
+      farm_plot_tilled_v1_58: 7916818559407409847
+      farm_plot_tilled_v1_59: 2558550415782239104
+      farm_plot_tilled_v1_6: -4554212478700803493
+      farm_plot_tilled_v1_60: -6895902857044313639
+      farm_plot_tilled_v1_61: 6301329737529161179
+      farm_plot_tilled_v1_62: -8390323056055301578
+      farm_plot_tilled_v1_63: 6351046221805547748
+      farm_plot_tilled_v1_64: 573297193939661197
+      farm_plot_tilled_v1_65: -6118121169542706332
+      farm_plot_tilled_v1_66: 6706820953368524058
+      farm_plot_tilled_v1_67: 1973458434488210553
+      farm_plot_tilled_v1_68: 3068589407526675456
+      farm_plot_tilled_v1_69: 1643260557568252451
+      farm_plot_tilled_v1_7: 5218736612741308665
+      farm_plot_tilled_v1_70: 788464430919132355
+      farm_plot_tilled_v1_71: 1186033208605070797
+      farm_plot_tilled_v1_72: 5096972296384886129
+      farm_plot_tilled_v1_73: 1949098869161316791
+      farm_plot_tilled_v1_74: -1154350720241219433
+      farm_plot_tilled_v1_75: 3961747628968126459
+      farm_plot_tilled_v1_76: -6827482159138148612
+      farm_plot_tilled_v1_77: 814366179078445278
+      farm_plot_tilled_v1_78: 7411806134432675995
+      farm_plot_tilled_v1_79: -4725978417305606622
+      farm_plot_tilled_v1_8: -668954270879856238
+      farm_plot_tilled_v1_80: 6238435765540249142
+      farm_plot_tilled_v1_81: 3118355827842942210
+      farm_plot_tilled_v1_82: -2302852915350299973
+      farm_plot_tilled_v1_83: -1786312865758962297
+      farm_plot_tilled_v1_84: -2845483786199035064
+      farm_plot_tilled_v1_85: -2818722332821522537
+      farm_plot_tilled_v1_86: -5879940872213439088
+      farm_plot_tilled_v1_87: 2388427647978825020
+      farm_plot_tilled_v1_88: -5944348495445037849
+      farm_plot_tilled_v1_89: -7837425613009266786
+      farm_plot_tilled_v1_9: 9166678766866983262
+      farm_plot_tilled_v1_90: -522706613151319606
+      farm_plot_tilled_v1_91: -1036312874818398070
+      farm_plot_tilled_v1_92: 4903404045262760584
+      farm_plot_tilled_v1_93: -4570374669407308519
+      farm_plot_tilled_v1_94: -5879532060804501309
+      farm_plot_tilled_v1_95: 7326736053141104067
+      farm_plot_tilled_v1_96: -2836860088204742449
+      farm_plot_tilled_v1_97: -79563772970754092
+      farm_plot_tilled_v1_98: -6513154607731266797
+      farm_plot_tilled_v1_99: -8649399444306562168
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

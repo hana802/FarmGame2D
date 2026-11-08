@@ -1,4 +1,5 @@
 using System;
+using FarmGame2D.Core;
 
 namespace FarmGame2D.Farming
 {
@@ -16,6 +17,9 @@ namespace FarmGame2D.Farming
     {
         public SoilState state;
         public int growthDays;
+        public int gridX;
+        public int gridY;
+        public GameItem plantedSeed = GameItem.WheatSeed;
 
         public void AdvanceDay()
         {
@@ -25,12 +29,20 @@ namespace FarmGame2D.Farming
             }
 
             growthDays++;
-            state = growthDays >= 2 ? SoilState.Ready : SoilState.Planted;
+            var requiredDays = CropCatalog.TryGetBySeed(plantedSeed, out var crop) ? crop.GrowthDays : 2;
+            state = growthDays >= requiredDays ? SoilState.Ready : SoilState.Planted;
         }
 
-        public void Reset()
+        public void Plant(GameItem seed)
         {
-            state = SoilState.Empty;
+            plantedSeed = seed;
+            growthDays = 0;
+            state = SoilState.Planted;
+        }
+
+        public void ResetToTilled()
+        {
+            state = SoilState.Tilled;
             growthDays = 0;
         }
     }

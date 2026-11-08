@@ -7,6 +7,7 @@ namespace FarmGame2D.Player
     public sealed class HeldItemPresenter : MonoBehaviour
     {
         private SpriteRenderer itemRenderer;
+        private SpriteRenderer ownerRenderer;
         private FarmTool? displayedTool;
 
         public SpriteRenderer ItemRenderer => itemRenderer;
@@ -14,6 +15,7 @@ namespace FarmGame2D.Player
 
         private void Awake()
         {
+            ownerRenderer = GetComponent<SpriteRenderer>();
             var itemObject = new GameObject("Held Item");
             itemObject.transform.SetParent(transform, false);
             itemRenderer = itemObject.AddComponent<SpriteRenderer>();
@@ -37,7 +39,7 @@ namespace FarmGame2D.Player
 
             itemRenderer.enabled = itemRenderer.sprite != null;
             itemRenderer.flipX = facingRow == 2;
-            itemRenderer.sortingOrder = facingRow == 0 ? 9 : 11;
+            itemRenderer.sortingOrder = ownerRenderer.sortingOrder + (facingRow == 0 ? -1 : 1);
             itemRenderer.transform.localScale = Vector3.one * GetScale(tool);
 
             var position = GetLocalPosition(facingRow);
@@ -67,6 +69,7 @@ namespace FarmGame2D.Player
                 FarmTool.Hoe => 0.55f,
                 FarmTool.Seeds => 0.5f,
                 FarmTool.WateringCan => 0.58f,
+                FarmTool.Pickaxe => 0.55f,
                 _ => 0.55f
             };
         }
