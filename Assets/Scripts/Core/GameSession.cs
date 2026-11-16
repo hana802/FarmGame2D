@@ -1,5 +1,7 @@
 using System;
+using FarmGame2D.Audio;
 using FarmGame2D.Farming;
+using FarmGame2D.Interactions;
 using FarmGame2D.TimeSystem;
 using FarmGame2D.World;
 using UnityEngine;
@@ -25,6 +27,7 @@ namespace FarmGame2D.Core
         public GameSaveData Data { get; private set; }
         public FarmTool SelectedTool { get; private set; } = FarmTool.Hoe;
         public GameItem SelectedSeed { get; private set; } = GameItem.PotatoSeed;
+        public GameItem? SelectedDecoration { get; private set; }
         public ShopKind ActiveShop { get; private set; } = ShopKind.SeedsAndAnimals;
         public bool PhoneOpen { get; private set; }
         public bool ShopOpen { get; private set; }
@@ -117,6 +120,16 @@ namespace FarmGame2D.Core
 
         private void Update()
         {
+            if (NpcInteractionOverlay.IsOpen)
+            {
+                return;
+            }
+
+            if (Input.GetKeyDown(KeyCode.G) && !PhoneOpen && !ShopOpen && !InventoryOpen && !QuestBoardOpen)
+            {
+                ToggleDogSit();
+            }
+
             if (Input.GetKeyDown(KeyCode.P))
             {
                 TogglePhone();
@@ -183,6 +196,7 @@ namespace FarmGame2D.Core
                 case FarmTool.Hoe when plot.state == SoilState.Empty:
                     plot.state = SoilState.Tilled;
                     Message = "호미로 새 밭을 만들었습니다.";
+                    GameAudioController.Play(GameAudioCue.TillSoil);
                     break;
                 case FarmTool.Seeds when plot.state == SoilState.Tilled:
                     Plant(plot);
@@ -190,6 +204,7 @@ namespace FarmGame2D.Core
                 case FarmTool.WateringCan when plot.state == SoilState.Planted:
                     plot.state = SoilState.Watered;
                     Message = $"{GetCropLabel(plot)}에 물을 주었습니다.";
+                    GameAudioController.Play(GameAudioCue.WaterCrop);
                     break;
                 default:
                     Message = "지금 선택한 도구로는 할 수 없습니다.";
@@ -279,6 +294,26 @@ namespace FarmGame2D.Core
             SaveSilently();
         }
 
+        public void ToggleDogSit()
+        {
+            var dog = FindAnyObjectByType<DogCompanionController>();
+            if (dog == null || Data == null) return;
+
+            Data.dogSitting = !Data.dogSitting;
+            if (Data.dogSitting)
+            {
+                Data.dogSitX = dog.transform.position.x;
+                Data.dogSitY = dog.transform.position.y;
+            }
+
+            dog.SetSitting(Data.dogSitting);
+            Message = Data.dogSitting
+                ? "강아지가 그 자리에 앉았습니다. G를 다시 누르면 따라옵니다."
+                : "강아지가 다시 따라옵니다.";
+            NotifyChanged();
+            SaveSilently();
+        }
+
         public void PurchaseSeed(GameItem seed)
         {
             if (!CropCatalog.TryGetBySeed(seed, out var crop) || crop.Season != CurrentSeason)
@@ -363,6 +398,12 @@ namespace FarmGame2D.Core
             }
 
             Purchase(ore, quantity, price, $"{ItemCatalog.GetLabel(ore)} {quantity}개");
+        }
+
+        public void PurchaseDecoration(GameItem item)
+        {
+            if (!TownDecorationCatalog.TryGet(item, out var decoration)) return;
+            Purchase(item, 1, decoration.Price, ItemCatalog.GetLabel(item));
         }
 
         public void SellAllProduce()
@@ -553,6 +594,11 @@ namespace FarmGame2D.Core
             NotifyChanged();
         }
 
+        public void SaveCurrentStateSilently()
+        {
+            SaveSilently();
+        }
+
         public void Save(bool automatic)
         {
             CapturePlayerPosition();
@@ -686,6 +732,7 @@ namespace FarmGame2D.Core
             }
 
             SelectedTool = tool;
+            SelectedDecoration = null;
             InventoryOpen = false;
             Message = $"가방에서 {GetToolLabel(tool)}를 꺼냈습니다.";
             NotifyChanged();
@@ -701,9 +748,59 @@ namespace FarmGame2D.Core
 
             SelectedSeed = seed;
             SelectedTool = FarmTool.Seeds;
+            SelectedDecoration = null;
             InventoryOpen = false;
             Message = $"{ItemCatalog.GetLabel(seed)}을 꺼냈습니다.";
             NotifyChanged();
+        }
+
+        public void SelectDecoration(GameItem item)
+        {
+            if (!TownDecorationCatalog.TryGet(item, out _) || Data.inventory.Count(item) <= 0)
+            {
+                ShowMessage("가방에 그 장식품이 없습니다.");
+                return;
+            }
+
+            SelectedDecoration = item;
+            InventoryOpen = false;
+            Message = $"{ItemCatalog.GetLabel(item)}을 꺼냈습니다. 마을 잔디에서 Space로 설치하세요.";
+            NotifyChanged();
+        }
+
+        public bool PlaceDecoration(Vector2 position)
+        {
+            if (!SelectedDecoration.HasValue || !Data.inventory.TrySpend(SelectedDecoration.Value, 1))
+            {
+                ShowMessage("설치할 장식품이 없습니다.");
+                SelectedDecoration = null;
+                return false;
+            }
+
+            var item = SelectedDecoration.Value;
+            Data.placedDecorations.Add(new PlacedDecorationData
+            {
+                item = item,
+                worldX = position.x,
+                worldY = position.y
+            });
+            if (Data.inventory.Count(item) == 0) SelectedDecoration = null;
+            Message = $"{ItemCatalog.GetLabel(item)}을 설치했습니다. E로 다시 주울 수 있어요.";
+            NotifyChanged();
+            SaveSilently();
+            return true;
+        }
+
+        public bool PickUpDecoration(int index)
+        {
+            if (index < 0 || index >= Data.placedDecorations.Count) return false;
+            var item = Data.placedDecorations[index].item;
+            Data.placedDecorations.RemoveAt(index);
+            Data.inventory.Add(item, 1);
+            Message = $"{ItemCatalog.GetLabel(item)}을 가방에 넣었습니다.";
+            NotifyChanged();
+            SaveSilently();
+            return true;
         }
 
         public void MineNode(int nodeId)
@@ -889,6 +986,7 @@ namespace FarmGame2D.Core
 
             plot.Plant(SelectedSeed);
             Message = $"{crop.Label} 씨앗을 심었습니다.";
+            GameAudioController.Play(GameAudioCue.PlantSeed);
         }
 
         private void Harvest(FarmPlotData plot)
@@ -901,6 +999,7 @@ namespace FarmGame2D.Core
             Data.wheatHarvested++;
             Data.firstHarvestAchievement = true;
             Message = $"{ItemCatalog.GetLabel(produce)}을 수확했습니다. 도전 과제: 첫 수확!";
+            GameAudioController.Play(GameAudioCue.HarvestCrop);
 
             CompleteCurrentStarterQuest();
 
@@ -1086,6 +1185,7 @@ namespace FarmGame2D.Core
             if (playerTransform != null)
             {
                 playerTransform.position = new Vector3(Data.playerX, Data.playerY, 0f);
+                FindAnyObjectByType<DogCompanionController>()?.Configure(playerTransform);
             }
 
             GameClockController.Instance?.SetTime(Data.day, Data.hour, Data.minute);

@@ -30,7 +30,10 @@ namespace FarmGame2D.Core
             { GameItem.GoldOre, "금 광석" }
             ,{ GameItem.RiverFish, "민물고기" }
             ,{ GameItem.SeaBass, "농어" }
-            ,{ GameItem.GoldenCarp, "황금 잉어" }
+            ,{ GameItem.GoldenCarp, "황금 잉어" },
+            { GameItem.FlowerPot, "꽃 화분" },
+            { GameItem.StreetLamp, "가로등" },
+            { GameItem.TownBench, "마을 벤치" }
         };
 
         private static readonly Dictionary<GameItem, int> SellPrices = new()

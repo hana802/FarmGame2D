@@ -20,9 +20,13 @@ namespace FarmGame2D.Core
         {
             data.version = GameSaveData.CurrentVersion;
             data.inventory ??= new InventoryModel();
+            data.npcFriendships ??= new List<NpcFriendshipData>();
             data.pulledWeedIds ??= new List<int>();
             data.farmPlots ??= new List<FarmPlotData>();
             data.miningNodes ??= new List<MiningNodeData>();
+            data.placedDecorations ??= new List<PlacedDecorationData>();
+            data.placedDecorations.RemoveAll(decoration => decoration == null
+                || !TownDecorationCatalog.TryGet(decoration.item, out _));
             data.chickenJuvenileDays ??= new List<int>();
             data.cowJuvenileDays ??= new List<int>();
             data.ownedChickens = System.Math.Max(1, data.ownedChickens);

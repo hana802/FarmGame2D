@@ -9,7 +9,7 @@ namespace FarmGame2D.Interactions
         private NpcDialogueSequence dialogue = new(new[] { "좋은 하루예요." });
         private int portraitRow = -1;
 
-        public override string Prompt => $"{speaker}와 대화";
+        public override string Prompt => $"{speaker}와 상호작용";
         public int DialogueCount => dialogue.Count;
 
         public void Configure(string speakerName, string line, int npcPortraitRow = -1)
@@ -27,8 +27,8 @@ namespace FarmGame2D.Interactions
         public override void Interact(PrototypePlayerController player)
         {
             GetComponent<FarmGame2D.World.NpcSocialAgent>()?.CancelConversation();
-            GetComponent<FarmGame2D.World.WanderingMover>()?.Pause(4f);
-            GameSession.Instance?.ShowDialogue(speaker, dialogue.TakeNext(), portraitRow);
+            GetComponent<FarmGame2D.World.WanderingMover>()?.Pause(30f);
+            NpcInteractionOverlay.Show(gameObject.name, speaker, portraitRow, dialogue.TakeNext);
         }
     }
 

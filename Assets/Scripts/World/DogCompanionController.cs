@@ -1,4 +1,5 @@
 using FarmGame2D.Art;
+using FarmGame2D.Core;
 using UnityEngine;
 
 namespace FarmGame2D.World
@@ -10,6 +11,7 @@ namespace FarmGame2D.World
         private const float CelebrationDuration = 2.4f;
         private const float CelebrationOrbitRadius = 1.12f;
         private const float CelebrationTurns = 2f;
+        private const float VisualScale = 0.84f;
         private readonly RaycastHit2D[] pathHits = new RaycastHit2D[8];
 
         private Rigidbody2D body;
@@ -27,8 +29,10 @@ namespace FarmGame2D.World
         private bool initialPlacementPending;
 
         public bool IsCelebrating => celebrationElapsed > 0f;
+        public bool IsSitting { get; private set; }
         public Transform FollowTarget => player;
         public SpriteRenderer DogRenderer => dogRenderer;
+        public float CurrentVisualScale => visual == null ? 0f : visual.localScale.x;
 
         private void Awake()
         {
@@ -37,12 +41,13 @@ namespace FarmGame2D.World
             body.interpolation = RigidbodyInterpolation2D.Interpolate;
             bodyCollider = GetComponent<BoxCollider2D>();
             bodyCollider.isTrigger = true;
-            bodyCollider.size = new Vector2(0.72f, 0.48f);
+            bodyCollider.size = new Vector2(0.62f, 0.41f);
 
             visual = new GameObject("Farm Dog Visual").transform;
             visual.SetParent(transform, false);
             dogRenderer = visual.gameObject.AddComponent<SpriteRenderer>();
             dogRenderer.sprite = WorldArtCatalog.GetSprite(WorldArtKind.Dog);
+            visual.localScale = Vector3.one * VisualScale;
         }
 
         public void Configure(Transform playerTransform)
@@ -54,10 +59,45 @@ namespace FarmGame2D.World
             {
                 body.position = (Vector2)player.position + new Vector2(-0.9f, -0.65f);
             }
+
+            var save = GameSession.Instance?.Data;
+            if (save != null && save.dogSitting)
+            {
+                var sittingPosition = new Vector2(save.dogSitX, save.dogSitY);
+                if (IsPositionClear(sittingPosition))
+                {
+                    SetPosition(sittingPosition);
+                    initialPlacementPending = false;
+                }
+                else
+                {
+                    PlaceAtSafeCompanionPosition(GetDesiredPosition());
+                    initialPlacementPending = false;
+                }
+            }
+
+            SetSitting(save != null && save.dogSitting);
+        }
+
+        public void SetSitting(bool sitting)
+        {
+            IsSitting = sitting;
+            if (sitting) celebrationElapsed = 0f;
+            visual.localPosition = sitting ? Vector3.down * 0.10f : Vector3.zero;
+            visual.localRotation = Quaternion.identity;
+            visual.localScale = sitting
+                ? new Vector3(VisualScale, VisualScale * 0.72f, VisualScale)
+                : Vector3.one * VisualScale;
         }
 
         public void Celebrate()
         {
+            if (IsSitting)
+            {
+                DogHeartEffect.Spawn((Vector2)transform.position + new Vector2(0f, 0.2f));
+                return;
+            }
+
             if (player != null)
             {
                 var offset = body.position - (Vector2)player.position;
@@ -90,6 +130,8 @@ namespace FarmGame2D.World
                 PlaceAtSafeCompanionPosition(desiredPosition);
                 return;
             }
+
+            if (IsSitting) return;
 
             if (IsCelebrating)
             {
@@ -286,7 +328,10 @@ namespace FarmGame2D.World
             var stride = Mathf.Abs(Mathf.Sin(progress * Mathf.PI * CelebrationTurns * 4f));
             visual.localPosition = Vector3.up * (stride * 0.16f);
             visual.localRotation = Quaternion.identity;
-            visual.localScale = new Vector3(1f + (stride * 0.04f), 1f - (stride * 0.04f), 1f);
+            visual.localScale = new Vector3(
+                VisualScale * (1f + (stride * 0.04f)),
+                VisualScale * (1f - (stride * 0.04f)),
+                VisualScale);
             if (progress < 1f)
             {
                 return;
@@ -295,7 +340,7 @@ namespace FarmGame2D.World
             celebrationElapsed = 0f;
             visual.localPosition = Vector3.zero;
             visual.localRotation = Quaternion.identity;
-            visual.localScale = Vector3.one;
+            visual.localScale = Vector3.one * VisualScale;
         }
 
         private void UpdateCelebrationOrbit()

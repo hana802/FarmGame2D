@@ -1,4 +1,5 @@
 using System.Collections;
+using FarmGame2D.Audio;
 using FarmGame2D.Core;
 using FarmGame2D.Player;
 using FarmGame2D.World;
@@ -33,7 +34,9 @@ namespace FarmGame2D.Interactions
         {
             fishing = true;
             GameSession.Instance.ShowMessage("낚싯줄을 던졌습니다…");
-            var bobber = PrototypeSpriteFactory.CreateBlock("Fishing Bobber", transform.position,
+            GameAudioController.Play(GameAudioCue.FishingCast);
+            var castTarget = FishingCastTarget.Resolve(transform.position, player.position);
+            var bobber = PrototypeSpriteFactory.CreateBlock("Fishing Bobber", castTarget,
                 new Vector2(0.16f, 0.16f), new Color(0.95f, 0.35f, 0.25f));
             var line = bobber.AddComponent<LineRenderer>();
             line.positionCount = 2;
@@ -46,13 +49,14 @@ namespace FarmGame2D.Interactions
             {
                 elapsed += Time.deltaTime;
                 var bob = Mathf.Sin(elapsed * 10f) * 0.07f;
-                bobber.transform.position = transform.position + new Vector3(0f, bob, 0f);
+                bobber.transform.position = castTarget + new Vector2(0f, bob);
                 line.SetPosition(0, player.position + new Vector3(0f, 0.55f));
                 line.SetPosition(1, bobber.transform.position);
                 yield return null;
             }
 
             Destroy(bobber);
+            GameAudioController.Play(GameAudioCue.FishingCatch);
             GameSession.Instance.CatchFish();
             fishing = false;
         }

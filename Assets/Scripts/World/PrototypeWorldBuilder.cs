@@ -23,6 +23,9 @@ namespace FarmGame2D.World
             BuildTilemaps();
             BuildFarm(session);
             BuildMainStreetTown(session.Data.worldSeed);
+            var decorationField = new GameObject("Town Decoration Field").AddComponent<TownDecorationField>();
+            decorationField.transform.SetParent(transform);
+            decorationField.Configure(session, groundTilemap, roadTilemap);
             BuildWeeds(session);
             BuildMiningArea(session);
             BuildBoundaries();

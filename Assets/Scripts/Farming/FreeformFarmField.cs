@@ -1,4 +1,5 @@
 using FarmGame2D.Core;
+using FarmGame2D.Audio;
 using FarmGame2D.Interactions;
 using FarmGame2D.Player;
 using FarmGame2D.World;
@@ -49,7 +50,13 @@ namespace FarmGame2D.Farming
                 return false;
             }
 
-            return session.AddFreeformPlot(center);
+            var added = session.AddFreeformPlot(center);
+            if (added)
+            {
+                GameAudioController.Play(GameAudioCue.TillSoil);
+            }
+
+            return added;
         }
 
         private bool IsBlocked(Vector2 center)

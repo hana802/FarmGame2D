@@ -58,7 +58,7 @@ namespace FarmGame2D.Player
             }
 
             if (GameSession.Instance.InventoryOpen || GameSession.Instance.PhoneOpen || GameSession.Instance.ShopOpen
-                || GameSession.Instance.QuestBoardOpen)
+                || GameSession.Instance.QuestBoardOpen || NpcInteractionOverlay.IsOpen)
             {
                 moveInput = Vector2.zero;
                 UpdateCharacterVisual(false);
@@ -77,7 +77,11 @@ namespace FarmGame2D.Player
                 InteractWithNearest();
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && GameSession.Instance.SelectedTool == FarmTool.Hoe)
+            if (Input.GetKeyDown(KeyCode.Space) && GameSession.Instance.SelectedDecoration.HasValue)
+            {
+                FindAnyObjectByType<TownDecorationField>()?.TryPlace(GetToolTarget());
+            }
+            else if (Input.GetKeyDown(KeyCode.Space) && GameSession.Instance.SelectedTool == FarmTool.Hoe)
             {
                 FindAnyObjectByType<FreeformFarmField>()?.TryTill(GetToolTarget());
             }
@@ -178,8 +182,8 @@ namespace FarmGame2D.Player
         private void UpdateHeldItem()
         {
             var session = GameSession.Instance;
-            var available = session.SelectedTool != FarmTool.Seeds
-                || session.Data.inventory.Count(session.SelectedSeed) > 0;
+            var available = !session.SelectedDecoration.HasValue && (session.SelectedTool != FarmTool.Seeds
+                || session.Data.inventory.Count(session.SelectedSeed) > 0);
             heldItemPresenter.Present(session.SelectedTool, facingRow, moveInput.sqrMagnitude > 0.01f, available);
         }
 
@@ -192,7 +196,7 @@ namespace FarmGame2D.Player
                 return;
             }
 
-            if (GameSession.Instance.SelectedTool == FarmTool.Hoe)
+            if (!GameSession.Instance.SelectedDecoration.HasValue && GameSession.Instance.SelectedTool == FarmTool.Hoe)
             {
                 FindAnyObjectByType<FreeformFarmField>()?.TryTill(GetToolTarget());
             }
@@ -233,9 +237,12 @@ namespace FarmGame2D.Player
                 }
 
                 var distance = Vector2.SqrMagnitude(candidate.transform.position - transform.position);
-                if (distance >= nearestDistance)
+                if (nearest != null)
                 {
-                    continue;
+                    var candidateIsDog = candidate is DogInteractable;
+                    var nearestIsDog = nearest is DogInteractable;
+                    if (candidateIsDog && !nearestIsDog) continue;
+                    if (candidateIsDog == nearestIsDog && distance >= nearestDistance) continue;
                 }
 
                 nearest = candidate;

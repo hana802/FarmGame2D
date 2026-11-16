@@ -5,8 +5,13 @@ namespace FarmGame2D.UI
         private int observedRevision = -1;
         private float visibleUntil;
 
-        public bool ShouldShow(int messageRevision, float currentTime, float displayDuration)
+        public bool ShouldShow(int messageRevision, float currentTime, float displayDuration, bool modalOpen = false)
         {
+            if (modalOpen)
+            {
+                return false;
+            }
+
             if (messageRevision != observedRevision)
             {
                 observedRevision = messageRevision;

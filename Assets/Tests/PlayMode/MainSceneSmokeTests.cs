@@ -49,6 +49,8 @@ namespace FarmGame2D.Tests
             Assert.That(dog.FollowTarget, Is.EqualTo(player.transform));
             Assert.That(dog.DogRenderer.sprite.name, Is.EqualTo("world_Dog"));
             Assert.That(dog.DogRenderer.sprite.texture.width, Is.GreaterThan(1));
+            Assert.That(dog.CurrentVisualScale, Is.EqualTo(0.84f).Within(0.01f),
+                "The dog should read as smaller than the player character.");
             var dogInteraction = dog.GetComponent<DogInteractable>();
             Assert.That(dogInteraction, Is.Not.Null);
             Assert.That(dogInteraction.Prompt, Is.EqualTo("강아지 쓰다듬기"));
@@ -68,6 +70,8 @@ namespace FarmGame2D.Tests
                 "The celebration should keep the dog on a readable circle around the player.");
             yield return new WaitForSeconds(2.2f);
             Assert.That(dog.IsCelebrating, Is.False);
+            Assert.That(dog.CurrentVisualScale, Is.EqualTo(0.84f).Within(0.01f),
+                "Petting animation must restore the dog's smaller base scale.");
 
             var dogStartDistance = Vector2.Distance(dog.transform.position, player.transform.position);
             dog.transform.position = player.transform.position + new Vector3(3f, 0f, 0f);

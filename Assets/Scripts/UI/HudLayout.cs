@@ -92,22 +92,61 @@ namespace FarmGame2D.UI
 
     public readonly struct PhoneHudLayout
     {
-        public PhoneHudLayout(Rect panel, Rect title, Rect questBody, Rect saveButton, Rect loadButton, Rect closeButton)
+        public PhoneHudLayout(
+            Rect panel,
+            Rect title,
+            Rect farmTabButton,
+            Rect settingsTabButton,
+            Rect questBody,
+            Rect volumeLabel,
+            Rect volumeSlider,
+            Rect muteButton,
+            Rect saveButton,
+            Rect loadButton,
+            Rect quitButton,
+            Rect notice,
+            Rect closeButton,
+            Rect exitConfirmationPanel,
+            Rect exitConfirmationMessage,
+            Rect cancelExitButton,
+            Rect confirmExitButton)
         {
             Panel = panel;
             Title = title;
+            FarmTabButton = farmTabButton;
+            SettingsTabButton = settingsTabButton;
             QuestBody = questBody;
+            VolumeLabel = volumeLabel;
+            VolumeSlider = volumeSlider;
+            MuteButton = muteButton;
             SaveButton = saveButton;
             LoadButton = loadButton;
+            QuitButton = quitButton;
+            Notice = notice;
             CloseButton = closeButton;
+            ExitConfirmationPanel = exitConfirmationPanel;
+            ExitConfirmationMessage = exitConfirmationMessage;
+            CancelExitButton = cancelExitButton;
+            ConfirmExitButton = confirmExitButton;
         }
 
         public Rect Panel { get; }
         public Rect Title { get; }
+        public Rect FarmTabButton { get; }
+        public Rect SettingsTabButton { get; }
         public Rect QuestBody { get; }
+        public Rect VolumeLabel { get; }
+        public Rect VolumeSlider { get; }
+        public Rect MuteButton { get; }
         public Rect SaveButton { get; }
         public Rect LoadButton { get; }
+        public Rect QuitButton { get; }
+        public Rect Notice { get; }
         public Rect CloseButton { get; }
+        public Rect ExitConfirmationPanel { get; }
+        public Rect ExitConfirmationMessage { get; }
+        public Rect CancelExitButton { get; }
+        public Rect ConfirmExitButton { get; }
     }
 
     public readonly struct QuestBoardHudLayout
@@ -265,14 +304,25 @@ namespace FarmGame2D.UI
 
         public static PhoneHudLayout CalculatePhoneLayout()
         {
-            var panel = new Rect((ReferenceWidth - 400f) * 0.5f, 150f, 400f, 350f);
+            var panel = new Rect(190f, 80f, 470f, 560f);
             return new PhoneHudLayout(
                 panel,
-                new Rect(panel.x + 130f, panel.y + 34f, 230f, 40f),
-                new Rect(panel.x + 45f, panel.y + 105f, 310f, 82f),
-                new Rect(panel.x + 40f, panel.y + 195f, 140f, 48f),
-                new Rect(panel.x + 220f, panel.y + 195f, 140f, 48f),
-                new Rect(panel.x + 130f, panel.y + 270f, 140f, 48f));
+                new Rect(panel.x + 120f, panel.y + 28f, 310f, 42f),
+                new Rect(panel.x + 45f, panel.y + 88f, 180f, 42f),
+                new Rect(panel.x + 245f, panel.y + 88f, 180f, 42f),
+                new Rect(panel.x + 55f, panel.y + 166f, 360f, 92f),
+                new Rect(panel.x + 55f, panel.y + 168f, 360f, 38f),
+                new Rect(panel.x + 65f, panel.y + 224f, 340f, 26f),
+                new Rect(panel.x + 145f, panel.y + 270f, 180f, 44f),
+                new Rect(panel.x + 55f, panel.y + 330f, 170f, 48f),
+                new Rect(panel.x + 245f, panel.y + 330f, 170f, 48f),
+                new Rect(panel.x + 110f, panel.y + 395f, 250f, 48f),
+                new Rect(panel.x + 55f, panel.y + 450f, 360f, 34f),
+                new Rect(panel.x + 145f, panel.y + 496f, 180f, 42f),
+                new Rect(panel.x + 35f, panel.y + 158f, 400f, 250f),
+                new Rect(panel.x + 75f, panel.y + 200f, 320f, 76f),
+                new Rect(panel.x + 68f, panel.y + 318f, 145f, 48f),
+                new Rect(panel.x + 257f, panel.y + 318f, 145f, 48f));
         }
 
         public static QuestBoardHudLayout CalculateQuestBoardLayout()

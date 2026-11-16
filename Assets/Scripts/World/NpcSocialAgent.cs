@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using FarmGame2D.Core;
+using FarmGame2D.Interactions;
 using UnityEngine;
 
 namespace FarmGame2D.World
@@ -305,7 +306,8 @@ namespace FarmGame2D.World
                 && (session.ShopOpen
                     || session.InventoryOpen
                     || session.PhoneOpen
-                    || session.QuestBoardOpen);
+                    || session.QuestBoardOpen
+                    || NpcInteractionOverlay.IsOpen);
         }
 
         private static GUIStyle CreateBubbleStyle()

@@ -1,11 +1,18 @@
 using FarmGame2D.Art;
 using FarmGame2D.Core;
+using FarmGame2D.Interactions;
 using FarmGame2D.Player;
 using FarmGame2D.TimeSystem;
 using UnityEngine;
 
 namespace FarmGame2D.UI
 {
+    internal enum PhonePage
+    {
+        Farm,
+        Settings
+    }
+
     public sealed class PrototypeHud : MonoBehaviour
     {
         public const string ShopTitle = "상점";
@@ -31,8 +38,14 @@ namespace FarmGame2D.UI
         private readonly HudMessageVisibility messageVisibility = new();
         private readonly ShopPurchaseConfirmation shopPurchaseConfirmation = new();
         private Vector2 shopScrollPosition;
+        private bool inventoryDecorationsPage;
         private string cloudCodeInput = string.Empty;
         private string cloudPinInput = string.Empty;
+        private PhonePage phonePage;
+        private bool exitConfirmationPending;
+        private float masterVolume;
+        private float volumeBeforeMute = GameAudioSettings.DefaultMasterVolume;
+        private string exitNotice = string.Empty;
 
         public bool HasArtSkin => farmSkin?.IsReady == true;
 
@@ -42,6 +55,11 @@ namespace FarmGame2D.UI
             koreanFont = Resources.Load<Font>("Fonts/NotoSansKR-VF")
                 ?? Font.CreateDynamicFontFromOSFont(new[] { "Noto Sans KR", "Malgun Gothic", "Arial" }, 18);
             farmSkin = new FarmGuiSkin(koreanFont);
+            masterVolume = GameAudioSettings.LoadAndApply();
+            if (masterVolume > 0.001f)
+            {
+                volumeBeforeMute = masterVolume;
+            }
         }
 
         private void OnGUI()
@@ -71,9 +89,19 @@ namespace FarmGame2D.UI
                 DrawStatus(session);
                 DrawQuest(session);
                 DrawHotbar(session);
+                DrawDogCommand(session);
                 DrawInteractionPrompt();
 
-                if (messageVisibility.ShouldShow(session.MessageRevision, Time.unscaledTime, session.MessageDisplaySeconds))
+                var modalOpen = session.PhoneOpen
+                    || session.ShopOpen
+                    || session.InventoryOpen
+                    || session.QuestBoardOpen
+                    || NpcInteractionOverlay.IsOpen;
+                if (messageVisibility.ShouldShow(
+                        session.MessageRevision,
+                        Time.unscaledTime,
+                        session.MessageDisplaySeconds,
+                        modalOpen))
                 {
                     DrawMessage(session);
                 }
@@ -128,7 +156,9 @@ namespace FarmGame2D.UI
 
         private void DrawHotbar(GameSession session)
         {
-            var label = session.SelectedTool switch
+            var label = session.SelectedDecoration.HasValue
+                ? $"[I] 가방   [Space] {ItemCatalog.GetLabel(session.SelectedDecoration.Value)} 설치   [E] 줍기"
+                : session.SelectedTool switch
             {
                 FarmTool.Hoe => "[I] 가방   [Space] 앞의 땅 갈기   [E] 상호작용",
                 FarmTool.Shovel => "[I] 가방   [E] 빈 밭 없애기",
@@ -139,12 +169,31 @@ namespace FarmGame2D.UI
             GUI.Label(rect, label, centeredStyle);
         }
 
+        private void DrawDogCommand(GameSession session)
+        {
+            var rect = new Rect(16f, HudLayout.ReferenceHeight - 70f, 190f, 54f);
+            farmSkin.DrawButtonBackground(rect, false);
+            GUI.Label(rect, session.Data.dogSitting ? "[G] 강아지 따라와" : "[G] 강아지 앉아", centeredStyle);
+        }
+
         private void DrawInventory(GameSession session)
         {
             var layout = HudLayout.CalculateInventoryLayout();
             farmSkin.DrawWindow(layout.Panel);
             farmSkin.DrawSprite(layout.Portrait, GameArtCatalog.GetPlayerPortrait(session.Data.characterChoice));
             GUI.Label(layout.Title, InventoryTitle, inventoryTitleStyle);
+
+            var tabY = layout.Panel.y + 132f;
+            if (farmSkin.DrawButton(new Rect(layout.Panel.x + 205f, tabY, 180f, 36f), "도구와 씨앗", !inventoryDecorationsPage))
+                inventoryDecorationsPage = false;
+            if (farmSkin.DrawButton(new Rect(layout.Panel.x + 405f, tabY, 180f, 36f), "마을 장식", inventoryDecorationsPage))
+                inventoryDecorationsPage = true;
+
+            if (inventoryDecorationsPage)
+            {
+                DrawInventoryDecorations(session, layout);
+                return;
+            }
 
             if (farmSkin.DrawButton(layout.HoeButton, "호미"))
             {
@@ -206,6 +255,23 @@ namespace FarmGame2D.UI
             }
         }
 
+        private void DrawInventoryDecorations(GameSession session, InventoryHudLayout layout)
+        {
+            var decorations = TownDecorationCatalog.GetAll();
+            for (var index = 0; index < decorations.Count; index++)
+            {
+                var item = decorations[index].Item;
+                var label = $"{ItemCatalog.GetLabel(item)}  ×{session.Data.inventory.Count(item)}";
+                var button = new Rect(layout.Panel.x + 120f, layout.Panel.y + 188f + index * 66f, 580f, 54f);
+                if (farmSkin.DrawButton(button, label, session.SelectedDecoration == item))
+                    session.SelectDecoration(item);
+            }
+
+            GUI.Label(new Rect(layout.Panel.x + 98f, layout.Panel.y + 395f, 630f, 42f),
+                "잡화점에서 구입 · 마을 잔디 앞에서 Space로 설치 · E로 줍기", centeredStyle);
+            if (farmSkin.DrawButton(layout.CloseButton, "닫기")) session.ToggleInventory();
+        }
+
         private void DrawMessage(GameSession session)
         {
             if (session.ActivePortraitRow < 0)
@@ -261,6 +327,48 @@ namespace FarmGame2D.UI
             var layout = HudLayout.CalculatePhoneLayout();
             farmSkin.DrawWindow(layout.Panel);
             GUI.Label(layout.Title, "농장 휴대폰", titleStyle);
+
+            if (exitConfirmationPending)
+            {
+                DrawExitConfirmation(session, layout);
+                return;
+            }
+
+            DrawPhoneTabs(layout);
+            if (phonePage == PhonePage.Farm)
+            {
+                DrawPhoneFarmTab(session, layout);
+                DrawCloudSync(session, layout.Panel);
+            }
+            else
+            {
+                DrawPhoneSettingsTab(session, layout);
+            }
+
+            if (farmSkin.DrawButton(layout.CloseButton, "닫기 (P)"))
+            {
+                exitConfirmationPending = false;
+                session.TogglePhone();
+            }
+        }
+
+        private void DrawPhoneTabs(PhoneHudLayout layout)
+        {
+            if (farmSkin.DrawButton(layout.FarmTabButton, "농장", phonePage == PhonePage.Farm))
+            {
+                phonePage = PhonePage.Farm;
+                exitNotice = string.Empty;
+            }
+
+            if (farmSkin.DrawButton(layout.SettingsTabButton, "설정", phonePage == PhonePage.Settings))
+            {
+                phonePage = PhonePage.Settings;
+                exitNotice = string.Empty;
+            }
+        }
+
+        private void DrawPhoneFarmTab(GameSession session, PhoneHudLayout layout)
+        {
             var quests = StarterQuestProgress.GetAll(session.Data);
             var completed = 0;
             foreach (var quest in quests)
@@ -285,13 +393,81 @@ namespace FarmGame2D.UI
             {
                 session.Load();
             }
+        }
 
-            if (farmSkin.DrawButton(layout.CloseButton, "닫기 (P)"))
+        private void DrawPhoneSettingsTab(GameSession session, PhoneHudLayout layout)
+        {
+            GUI.Label(layout.VolumeLabel, $"전체 음량  {Mathf.RoundToInt(masterVolume * 100f)}%", centeredStyle);
+            var nextVolume = GUI.HorizontalSlider(layout.VolumeSlider, masterVolume, 0f, 1f);
+            if (!Mathf.Approximately(nextVolume, masterVolume))
             {
-                session.TogglePhone();
+                ApplyMasterVolume(nextVolume);
+                exitNotice = "음량 설정을 저장했습니다.";
             }
 
-            DrawCloudSync(session, layout.Panel);
+            var muteLabel = masterVolume <= 0.001f ? "소리 켜기" : "음소거";
+            if (farmSkin.DrawButton(layout.MuteButton, muteLabel))
+            {
+                var toggledVolume = masterVolume <= 0.001f
+                    ? Mathf.Max(0.1f, volumeBeforeMute)
+                    : 0f;
+                ApplyMasterVolume(toggledVolume);
+                exitNotice = toggledVolume <= 0.001f ? "소리를 껐습니다." : "소리를 켰습니다.";
+            }
+
+            if (farmSkin.DrawButton(layout.SaveButton, "지금 저장", true))
+            {
+                session.Save(false);
+                exitNotice = "현재 진행 상황을 저장했습니다.";
+            }
+
+            if (farmSkin.DrawButton(layout.QuitButton, "저장하고 나가기"))
+            {
+                exitConfirmationPending = true;
+            }
+
+            if (!string.IsNullOrEmpty(exitNotice))
+            {
+                GUI.Label(layout.Notice, exitNotice, centeredStyle);
+            }
+        }
+
+        private void ApplyMasterVolume(float volume)
+        {
+            if (volume > 0.001f)
+            {
+                volumeBeforeMute = volume;
+            }
+
+            masterVolume = GameAudioSettings.SetMasterVolume(volume);
+        }
+
+        private void DrawExitConfirmation(GameSession session, PhoneHudLayout layout)
+        {
+            farmSkin.DrawWindow(layout.ExitConfirmationPanel);
+            GUI.Label(layout.ExitConfirmationMessage,
+                "현재 진행 상황을 저장하고\n게임에서 나갈까요?",
+                centeredStyle);
+
+            if (farmSkin.DrawButton(layout.CancelExitButton, "취소"))
+            {
+                exitConfirmationPending = false;
+            }
+
+            if (!farmSkin.DrawButton(layout.ConfirmExitButton, "저장 후 나가기", true))
+            {
+                return;
+            }
+
+            session.Save(false);
+            exitConfirmationPending = false;
+#if UNITY_EDITOR
+            exitNotice = "저장했습니다. 빌드에서는 게임이 종료됩니다.";
+#elif UNITY_WEBGL
+            exitNotice = "저장했습니다. 브라우저 탭을 닫아 주세요.";
+#else
+            Application.Quit();
+#endif
         }
 
         private void DrawQuestBoard(GameSession session)
@@ -457,7 +633,7 @@ namespace FarmGame2D.UI
 
         private void DrawMiningShop(GameSession session, ShopHudLayout layout)
         {
-            const int productRows = 4;
+            const int productRows = 7;
             BeginShopScroll(layout, productRows, 92f);
             if (farmSkin.DrawButton(layout.GetScrollableProductButton(0), session.Data.hasPickaxe ? "곡괭이 — 구입 완료" : "곡괭이 — 120G"))
             {
@@ -479,7 +655,16 @@ namespace FarmGame2D.UI
                 shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Ore, "철 광석 2개", GameItem.IronOre, 2, 110));
             }
 
-            GUI.Label(layout.GetScrollableInfoLabel(productRows, 84f), "곡괭이를 가방에서 선택한 뒤 마을 서남쪽 광맥을 캐세요.\n채굴한 광물은 판매 상자에 넣거나 이곳에서 바로 구입할 수 있습니다.", centeredStyle);
+            var decorations = TownDecorationCatalog.GetAll();
+            for (var index = 0; index < decorations.Count; index++)
+            {
+                var decoration = decorations[index];
+                var label = ItemCatalog.GetLabel(decoration.Item);
+                if (farmSkin.DrawButton(layout.GetScrollableProductButton(4 + index), $"{label} — {decoration.Price}G", index % 2 == 0))
+                    shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Decoration, label, decoration.Item));
+            }
+
+            GUI.Label(layout.GetScrollableInfoLabel(productRows, 84f), "장식품은 가방의 마을 장식 탭에서 골라 설치하세요.\n마을 잔디에 Space로 놓고 E로 다시 주울 수 있습니다.", centeredStyle);
             GUI.EndScrollView();
         }
 
@@ -538,6 +723,9 @@ namespace FarmGame2D.UI
                     break;
                 case ShopPurchaseKind.Ore:
                     session.PurchaseOre(request.Item, request.Quantity, request.Price);
+                    break;
+                case ShopPurchaseKind.Decoration:
+                    session.PurchaseDecoration(request.Item);
                     break;
             }
         }

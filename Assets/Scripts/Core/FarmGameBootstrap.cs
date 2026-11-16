@@ -1,3 +1,4 @@
+using FarmGame2D.Audio;
 using FarmGame2D.Player;
 using FarmGame2D.UI;
 using FarmGame2D.World;
@@ -57,6 +58,11 @@ namespace FarmGame2D.Core
                 var cameraObject = new GameObject("Main Camera") { tag = "MainCamera" };
                 camera = cameraObject.AddComponent<Camera>();
                 cameraObject.AddComponent<AudioListener>();
+            }
+
+            if (FindAnyObjectByType<GameAudioController>() == null)
+            {
+                new GameObject("Game Audio").AddComponent<GameAudioController>();
             }
 
             var cameraFollow = camera.GetComponent<PixelCameraFollow>();

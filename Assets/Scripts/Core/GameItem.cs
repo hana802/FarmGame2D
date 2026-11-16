@@ -26,7 +26,10 @@ namespace FarmGame2D.Core
         GoldOre,
         RiverFish,
         SeaBass,
-        GoldenCarp
+        GoldenCarp,
+        FlowerPot,
+        StreetLamp,
+        TownBench
     }
 
     public enum FarmTool
