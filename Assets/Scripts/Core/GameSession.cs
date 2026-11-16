@@ -292,6 +292,8 @@ namespace FarmGame2D.Core
             };
             NotifyChanged();
             SaveSilently();
+            var bondEvent = BondEventService.GetPendingDogEvent(Data);
+            if (bondEvent.HasValue) NpcInteractionOverlay.ShowDogEvent(bondEvent.Value);
         }
 
         public void ToggleDogSit()
