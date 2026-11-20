@@ -29,6 +29,7 @@ namespace FarmGame2D.World
 
         public WanderArea RoamingArea => daytimeArea;
         public bool IsMoving => hasTarget && Time.time >= waitUntil && Time.time >= pausedUntil;
+        public Vector2 MovementDirection { get; private set; }
         public bool UsesWaypointNetwork => waypointNetwork != null;
 
         public void Configure(
@@ -161,6 +162,7 @@ namespace FarmGame2D.World
                 return;
             }
 
+            MovementDirection = (next - current).normalized;
             motor.MovePosition(next);
             if (Vector2.SqrMagnitude(next - target) > 0.0025f)
             {

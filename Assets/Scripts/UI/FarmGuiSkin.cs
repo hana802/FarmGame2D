@@ -14,6 +14,8 @@ namespace FarmGame2D.UI
         private readonly Texture2D atlas;
         private readonly Font font;
         private GUIStyle buttonStyle;
+        private GUIStyle dialogueSpeakerStyle;
+        private GUIStyle dialogueBodyStyle;
 
         public FarmGuiSkin(Font font)
         {
@@ -23,7 +25,24 @@ namespace FarmGame2D.UI
 
         public bool IsReady => atlas != null;
 
-        public void DrawDialogue(Rect rect) => DrawAtlas(rect, DialogueAtlasRect);
+        public void DrawDialogue(DialogueHudLayout layout, string speaker, string line, int portraitRow)
+        {
+            dialogueSpeakerStyle ??= new GUIStyle(GUI.skin.label)
+            {
+                font = font, fontSize = 21, fontStyle = FontStyle.Bold, alignment = TextAnchor.MiddleCenter,
+                clipping = TextClipping.Clip, normal = { textColor = new Color32(91, 64, 43, 255) }
+            };
+            dialogueBodyStyle ??= new GUIStyle(dialogueSpeakerStyle)
+            {
+                fontSize = 19, fontStyle = FontStyle.Normal, alignment = TextAnchor.MiddleLeft,
+                wordWrap = true, padding = new RectOffset(8, 8, 4, 4)
+            };
+
+            DrawAtlas(layout.Panel, DialogueAtlasRect);
+            if (portraitRow >= 0) DrawSprite(layout.Portrait, GameArtCatalog.GetNpcPortrait(portraitRow));
+            GUI.Label(layout.Name, speaker, dialogueSpeakerStyle);
+            GUI.Label(layout.Body, line, dialogueBodyStyle);
+        }
 
         public void DrawWindow(Rect rect) => DrawAtlas(rect, WindowAtlasRect);
 

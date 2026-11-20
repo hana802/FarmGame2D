@@ -75,7 +75,7 @@ namespace FarmGame2D.World
         };
 
         private WanderingMover mover;
-        private SpriteRenderer spriteRenderer;
+        private NpcMotionPresenter motionPresenter;
         private NpcSocialAgent partner;
         private System.Random random;
         private GUIStyle bubbleStyle;
@@ -97,7 +97,7 @@ namespace FarmGame2D.World
             displayName = npcName;
             random = new System.Random(seed);
             mover = GetComponent<WanderingMover>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            motionPresenter = GetComponent<NpcMotionPresenter>();
             nextSearchAt = Time.time + 1f + (float)random.NextDouble();
         }
 
@@ -218,14 +218,10 @@ namespace FarmGame2D.World
             return true;
         }
 
-        private void FacePlayer()
+        public void FacePlayer()
         {
-            if (spriteRenderer == null || GameSession.Instance == null)
-            {
-                return;
-            }
-
-            spriteRenderer.flipX = GameSession.Instance.PlayerPosition.x < transform.position.x;
+            if (GameSession.Instance != null)
+                motionPresenter?.Face(GameSession.Instance.PlayerPosition);
         }
 
         private bool CanTalkTo(NpcSocialAgent other)
@@ -265,12 +261,8 @@ namespace FarmGame2D.World
 
         private void FacePartner()
         {
-            if (partner == null || spriteRenderer == null)
-            {
-                return;
-            }
-
-            spriteRenderer.flipX = partner.transform.position.x < transform.position.x;
+            if (partner != null)
+                motionPresenter?.Face(partner.transform.position);
         }
 
         private void OnGUI()

@@ -28,8 +28,6 @@ namespace FarmGame2D.UI
         private GUIStyle centeredStyle;
         private GUIStyle titleStyle;
         private GUIStyle inventoryTitleStyle;
-        private GUIStyle speakerStyle;
-        private GUIStyle dialogueBodyStyle;
         private GUIStyle panelStyle;
         private GUIStyle interactionPromptStyle;
         private GUIStyle interactionKeyStyle;
@@ -88,9 +86,12 @@ namespace FarmGame2D.UI
 
                 DrawStatus(session);
                 DrawQuest(session);
-                DrawHotbar(session);
-                DrawDogCommand(session);
-                DrawInteractionPrompt();
+                if (!NpcInteractionOverlay.IsOpen)
+                {
+                    DrawHotbar(session);
+                    DrawDogCommand(session);
+                    DrawInteractionPrompt();
+                }
 
                 var modalOpen = session.PhoneOpen
                     || session.ShopOpen
@@ -124,6 +125,13 @@ namespace FarmGame2D.UI
                 if (session.QuestBoardOpen)
                 {
                     DrawQuestBoard(session);
+                }
+
+                var input = Event.current;
+                if (!modalOpen && input.type == EventType.MouseDown && input.button == 0
+                    && player != null && player.TryInteractWithClickedNpc(Input.mousePosition))
+                {
+                    input.Use();
                 }
             }
             finally
@@ -282,12 +290,7 @@ namespace FarmGame2D.UI
                 return;
             }
 
-            var layout = HudLayout.CalculateDialogueLayout();
-            farmSkin.DrawDialogue(layout.Panel);
-            var portrait = GameArtCatalog.GetNpcPortrait(session.ActivePortraitRow);
-            farmSkin.DrawSprite(layout.Portrait, portrait);
-            GUI.Label(layout.Name, session.ActiveSpeaker, speakerStyle);
-            GUI.Label(layout.Body, session.Message, dialogueBodyStyle);
+            farmSkin.DrawDialogue(HudLayout.CalculateDialogueLayout(), session.ActiveSpeaker, session.Message, session.ActivePortraitRow);
         }
 
         private void DrawInteractionPrompt()
@@ -757,21 +760,6 @@ namespace FarmGame2D.UI
             inventoryTitleStyle ??= new GUIStyle(titleStyle)
             {
                 fontSize = InventoryTitleFontSize
-            };
-            speakerStyle ??= new GUIStyle(bodyStyle)
-            {
-                fontSize = 21,
-                fontStyle = FontStyle.Bold,
-                alignment = TextAnchor.MiddleCenter,
-                clipping = TextClipping.Clip
-            };
-            dialogueBodyStyle ??= new GUIStyle(bodyStyle)
-            {
-                fontSize = 19,
-                alignment = TextAnchor.MiddleLeft,
-                wordWrap = true,
-                clipping = TextClipping.Clip,
-                padding = new RectOffset(8, 8, 4, 4)
             };
             panelStyle ??= new GUIStyle(smallStyle)
             {

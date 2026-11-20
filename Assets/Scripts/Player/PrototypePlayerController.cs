@@ -202,6 +202,54 @@ namespace FarmGame2D.Player
             }
         }
 
+        public bool TryInteractWithClickedNpc(Vector2 screenPosition)
+        {
+            var worldCamera = Camera.main;
+            if (worldCamera == null || !worldCamera.pixelRect.Contains(screenPosition))
+            {
+                return false;
+            }
+
+            var point = worldCamera.ScreenToWorldPoint(
+                new Vector3(screenPosition.x, screenPosition.y, -worldCamera.transform.position.z));
+            DialogueInteractable clickedNpc = null;
+            var frontOrder = int.MinValue;
+            var nearestDistance = float.PositiveInfinity;
+            foreach (var npc in FindObjectsByType<DialogueInteractable>())
+            {
+                var renderer = npc.GetComponent<SpriteRenderer>();
+                if (!npc.isActiveAndEnabled || renderer == null || !renderer.enabled)
+                {
+                    continue;
+                }
+
+                var bounds = renderer.bounds;
+                if (!bounds.Contains(new Vector3(point.x, point.y, bounds.center.z)))
+                {
+                    continue;
+                }
+
+                var distance = Vector2.SqrMagnitude(bounds.center - point);
+                if (renderer.sortingOrder < frontOrder || (renderer.sortingOrder == frontOrder && distance >= nearestDistance))
+                {
+                    continue;
+                }
+
+                clickedNpc = npc;
+                frontOrder = renderer.sortingOrder;
+                nearestDistance = distance;
+            }
+
+            if (clickedNpc == null)
+            {
+                return false;
+            }
+
+            moveInput = Vector2.zero;
+            clickedNpc.Interact(this);
+            return true;
+        }
+
         private Vector2 GetToolTarget()
         {
             var direction = facingRow switch

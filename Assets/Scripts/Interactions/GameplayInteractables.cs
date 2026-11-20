@@ -26,8 +26,10 @@ namespace FarmGame2D.Interactions
 
         public override void Interact(PrototypePlayerController player)
         {
-            GetComponent<FarmGame2D.World.NpcSocialAgent>()?.CancelConversation();
+            var socialAgent = GetComponent<FarmGame2D.World.NpcSocialAgent>();
+            socialAgent?.CancelConversation();
             GetComponent<FarmGame2D.World.WanderingMover>()?.Pause(30f);
+            socialAgent?.FacePlayer();
             NpcInteractionOverlay.Show(gameObject.name, speaker, portraitRow, dialogue.TakeNext);
         }
     }

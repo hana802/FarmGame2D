@@ -1,5 +1,6 @@
 using System;
 using FarmGame2D.Core;
+using FarmGame2D.UI;
 using UnityEngine;
 
 namespace FarmGame2D.Interactions
@@ -13,19 +14,20 @@ namespace FarmGame2D.Interactions
         private string npcId = string.Empty;
         private string speaker = string.Empty;
         private int portraitRow = -1;
-        private Func<string> nextDialogue;
+        private string dialogueLine;
         private bool choosingGift;
         private BondEventDefinition? activeBondEvent;
         private int bondPage;
         private Vector2 giftScroll;
         private GUIStyle titleStyle;
-        private GUIStyle bodyStyle;
         private GUIStyle centeredStyle;
+        private GUIStyle actionCaptionStyle;
         private GUIStyle buttonStyle;
         private GUIStyle panelStyle;
         private Texture2D panelTexture;
         private Texture2D buttonTexture;
         private Font koreanFont;
+        private FarmGuiSkin farmSkin;
 
         public static bool IsOpen => instance != null && instance.enabled;
 
@@ -41,7 +43,6 @@ namespace FarmGame2D.Interactions
             instance.npcId = id ?? string.Empty;
             instance.speaker = displayName ?? "주민";
             instance.portraitRow = dialoguePortraitRow;
-            instance.nextDialogue = dialogueProvider;
             instance.choosingGift = false;
             var data = GameSession.Instance?.Data;
             instance.activeBondEvent = data == null ? null :
@@ -50,7 +51,12 @@ namespace FarmGame2D.Interactions
                 BondEventService.GetMarriageProposal(data, instance.npcId);
             instance.bondPage = 0;
             instance.giftScroll = Vector2.zero;
+            instance.dialogueLine = instance.activeBondEvent.HasValue
+                ? string.Empty
+                : dialogueProvider?.Invoke() ?? "좋은 하루예요.";
             instance.enabled = true;
+            if (!instance.activeBondEvent.HasValue && dialogueProvider != null)
+                GameSession.Instance?.ShowDialogue(instance.speaker, instance.dialogueLine, dialoguePortraitRow, inInteraction: true);
         }
 
         public static void ShowDogEvent(BondEventDefinition bondEvent)
@@ -79,6 +85,10 @@ namespace FarmGame2D.Interactions
                 if (choosingGift) choosingGift = false;
                 else Close();
             }
+            else if (!choosingGift && !activeBondEvent.HasValue && Input.GetKeyDown(KeyCode.Return))
+            {
+                Close();
+            }
         }
 
         private void OnGUI()
@@ -89,6 +99,21 @@ namespace FarmGame2D.Interactions
             var oldDepth = GUI.depth;
             GUI.depth = -100;
             var oldMatrix = GUI.matrix;
+            try
+            {
+                var data = GameSession.Instance.Data;
+                if (activeBondEvent.HasValue) DrawBondOverlay(data);
+                else DrawDialogueAndActions(data);
+            }
+            finally
+            {
+                GUI.matrix = oldMatrix;
+                GUI.depth = oldDepth;
+            }
+        }
+
+        private void DrawBondOverlay(GameSaveData data)
+        {
             var scale = Mathf.Min(Screen.width / ReferenceWidth, Screen.height / ReferenceHeight);
             var offsetX = (Screen.width - ReferenceWidth * scale) * 0.5f;
             var offsetY = (Screen.height - ReferenceHeight * scale) * 0.5f;
@@ -101,7 +126,6 @@ namespace FarmGame2D.Interactions
 
             var panel = new Rect(400f, 145f, 800f, 610f);
             GUI.Box(panel, GUIContent.none, panelStyle);
-            var data = GameSession.Instance.Data;
             var isSpouse = data.spouseNpcId == npcId && !string.IsNullOrEmpty(npcId);
             GUI.Label(new Rect(panel.x + 45f, panel.y + 38f, panel.width - 90f, 55f), isSpouse ? $"{speaker}  ♥ 배우자" : speaker, titleStyle);
             if (activeBondEvent?.Kind == BondEventKind.DogCompanion || activeBondEvent?.Kind == BondEventKind.DogEnding)
@@ -114,87 +138,103 @@ namespace FarmGame2D.Interactions
                 GUI.Label(new Rect(panel.x + 45f, panel.y + 100f, panel.width - 90f, 44f), $"호감도  {heartText}  {points}/{NpcFriendshipService.MaxPoints}", centeredStyle);
             }
 
-            if (activeBondEvent.HasValue) DrawBondEvent(panel, data);
-            else if (choosingGift) DrawGiftSelection(panel, data);
-            else DrawMainMenu(panel, data);
-
-            GUI.matrix = oldMatrix;
-            GUI.depth = oldDepth;
+            DrawBondEvent(panel, data);
         }
 
-        private void DrawMainMenu(Rect panel, GameSaveData data)
+        private void DrawDialogueAndActions(GameSaveData data)
         {
-            GUI.Label(new Rect(panel.x + 70f, panel.y + 165f, panel.width - 140f, 60f), $"{speaker}에게 무엇을 할까요?", centeredStyle);
-
-            if (GUI.Button(new Rect(panel.x + 180f, panel.y + 250f, 440f, 62f), "대화하기", buttonStyle))
+            var viewport = HudLayout.CalculateViewport(Screen.width, Screen.height);
+            GUI.matrix = Matrix4x4.TRS(new Vector3(viewport.OffsetX, viewport.OffsetY, 0f), Quaternion.identity,
+                new Vector3(viewport.Scale, viewport.Scale, 1f));
+            var dialogue = HudLayout.CalculateDialogueLayout();
+            farmSkin.DrawDialogue(dialogue, speaker, dialogueLine, portraitRow);
+            if (!choosingGift && GUI.Button(dialogue.Panel, GUIContent.none, GUIStyle.none))
             {
-                var line = nextDialogue?.Invoke() ?? "좋은 하루예요.";
                 Close();
-                GameSession.Instance.ShowDialogue(speaker, line, portraitRow);
+                return;
             }
 
-            var giftedToday = NpcFriendshipService.HasGiftedToday(data, npcId);
-            GUI.enabled = !giftedToday;
-            if (GUI.Button(new Rect(panel.x + 180f, panel.y + 330f, 440f, 62f), giftedToday ? "오늘 선물 완료" : "선물하기", buttonStyle))
+            const float width = 370f;
+            var bottom = dialogue.Panel.yMin - 10f;
+            var left = dialogue.Panel.xMax - width - 12f;
+            if (choosingGift)
             {
-                choosingGift = true;
+                DrawGiftSelection(new Rect(left, bottom - 246f, width, 246f), data);
+                return;
             }
-            GUI.enabled = true;
 
             var replay = BondEventService.GetNpcEndingForReplay(data, npcId);
             var weddingReplay = BondEventService.GetWeddingForReplay(data, npcId);
-            var replayRect = weddingReplay.HasValue
-                ? new Rect(panel.x + 90f, panel.y + 410f, 290f, 62f)
-                : new Rect(panel.x + 180f, panel.y + 410f, 440f, 62f);
-            if (replay.HasValue && GUI.Button(replayRect, "우정 엔딩 다시 보기", buttonStyle))
+            var height = replay.HasValue || weddingReplay.HasValue ? 138f : 94f;
+            var panel = new Rect(left, bottom - height, width, height);
+            farmSkin.DrawBanner(panel);
+            var points = NpcFriendshipService.GetPoints(data, npcId);
+            var hearts = NpcFriendshipService.GetHeartCount(data, npcId);
+            var heartText = new string('♥', hearts) + new string('♡', 5 - hearts);
+            var relation = data.spouseNpcId == npcId ? "배우자" : "호감도";
+            GUI.Label(new Rect(panel.x + 18f, panel.y + 12f, width - 36f, 27f),
+                $"{relation}  {heartText}  {points}/{NpcFriendshipService.MaxPoints}", actionCaptionStyle);
+
+            var giftedToday = NpcFriendshipService.HasGiftedToday(data, npcId);
+            var previousEnabled = GUI.enabled;
+            GUI.enabled = previousEnabled && !giftedToday;
+            if (farmSkin.DrawButton(ActionButton(panel, 0, 0), giftedToday ? "오늘 선물 완료" : "선물하기", true))
+            {
+                choosingGift = true;
+                giftScroll = Vector2.zero;
+            }
+            GUI.enabled = previousEnabled;
+            if (farmSkin.DrawButton(ActionButton(panel, 1, 0), "닫기"))
+            {
+                Close();
+                return;
+            }
+            if (replay.HasValue && farmSkin.DrawButton(ActionButton(panel, 0, 1), "우정 엔딩 다시 보기"))
             {
                 activeBondEvent = replay;
                 bondPage = 0;
             }
-
-            if (weddingReplay.HasValue && GUI.Button(new Rect(panel.x + 420f, panel.y + 410f, 290f, 62f), "결혼식 다시 보기", buttonStyle))
+            if (weddingReplay.HasValue && farmSkin.DrawButton(ActionButton(panel, replay.HasValue ? 1 : 0, 1), "결혼식 다시 보기"))
             {
                 activeBondEvent = weddingReplay;
                 bondPage = 0;
             }
-
-            if (giftedToday && !replay.HasValue)
-            {
-                GUI.Label(new Rect(panel.x + 100f, panel.y + 400f, panel.width - 200f, 36f), "선물은 NPC마다 하루에 한 번 줄 수 있어요.", centeredStyle);
-            }
-
-            if (GUI.Button(new Rect(panel.x + 270f, panel.y + 500f, 260f, 56f), "닫기", buttonStyle)) Close();
         }
+
+        private static Rect ActionButton(Rect panel, int column, int row) =>
+            new Rect(panel.x + 20f + column * 170f, panel.y + 43f + row * 43f, 160f, 36f);
 
         private void DrawGiftSelection(Rect panel, GameSaveData data)
         {
-            GUI.Label(new Rect(panel.x + 70f, panel.y + 155f, panel.width - 140f, 42f), "선물할 물건을 골라주세요", centeredStyle);
+            farmSkin.DrawWindow(panel);
+            GUI.Label(new Rect(panel.x + 28f, panel.y + 18f, panel.width - 56f, 28f),
+                "선물할 물건을 골라주세요", actionCaptionStyle);
             var ownedItems = NpcFriendshipService.GetOwnedGiftableItems(data.inventory);
-            var viewport = new Rect(panel.x + 100f, panel.y + 210f, panel.width - 200f, 270f);
-            var contentHeight = Mathf.Max(viewport.height - 4f, Mathf.Ceil(ownedItems.Count / 2f) * 58f + 8f);
+            var viewport = new Rect(panel.x + 30f, panel.y + 49f, panel.width - 60f, 140f);
+            var contentHeight = Mathf.Max(viewport.height, ownedItems.Count * 40f);
             giftScroll = GUI.BeginScrollView(viewport, giftScroll, new Rect(0f, 0f, viewport.width - 20f, contentHeight));
 
             for (var index = 0; index < ownedItems.Count; index++)
             {
                 var item = ownedItems[index];
-                var column = index % 2;
-                var row = index / 2;
-                var itemRect = new Rect(column * 295f, row * 58f, 280f, 48f);
-                if (GUI.Button(itemRect, $"{ItemCatalog.GetLabel(item)}  ×{data.inventory.Count(item)}", buttonStyle))
+                var itemRect = new Rect(0f, index * 40f, viewport.width - 20f, 36f);
+                if (farmSkin.DrawButton(itemRect, $"{ItemCatalog.GetLabel(item)}  ×{data.inventory.Count(item)}"))
                 {
-                    GiveGift(data, item);
                     GUI.EndScrollView();
+                    GiveGift(data, item);
                     return;
                 }
             }
 
             if (ownedItems.Count == 0)
             {
-                GUI.Label(new Rect(0f, 80f, viewport.width - 20f, 50f), "선물할 수 있는 수확물·물고기·광물이 없어요.", centeredStyle);
+                GUI.Label(new Rect(0f, 18f, viewport.width - 20f, 85f),
+                    "선물할 수 있는 수확물·물고기·광물이 없어요.", actionCaptionStyle);
             }
 
             GUI.EndScrollView();
-            if (GUI.Button(new Rect(panel.x + 270f, panel.y + 510f, 260f, 56f), "뒤로", buttonStyle)) choosingGift = false;
+            if (farmSkin.DrawButton(new Rect(panel.center.x - 70f, panel.yMax - 48f, 140f, 34f), "뒤로"))
+                choosingGift = false;
         }
 
         private void GiveGift(GameSaveData data, GameItem item)
@@ -211,8 +251,9 @@ namespace FarmGame2D.Interactions
                 return;
             }
 
-            Close();
-            GameSession.Instance.ShowDialogue(speaker, result.Message, portraitRow);
+            choosingGift = false;
+            dialogueLine = result.Message;
+            GameSession.Instance.ShowDialogue(speaker, dialogueLine, portraitRow, inInteraction: true);
         }
 
         private void DrawBondEvent(Rect panel, GameSaveData data)
@@ -270,6 +311,7 @@ namespace FarmGame2D.Interactions
             koreanFont = Resources.Load<Font>("Fonts/NotoSansKR-VF")
                 ?? Font.CreateDynamicFontFromOSFont(new[] { "Noto Sans KR", "Malgun Gothic", "Arial" }, 18);
             var font = koreanFont;
+            farmSkin = new FarmGuiSkin(font);
             panelStyle = new GUIStyle(GUI.skin.box)
             {
                 normal = { background = panelTexture },
@@ -280,12 +322,12 @@ namespace FarmGame2D.Interactions
                 font = font, fontSize = 36, fontStyle = FontStyle.Bold,
                 alignment = TextAnchor.MiddleCenter, normal = { textColor = new Color(0.22f, 0.13f, 0.07f) }
             };
-            bodyStyle = new GUIStyle(GUI.skin.label)
+            centeredStyle = new GUIStyle(GUI.skin.label)
             {
-                font = font, fontSize = 23, wordWrap = true,
+                font = font, fontSize = 23, wordWrap = true, alignment = TextAnchor.MiddleCenter,
                 normal = { textColor = new Color(0.25f, 0.16f, 0.09f) }
             };
-            centeredStyle = new GUIStyle(bodyStyle) { alignment = TextAnchor.MiddleCenter };
+            actionCaptionStyle = new GUIStyle(centeredStyle) { fontSize = 16, fontStyle = FontStyle.Bold };
             buttonStyle = new GUIStyle(GUI.skin.button)
             {
                 font = font, fontSize = 24, fontStyle = FontStyle.Bold,

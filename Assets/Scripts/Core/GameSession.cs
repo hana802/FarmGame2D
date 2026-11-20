@@ -587,12 +587,12 @@ namespace FarmGame2D.Core
             NotifyChanged();
         }
 
-        public void ShowDialogue(string speaker, string dialogue, int portraitRow)
+        public void ShowDialogue(string speaker, string dialogue, int portraitRow, bool inInteraction = false)
         {
             Message = dialogue;
             activeSpeaker = speaker;
             activePortraitRow = portraitRow;
-            messageDisplaySeconds = 4f;
+            messageDisplaySeconds = inInteraction ? 0f : 4f;
             NotifyChanged();
         }
 
