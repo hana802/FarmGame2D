@@ -16,6 +16,16 @@ namespace FarmGame2D.Interactions
 
         private void DrawFarmHelpMenu(Rect panel, GameSession session)
         {
+            var previousColor = GUI.color;
+            GUI.color = new Color(0.20f, 0.12f, 0.08f, 0.40f);
+            GUI.DrawTexture(new Rect(panel.x + 5f, panel.y + 7f, panel.width, panel.height), Texture2D.whiteTexture);
+            GUI.color = new Color(0.38f, 0.22f, 0.13f);
+            GUI.DrawTexture(panel, Texture2D.whiteTexture);
+            GUI.color = new Color(0.98f, 0.92f, 0.78f);
+            GUI.DrawTexture(new Rect(panel.x + 5f, panel.y + 5f, panel.width - 10f, panel.height - 10f),
+                Texture2D.whiteTexture);
+            GUI.color = previousColor;
+
             GUI.Label(new Rect(panel.x + 24f, panel.y + 22f, panel.width - 48f, 48f), "농장일 부탁하기", titleStyle);
 
             var restriction = session.GetSpouseFarmHelpRestriction(npcId);
