@@ -1,5 +1,7 @@
+using System.Collections;
 using FarmGame2D.Core;
 using FarmGame2D.Player;
+using UnityEngine;
 
 namespace FarmGame2D.Interactions
 {
@@ -149,9 +151,13 @@ namespace FarmGame2D.Interactions
 
     public sealed class MiningNodeInteractable : InteractableBehaviour
     {
+        private const float WindupTime = 0.10f;
+        private const float StrikeTime = 0.22f;
+        private const float SwingDuration = 0.50f;
         private int nodeId;
         private UnityEngine.SpriteRenderer nodeRenderer;
         private FarmGame2D.World.MiningNodeDepletionPresentation depletionPresentation;
+        private PrototypePlayerController miner;
 
         public override string Prompt
         {
@@ -195,7 +201,70 @@ namespace FarmGame2D.Interactions
 
         public override void Interact(PrototypePlayerController player)
         {
-            GameSession.Instance?.MineNode(nodeId);
+            var session = GameSession.Instance;
+            if (!isActiveAndEnabled || session == null || player == null || !player.isActiveAndEnabled
+                || player.IsMining || player.IsFishing || miner != null)
+                return;
+
+            if (!session.CanMineNode(nodeId))
+            {
+                session.MineNode(nodeId);
+                return;
+            }
+
+            miner = player;
+            StartCoroutine(PlaySwing(session));
+        }
+
+        private IEnumerator PlaySwing(GameSession session)
+        {
+            var data = session.Data;
+            var direction = ((Vector2)transform.position - (Vector2)miner.transform.position).normalized;
+            var contact = (Vector2)transform.position - direction * 0.20f + Vector2.up * 0.33f;
+            var oreColor = GetOreColor(data.miningNodes[nodeId].ore);
+            miner.BeginMining(transform.position);
+            var elapsed = 0f;
+            var struck = false;
+            var mined = false;
+            while (miner != null && miner.isActiveAndEnabled && GameSession.Instance == session && session.Data == data)
+            {
+                if (elapsed >= StrikeTime && !struck)
+                {
+                    struck = true;
+                    mined = session.MineNode(nodeId);
+                }
+
+                miner.PresentMiningSwing(contact, CalculatePullback(elapsed));
+                if (mined)
+                    depletionPresentation.PresentImpact(contact, oreColor, Mathf.InverseLerp(StrikeTime, SwingDuration, elapsed));
+
+                if (elapsed >= SwingDuration) break;
+                yield return null;
+                elapsed = Mathf.Min(SwingDuration, elapsed + Time.deltaTime);
+            }
+            ClearSwing();
+        }
+
+        private static float CalculatePullback(float elapsed)
+        {
+            if (elapsed < WindupTime)
+                return Mathf.SmoothStep(22f, 108f, elapsed / WindupTime);
+            if (elapsed < StrikeTime)
+                return Mathf.SmoothStep(108f, 0f, Mathf.InverseLerp(WindupTime, StrikeTime, elapsed));
+            return Mathf.SmoothStep(0f, 42f, Mathf.InverseLerp(StrikeTime, SwingDuration, elapsed));
+        }
+
+        private void OnDisable()
+        {
+            StopAllCoroutines();
+            ClearSwing();
+        }
+
+        private void ClearSwing()
+        {
+            if (miner != null) miner.EndMining();
+            miner = null;
+            if (depletionPresentation != null) depletionPresentation.HideImpact();
         }
 
         private void Refresh()

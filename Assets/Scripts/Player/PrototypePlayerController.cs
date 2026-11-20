@@ -25,6 +25,7 @@ namespace FarmGame2D.Player
         public string VisibleNearbyPrompt => NearbyPrompt;
         public HeldItemPresenter HeldItemPresenter => heldItemPresenter;
         public bool IsFishing { get; private set; }
+        public bool IsMining { get; private set; }
 
         private void Awake()
         {
@@ -57,6 +58,8 @@ namespace FarmGame2D.Player
                 heldItemPresenter.Present(FarmTool.Hoe, facingRow, false, false);
                 return;
             }
+
+            if (IsMining) return;
 
             if (GameSession.Instance.InventoryOpen || GameSession.Instance.PhoneOpen || GameSession.Instance.ShopOpen
                 || GameSession.Instance.QuestBoardOpen || NpcInteractionOverlay.IsOpen)
@@ -209,6 +212,26 @@ namespace FarmGame2D.Player
         internal void EndFishing()
         {
             IsFishing = false;
+            if (GameSession.Instance != null) UpdateHeldItem();
+        }
+
+        internal void BeginMining(Vector2 target)
+        {
+            IsMining = true;
+            moveInput = Vector2.zero;
+            NearbyPrompt = string.Empty;
+            facingRow = PlayerMotionPresentation.GetFacingRow(target - (Vector2)transform.position, facingRow);
+            UpdateCharacterVisual(true);
+        }
+
+        internal void PresentMiningSwing(Vector2 target, float pullback)
+        {
+            heldItemPresenter.PresentMining(facingRow, target, pullback);
+        }
+
+        internal void EndMining()
+        {
+            IsMining = false;
             if (GameSession.Instance != null) UpdateHeldItem();
         }
 

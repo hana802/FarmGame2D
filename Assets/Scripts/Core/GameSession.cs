@@ -804,18 +804,23 @@ namespace FarmGame2D.Core
             return true;
         }
 
-        public void MineNode(int nodeId)
+        private bool HasSelectedPickaxe => SelectedTool == FarmTool.Pickaxe && Data.hasPickaxe;
+
+        public bool CanMineNode(int nodeId) => HasSelectedPickaxe && nodeId >= 0 && nodeId < Data.miningNodes.Count
+            && Data.miningNodes[nodeId].IsAvailable;
+
+        public bool MineNode(int nodeId)
         {
-            if (SelectedTool != FarmTool.Pickaxe || !Data.hasPickaxe)
+            if (!HasSelectedPickaxe)
             {
                 Message = "곡괭이를 선택해야 광맥을 캘 수 있습니다.";
                 NotifyChanged();
-                return;
+                return false;
             }
 
             if (nodeId < 0 || nodeId >= Data.miningNodes.Count)
             {
-                return;
+                return false;
             }
 
             var node = Data.miningNodes[nodeId];
@@ -823,7 +828,7 @@ namespace FarmGame2D.Core
             {
                 Message = $"광맥이 다시 생기려면 {node.regrowDaysRemaining}일 남았습니다.";
                 NotifyChanged();
-                return;
+                return false;
             }
 
             node.Mine();
@@ -832,6 +837,7 @@ namespace FarmGame2D.Core
             Message = $"{ItemCatalog.GetLabel(node.ore)}을 채굴했습니다.";
             CompleteCurrentStarterQuest();
             NotifyChanged();
+            return true;
         }
 
         public bool PullWeed(int weedId)

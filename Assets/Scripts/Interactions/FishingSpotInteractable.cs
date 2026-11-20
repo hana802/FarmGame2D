@@ -23,7 +23,7 @@ namespace FarmGame2D.Interactions
         {
             var session = GameSession.Instance;
             if (!isActiveAndEnabled || angler != null || player == null || !player.isActiveAndEnabled
-                || player.IsFishing || session == null)
+                || player.IsFishing || player.IsMining || session == null)
             {
                 return;
             }
