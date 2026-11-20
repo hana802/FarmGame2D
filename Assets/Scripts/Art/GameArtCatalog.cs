@@ -127,6 +127,13 @@ namespace FarmGame2D.Art
             return GetOrCreate(npcSprites, key, npcSheet, rect, new Vector2(0.5f, 0.12f));
         }
 
+        public static Sprite GetNpcDirectionalSprite(int characterRowFromTop, int facingRow, bool stepping)
+        {
+            // The sheet lists front, left, right and back, followed by a stride in each direction.
+            var column = facingRow switch { 0 => 3, 1 => 2, 2 => 1, _ => 0 };
+            return GetNpcSprite(characterRowFromTop, column + (stepping ? 4 : 0));
+        }
+
         public static Sprite GetNpcPortrait(int characterRowFromTop)
         {
             var dedicatedPortrait = GetDedicatedNpcPortrait(characterRowFromTop);

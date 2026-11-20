@@ -177,7 +177,7 @@ namespace FarmGame2D.World
             ConfigureNpcMovement(villager, villageRoutes, 13, 0.75f, seed + 33, new Vector2(11.5f, 7.2f), "주민 도윤");
 
             var fisher = CreateNpc("Fisher Minseo", new Vector2(-9f, 0f), new Color(0.3f, 0.58f, 0.72f), townRoot);
-            ApplyNpcArt(fisher, 1, 4);
+            ApplyNpcArt(fisher, 1);
             fisher.Configure("어부 민서", new[]
             {
                 "낚싯대를 들고 연못이나 바닷가의 낚시 자리를 찾아보세요.",
@@ -190,7 +190,7 @@ namespace FarmGame2D.World
             ConfigureNpcMovement(fisher, villageRoutes, 10, 0.68f, seed + 44, new Vector2(-11.5f, 2.5f), "어부 민서");
 
             var florist = CreateNpc("Florist Taeo", new Vector2(5f, 0f), new Color(0.64f, 0.45f, 0.72f), townRoot);
-            ApplyNpcArt(florist, 0, 6);
+            ApplyNpcArt(florist, 0);
             florist.Configure("원예가 태오", new[]
             {
                 "마을 길과 광장은 모두가 쓰는 곳이라 밭을 만들 수 없어요.",
@@ -546,16 +546,18 @@ namespace FarmGame2D.World
             herdObject.AddComponent<FarmAnimalHerd>().Configure(session, kind, area, speed, separationGroup);
         }
 
-        private static void ApplyNpcArt(DialogueInteractable npc, int characterRowFromTop, int column = 0)
+        private static void ApplyNpcArt(DialogueInteractable npc, int characterRowFromTop)
         {
-            var artSprite = GameArtCatalog.GetNpcSprite(characterRowFromTop, column);
+            var artSprite = GameArtCatalog.GetNpcDirectionalSprite(characterRowFromTop, 3, false);
             ApplyCharacterArt(npc, artSprite);
+            npc.gameObject.AddComponent<NpcMotionPresenter>().Configure(characterRowFromTop);
         }
 
         private static void ApplyPlayerStyleNpcArt(DialogueInteractable npc, CharacterChoice choice)
         {
             var artSprite = GameArtCatalog.GetPlayerSprite(choice, 3, 0);
             ApplyCharacterArt(npc, artSprite);
+            npc.gameObject.AddComponent<NpcMotionPresenter>().Configure(0, choice);
         }
 
         private static void ApplyCharacterArt(DialogueInteractable npc, Sprite artSprite)
