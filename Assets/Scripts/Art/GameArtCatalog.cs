@@ -9,6 +9,13 @@ namespace FarmGame2D.Art
         private const int PlayerFrameWidth = 160;
         private const int PlayerFrameHeight = 208;
         private const float PixelsPerUnit = 160f;
+        private const float VillagerSheetPixelsPerUnit = 148f;
+        private const float CharacterPivotY = 0.12f;
+        private const float VillagerSheetFootY = 10f;
+        // Keep the artwork's bottom opaque row at the same world position when enlarging it.
+        private const float VillagerSheetPivotY =
+            (VillagerSheetFootY + (PlayerFrameHeight * CharacterPivotY - VillagerSheetFootY)
+                * VillagerSheetPixelsPerUnit / PixelsPerUnit) / PlayerFrameHeight;
         internal const int MinseoWorldArt = 4;
         internal const int TaeoWorldArt = 5;
 
@@ -87,7 +94,7 @@ namespace FarmGame2D.Art
             var key = ((int)choice * 100) + (row * 10) + safeFrame;
             var frameLefts = choice == CharacterChoice.Female ? FemaleFrameLefts : MaleFrameLefts;
             var rect = new Rect(frameLefts[safeFrame], CharacterRowBottoms[row], PlayerFrameWidth, PlayerFrameHeight);
-            return GetOrCreate(playerSprites, key, playerSheet, rect, new Vector2(0.5f, 0.12f));
+            return GetOrCreate(playerSprites, key, playerSheet, rect, new Vector2(0.5f, CharacterPivotY));
         }
 
         public static Sprite GetPlayerPortrait(CharacterChoice choice)
@@ -132,7 +139,7 @@ namespace FarmGame2D.Art
                     safeColumn < 4 ? PlayerFrameHeight : 0f,
                     PlayerFrameWidth, PlayerFrameHeight);
                 return GetOrCreate(npcSprites, characterRowFromTop * 10 + safeColumn,
-                    dedicatedSheet, frameRect, new Vector2(0.5f, 0.12f));
+                    dedicatedSheet, frameRect, new Vector2(0.5f, VillagerSheetPivotY), VillagerSheetPixelsPerUnit);
             }
 
             npcSheet ??= LoadTexture("Art/NPCs/village_npcs_spritesheet_concept_v1");
@@ -150,7 +157,7 @@ namespace FarmGame2D.Art
             var rowFromBottom = 3 - Mathf.Clamp(legacyRow, 0, 3);
             var key = (rowFromBottom * 10) + safeColumn;
             var rect = new Rect(NpcFrameLefts[safeColumn], CharacterRowBottoms[rowFromBottom], PlayerFrameWidth, PlayerFrameHeight);
-            return GetOrCreate(npcSprites, key, npcSheet, rect, new Vector2(0.5f, 0.12f));
+            return GetOrCreate(npcSprites, key, npcSheet, rect, new Vector2(0.5f, CharacterPivotY));
         }
 
         public static Sprite GetNpcDirectionalSprite(int characterRowFromTop, int facingRow, bool stepping)
@@ -353,14 +360,15 @@ namespace FarmGame2D.Art
             int key,
             Texture2D texture,
             Rect rect,
-            Vector2 pivot)
+            Vector2 pivot,
+            float pixelsPerUnit = PixelsPerUnit)
         {
             if (cache.TryGetValue(key, out var cached))
             {
                 return cached;
             }
 
-            var sprite = Sprite.Create(texture, rect, pivot, PixelsPerUnit, 0, SpriteMeshType.FullRect);
+            var sprite = Sprite.Create(texture, rect, pivot, pixelsPerUnit, 0, SpriteMeshType.FullRect);
             sprite.name = $"{texture.name}_{key}";
             cache[key] = sprite;
             return sprite;

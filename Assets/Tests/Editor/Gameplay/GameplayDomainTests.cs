@@ -569,6 +569,57 @@ namespace FarmGame2D.Tests
             Assert.That(portrait.texture.height, Is.GreaterThanOrEqualTo(1024));
         }
 
+        [TestCase(4)]
+        [TestCase(5)]
+        public void DedicatedVillagerFrames_MatchPlayerHeightAndKeepFeetAnchored(int worldArt)
+        {
+            var player = GameArtCatalog.GetPlayerSprite(CharacterChoice.Female, 3, 0);
+            var playerInk = ReadInkRows(player, "Characters");
+            var playerHeight = (playerInk.Top - playerInk.Bottom + 1) / player.pixelsPerUnit;
+
+            for (var column = 0; column < 8; column++)
+            {
+                var villager = GameArtCatalog.GetNpcSprite(worldArt, column);
+                var ink = ReadInkRows(villager, "NPCs");
+                var height = (ink.Top - ink.Bottom + 1) / villager.pixelsPerUnit;
+                var feet = (ink.Bottom - villager.pivot.y) / villager.pixelsPerUnit;
+                var previousFeet = (ink.Bottom - villager.rect.height * 0.12f) / player.pixelsPerUnit;
+                Assert.That(height, Is.InRange(playerHeight, playerHeight * 1.05f), $"Frame {column}");
+                Assert.That(feet, Is.EqualTo(previousFeet).Within(0.005f), $"Frame {column}");
+            }
+        }
+
+        private static (int Bottom, int Top) ReadInkRows(Sprite sprite, string folder)
+        {
+            var source = new Texture2D(2, 2);
+            try
+            {
+                var path = Path.Combine(Application.dataPath, "Resources", "Art", folder, sprite.texture.name + ".png");
+                Assert.That(source.LoadImage(File.ReadAllBytes(path)), Is.True);
+                var frame = sprite.rect;
+                var pixels = source.GetPixels32();
+                var bottom = (int)frame.height;
+                var top = -1;
+                for (var y = 0; y < (int)frame.height; y++)
+                {
+                    var row = ((int)frame.y + y) * source.width + (int)frame.x;
+                    for (var x = 0; x < (int)frame.width; x++)
+                    {
+                        if (pixels[row + x].a < 128) continue;
+                        bottom = Mathf.Min(bottom, y);
+                        top = y;
+                        break;
+                    }
+                }
+                Assert.That(top, Is.GreaterThanOrEqualTo(bottom));
+                return (bottom, top);
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(source);
+            }
+        }
+
         [Test]
         public void PhoneLayout_KeepsQuestTextBetweenTabsAndSaveActions()
         {
