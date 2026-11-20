@@ -61,7 +61,8 @@ namespace FarmGame2D.Tests.Editor.Gameplay
                 var sprite = TownDecorationArt.GetSprite(definition.Item);
                 Assert.That(sprite, Is.Not.Null);
                 Assert.That(sprite.texture.filterMode, Is.EqualTo(FilterMode.Point));
-                Assert.That(sprite.texture.width, Is.GreaterThan(1));
+                Assert.That(sprite.texture.width, Is.GreaterThan(32));
+                Assert.That(sprite.texture.height, Is.GreaterThan(32));
             }
         }
     }

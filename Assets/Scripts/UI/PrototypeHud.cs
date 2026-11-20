@@ -3,6 +3,7 @@ using FarmGame2D.Core;
 using FarmGame2D.Interactions;
 using FarmGame2D.Player;
 using FarmGame2D.TimeSystem;
+using FarmGame2D.World;
 using UnityEngine;
 
 namespace FarmGame2D.UI
@@ -33,6 +34,7 @@ namespace FarmGame2D.UI
         private GUIStyle panelStyle;
         private GUIStyle interactionPromptStyle;
         private GUIStyle interactionKeyStyle;
+        private GUIStyle fishingMarkerStyle;
         private Font koreanFont;
         private FarmGuiSkin farmSkin;
         private readonly HudMessageVisibility messageVisibility = new();
@@ -97,6 +99,11 @@ namespace FarmGame2D.UI
                     || session.InventoryOpen
                     || session.QuestBoardOpen
                     || NpcInteractionOverlay.IsOpen;
+                if (!modalOpen)
+                {
+                    DrawFishingMarker(viewport);
+                }
+
                 if (messageVisibility.ShouldShow(
                         session.MessageRevision,
                         Time.unscaledTime,
@@ -130,6 +137,27 @@ namespace FarmGame2D.UI
             {
                 GUI.matrix = previousMatrix;
             }
+        }
+
+        private void DrawFishingMarker(HudViewport viewport)
+        {
+            if (player == null || !player.IsFishing || Camera.main is not Camera worldCamera) return;
+
+            var screen = worldCamera.WorldToScreenPoint(player.transform.position + Vector3.up * 1.25f);
+            if (screen.z <= 0f) return;
+
+            const float width = 88f;
+            const float height = 28f;
+            var x = (screen.x - viewport.OffsetX) / viewport.Scale;
+            var y = (Screen.height - screen.y - viewport.OffsetY) / viewport.Scale;
+            if (fishingMarkerStyle == null)
+            {
+                fishingMarkerStyle = NpcSpeechBubblePresentation.CreateStyle(GUI.skin.box, koreanFont);
+                fishingMarkerStyle.fontSize = 14;
+            }
+
+            NpcSpeechBubblePresentation.Draw(new Rect(x - width * 0.5f, y - height - 6f, width, height),
+                "낚시 중", fishingMarkerStyle);
         }
 
         private void DrawStatus(GameSession session)

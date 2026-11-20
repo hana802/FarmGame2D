@@ -11,6 +11,7 @@ namespace FarmGame2D.World
     public sealed class PrototypeWorldBuilder : MonoBehaviour
     {
         private readonly List<SpriteRenderer> trees = new();
+        private readonly SeasonalTreeArt seasonalTreeArt = new();
         private static readonly BoundsInt IslandGroundBounds = new(-18, -16, 0, 37, 35, 1);
         private static readonly BoundsInt IslandOceanBounds = new(-28, -26, 0, 57, 55, 1);
         private Tilemap groundTilemap;
@@ -35,6 +36,7 @@ namespace FarmGame2D.World
 
         private void OnDestroy()
         {
+            seasonalTreeArt.Dispose();
             if (GameSession.Instance != null)
             {
                 GameSession.Instance.StateChanged -= RefreshSeason;
@@ -338,7 +340,8 @@ namespace FarmGame2D.World
                 return;
             }
 
-            var palette = GetSeasonPalette(GameSession.Instance.CurrentSeason);
+            var season = GameSession.Instance.CurrentSeason;
+            var palette = GetSeasonPalette(season);
             groundTilemap.color = palette.ground;
             if (oceanTilemap != null)
             {
@@ -349,21 +352,24 @@ namespace FarmGame2D.World
                 waterRenderer.color = palette.water;
             }
 
-            foreach (var tree in trees)
+            if (trees.Count > 0 && seasonalTreeArt.Refresh(season))
             {
-                tree.color = palette.trees;
+                foreach (var tree in trees)
+                {
+                    tree.sprite = seasonalTreeArt.Sprite;
+                }
             }
         }
 
-        private static (Color ground, Color trees, Color water) GetSeasonPalette(Season season)
+        private static (Color ground, Color water) GetSeasonPalette(Season season)
         {
             return season switch
             {
-                Season.Spring => (new Color(1f, 0.94f, 0.96f), new Color(1f, 0.82f, 0.9f), new Color(0.82f, 0.96f, 1f)),
-                Season.Summer => (new Color(0.78f, 1f, 0.68f), new Color(0.62f, 0.94f, 0.52f), new Color(0.72f, 0.94f, 1f)),
-                Season.Autumn => (new Color(1f, 0.72f, 0.38f), new Color(1f, 0.46f, 0.16f), new Color(0.86f, 0.9f, 1f)),
-                Season.Winter => (new Color(0.8f, 0.9f, 1f), new Color(0.66f, 0.78f, 0.9f), new Color(0.78f, 0.92f, 1f)),
-                _ => (Color.white, Color.green, Color.cyan)
+                Season.Spring => (new Color(1f, 0.94f, 0.96f), new Color(0.82f, 0.96f, 1f)),
+                Season.Summer => (new Color(0.78f, 1f, 0.68f), new Color(0.72f, 0.94f, 1f)),
+                Season.Autumn => (new Color(1f, 0.72f, 0.38f), new Color(0.86f, 0.9f, 1f)),
+                Season.Winter => (new Color(0.8f, 0.9f, 1f), new Color(0.78f, 0.92f, 1f)),
+                _ => (Color.white, Color.cyan)
             };
         }
 

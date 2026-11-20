@@ -24,6 +24,7 @@ namespace FarmGame2D.Player
         public string NearbyPrompt { get; private set; }
         public string VisibleNearbyPrompt => NearbyPrompt;
         public HeldItemPresenter HeldItemPresenter => heldItemPresenter;
+        public bool IsFishing { get; internal set; }
 
         private void Awake()
         {
@@ -170,7 +171,8 @@ namespace FarmGame2D.Player
         private void UpdateNearbyInteraction()
         {
             var nearest = FindNearestInteractable();
-            var nextPrompt = nearest == null ? string.Empty : $"E: {nearest.Prompt}";
+            var showPrompt = nearest != null && !(IsFishing && nearest is FishingSpotInteractable);
+            var nextPrompt = showPrompt ? $"E: {nearest.Prompt}" : string.Empty;
             if (nextPrompt == NearbyPrompt)
             {
                 return;
