@@ -21,6 +21,8 @@ namespace FarmGame2D.Core
         public float playerY = -12f;
         public InventoryModel inventory = new();
         public List<NpcFriendshipData> npcFriendships = new();
+        public string spouseNpcId = string.Empty;
+        public bool weddingSeen;
         public List<FarmPlotData> farmPlots = new();
         public bool chickenFedToday;
         public bool eggReady;
@@ -32,6 +34,8 @@ namespace FarmGame2D.Core
         public List<int> cowJuvenileDays = new();
         public bool cowFedToday;
         public int dogAffection;
+        public bool dogCompanionEventSeen;
+        public bool dogEndingSeen;
         public int dogLastCareDay;
         public bool dogSitting;
         public float dogSitX;

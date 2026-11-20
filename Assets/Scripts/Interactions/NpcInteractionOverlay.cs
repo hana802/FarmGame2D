@@ -15,6 +15,8 @@ namespace FarmGame2D.Interactions
         private int portraitRow = -1;
         private Func<string> nextDialogue;
         private bool choosingGift;
+        private BondEventDefinition? activeBondEvent;
+        private int bondPage;
         private Vector2 giftScroll;
         private GUIStyle titleStyle;
         private GUIStyle bodyStyle;
@@ -41,8 +43,21 @@ namespace FarmGame2D.Interactions
             instance.portraitRow = dialoguePortraitRow;
             instance.nextDialogue = dialogueProvider;
             instance.choosingGift = false;
+            var data = GameSession.Instance?.Data;
+            instance.activeBondEvent = data == null ? null :
+                BondEventService.GetPendingNpcEnding(data, instance.npcId) ??
+                BondEventService.GetPendingWedding(data, instance.npcId) ??
+                BondEventService.GetMarriageProposal(data, instance.npcId);
+            instance.bondPage = 0;
             instance.giftScroll = Vector2.zero;
             instance.enabled = true;
+        }
+
+        public static void ShowDogEvent(BondEventDefinition bondEvent)
+        {
+            Show(string.Empty, "강아지", -1, null);
+            instance.activeBondEvent = bondEvent;
+            instance.bondPage = 0;
         }
 
         private void Awake()
@@ -86,15 +101,21 @@ namespace FarmGame2D.Interactions
 
             var panel = new Rect(400f, 145f, 800f, 610f);
             GUI.Box(panel, GUIContent.none, panelStyle);
-            GUI.Label(new Rect(panel.x + 45f, panel.y + 38f, panel.width - 90f, 55f), speaker, titleStyle);
-
             var data = GameSession.Instance.Data;
-            var points = NpcFriendshipService.GetPoints(data, npcId);
-            var hearts = NpcFriendshipService.GetHeartCount(data, npcId);
-            var heartText = new string('♥', hearts) + new string('♡', 5 - hearts);
-            GUI.Label(new Rect(panel.x + 45f, panel.y + 100f, panel.width - 90f, 44f), $"호감도  {heartText}  {points}/{NpcFriendshipService.MaxPoints}", centeredStyle);
+            var isSpouse = data.spouseNpcId == npcId && !string.IsNullOrEmpty(npcId);
+            GUI.Label(new Rect(panel.x + 45f, panel.y + 38f, panel.width - 90f, 55f), isSpouse ? $"{speaker}  ♥ 배우자" : speaker, titleStyle);
+            if (activeBondEvent?.Kind == BondEventKind.DogCompanion || activeBondEvent?.Kind == BondEventKind.DogEnding)
+                GUI.Label(new Rect(panel.x + 45f, panel.y + 100f, panel.width - 90f, 44f), $"친밀도  {data.dogAffection}", centeredStyle);
+            else
+            {
+                var points = NpcFriendshipService.GetPoints(data, npcId);
+                var hearts = NpcFriendshipService.GetHeartCount(data, npcId);
+                var heartText = new string('♥', hearts) + new string('♡', 5 - hearts);
+                GUI.Label(new Rect(panel.x + 45f, panel.y + 100f, panel.width - 90f, 44f), $"호감도  {heartText}  {points}/{NpcFriendshipService.MaxPoints}", centeredStyle);
+            }
 
-            if (choosingGift) DrawGiftSelection(panel, data);
+            if (activeBondEvent.HasValue) DrawBondEvent(panel, data);
+            else if (choosingGift) DrawGiftSelection(panel, data);
             else DrawMainMenu(panel, data);
 
             GUI.matrix = oldMatrix;
@@ -120,7 +141,24 @@ namespace FarmGame2D.Interactions
             }
             GUI.enabled = true;
 
-            if (giftedToday)
+            var replay = BondEventService.GetNpcEndingForReplay(data, npcId);
+            var weddingReplay = BondEventService.GetWeddingForReplay(data, npcId);
+            var replayRect = weddingReplay.HasValue
+                ? new Rect(panel.x + 90f, panel.y + 410f, 290f, 62f)
+                : new Rect(panel.x + 180f, panel.y + 410f, 440f, 62f);
+            if (replay.HasValue && GUI.Button(replayRect, "우정 엔딩 다시 보기", buttonStyle))
+            {
+                activeBondEvent = replay;
+                bondPage = 0;
+            }
+
+            if (weddingReplay.HasValue && GUI.Button(new Rect(panel.x + 420f, panel.y + 410f, 290f, 62f), "결혼식 다시 보기", buttonStyle))
+            {
+                activeBondEvent = weddingReplay;
+                bondPage = 0;
+            }
+
+            if (giftedToday && !replay.HasValue)
             {
                 GUI.Label(new Rect(panel.x + 100f, panel.y + 400f, panel.width - 200f, 36f), "선물은 NPC마다 하루에 한 번 줄 수 있어요.", centeredStyle);
             }
@@ -164,13 +202,62 @@ namespace FarmGame2D.Interactions
             var result = NpcFriendshipService.TryGiveGift(data, npcId, item);
             if (result.Success) GameSession.Instance.SaveCurrentStateSilently();
 
+            var pending = result.Success ? BondEventService.GetPendingNpcEnding(data, npcId) : null;
+            if (pending.HasValue)
+            {
+                choosingGift = false;
+                activeBondEvent = pending;
+                bondPage = 0;
+                return;
+            }
+
             Close();
             GameSession.Instance.ShowDialogue(speaker, result.Message, portraitRow);
+        }
+
+        private void DrawBondEvent(Rect panel, GameSaveData data)
+        {
+            var bondEvent = activeBondEvent.Value;
+            GUI.Label(new Rect(panel.x + 70f, panel.y + 160f, panel.width - 140f, 52f), bondEvent.Title, titleStyle);
+            GUI.Label(new Rect(panel.x + 90f, panel.y + 240f, panel.width - 180f, 190f), bondEvent.Lines[bondPage], centeredStyle);
+            GUI.Label(new Rect(panel.x + 90f, panel.y + 445f, panel.width - 180f, 35f), $"{bondPage + 1} / {bondEvent.Lines.Length}", centeredStyle);
+            var isLastPage = bondPage == bondEvent.Lines.Length - 1;
+            if (isLastPage && bondEvent.Kind == BondEventKind.MarriageProposal)
+            {
+                if (GUI.Button(new Rect(panel.x + 100f, panel.y + 500f, 280f, 56f), "결혼하기", buttonStyle) &&
+                    BondEventService.TryAcceptMarriage(data, bondEvent.NpcId))
+                {
+                    GameSession.Instance.SaveCurrentStateSilently();
+                    activeBondEvent = BondEventService.GetPendingWedding(data, bondEvent.NpcId);
+                    bondPage = 0;
+                }
+                if (GUI.Button(new Rect(panel.x + 420f, panel.y + 500f, 280f, 56f), "나중에", buttonStyle)) Close();
+                return;
+            }
+
+            if (GUI.Button(new Rect(panel.x + 270f, panel.y + 500f, 260f, 56f), isLastPage ? "마치기" : "계속", buttonStyle))
+            {
+                if (isLastPage)
+                {
+                    BondEventService.Complete(data, bondEvent);
+                    GameSession.Instance.SaveCurrentStateSilently();
+                    if (bondEvent.Kind == BondEventKind.NpcEnding)
+                    {
+                        activeBondEvent = BondEventService.GetPendingWedding(data, bondEvent.NpcId) ??
+                            BondEventService.GetMarriageProposal(data, bondEvent.NpcId);
+                        bondPage = 0;
+                        if (!activeBondEvent.HasValue) Close();
+                    }
+                    else Close();
+                }
+                else bondPage++;
+            }
         }
 
         private void Close()
         {
             choosingGift = false;
+            activeBondEvent = null;
             enabled = false;
         }
 

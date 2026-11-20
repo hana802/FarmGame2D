@@ -9,6 +9,7 @@ namespace FarmGame2D.Core
         public string npcId = string.Empty;
         public int points;
         public int lastGiftDay;
+        public bool endingSeen;
     }
 
     public enum NpcGiftReaction { Neutral, Liked, Loved }
