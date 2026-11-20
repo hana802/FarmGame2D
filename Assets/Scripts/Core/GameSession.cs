@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace FarmGame2D.Core
 {
-    public sealed class GameSession : MonoBehaviour
+    public sealed partial class GameSession : MonoBehaviour
     {
         private readonly SaveService saveService = new();
         private readonly CloudSaveClient cloudSaveClient = new();
@@ -844,6 +844,15 @@ namespace FarmGame2D.Core
 
         public bool PullWeed(int weedId)
         {
+            if (!CollectWeed(weedId)) return false;
+            Message = "잡초를 뽑아 가방에 넣었습니다.";
+            CompleteCurrentStarterQuest();
+            NotifyChanged();
+            return true;
+        }
+
+        private bool CollectWeed(int weedId)
+        {
             Data.pulledWeedIds ??= new System.Collections.Generic.List<int>();
             if (Data.pulledWeedIds.Contains(weedId))
             {
@@ -852,9 +861,6 @@ namespace FarmGame2D.Core
 
             Data.pulledWeedIds.Add(weedId);
             Data.inventory.Add(GameItem.Weed, 1);
-            Message = "잡초를 뽑아 가방에 넣었습니다.";
-            CompleteCurrentStarterQuest();
-            NotifyChanged();
             return true;
         }
 

@@ -270,32 +270,16 @@ namespace FarmGame2D.World
         {
             var weedRoot = new GameObject("Pullable Weeds").transform;
             weedRoot.SetParent(transform);
-            var positions = new[]
+            var positions = WeedLayout.Positions;
+            for (var index = 0; index < positions.Count; index++)
             {
-                new Vector2(2.5f, -9.5f),
-                new Vector2(-10f, -5.5f),
-                new Vector2(13.5f, -10.5f),
-                new Vector2(14f, -3.5f),
-                new Vector2(-14.5f, 12f),
-                new Vector2(14.5f, 14f),
-                new Vector2(-15f, 3f),
-                new Vector2(12.5f, 2f)
-            };
-
-            for (var index = 0; index < positions.Length; index++)
-            {
-                if (session.Data.pulledWeedIds != null && session.Data.pulledWeedIds.Contains(index))
-                {
-                    continue;
-                }
-
                 var weed = CreateArtInteractable<WeedInteractable>(
                     $"Weed {index + 1}",
                     WorldArtKind.Weed,
                     positions[index],
                     new Vector2(0.75f, 0.65f),
                     weedRoot);
-                weed.Configure(index);
+                weed.Configure(session, index);
             }
         }
 

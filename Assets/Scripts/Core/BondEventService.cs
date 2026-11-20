@@ -102,7 +102,7 @@ namespace FarmGame2D.Core
             }
         }
 
-        private static bool IsSpouse(GameSaveData data, string npcId)
+        internal static bool IsSpouse(GameSaveData data, string npcId)
         {
             return data != null && !string.IsNullOrWhiteSpace(npcId) &&
                    string.Equals(data.spouseNpcId, npcId, StringComparison.Ordinal);

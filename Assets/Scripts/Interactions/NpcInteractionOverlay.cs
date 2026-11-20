@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FarmGame2D.Interactions
 {
-    public sealed class NpcInteractionOverlay : MonoBehaviour
+    public sealed partial class NpcInteractionOverlay : MonoBehaviour
     {
         private const float ReferenceWidth = 1600f;
         private const float ReferenceHeight = 900f;
@@ -43,6 +43,7 @@ namespace FarmGame2D.Interactions
             instance.portraitRow = dialoguePortraitRow;
             instance.nextDialogue = dialogueProvider;
             instance.choosingGift = false;
+            instance.choosingFarmHelp = false;
             var data = GameSession.Instance?.Data;
             instance.activeBondEvent = data == null ? null :
                 BondEventService.GetPendingNpcEnding(data, instance.npcId) ??
@@ -76,7 +77,8 @@ namespace FarmGame2D.Interactions
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (choosingGift) choosingGift = false;
+                if (choosingFarmHelp) choosingFarmHelp = false;
+                else if (choosingGift) choosingGift = false;
                 else Close();
             }
         }
@@ -115,6 +117,8 @@ namespace FarmGame2D.Interactions
             }
 
             if (activeBondEvent.HasValue) DrawBondEvent(panel, data);
+            else if (choosingFarmHelp)
+                DrawFarmHelpMenu(new Rect(panel.center.x - 260f, panel.y + 146f, 520f, 430f), GameSession.Instance);
             else if (choosingGift) DrawGiftSelection(panel, data);
             else DrawMainMenu(panel, data);
 
@@ -163,7 +167,11 @@ namespace FarmGame2D.Interactions
                 GUI.Label(new Rect(panel.x + 100f, panel.y + 400f, panel.width - 200f, 36f), "선물은 NPC마다 하루에 한 번 줄 수 있어요.", centeredStyle);
             }
 
-            if (GUI.Button(new Rect(panel.x + 270f, panel.y + 500f, 260f, 56f), "닫기", buttonStyle)) Close();
+            var canAsk = GameSession.Instance.HasSpouseFarmHelp(npcId);
+            if (canAsk && GUI.Button(new Rect(panel.x + 180f, panel.y + 480f, 440f, 56f), "농장일 부탁하기", buttonStyle))
+                OpenFarmHelp();
+
+            if (GUI.Button(new Rect(panel.x + 270f, panel.y + (canAsk ? 548f : 500f), 260f, 56f), "닫기", buttonStyle)) Close();
         }
 
         private void DrawGiftSelection(Rect panel, GameSaveData data)
@@ -256,6 +264,7 @@ namespace FarmGame2D.Interactions
 
         private void Close()
         {
+            choosingFarmHelp = false;
             choosingGift = false;
             activeBondEvent = null;
             enabled = false;
