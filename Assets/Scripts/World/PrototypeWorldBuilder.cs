@@ -177,7 +177,7 @@ namespace FarmGame2D.World
             ConfigureNpcMovement(villager, villageRoutes, 13, 0.75f, seed + 33, new Vector2(11.5f, 7.2f), "주민 도윤");
 
             var fisher = CreateNpc("Fisher Minseo", new Vector2(-9f, 0f), new Color(0.3f, 0.58f, 0.72f), townRoot);
-            ApplyNpcArt(fisher, 1);
+            ApplyNpcArt(fisher, GameArtCatalog.MinseoWorldArt);
             fisher.Configure("어부 민서", new[]
             {
                 "낚싯대를 들고 연못이나 바닷가의 낚시 자리를 찾아보세요.",
@@ -190,7 +190,7 @@ namespace FarmGame2D.World
             ConfigureNpcMovement(fisher, villageRoutes, 10, 0.68f, seed + 44, new Vector2(-11.5f, 2.5f), "어부 민서");
 
             var florist = CreateNpc("Florist Taeo", new Vector2(5f, 0f), new Color(0.64f, 0.45f, 0.72f), townRoot);
-            ApplyNpcArt(florist, 0);
+            ApplyNpcArt(florist, GameArtCatalog.TaeoWorldArt);
             florist.Configure("원예가 태오", new[]
             {
                 "마을 길과 광장은 모두가 쓰는 곳이라 밭을 만들 수 없어요.",

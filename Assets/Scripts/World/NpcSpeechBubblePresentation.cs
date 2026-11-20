@@ -21,9 +21,10 @@ namespace FarmGame2D.World
             return new GUIStyle(baseStyle)
             {
                 font = font,
-                fontSize = 11,
+                fontSize = 14,
                 alignment = TextAnchor.MiddleCenter,
                 wordWrap = true,
+                clipping = TextClipping.Clip,
                 border = new RectOffset(4, 4, 4, 4),
                 padding = new RectOffset(10, 10, 5, 6),
                 normal =
@@ -54,7 +55,7 @@ namespace FarmGame2D.World
                 return 38f;
             }
 
-            return Mathf.Clamp(style.CalcHeight(new GUIContent(spokenLine), width), 36f, 58f);
+            return Mathf.Max(36f, Mathf.Ceil(style.CalcHeight(new GUIContent(spokenLine), width)));
         }
 
         public static Rect KeepOnScreen(Rect rect, float screenWidth, float screenHeight)

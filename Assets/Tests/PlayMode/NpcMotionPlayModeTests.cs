@@ -26,6 +26,10 @@ namespace FarmGame2D.Tests
             {
                 Assert.That(GameObject.Find(name).GetComponent<NpcMotionPresenter>(), Is.Not.Null, name);
             }
+            Assert.That(GameObject.Find("Fisher Minseo").GetComponent<SpriteRenderer>().sprite.texture.name,
+                Is.EqualTo("minseo_world_v1"));
+            Assert.That(GameObject.Find("Florist Taeo").GetComponent<SpriteRenderer>().sprite.texture.name,
+                Is.EqualTo("taeo_world_v1"));
 
             var rightWalker = CreateWalker(new Vector2(0f, 100f), Vector2.right, CharacterChoice.None);
             var leftWalker = CreateWalker(new Vector2(0f, 104f), Vector2.left, CharacterChoice.Female);

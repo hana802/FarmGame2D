@@ -280,7 +280,7 @@ namespace FarmGame2D.World
 
             bubbleStyle ??= CreateBubbleStyle();
             var spokenLine = NpcSpeechBubblePresentation.GetSpokenLine(bubbleText);
-            var width = 184f;
+            var width = Mathf.Min(218f, Mathf.Max(1f, Screen.width - 16f));
             var height = NpcSpeechBubblePresentation.CalculateHeight(bubbleStyle, spokenLine, width);
             var x = screen.x - (width * 0.5f);
             var y = Screen.height - screen.y - height - 8f;

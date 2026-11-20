@@ -392,7 +392,7 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
-        public void NpcSpeechBubble_UsesWarmPixelFrameAndCompactText()
+        public void NpcSpeechBubble_UsesWarmPixelFrameAndLargerText()
         {
             var darkBase = new GUIStyle();
             darkBase.normal.background = Texture2D.blackTexture;
@@ -401,7 +401,7 @@ namespace FarmGame2D.Tests
 
             Assert.That(style.normal.background, Is.Not.SameAs(Texture2D.whiteTexture));
             Assert.That(style.normal.textColor.grayscale, Is.LessThan(0.5f));
-            Assert.That(style.fontSize, Is.EqualTo(11));
+            Assert.That(style.fontSize, Is.EqualTo(14));
             Assert.That(style.border.left, Is.GreaterThanOrEqualTo(3));
             Assert.That(style.padding.left, Is.GreaterThan(style.padding.top));
         }

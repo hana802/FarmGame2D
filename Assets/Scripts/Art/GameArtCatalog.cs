@@ -9,6 +9,8 @@ namespace FarmGame2D.Art
         private const int PlayerFrameWidth = 160;
         private const int PlayerFrameHeight = 208;
         private const float PixelsPerUnit = 160f;
+        internal const int MinseoWorldArt = 4;
+        internal const int TaeoWorldArt = 5;
 
         private static readonly int[] CharacterRowBottoms = { 64, 272, 496, 712 };
         private static readonly int[] MaleFrameLefts = { 89, 243, 399, 555 };
@@ -22,6 +24,8 @@ namespace FarmGame2D.Art
         private static readonly Dictionary<FarmTool, Sprite> heldToolSprites = new();
         private static Texture2D playerSheet;
         private static Texture2D npcSheet;
+        private static Texture2D minseoWorldSheet;
+        private static Texture2D taeoWorldSheet;
         private static Texture2D uiAtlas;
         private static Sprite castingRodSprite;
 
@@ -114,14 +118,36 @@ namespace FarmGame2D.Art
 
         public static Sprite GetNpcSprite(int characterRowFromTop, int column = 0)
         {
+            var safeColumn = Mathf.Clamp(column, 0, 7);
+            var dedicatedSheet = characterRowFromTop switch
+            {
+                MinseoWorldArt => minseoWorldSheet ??= LoadTexture("Art/NPCs/minseo_world_v1"),
+                TaeoWorldArt => taeoWorldSheet ??= LoadTexture("Art/NPCs/taeo_world_v1"),
+                _ => null
+            };
+            if (dedicatedSheet != null)
+            {
+                var frameRect = new Rect(
+                    safeColumn % 4 * PlayerFrameWidth,
+                    safeColumn < 4 ? PlayerFrameHeight : 0f,
+                    PlayerFrameWidth, PlayerFrameHeight);
+                return GetOrCreate(npcSprites, characterRowFromTop * 10 + safeColumn,
+                    dedicatedSheet, frameRect, new Vector2(0.5f, 0.12f));
+            }
+
             npcSheet ??= LoadTexture("Art/NPCs/village_npcs_spritesheet_concept_v1");
             if (npcSheet == null)
             {
                 return null;
             }
 
-            var rowFromBottom = 3 - Mathf.Clamp(characterRowFromTop, 0, 3);
-            var safeColumn = Mathf.Clamp(column, 0, 7);
+            var legacyRow = characterRowFromTop switch
+            {
+                MinseoWorldArt => 1,
+                TaeoWorldArt => 0,
+                _ => characterRowFromTop
+            };
+            var rowFromBottom = 3 - Mathf.Clamp(legacyRow, 0, 3);
             var key = (rowFromBottom * 10) + safeColumn;
             var rect = new Rect(NpcFrameLefts[safeColumn], CharacterRowBottoms[rowFromBottom], PlayerFrameWidth, PlayerFrameHeight);
             return GetOrCreate(npcSprites, key, npcSheet, rect, new Vector2(0.5f, 0.12f));
