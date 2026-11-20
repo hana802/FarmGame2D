@@ -14,6 +14,7 @@ namespace FarmGame2D.UI
         private readonly Texture2D atlas;
         private readonly Font font;
         private GUIStyle buttonStyle;
+        private GUIStyle panelButtonStyle;
 
         public FarmGuiSkin(Font font)
         {
@@ -43,6 +44,44 @@ namespace FarmGame2D.UI
         public void DrawButtonBackground(Rect rect, bool orange = false)
         {
             DrawAtlas(rect, orange ? OrangeButtonAtlasRect : GreenButtonAtlasRect);
+        }
+
+        public bool DrawPanelButton(Rect rect, string label, Color fill, Color border, bool lightText = true)
+        {
+            if (rect.Contains(Event.current.mousePosition) && GUI.enabled)
+            {
+                fill = Color.Lerp(fill, Color.white, Event.current.type == EventType.MouseDown ? 0.23f : 0.10f);
+            }
+            DrawPixelPanel(rect, fill, border, false);
+            panelButtonStyle ??= new GUIStyle(GetButtonStyle())
+            {
+                fontSize = 16,
+                clipping = TextClipping.Clip,
+                padding = new RectOffset(9, 9, 3, 3)
+            };
+            var text = lightText ? new Color32(251, 243, 217, 255) : new Color32(55, 45, 32, 255);
+            panelButtonStyle.normal.textColor = panelButtonStyle.hover.textColor = panelButtonStyle.active.textColor = text;
+            return GUI.Button(rect, label, panelButtonStyle);
+        }
+
+        public void DrawPixelPanel(Rect rect, Color fill, Color edge, bool shadow = true)
+        {
+            const float corner = 4f;
+            if (shadow)
+            {
+                var offset = new Rect(rect.x, rect.y + 4f, rect.width, rect.height);
+                DrawPixelShape(offset, corner, new Color(0.12f, 0.08f, 0.06f, 0.35f));
+            }
+            DrawPixelShape(rect, corner, edge);
+            DrawPixelShape(new Rect(rect.x + 2f, rect.y + 2f, rect.width - 4f, rect.height - 4f),
+                2f, fill);
+        }
+
+        private static void DrawPixelShape(Rect rect, float corner, Color color)
+        {
+            DrawSolid(new Rect(rect.x + corner, rect.y, rect.width - corner * 2f, corner), color);
+            DrawSolid(new Rect(rect.x, rect.y + corner, rect.width, rect.height - corner * 2f), color);
+            DrawSolid(new Rect(rect.x + corner, rect.yMax - corner, rect.width - corner * 2f, corner), color);
         }
 
         public void DrawMutedPrompt(Rect rect, Rect keycap)
@@ -83,6 +122,9 @@ namespace FarmGame2D.UI
                 fontSize = 17,
                 fontStyle = FontStyle.Bold,
                 alignment = TextAnchor.MiddleCenter,
+                clipping = TextClipping.Clip,
+                wordWrap = true,
+                padding = new RectOffset(9, 9, 4, 4),
                 normal = { background = null, textColor = new Color32(76, 45, 28, 255) },
                 hover = { background = null, textColor = new Color32(116, 67, 35, 255) },
                 active = { background = null, textColor = new Color32(63, 91, 47, 255) }
@@ -90,7 +132,7 @@ namespace FarmGame2D.UI
             return buttonStyle;
         }
 
-        private static void DrawSolid(Rect rect, Color color)
+        public static void DrawSolid(Rect rect, Color color)
         {
             var previousColor = GUI.color;
             GUI.color = color;

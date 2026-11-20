@@ -37,6 +37,7 @@ namespace FarmGame2D.Core
         public bool CloudSyncBusy => cloudSyncBusy;
         public bool CloudSyncLinked => cloudSaveClient.IsLinked;
         public string CloudSyncCode => cloudSaveClient.SyncCode;
+        public string CloudSyncNotice { get; private set; } = string.Empty;
         public string NewlyCreatedCloudPin { get; private set; } = string.Empty;
         public bool CloudLoadRequired => cloudLoadRequired;
         public string Message
@@ -1194,6 +1195,7 @@ namespace FarmGame2D.Core
 
         private void ShowCloudMessage(string text, float seconds = 5f)
         {
+            CloudSyncNotice = text;
             Message = text;
             messageDisplaySeconds = seconds;
             NotifyChanged();

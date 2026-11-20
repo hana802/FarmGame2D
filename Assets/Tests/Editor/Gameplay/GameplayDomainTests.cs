@@ -570,17 +570,15 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
-        public void PhoneLayout_KeepsQuestTextBelowHeaderArtwork()
+        public void PhoneLayout_KeepsQuestTextBetweenTabsAndSaveActions()
         {
             var layout = HudLayout.CalculatePhoneLayout();
 
-            Assert.That(layout.Title.xMin, Is.GreaterThanOrEqualTo(layout.Panel.xMin + 120f),
-                "The phone title must clear the illustrated portrait slot.");
-            Assert.That(layout.QuestBody.yMin, Is.GreaterThanOrEqualTo(layout.Panel.yMin + 100f),
-                "Quest lines must start below the illustrated header.");
+            Assert.That(layout.Title.yMax, Is.LessThanOrEqualTo(layout.FarmTabButton.yMin));
+            Assert.That(layout.QuestBody.yMin, Is.GreaterThanOrEqualTo(layout.FarmTabButton.yMax));
             Assert.That(layout.QuestBody.yMax, Is.LessThanOrEqualTo(layout.SaveButton.yMin),
                 "Quest lines must clear the phone action buttons.");
-            Assert.That(layout.CloseButton.yMax, Is.LessThanOrEqualTo(layout.Panel.yMax - 18f));
+            Assert.That(layout.CloseButton.yMax, Is.LessThanOrEqualTo(layout.FarmTabButton.yMin));
         }
 
         [Test]
