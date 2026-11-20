@@ -18,6 +18,7 @@ namespace FarmGame2D.Art
                 * VillagerSheetPixelsPerUnit / PixelsPerUnit) / PlayerFrameHeight;
         internal const int MinseoWorldArt = 4;
         internal const int TaeoWorldArt = 5;
+        internal const int SoraWorldArt = 7;
 
         private static readonly int[] CharacterRowBottoms = { 64, 272, 496, 712 };
         private static readonly int[] MaleFrameLefts = { 89, 243, 399, 555 };
@@ -33,6 +34,7 @@ namespace FarmGame2D.Art
         private static Texture2D npcSheet;
         private static Texture2D minseoWorldSheet;
         private static Texture2D taeoWorldSheet;
+        private static Texture2D soraWorldSheet;
         private static Texture2D uiAtlas;
         private static Sprite castingRodSprite;
 
@@ -130,6 +132,7 @@ namespace FarmGame2D.Art
             {
                 MinseoWorldArt => minseoWorldSheet ??= LoadTexture("Art/NPCs/minseo_world_v1"),
                 TaeoWorldArt => taeoWorldSheet ??= LoadTexture("Art/NPCs/taeo_world_v1"),
+                SoraWorldArt => soraWorldSheet ??= LoadTexture("Art/NPCs/sora_world_v1"),
                 _ => null
             };
             if (dedicatedSheet != null)
@@ -204,7 +207,7 @@ namespace FarmGame2D.Art
                 4 => ("Art/NPCs/romance_minseo_portrait_v1", "npc_portrait_minseo"),
                 5 => ("Art/NPCs/romance_taeo_portrait_v1", "npc_portrait_taeo"),
                 6 => ("Art/NPCs/baker_yuna_portrait_v1", "npc_portrait_yuna"),
-                7 => ("Art/NPCs/rancher_sora_portrait_v1", "npc_portrait_sora"),
+                7 => ("Art/NPCs/rancher_sora_portrait_v2", "npc_portrait_sora"),
                 _ => (null, null)
             };
             if (resourcePath == null)

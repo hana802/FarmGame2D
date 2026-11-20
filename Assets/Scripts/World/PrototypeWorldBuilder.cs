@@ -218,7 +218,7 @@ namespace FarmGame2D.World
             ConfigureNpcMovement(baker, villageRoutes, 7, 0.66f, seed + 66, new Vector2(-5.8f, 6.1f), "제빵사 유나");
 
             var rancher = CreateNpc("Rancher Sora", new Vector2(3.6f, -0.8f), new Color(0.68f, 0.34f, 0.28f), townRoot);
-            ApplyPlayerStyleNpcArt(rancher, CharacterChoice.Female);
+            ApplyNpcArt(rancher, GameArtCatalog.SoraWorldArt);
             rancher.Configure("목장 관리인 소라", new[]
             {
                 "동물들은 생각보다 표정이 풍부해요. 매일 보다 보면 기분이 눈에 보일 정도라니까요.",
@@ -535,13 +535,6 @@ namespace FarmGame2D.World
             var artSprite = GameArtCatalog.GetNpcDirectionalSprite(characterRowFromTop, 3, false);
             ApplyCharacterArt(npc, artSprite);
             npc.gameObject.AddComponent<NpcMotionPresenter>().Configure(characterRowFromTop);
-        }
-
-        private static void ApplyPlayerStyleNpcArt(DialogueInteractable npc, CharacterChoice choice)
-        {
-            var artSprite = GameArtCatalog.GetPlayerSprite(choice, 3, 0);
-            ApplyCharacterArt(npc, artSprite);
-            npc.gameObject.AddComponent<NpcMotionPresenter>().Configure(0, choice);
         }
 
         private static void ApplyCharacterArt(DialogueInteractable npc, Sprite artSprite)

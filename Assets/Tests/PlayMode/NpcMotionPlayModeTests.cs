@@ -1,6 +1,5 @@
 using System.Collections;
 using FarmGame2D.Art;
-using FarmGame2D.Core;
 using FarmGame2D.World;
 using NUnit.Framework;
 using UnityEngine;
@@ -31,12 +30,17 @@ namespace FarmGame2D.Tests
             Assert.That(GameObject.Find("Florist Taeo").GetComponent<SpriteRenderer>().sprite.texture.name,
                 Is.EqualTo("taeo_world_v1"));
 
-            var rightWalker = CreateWalker(new Vector2(0f, 100f), Vector2.right, CharacterChoice.None);
-            var leftWalker = CreateWalker(new Vector2(0f, 104f), Vector2.left, CharacterChoice.Female);
+            const int soraWorldArt = 7;
+            var sora = GameObject.Find("Rancher Sora").GetComponent<SpriteRenderer>();
+            Assert.That(sora.sprite.texture.name, Is.EqualTo("sora_world_v1"));
+            Assert.That(GameArtCatalog.GetNpcPortrait(7).texture.name, Is.EqualTo("rancher_sora_portrait_v2"));
+
+            var rightWalker = CreateWalker(new Vector2(0f, 100f), Vector2.right, 0);
+            var leftWalker = CreateWalker(new Vector2(0f, 104f), Vector2.left, soraWorldArt);
             var rightRenderer = rightWalker.GetComponent<SpriteRenderer>();
             var leftRenderer = leftWalker.GetComponent<SpriteRenderer>();
             var rightStride = GameArtCatalog.GetNpcSprite(0, 6);
-            var leftStride = GameArtCatalog.GetPlayerSprite(CharacterChoice.Female, 2, 2);
+            var leftStride = GameArtCatalog.GetNpcDirectionalSprite(soraWorldArt, 2, true);
             var sawRightStride = false;
             var sawLeftStride = false;
             try
@@ -57,7 +61,7 @@ namespace FarmGame2D.Tests
                 yield return null;
 
                 Assert.That(rightRenderer.sprite, Is.EqualTo(GameArtCatalog.GetNpcSprite(0, 2)));
-                Assert.That(leftRenderer.sprite, Is.EqualTo(GameArtCatalog.GetPlayerSprite(CharacterChoice.Female, 2, 0)));
+                Assert.That(leftRenderer.sprite, Is.EqualTo(GameArtCatalog.GetNpcDirectionalSprite(soraWorldArt, 2, false)));
             }
             finally
             {
@@ -66,12 +70,12 @@ namespace FarmGame2D.Tests
             }
         }
 
-        private static WanderingMover CreateWalker(Vector2 start, Vector2 direction, CharacterChoice playerArt)
+        private static WanderingMover CreateWalker(Vector2 start, Vector2 direction, int sheetRow)
         {
             var actor = new GameObject("Walk presentation test resident");
             actor.transform.position = start;
             actor.AddComponent<SpriteRenderer>();
-            actor.AddComponent<NpcMotionPresenter>().Configure(0, playerArt);
+            actor.AddComponent<NpcMotionPresenter>().Configure(sheetRow);
             var mover = actor.AddComponent<WanderingMover>();
             mover.Configure(new WanderArea(start, new Vector2(10f, 1f)), 1f, 0, minIdle: 0f, maxIdle: 0f);
             mover.ConfigureRoute(new VillageWaypointNetwork(
