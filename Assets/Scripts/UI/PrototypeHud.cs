@@ -632,7 +632,7 @@ namespace FarmGame2D.UI
         private void DrawCloudConnectionForm(GameSession session, Rect panel)
         {
             GUI.Label(HudLayout.InsetRow(panel, 20f, 49f, 43f),
-                "코드와 PIN으로 다른 브라우저에서 이어 할 수 있어요.", phoneLightStyle);
+                "다른 브라우저의 코드와 PIN을 입력하세요.", phoneLightStyle);
             cloudCodeInput = DrawCloudField(HudLayout.InsetRow(panel, 20f, 99f, 36f),
                 "코드", "cloud-code", cloudCodeInput.ToUpperInvariant(), 10, false);
             cloudPinInput = DrawCloudField(HudLayout.InsetRow(panel, 20f, 143f, 36f),
