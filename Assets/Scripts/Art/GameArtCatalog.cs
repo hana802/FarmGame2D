@@ -23,6 +23,45 @@ namespace FarmGame2D.Art
         private static Texture2D playerSheet;
         private static Texture2D npcSheet;
         private static Texture2D uiAtlas;
+        private static Sprite castingRodSprite;
+
+        internal static readonly Vector2 CastingRodTip = new(20f / 18f, 3f / 18f);
+
+        internal static Sprite GetCastingRodSprite()
+        {
+            if (castingRodSprite != null) return castingRodSprite;
+
+            const int width = 24;
+            const int height = 10;
+            var texture = new Texture2D(width, height, TextureFormat.RGBA32, false)
+            {
+                filterMode = FilterMode.Point,
+                wrapMode = TextureWrapMode.Clamp,
+                name = "held_fishing_rod_cast"
+            };
+            texture.SetPixels32(new Color32[width * height]);
+            var outline = new Color32(62, 36, 27, 255);
+            var cane = new Color32(220, 156, 69, 255);
+            var guide = new Color32(250, 228, 160, 255);
+            for (var x = 0; x <= 22; x++)
+            {
+                var y = x < 9 ? 4 : x < 16 ? 5 : x < 20 ? 6 : 7;
+                texture.SetPixel(x, y - 1, outline);
+                texture.SetPixel(x, y, x < 5 ? outline : cane);
+            }
+            texture.SetPixel(4, 2, outline);
+            texture.SetPixel(5, 2, guide);
+            texture.SetPixel(6, 2, outline);
+            texture.SetPixel(5, 1, outline);
+            texture.SetPixel(11, 6, guide);
+            texture.SetPixel(17, 7, guide);
+            texture.SetPixel(22, 7, guide);
+            texture.Apply(false, true);
+            castingRodSprite = Sprite.Create(texture, new Rect(0, 0, width, height),
+                new Vector2(2.5f / width, 4.5f / height), 18f, 0, SpriteMeshType.FullRect);
+            castingRodSprite.name = texture.name;
+            return castingRodSprite;
+        }
 
         public static Texture2D UiAtlas => uiAtlas ??= LoadTexture("Art/UI/dialogue_info_ui_concept_v1");
 

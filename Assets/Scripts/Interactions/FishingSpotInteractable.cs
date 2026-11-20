@@ -9,6 +9,8 @@ namespace FarmGame2D.Interactions
     public sealed class FishingSpotInteractable : InteractableBehaviour
     {
         private const float CastDuration = 1.6f;
+        private const float ReleaseStart = 0.10f;
+        private const float WaterContact = 0.32f;
         private const float BiteStart = 1.32f;
         private static Sprite bobberSprite;
         private static Sprite rippleSprite;
@@ -33,14 +35,14 @@ namespace FarmGame2D.Interactions
             }
 
             angler = player;
-            angler.IsFishing = true;
             StartCoroutine(PlayFishingAnimation(session));
         }
 
         private IEnumerator PlayFishingAnimation(GameSession session)
         {
-            GameAudioController.Play(GameAudioCue.FishingCast);
             var castTarget = FishingCastTarget.Resolve(transform.position, angler.transform.position);
+            var direction = (castTarget - (Vector2)angler.transform.position).normalized;
+            angler.BeginFishing(direction);
             castVisual = new GameObject("Fishing Cast");
             castVisual.transform.position = castTarget;
             castVisual.transform.SetParent(transform, true);
@@ -58,16 +60,32 @@ namespace FarmGame2D.Interactions
             line.startColor = line.endColor = new Color(0.98f, 0.93f, 0.78f, 0.8f);
 
             var elapsed = 0f;
+            var landed = false;
             while (elapsed < CastDuration && angler != null && angler.isActiveAndEnabled
                 && GameSession.Instance == session)
             {
                 var bite = Mathf.InverseLerp(BiteStart, CastDuration, elapsed);
                 var dip = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(bite * 2.7f));
+                var flight = Mathf.InverseLerp(ReleaseStart, WaterContact, elapsed);
+                var swing = elapsed < ReleaseStart
+                    ? Mathf.SmoothStep(0.75f, 0f, elapsed / ReleaseStart)
+                    : Mathf.SmoothStep(0f, 1f, flight);
+                var tip = angler.PresentFishingRod(direction, swing, Mathf.Clamp01(bite * 1.8f));
                 var bob = Mathf.Sin(elapsed * 10f) * 0.05f;
-                bobber.transform.localPosition = Vector3.up * (0.065f + bob - dip * 0.17f);
+                var afloat = (Vector3)castTarget + Vector3.up * (0.065f + bob - dip * 0.17f);
+                bobber.transform.position = Vector3.Lerp(tip, afloat, flight)
+                    + Vector3.up * (Mathf.Sin(flight * Mathf.PI) * 0.38f);
                 bobber.color = new Color(1f, 1f, 1f, 1f - dip * 0.92f);
-                line.SetPosition(0, angler.transform.position + new Vector3(0f, 0.55f));
+                bobber.enabled = elapsed >= ReleaseStart;
+                line.enabled = bobber.enabled;
+                line.SetPosition(0, tip);
                 line.SetPosition(1, bobber.transform.position);
+                if (!landed && flight >= 1f)
+                {
+                    landed = true;
+                    GameAudioController.Play(GameAudioCue.FishingCast);
+                }
+                outerRipple.enabled = innerRipple.enabled = landed;
                 if (bite > 0f)
                 {
                     DrawRipple(outerRipple, bite, 0.96f, 1f);
@@ -99,7 +117,7 @@ namespace FarmGame2D.Interactions
 
         private void ClearCast()
         {
-            if (angler != null) angler.IsFishing = false;
+            if (angler != null) angler.EndFishing();
             angler = null;
             if (castVisual != null)
             {

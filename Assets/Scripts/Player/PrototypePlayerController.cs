@@ -24,7 +24,7 @@ namespace FarmGame2D.Player
         public string NearbyPrompt { get; private set; }
         public string VisibleNearbyPrompt => NearbyPrompt;
         public HeldItemPresenter HeldItemPresenter => heldItemPresenter;
-        public bool IsFishing { get; internal set; }
+        public bool IsFishing { get; private set; }
 
         private void Awake()
         {
@@ -137,7 +137,10 @@ namespace FarmGame2D.Player
 
         private void UpdateFacingDirection()
         {
-            facingRow = PlayerMotionPresentation.GetFacingRow(moveInput, facingRow);
+            if (!IsFishing)
+            {
+                facingRow = PlayerMotionPresentation.GetFacingRow(moveInput, facingRow);
+            }
         }
 
         private void UpdateCharacterVisual(bool force)
@@ -183,10 +186,30 @@ namespace FarmGame2D.Player
 
         private void UpdateHeldItem()
         {
+            if (IsFishing) return;
+
             var session = GameSession.Instance;
             var available = !session.SelectedDecoration.HasValue && (session.SelectedTool != FarmTool.Seeds
                 || session.Data.inventory.Count(session.SelectedSeed) > 0);
             heldItemPresenter.Present(session.SelectedTool, facingRow, moveInput.sqrMagnitude > 0.01f, available);
+        }
+
+        internal void BeginFishing(Vector2 direction)
+        {
+            IsFishing = true;
+            facingRow = PlayerMotionPresentation.GetFacingRow(direction, facingRow);
+            UpdateCharacterVisual(true);
+        }
+
+        internal Vector3 PresentFishingRod(Vector2 direction, float swing, float bite)
+        {
+            return heldItemPresenter.PresentFishing(facingRow, direction, swing, bite);
+        }
+
+        internal void EndFishing()
+        {
+            IsFishing = false;
+            if (GameSession.Instance != null) UpdateHeldItem();
         }
 
         private void InteractWithNearest()

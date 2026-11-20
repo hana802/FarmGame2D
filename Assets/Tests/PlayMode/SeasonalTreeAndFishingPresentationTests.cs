@@ -83,16 +83,34 @@ namespace FarmGame2D.Tests
             var cast = coast.transform.Find("Fishing Cast");
             Assert.That(cast, Is.Not.Null);
             var bobber = cast.Find("Fishing Bobber").GetComponent<SpriteRenderer>();
+            var rod = player.HeldItemPresenter.ItemRenderer;
+            var line = cast.GetComponent<LineRenderer>();
+            var windup = rod.transform.localRotation;
+            Assert.That(rod.sprite.name, Is.EqualTo("held_fishing_rod_cast"));
+            Assert.That(line.enabled, Is.False);
             Assert.That(cast.Find("Fishing Outer Ripple"), Is.Not.Null);
             var lowestBobberOpacity = 1f;
+            var furthestSwing = 0f;
+            var lineFollowedRod = false;
             var deadline = Time.realtimeSinceStartup + 5f;
             while (player.IsFishing && Time.realtimeSinceStartup < deadline)
             {
                 lowestBobberOpacity = Mathf.Min(lowestBobberOpacity, bobber.color.a);
+                furthestSwing = Mathf.Max(furthestSwing, Quaternion.Angle(windup, rod.transform.localRotation));
+                if (line.enabled)
+                {
+                    var tipOffset = rod.flipY ? new Vector3(20f, -3f) : new Vector3(20f, 3f);
+                    var tip = rod.transform.TransformPoint(tipOffset / 18f);
+                    lineFollowedRod |= Vector3.Distance(line.GetPosition(0), tip) < 0.01f;
+                }
                 yield return null;
             }
             Assert.That(lowestBobberOpacity, Is.LessThan(0.5f));
+            Assert.That(furthestSwing, Is.GreaterThan(35f));
+            Assert.That(lineFollowedRod, Is.True);
             Assert.That(player.IsFishing, Is.False);
+            Assert.That(rod.sprite.texture.name, Is.EqualTo("held_fishing_rod_v1"));
+            Assert.That(Quaternion.Angle(rod.transform.localRotation, Quaternion.identity), Is.LessThan(0.01f));
             yield return null;
             Assert.That(coast.transform.Find("Fishing Cast"), Is.Null);
             Assert.That(session.Data.fishCaught, Is.EqualTo(before + 1));
