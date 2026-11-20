@@ -10,9 +10,13 @@ namespace FarmGame2D.Tests
         {
             var layout = HudLayout.CalculatePhoneLayout(settings: true);
 
-            AssertInside(layout.Panel, layout.SettingsTabButton);
-            AssertInside(layout.Panel, layout.VolumeSlider);
-            AssertInside(layout.Panel, layout.QuitButton);
+            Assert.That(layout.Panel, Is.EqualTo(HudLayout.CalculatePhoneLayout().Panel));
+            AssertInside(layout.Screen, layout.SettingsTabButton);
+            AssertInside(layout.Content, layout.VolumeSlider);
+            AssertInside(layout.Content, layout.MuteButton);
+            AssertInside(layout.CloudPanel, layout.SaveButton);
+            AssertInside(layout.CloudPanel, layout.QuitButton);
+            AssertInside(layout.CloudPanel, layout.Notice);
         }
 
         [Test]
@@ -31,8 +35,11 @@ namespace FarmGame2D.Tests
         {
             var layout = HudLayout.CalculatePhoneLayout();
             AssertInside(new UnityEngine.Rect(0, 0, HudLayout.ReferenceWidth, HudLayout.ReferenceHeight), layout.Panel);
-            AssertInside(layout.Panel, layout.Content);
-            AssertInside(layout.Panel, layout.CloudPanel);
+            AssertInside(layout.Panel, layout.Screen);
+            AssertInside(layout.Screen, layout.Content);
+            AssertInside(layout.Screen, layout.CloudPanel);
+            AssertInside(layout.Header, layout.Title);
+            AssertInside(layout.Header, layout.CloseButton);
             AssertInside(layout.Content, layout.QuestBody);
             AssertInside(layout.Content, layout.SaveButton);
             AssertInside(layout.Content, layout.LoadButton);

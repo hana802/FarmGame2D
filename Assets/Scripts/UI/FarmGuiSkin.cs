@@ -14,7 +14,6 @@ namespace FarmGame2D.UI
         private readonly Texture2D atlas;
         private readonly Font font;
         private GUIStyle buttonStyle;
-        private GUIStyle panelButtonStyle;
 
         public FarmGuiSkin(Font font)
         {
@@ -44,24 +43,6 @@ namespace FarmGame2D.UI
         public void DrawButtonBackground(Rect rect, bool orange = false)
         {
             DrawAtlas(rect, orange ? OrangeButtonAtlasRect : GreenButtonAtlasRect);
-        }
-
-        public bool DrawPanelButton(Rect rect, string label, Color fill, Color border, bool lightText = true)
-        {
-            if (rect.Contains(Event.current.mousePosition) && GUI.enabled)
-            {
-                fill = Color.Lerp(fill, Color.white, Event.current.type == EventType.MouseDown ? 0.23f : 0.10f);
-            }
-            DrawPixelPanel(rect, fill, border, false);
-            panelButtonStyle ??= new GUIStyle(GetButtonStyle())
-            {
-                fontSize = 16,
-                clipping = TextClipping.Clip,
-                padding = new RectOffset(9, 9, 3, 3)
-            };
-            var text = lightText ? new Color32(251, 243, 217, 255) : new Color32(55, 45, 32, 255);
-            panelButtonStyle.normal.textColor = panelButtonStyle.hover.textColor = panelButtonStyle.active.textColor = text;
-            return GUI.Button(rect, label, panelButtonStyle);
         }
 
         public void DrawPixelPanel(Rect rect, Color fill, Color edge, bool shadow = true)

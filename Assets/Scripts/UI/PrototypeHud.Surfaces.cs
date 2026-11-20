@@ -16,6 +16,7 @@ namespace FarmGame2D.UI
         private static readonly Color32 CanvasScrim = new(23, 34, 30, 191);
 
         private GUIStyle phoneTitleStyle;
+        private GUIStyle phoneHeadingStyle;
         private GUIStyle phoneSectionStyle;
         private GUIStyle phoneBodyStyle;
         private GUIStyle phoneLightStyle;
@@ -23,14 +24,17 @@ namespace FarmGame2D.UI
         private GUIStyle seasonStampStyle;
         private GUIStyle phoneInputStyle;
         private GUIStyle keyHintStyle;
+        private FarmPhoneSkin phoneSkin;
         private string phoneSaveNotice = string.Empty;
 
         private void EnsureSurfaceStyles()
         {
             if (phoneTitleStyle != null) return;
-            phoneTitleStyle = CreateSurfaceStyle(25, Cream, FontStyle.Bold);
+            phoneSkin = new FarmPhoneSkin(koreanFont);
+            phoneTitleStyle = CreateSurfaceStyle(30, new Color32(101, 48, 27, 255), FontStyle.Bold);
+            phoneHeadingStyle = CreateSurfaceStyle(23, new Color32(101, 48, 27, 255), FontStyle.Bold);
             phoneSectionStyle = CreateSurfaceStyle(18, Ink, FontStyle.Bold);
-            phoneBodyStyle = CreateSurfaceStyle(16, Ink);
+            phoneBodyStyle = CreateSurfaceStyle(17, Ink);
             phoneLightStyle = CreateSurfaceStyle(16, Cream);
             warmLightStyle = CreateSurfaceStyle(16, Amber, FontStyle.Bold);
             seasonStampStyle = CreateSurfaceStyle(23, Ink, FontStyle.Bold, TextAnchor.MiddleCenter);
@@ -89,10 +93,10 @@ namespace FarmGame2D.UI
 
         private string DrawCloudField(Rect row, string label, string name, string value, int maxLength, bool password)
         {
-            GUI.Label(new Rect(row.x, row.y, 72f, row.height), label, phoneLightStyle);
+            GUI.Label(new Rect(row.x, row.y, 72f, row.height), label, phoneSectionStyle);
             var field = new Rect(row.x + 76f, row.y, row.width - 76f, row.height);
             var focused = GUI.GetNameOfFocusedControl() == name;
-            farmSkin.DrawPixelPanel(field, Cream, focused ? Amber : PaperEdge, false);
+            phoneSkin.DrawField(field, focused);
             GUI.SetNextControlName(name);
             return password
                 ? GUI.PasswordField(field, value, '●', maxLength, phoneInputStyle)
