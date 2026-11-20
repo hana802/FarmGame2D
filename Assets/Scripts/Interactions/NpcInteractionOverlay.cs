@@ -156,8 +156,12 @@ namespace FarmGame2D.Interactions
             }
 
             var dialogue = HudLayout.CalculateDialogueLayout();
-            farmSkin.DrawDialogue(dialogue, speaker, dialogueLine, portraitRow);
-            DrawFriendship(dialogue.Panel, data);
+            var badge = new Rect(dialogue.Panel.xMax - 418f, dialogue.Panel.y + 64f, 364f, 37f);
+            var body = dialogue.Body;
+            body.yMin = Mathf.Max(body.yMin, badge.yMax + 8f);
+            var layout = new DialogueHudLayout(dialogue.Panel, dialogue.Portrait, dialogue.Name, body);
+            farmSkin.DrawDialogue(layout, speaker, dialogueLine, portraitRow);
+            DrawFriendship(badge, data);
             if (!choosingGift && GUI.Button(dialogue.Panel, GUIContent.none, GUIStyle.none))
             {
                 Close();
@@ -193,13 +197,12 @@ namespace FarmGame2D.Interactions
             DrawOptionalActions(gift, data);
         }
 
-        private void DrawFriendship(Rect panel, GameSaveData data)
+        private void DrawFriendship(Rect badge, GameSaveData data)
         {
             var points = NpcFriendshipService.GetPoints(data, npcId);
             var hearts = NpcFriendshipService.GetHeartCount(data, npcId);
             var heartText = new string('♥', hearts) + new string('♡', 5 - hearts);
             var relation = data.spouseNpcId == npcId ? "배우자 호감도" : "호감도";
-            var badge = new Rect(panel.xMax - 418f, panel.y + 23f, 364f, 37f);
             farmSkin.DrawPixelPanel(badge, new Color32(250, 235, 208, 255), new Color32(198, 155, 116, 255), false);
             GUI.Label(badge, $"{relation}   <color=#984C44>{heartText}</color>   {points}/{NpcFriendshipService.MaxPoints}",
                 actionCaptionStyle);
