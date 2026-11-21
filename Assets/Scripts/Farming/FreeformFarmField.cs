@@ -17,6 +17,8 @@ namespace FarmGame2D.Farming
         private Transform plotParent;
         private List<FarmPlotData> boundPlots;
         private readonly List<GameObject> visiblePlots = new();
+        private PrototypePlayerController player;
+        private GameObject wateringPreview;
 
         public void Configure(GameSession gameSession, Tilemap groundTiles, Tilemap roadTiles, Transform parent)
         {
@@ -34,6 +36,66 @@ namespace FarmGame2D.Farming
             {
                 session.StateChanged -= Synchronize;
             }
+        }
+
+        private void LateUpdate()
+        {
+            var show = session != null
+                && session.SelectedTool == FarmTool.WateringCan
+                && !session.SelectedDecoration.HasValue
+                && !session.InventoryOpen
+                && !session.ShopOpen
+                && !session.PhoneOpen
+                && !session.QuestBoardOpen
+                && !session.SellBoxOpen;
+            if (!show || !TryGetWateringCenter(out var center))
+            {
+                if (wateringPreview != null) wateringPreview.SetActive(false);
+                return;
+            }
+
+            if (wateringPreview == null) wateringPreview = CreateWateringPreview();
+            wateringPreview.transform.position = center;
+            wateringPreview.SetActive(true);
+        }
+
+        private bool TryGetWateringCenter(out Vector2 center)
+        {
+            center = default;
+            if (player == null) player = FindAnyObjectByType<PrototypePlayerController>();
+            if (player == null || session?.Data?.farmPlots == null) return false;
+
+            var origin = (Vector2)player.transform.position;
+            var best = 1.35f * 1.35f;
+            FarmPlotData nearest = null;
+            foreach (var plot in session.Data.farmPlots)
+            {
+                if (plot.greenhouse) continue;
+                var position = FarmFieldLayout.GetWorldPosition(plot);
+                var distance = (position - origin).sqrMagnitude;
+                if (distance > best) continue;
+                best = distance;
+                nearest = plot;
+                center = position;
+            }
+
+            return nearest != null && nearest.state == SoilState.Planted;
+        }
+
+        private GameObject CreateWateringPreview()
+        {
+            var preview = new GameObject("Watering Coverage Preview");
+            preview.transform.SetParent(transform, false);
+            foreach (var offset in FarmUpgradeRules.SprinklerOffsets)
+            {
+                var marker = PrototypeSpriteFactory.CreateBlock(
+                    "Watering Coverage", Vector2.zero, Vector2.one * 0.84f,
+                    new Color(0.37f, 0.79f, 0.92f, 0.4f), preview.transform);
+                marker.transform.localPosition = offset;
+                marker.GetComponent<SpriteRenderer>().sortingOrder = 5;
+            }
+
+            return preview;
         }
 
         public bool TryTill(Vector2 target)

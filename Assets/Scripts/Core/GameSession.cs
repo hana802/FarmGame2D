@@ -209,8 +209,10 @@ namespace FarmGame2D.Core
                     Plant(plot);
                     break;
                 case FarmTool.WateringCan when plot.state == SoilState.Planted:
-                    plot.state = SoilState.Watered;
-                    Message = $"{GetCropLabel(plot)}에 물을 주었습니다.";
+                    var watered = FarmUpgradeRules.WaterAround(Data, FarmFieldLayout.GetWorldPosition(plot));
+                    Message = watered <= 1
+                        ? $"{GetCropLabel(plot)}에 물을 주었습니다."
+                        : $"작물 {watered}칸에 물을 주었습니다.";
                     GameAudioController.Play(GameAudioCue.WaterCrop);
                     break;
                 default:
@@ -881,7 +883,7 @@ namespace FarmGame2D.Core
                 var watered = FarmUpgradeRules.WaterWithSprinklers(Data);
                 Message = watered > 0
                     ? $"스프링클러가 주변 작물 {watered}칸에 물을 주었습니다. E로 다시 주울 수 있어요."
-                    : "스프링클러를 설치했습니다. 매일 아침 6시에 상하좌우 작물에 물을 줍니다. E로 다시 주울 수 있어요.";
+                    : "스프링클러를 설치했습니다. 매일 아침 6시에 좌우와 아래쪽 작물에 물을 줍니다. E로 다시 주울 수 있어요.";
             }
             else
             {

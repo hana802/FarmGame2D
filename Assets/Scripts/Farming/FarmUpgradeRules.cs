@@ -6,10 +6,35 @@ namespace FarmGame2D.Farming
 {
     public static class FarmUpgradeRules
     {
+        // Marked watering shape. +Y is up the screen, so the pattern reaches south:
+        // the reference tile and its left and right, both sides one tile south,
+        // and all three tiles two tiles south. The tile directly south stays dry.
         public static IReadOnlyList<Vector2> SprinklerOffsets { get; } = new[]
         {
-            Vector2.up, Vector2.right, Vector2.down, Vector2.left
+            new Vector2(-1f, 0f), Vector2.zero, Vector2.right,
+            new Vector2(-1f, -1f), new Vector2(1f, -1f),
+            new Vector2(-1f, -2f), new Vector2(0f, -2f), new Vector2(1f, -2f)
         };
+
+        public static int WaterAround(GameSaveData data, Vector2 center)
+        {
+            var watered = 0;
+            foreach (var plot in data.farmPlots)
+            {
+                if (plot.state != SoilState.Planted) continue;
+                var position = FarmFieldLayout.GetWorldPosition(plot);
+                if (plot.greenhouse && (position - center).sqrMagnitude > 0.04f) continue;
+                foreach (var offset in SprinklerOffsets)
+                {
+                    if ((position - center - offset).sqrMagnitude > 0.04f) continue;
+                    plot.state = SoilState.Watered;
+                    watered++;
+                    break;
+                }
+            }
+
+            return watered;
+        }
 
         public static int WaterWithSprinklers(GameSaveData data)
         {
@@ -17,20 +42,9 @@ namespace FarmGame2D.Farming
             foreach (var placement in data.placedDecorations)
             {
                 if (placement.item != GameItem.Sprinkler) continue;
-                var center = new Vector2(placement.worldX, placement.worldY);
-                foreach (var plot in data.farmPlots)
-                {
-                    if (plot.greenhouse || plot.state != SoilState.Planted) continue;
-                    var position = FarmFieldLayout.GetWorldPosition(plot);
-                    foreach (var offset in SprinklerOffsets)
-                    {
-                        if ((position - center - offset).sqrMagnitude > 0.04f) continue;
-                        plot.state = SoilState.Watered;
-                        watered++;
-                        break;
-                    }
-                }
+                watered += WaterAround(data, new Vector2(placement.worldX, placement.worldY));
             }
+
             return watered;
         }
 

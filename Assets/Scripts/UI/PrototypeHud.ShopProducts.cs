@@ -82,7 +82,7 @@ namespace FarmGame2D.UI
                 ShopPurchaseKind.CowSale => $"보유 {session.Data.ownedCows}마리",
                 ShopPurchaseKind.Pickaxe => session.Data.hasPickaxe ? "구입 완료" : "광맥을 캐는 도구",
                 ShopPurchaseKind.Ore => "광물  ·  가방에 바로 보관",
-                ShopPurchaseKind.Sprinkler => "매일 아침 인접한 밭 네 칸에 물주기",
+                ShopPurchaseKind.Sprinkler => "매일 아침 설치 칸과 좌우·아래쪽 밭에 물주기",
                 _ => "빈 잔디에 놓는 장식품"
             };
         }

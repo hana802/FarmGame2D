@@ -27,7 +27,7 @@ namespace FarmGame2D.UI
                 case ShopPurchaseKind.Ore:
                     return DescribeOre(request.Item, request.Quantity);
                 case ShopPurchaseKind.Sprinkler:
-                    return "스프링클러\n가방에서 선택한 뒤 빈 농장 잔디에 Space로 놓습니다.\n매일 오전 6시에 상하좌우 네 칸의 작물에 물을 줍니다.\n설치 범위는 바닥에 표시되며, E로 다시 주울 수 있어요.";
+                    return "스프링클러\n가방에서 선택한 뒤 빈 농장 잔디에 Space로 놓습니다.\n매일 오전 6시에 설치한 칸과 그 좌우, 그리고 아래쪽 밭에 물을 줍니다.\n바로 아래 가운데 칸은 빼고, 그 아래 줄은 세 칸 모두 줍니다.\n설치 범위는 바닥에 표시되며, E로 다시 주울 수 있어요.";
                 case ShopPurchaseKind.Decoration:
                     return DescribeDecoration(request.Item);
                 default:
