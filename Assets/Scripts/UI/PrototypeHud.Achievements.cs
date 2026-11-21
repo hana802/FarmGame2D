@@ -27,7 +27,7 @@ namespace FarmGame2D.UI
                 $"달성 {entries.Count(entry => entry.Earned)} / {entries.Length}", bodyStyle);
 
             var viewport = new Rect(area.x + 12f, area.y + 42f, area.width - 24f, area.height - 50f);
-            const float rowHeight = 53f;
+            const float rowHeight = 45f;
             const float gap = 4f;
             var width = viewport.width - 17f;
             achievementScroll = GUI.BeginScrollView(viewport, achievementScroll,
@@ -41,7 +41,7 @@ namespace FarmGame2D.UI
                 FarmGuiSkin.DrawSolid(new Rect(0f, y, 4f, rowHeight),
                     entry.Earned ? new Color32(62, 95, 63, 255) : new Color32(168, 136, 100, 255));
                 GUI.Label(new Rect(11f, y + 2f, width - 97f, 23f), entry.Title, bodyStyle);
-                GUI.Label(new Rect(11f, y + 25f, width - 23f, 24f), entry.Detail, smallStyle);
+                GUI.Label(new Rect(11f, y + 22f, width - 23f, 21f), entry.Detail, smallStyle);
                 var previous = GUI.contentColor;
                 GUI.contentColor = ink;
                 GUI.Label(new Rect(width - 77f, y + 2f, 74f, 23f), entry.Earned ? "달성" : "미달성", centeredStyle);

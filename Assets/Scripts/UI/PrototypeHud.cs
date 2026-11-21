@@ -347,7 +347,8 @@ namespace FarmGame2D.UI
         {
             var layout = HudLayout.CalculatePhoneLayout();
             farmSkin.DrawWindow(layout.Panel);
-            GUI.Label(layout.Title, phonePage == PhonePage.Achievements ? "도전과제" : "농장 휴대폰", titleStyle);
+            if (phonePage != PhonePage.Achievements)
+                GUI.Label(layout.Title, "농장 휴대폰", titleStyle);
 
             if (exitConfirmationPending)
             {
