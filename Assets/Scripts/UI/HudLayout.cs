@@ -243,17 +243,6 @@ namespace FarmGame2D.UI
         public Rect GetProduct(int row) => new(Tabs.x, Tabs.yMax + 14f + row * 83f, Tabs.width, 74f);
     }
 
-    internal readonly struct SellBoxHudLayout
-    {
-        public Rect Panel => new((HudLayout.ReferenceWidth - 620f) * 0.5f, 92f, 620f, 550f);
-        public Rect Title => new(Panel.x + 120f, Panel.y + 58f, 380f, 38f);
-        public Rect ProductsViewport => new(Panel.x + 45f, Panel.y + 130f, 530f, 286f);
-        public Rect CloseButton => new(Panel.x + 170f, Panel.y + 446f, 280f, 44f);
-
-        public Rect GetScrollableProductButton(int row) => new(8f, 4f + row * 58f, ProductsViewport.width - 34f, 48f);
-        public float GetContentHeight(int rows) => Mathf.Max(ProductsViewport.height, 8f + rows * 58f);
-    }
-
     public static class HudLayout
     {
         public const float ReferenceWidth = 1280f;

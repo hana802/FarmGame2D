@@ -37,7 +37,6 @@ namespace FarmGame2D.UI
         private Font koreanFont;
         private FarmGuiSkin farmSkin;
         private readonly HudMessageVisibility messageVisibility = new();
-        private Vector2 sellScrollPosition;
         private bool inventoryDecorationsPage;
         private string cloudCodeInput = string.Empty;
         private string cloudPinInput = string.Empty;
@@ -136,13 +135,14 @@ namespace FarmGame2D.UI
                 }
 
                 if (session.SellBoxOpen)
-                {
                     DrawSellBox(session);
-                }
+                else
+                    sellBoxWasOpen = false;
 
                 var input = Event.current;
                 if (!modalOpen && input.type == EventType.MouseDown && input.button == 0
-                    && player != null && player.TryInteractWithClickedNpc(Input.mousePosition))
+                    && player != null && (TryOpenClickedSellBox(Input.mousePosition)
+                        || player.TryInteractWithClickedNpc(Input.mousePosition)))
                 {
                     input.Use();
                 }
@@ -663,70 +663,6 @@ namespace FarmGame2D.UI
 
             GUI.Label(HudLayout.InsetRow(panel, 20f, 224f, 47f),
                 "다른 브라우저에서는 같은 코드와 PIN을 입력하세요.", phoneBodyStyle);
-        }
-
-        private void DrawSellBox(GameSession session)
-        {
-            var layout = new SellBoxHudLayout();
-            farmSkin.DrawWindow(layout.Panel);
-            GUI.Label(layout.Title, "판매 상자", titleStyle);
-            var offers = ProduceSale.List(session.Data.inventory);
-            if (offers.Length == 0)
-            {
-                GUI.Label(layout.ProductsViewport, "판매할 농산물이나 광물이 없습니다.", centeredStyle);
-            }
-            else
-            {
-                var content = new Rect(0f, 0f, layout.ProductsViewport.width - 18f, layout.GetContentHeight(offers.Length + 1));
-                sellScrollPosition = GUI.BeginScrollView(layout.ProductsViewport, sellScrollPosition, content, false, true);
-                for (var index = 0; index < offers.Length; index++)
-                {
-                    DrawSellOffer(session, layout, offers[index], index);
-                }
-
-                if (farmSkin.DrawButton(layout.GetScrollableProductButton(offers.Length), "가지고 있는 것 모두 판매", true))
-                {
-                    session.SellAllProduce();
-                }
-
-                GUI.EndScrollView();
-            }
-
-            if (farmSkin.DrawButton(layout.CloseButton, "닫기"))
-            {
-                session.CloseSellBox();
-            }
-        }
-
-        private void DrawSellOffer(GameSession session, SellBoxHudLayout layout, ProduceSale.Offer offer, int index)
-        {
-            var row = layout.GetScrollableProductButton(index);
-            var textWidth = row.width * 0.5f;
-            GUI.Label(new Rect(row.x, row.y, textWidth, row.height),
-                $"{ItemCatalog.GetLabel(offer.Item)}  ×{offer.Quantity}\n개당 {offer.UnitPrice}G",
-                panelStyle);
-            var buttons = new Rect(row.x + textWidth, row.y, row.width - textWidth, row.height);
-            if (offer.Quantity <= 1)
-            {
-                if (farmSkin.DrawButton(buttons, $"{offer.Total}G 판매"))
-                {
-                    session.SellProduce(offer.Item, offer.Quantity);
-                }
-
-                return;
-            }
-
-            var one = new Rect(buttons.x, buttons.y, buttons.width * 0.48f, buttons.height);
-            var all = new Rect(buttons.x + buttons.width * 0.52f, buttons.y, buttons.width * 0.48f, buttons.height);
-            if (farmSkin.DrawButton(one, "1개"))
-            {
-                session.SellProduce(offer.Item, 1);
-            }
-
-            if (farmSkin.DrawButton(all, "전부", true))
-            {
-                session.SellProduce(offer.Item, offer.Quantity);
-            }
         }
 
         private static void ExecutePurchase(GameSession session, ShopPurchaseRequest request)
