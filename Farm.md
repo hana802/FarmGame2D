@@ -34,7 +34,7 @@
 
 ## 저장한 버전과 작업 브랜치
 
-2026년 11월 21일 정리. 공개 게임의 WebGL 소스는 `5f923da`, GitHub Pages 배포는 `487b899`다. 소스 수정은 `main`, 공개 빌드 파일은 `gh-pages`에서 관리한다. [공개 게임](https://hana802.github.io/FarmGame2D/) · [배포 커밋](https://github.com/hana802/FarmGame2D/commit/487b8997689d533d46b19f03db0cd922ddc341e8)
+2026년 11월 22일에 11월 21일까지의 작업을 정리했다. 공개 게임의 WebGL 소스는 `5f923da`, GitHub Pages 배포는 `487b899`다. 소스 수정은 `main`, 공개 빌드 파일은 `gh-pages`에서 관리한다. [공개 게임](https://hana802.github.io/FarmGame2D/) · [배포 커밋](https://github.com/hana802/FarmGame2D/commit/487b8997689d533d46b19f03db0cd922ddc341e8)
 
 | 브랜치 | 보관 내용 |
 | --- | --- |
