@@ -15,6 +15,7 @@ namespace FarmGame2D.Farming
         private Tilemap ground;
         private Tilemap road;
         private Transform plotParent;
+        private List<FarmPlotData> boundPlots;
         private readonly List<GameObject> visiblePlots = new();
 
         public void Configure(GameSession gameSession, Tilemap groundTiles, Tilemap roadTiles, Transform parent)
@@ -84,8 +85,9 @@ namespace FarmGame2D.Farming
 
         private void Synchronize()
         {
-            if (visiblePlots.Count > session.Data.farmPlots.Count)
+            if (boundPlots != session.Data.farmPlots || visiblePlots.Count > session.Data.farmPlots.Count)
             {
+                boundPlots = session.Data.farmPlots;
                 RebuildPlots();
                 return;
             }
@@ -100,6 +102,7 @@ namespace FarmGame2D.Farming
         {
             foreach (var plot in visiblePlots)
             {
+                plot.SetActive(false);
                 Destroy(plot);
             }
 
@@ -117,6 +120,7 @@ namespace FarmGame2D.Farming
                 $"Free Plot {index + 1}", FarmFieldLayout.GetWorldPosition(plotData), new Vector2(0.9f, 0.9f),
                 Color.white, plotParent, true);
             plot.GetComponent<BoxCollider2D>().isTrigger = true;
+            if (plotData.greenhouse) plot.GetComponent<SpriteRenderer>().sortingOrder = 2;
             plot.AddComponent<FarmPlotView>().Configure(index);
             return plot;
         }

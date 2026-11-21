@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace FarmGame2D.Core
 {
-    public sealed class GameSession : MonoBehaviour
+    public sealed partial class GameSession : MonoBehaviour
     {
         private readonly SaveService saveService = new();
         private readonly CloudSaveClient cloudSaveClient = new();
@@ -610,7 +610,7 @@ namespace FarmGame2D.Core
             }
 
             var plot = Data.farmPlots[index];
-            if (!plot.freeform)
+            if (!plot.freeform || plot.greenhouse)
             {
                 Message = "기본 지형은 삽으로 없앨 수 없습니다.";
                 NotifyChanged();
@@ -820,7 +820,8 @@ namespace FarmGame2D.Core
 
         public void SelectDecoration(GameItem item)
         {
-            if (!TownDecorationCatalog.TryGet(item, out _) || Data.inventory.Count(item) <= 0)
+            if ((item != GameItem.Sprinkler && !TownDecorationCatalog.TryGet(item, out _))
+                || Data.inventory.Count(item) <= 0)
             {
                 ShowMessage("가방에 그 장식품이 없습니다.");
                 return;
@@ -925,6 +926,7 @@ namespace FarmGame2D.Core
                 ProcessNewDay();
             }
 
+            if (snapshot.Hour == 6 && snapshot.Minute == 0) WaterSprinklersAtDawn(snapshot.Day);
             NotifyChanged();
         }
 
@@ -1036,7 +1038,7 @@ namespace FarmGame2D.Core
                 return;
             }
 
-            if (crop.Season != CurrentSeason)
+            if (!plot.greenhouse && crop.Season != CurrentSeason)
             {
                 Message = $"{crop.Label}은(는) {GetSeasonLabel(crop.Season)}에 심을 수 있습니다.";
                 return;
@@ -1295,6 +1297,7 @@ namespace FarmGame2D.Core
                 FarmTool.Pickaxe => "곡괭이",
                 FarmTool.FishingRod => "낚싯대",
                 FarmTool.Shovel => "삽",
+                FarmTool.Axe => "도끼",
                 _ => tool.ToString()
             };
         }

@@ -21,6 +21,7 @@ namespace FarmGame2D.Player
         private int displayedFrame = -1;
         private int facingRow = 3;
 
+        public bool IsMining { get; private set; }
         public string NearbyPrompt { get; private set; }
         public string VisibleNearbyPrompt => NearbyPrompt;
         public HeldItemPresenter HeldItemPresenter => heldItemPresenter;
@@ -56,6 +57,8 @@ namespace FarmGame2D.Player
                 heldItemPresenter.Present(FarmTool.Hoe, facingRow, false, false);
                 return;
             }
+
+            if (IsMining) return;
 
             if (GameSession.Instance.InventoryOpen || GameSession.Instance.PhoneOpen || GameSession.Instance.ShopOpen
                 || GameSession.Instance.QuestBoardOpen || GameSession.Instance.SellBoxOpen || NpcInteractionOverlay.IsOpen)
@@ -187,6 +190,26 @@ namespace FarmGame2D.Player
             heldItemPresenter.Present(session.SelectedTool, facingRow, moveInput.sqrMagnitude > 0.01f, available);
         }
 
+        internal void BeginMining(Vector2 target)
+        {
+            IsMining = true;
+            moveInput = Vector2.zero;
+            NearbyPrompt = string.Empty;
+            facingRow = PlayerMotionPresentation.GetFacingRow(target - (Vector2)transform.position, facingRow);
+            UpdateCharacterVisual(true);
+        }
+
+        internal void PresentMiningSwing(Vector2 target, float pullback, FarmTool tool = FarmTool.Pickaxe)
+        {
+            heldItemPresenter.PresentMining(facingRow, target, pullback, tool);
+        }
+
+        internal void EndMining()
+        {
+            IsMining = false;
+            if (GameSession.Instance != null) UpdateHeldItem();
+        }
+
         private void InteractWithNearest()
         {
             var interactable = FindNearestInteractable();
@@ -250,7 +273,7 @@ namespace FarmGame2D.Player
             return true;
         }
 
-        private Vector2 GetToolTarget()
+        internal Vector2 GetToolTarget()
         {
             var direction = facingRow switch
             {

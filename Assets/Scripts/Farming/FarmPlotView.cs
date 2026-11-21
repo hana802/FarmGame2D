@@ -52,6 +52,8 @@ namespace FarmGame2D.Farming
             }
 
             var plot = session.Data.farmPlots[plotIndex];
+            if (session.SelectedTool == FarmTool.Shovel && plot.state != SoilState.Ready && plot.greenhouse)
+                return "온실의 고정 밭";
             if (session.SelectedTool == FarmTool.Shovel)
             {
                 return plot.state == SoilState.Tilled

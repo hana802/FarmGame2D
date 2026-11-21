@@ -29,7 +29,9 @@ namespace FarmGame2D.Core
         GoldenCarp,
         FlowerPot,
         StreetLamp,
-        TownBench
+        TownBench,
+        Wood,
+        Sprinkler
     }
 
     public enum FarmTool
@@ -39,7 +41,8 @@ namespace FarmGame2D.Core
         WateringCan,
         Pickaxe,
         FishingRod,
-        Shovel
+        Shovel,
+        Axe
     }
 
     public enum CharacterChoice

@@ -41,6 +41,9 @@ namespace FarmGame2D.Core
         public float dogSitX;
         public float dogSitY;
         public bool hasPickaxe;
+        public bool greenhouseBuilt;
+        public int sprinklersWateredDay;
+        public List<TreeRegrowth> treeRegrowDays = new();
         public int wheatHarvested;
         public bool harvestQuestCompleted;
         public bool eggQuestCompleted;

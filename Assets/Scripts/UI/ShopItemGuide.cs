@@ -26,6 +26,8 @@ namespace FarmGame2D.UI
                     return "곡괭이\n광산의 광맥을 캐는 도구입니다.\n한 번 사면 가방에서 꺼내 사용할 수 있습니다.";
                 case ShopPurchaseKind.Ore:
                     return DescribeOre(request.Item, request.Quantity);
+                case ShopPurchaseKind.Sprinkler:
+                    return "스프링클러\n가방에서 선택한 뒤 빈 농장 잔디에 Space로 놓습니다.\n매일 오전 6시에 상하좌우 네 칸의 작물에 물을 줍니다.\n설치 범위는 바닥에 표시되며, E로 다시 주울 수 있어요.";
                 case ShopPurchaseKind.Decoration:
                     return DescribeDecoration(request.Item);
                 default:

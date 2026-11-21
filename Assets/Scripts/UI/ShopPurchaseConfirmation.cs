@@ -13,7 +13,8 @@ namespace FarmGame2D.UI
         CowSale,
         Pickaxe,
         Ore,
-        Decoration
+        Decoration,
+        Sprinkler
     }
 
     public readonly struct ShopPurchaseRequest

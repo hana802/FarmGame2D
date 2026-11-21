@@ -265,8 +265,14 @@ namespace FarmGame2D.UI
                 $"사료 {session.Data.inventory.Count(GameItem.Feed)} · 달걀 {session.Data.inventory.Count(GameItem.Egg)} · 우유 {session.Data.inventory.Count(GameItem.Milk)}\n닭 {session.Data.ownedChickens} · 소 {session.Data.ownedCows} · 새끼 {juvenileCount}",
                 smallStyle);
             GUI.Label(layout.GetStatsLabel(1, 0),
-                $"돌 {session.Data.inventory.Count(GameItem.Stone)} · 구리 {session.Data.inventory.Count(GameItem.CopperOre)} · 철 {session.Data.inventory.Count(GameItem.IronOre)} · 금 {session.Data.inventory.Count(GameItem.GoldOre)}\n물고기 {fishCount} · 잡초 {session.Data.inventory.Count(GameItem.Weed)} · 돈 {session.Data.money}G",
+                $"돌 {session.Data.inventory.Count(GameItem.Stone)} · 구리 {session.Data.inventory.Count(GameItem.CopperOre)} · 철 {session.Data.inventory.Count(GameItem.IronOre)} · 금 {session.Data.inventory.Count(GameItem.GoldOre)}\n물고기 {fishCount} · 잡초 {session.Data.inventory.Count(GameItem.Weed)} · 목재 {session.Data.inventory.Count(GameItem.Wood)}",
                 smallStyle);
+
+            var axeButton = new Rect(layout.Panel.x + 48f, layout.CloseButton.y, 138f, layout.CloseButton.height);
+            var sprinklerButton = new Rect(layout.Panel.xMax - 204f, layout.CloseButton.y, 156f, layout.CloseButton.height);
+            if (farmSkin.DrawButton(axeButton, "도끼")) session.SelectTool(FarmTool.Axe);
+            if (farmSkin.DrawButton(sprinklerButton, $"스프링클러 ×{session.Data.inventory.Count(GameItem.Sprinkler)}"))
+                session.SelectDecoration(GameItem.Sprinkler);
 
             if (farmSkin.DrawButton(layout.CloseButton, "닫기"))
             {
@@ -664,6 +670,9 @@ namespace FarmGame2D.UI
                 case ShopPurchaseKind.Ore:
                     session.PurchaseOre(request.Item, request.Quantity, request.Price);
                     break;
+                case ShopPurchaseKind.Sprinkler:
+                    session.PurchaseSprinkler();
+                    break;
                 case ShopPurchaseKind.Decoration:
                     session.PurchaseDecoration(request.Item);
                     break;
@@ -751,6 +760,7 @@ namespace FarmGame2D.UI
                 FarmTool.Pickaxe => "곡괭이",
                 FarmTool.FishingRod => "낚싯대",
                 FarmTool.Shovel => "삽",
+                FarmTool.Axe => "도끼",
                 _ => tool.ToString()
             };
         }

@@ -8,7 +8,7 @@ namespace FarmGame2D.UI
 {
     public sealed partial class PrototypeHud
     {
-        private static readonly string[] FarmShopTabs = { "씨앗", "가축 · 사료", "가축 판매" };
+        private static readonly string[] FarmShopTabs = { "씨앗", "가축 · 사료", "가축 판매", "농장 설비" };
         private static readonly string[] GeneralShopTabs = { "도구 · 광물", "마을 장식" };
 
         private static readonly ShopPurchaseRequest[] LivestockProducts =
@@ -16,6 +16,11 @@ namespace FarmGame2D.UI
             new(ShopPurchaseKind.Feed, "동물 사료 3개", GameItem.Feed, 3, 15),
             new(ShopPurchaseKind.Chicken, "닭 1마리", price: 150),
             new(ShopPurchaseKind.Cow, "소 1마리", price: 350)
+        };
+
+        private static readonly ShopPurchaseRequest[] FarmEquipment =
+        {
+            new(ShopPurchaseKind.Sprinkler, "스프링클러", GameItem.Sprinkler, 1, GameSession.SprinklerPrice)
         };
 
         private static readonly ShopPurchaseRequest[] LivestockSales =
@@ -44,6 +49,7 @@ namespace FarmGame2D.UI
             {
                 1 => LivestockProducts,
                 2 => LivestockSales,
+                3 => FarmEquipment,
                 _ => GetSeedProducts(session.CurrentSeason)
             };
         }
@@ -76,6 +82,7 @@ namespace FarmGame2D.UI
                 ShopPurchaseKind.CowSale => $"보유 {session.Data.ownedCows}마리",
                 ShopPurchaseKind.Pickaxe => session.Data.hasPickaxe ? "구입 완료" : "광맥을 캐는 도구",
                 ShopPurchaseKind.Ore => "광물  ·  가방에 바로 보관",
+                ShopPurchaseKind.Sprinkler => "매일 아침 인접한 밭 네 칸에 물주기",
                 _ => "빈 잔디에 놓는 장식품"
             };
         }
@@ -103,6 +110,7 @@ namespace FarmGame2D.UI
                 ShopPurchaseKind.Pickaxe => GameArtCatalog.GetHeldToolSprite(FarmTool.Pickaxe),
                 ShopPurchaseKind.Ore => WorldArtCatalog.GetSprite(WorldArtKind.MiningRock),
                 ShopPurchaseKind.Decoration => TownDecorationArt.GetSprite(request.Item),
+                ShopPurchaseKind.Sprinkler => FarmEquipmentArt.Sprinkler,
                 _ => WorldArtCatalog.GetSprite(WorldArtKind.SellingBox)
             };
         }

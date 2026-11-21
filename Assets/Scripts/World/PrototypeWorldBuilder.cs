@@ -23,7 +23,7 @@ namespace FarmGame2D.World
         {
             BuildTilemaps();
             BuildFarm(session);
-            BuildMainStreetTown(session.Data.worldSeed);
+            BuildMainStreetTown(session);
             var decorationField = new GameObject("Town Decoration Field").AddComponent<TownDecorationField>();
             decorationField.transform.SetParent(transform);
             decorationField.Configure(session, groundTilemap, roadTilemap);
@@ -92,6 +92,11 @@ namespace FarmGame2D.World
             freeformField.transform.SetParent(farmRoot);
             freeformField.Configure(session, groundTilemap, roadTilemap, farmRoot);
 
+            var greenhouseObject = new GameObject("Greenhouse Construction", typeof(BoxCollider2D));
+            var greenhouse = greenhouseObject.AddComponent<GreenhouseStructure>();
+            greenhouse.transform.SetParent(farmRoot);
+            greenhouse.Configure(session);
+
             BuildFarmHouseInterior();
         }
 
@@ -114,8 +119,9 @@ namespace FarmGame2D.World
             exit.Configure(new Vector2(6f, -13f), "밖으로 나가기", "농장으로 나왔습니다.");
         }
 
-        private void BuildMainStreetTown(int seed)
+        private void BuildMainStreetTown(GameSession session)
         {
+            var seed = session.Data.worldSeed;
             var townRoot = new GameObject("C Main Street Village").transform;
             townRoot.SetParent(transform);
 
@@ -237,12 +243,12 @@ namespace FarmGame2D.World
             CreateInteractable<FishingSpotInteractable>("Pond Fishing Spot", new Vector2(-11.5f, -0.15f), new Vector2(1.4f, 0.8f), Color.clear, townRoot);
             CreateInteractable<FishingSpotInteractable>("West Coast Fishing Spot", new Vector2(-17.25f, -4f), new Vector2(0.8f, 1.6f), Color.clear, townRoot);
             CreateInteractable<FishingSpotInteractable>("South Coast Fishing Spot", new Vector2(12f, -15.3f), new Vector2(1.6f, 0.8f), Color.clear, townRoot);
-            BuildRandomTrees(seed, townRoot);
+            BuildRandomTrees(session, townRoot);
         }
 
-        private void BuildRandomTrees(int seed, Transform parent)
+        private void BuildRandomTrees(GameSession session, Transform parent)
         {
-            var random = new System.Random(seed);
+            var random = new System.Random(session.Data.worldSeed);
             var created = 0;
             while (created < 18)
             {
@@ -262,6 +268,7 @@ namespace FarmGame2D.World
                     new Vector2(1.35f, 0.7f),
                     new Vector2(0f, 0.45f));
                 trees.Add(tree.GetComponent<SpriteRenderer>());
+                tree.AddComponent<ChoppableTree>().Configure(session, created);
                 created++;
             }
         }
