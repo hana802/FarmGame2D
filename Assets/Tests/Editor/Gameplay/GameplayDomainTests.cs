@@ -613,6 +613,8 @@ namespace FarmGame2D.Tests
                 "Quest lines must start below the illustrated header.");
             Assert.That(layout.QuestBody.yMax, Is.LessThanOrEqualTo(layout.SaveButton.yMin),
                 "Quest lines must clear the phone action buttons.");
+            Assert.That(layout.CloseButton.yMin, Is.GreaterThan(layout.Panel.yMin + layout.Panel.height * 0.75f),
+                "The close button must sit on the illustrated footer slots.");
             Assert.That(layout.CloseButton.yMax, Is.LessThanOrEqualTo(layout.Panel.yMax - 18f));
         }
 
