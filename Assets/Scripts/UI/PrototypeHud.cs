@@ -100,6 +100,7 @@ namespace FarmGame2D.UI
                     || session.QuestBoardOpen
                     || session.SellBoxOpen
                     || NpcInteractionOverlay.IsOpen;
+                if (!modalOpen) DrawInventorySummary(session);
                 if (messageVisibility.ShouldShow(
                         session.MessageRevision,
                         Time.unscaledTime,
