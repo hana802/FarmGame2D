@@ -64,6 +64,27 @@ namespace FarmGame2D.UI
             DrawAtlas(rect, orange ? OrangeButtonAtlasRect : GreenButtonAtlasRect);
         }
 
+        public void DrawPixelPanel(Rect rect, Color fill, Color edge, bool shadow = true)
+        {
+            const float corner = 4f;
+            if (shadow)
+            {
+                var offset = new Rect(rect.x, rect.y + 4f, rect.width, rect.height);
+                DrawPixelShape(offset, corner, new Color(0.12f, 0.08f, 0.06f, 0.35f));
+            }
+
+            DrawPixelShape(rect, corner, edge);
+            DrawPixelShape(new Rect(rect.x + 2f, rect.y + 2f, rect.width - 4f, rect.height - 4f),
+                2f, fill);
+        }
+
+        private static void DrawPixelShape(Rect rect, float corner, Color color)
+        {
+            DrawSolid(new Rect(rect.x + corner, rect.y, rect.width - corner * 2f, corner), color);
+            DrawSolid(new Rect(rect.x, rect.y + corner, rect.width, rect.height - corner * 2f), color);
+            DrawSolid(new Rect(rect.x + corner, rect.yMax - corner, rect.width - corner * 2f, corner), color);
+        }
+
         public void DrawMutedPrompt(Rect rect, Rect keycap)
         {
             DrawSolid(new Rect(rect.x + 2f, rect.y + 3f, rect.width, rect.height), new Color(0f, 0f, 0f, 0.18f));

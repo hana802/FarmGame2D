@@ -71,6 +71,7 @@ namespace FarmGame2D.UI
             }
 
             EnsureStyles();
+            EnsureSurfaceStyles();
             var previousMatrix = GUI.matrix;
             var viewport = HudLayout.CalculateViewport(Screen.width, Screen.height);
             GUI.matrix = Matrix4x4.TRS(
@@ -156,44 +157,79 @@ namespace FarmGame2D.UI
         {
             var time = GameClockController.Instance?.CurrentTime;
             var timeText = time.HasValue ? $"{time.Value.Hour:00}:{time.Value.Minute:00}" : "--:--";
-            var rect = new Rect(HudLayout.ReferenceWidth - 292f, 14f, 274f, 104f);
-            farmSkin.DrawBanner(rect);
-            GUI.Label(new Rect(rect.x + 90f, rect.y + 22f, rect.width - 116f, 62f),
-                $"{GetSeasonLabel(session.CurrentSeason)} {SeasonCalendar.GetDayOfSeason(session.Data.day)}일  {timeText}\n보유 금액 {session.Data.money}G",
-                panelStyle);
+            var rect = new Rect(HudLayout.ReferenceWidth - 230f, 16f, 212f, 76f);
+            farmSkin.DrawPixelPanel(rect, Pine, DarkEdge);
+            var seasonColor = session.CurrentSeason switch
+            {
+                Season.Spring => new Color32(217, 154, 167, 255),
+                Season.Summer => new Color32(167, 190, 108, 255),
+                Season.Autumn => new Color32(217, 153, 90, 255),
+                _ => new Color32(173, 209, 220, 255)
+            };
+            var season = new Rect(rect.x + 10f, rect.y + 10f, 54f, 54f);
+            farmSkin.DrawPixelPanel(season, seasonColor, DarkEdge, false);
+            GUI.Label(season, GetSeasonLabel(session.CurrentSeason), seasonStampStyle);
+            GUI.Label(new Rect(rect.x + 76f, rect.y + 10f, 126f, 25f),
+                $"{SeasonCalendar.GetDayOfSeason(session.Data.day)}일  {timeText}", phoneLightStyle);
+            GUI.Label(new Rect(rect.x + 76f, rect.y + 38f, 126f, 24f), $"{session.Data.money:N0} G", warmLightStyle);
         }
 
         private void DrawQuest(GameSession session)
         {
             var current = StarterQuestProgress.GetCurrent(session.Data);
-            var quest = session.Data.activeQuestId < 0
-                ? "광장 게시판에서 의뢰를 선택하세요"
-                : $"퀘스트: {current.Title} ({current.Current}/{current.Target})";
-            var rect = new Rect(14f, 14f, 340f, 104f);
-            farmSkin.DrawBanner(rect);
-            GUI.Label(new Rect(rect.x + 90f, rect.y + 22f, rect.width - 120f, 62f), quest, panelStyle);
+            var active = session.Data.activeQuestId >= 0;
+            var rect = new Rect(18f, 16f, 292f, 76f);
+            farmSkin.DrawPixelPanel(rect, Paper, PaperEdge);
+            FarmGuiSkin.DrawSolid(new Rect(rect.x + 10f, rect.y + 12f, 4f, 51f), Clay);
+            GUI.Label(new Rect(rect.x + 24f, rect.y + 8f, 248f, 25f),
+                active ? $"진행 중인 의뢰  {current.Current}/{current.Target}" : "마을 의뢰", phoneSectionStyle);
+            GUI.Label(new Rect(rect.x + 24f, rect.y + 36f, 248f, 34f),
+                active ? current.Title : "광장 게시판에서 의뢰를 선택하세요", phoneBodyStyle);
         }
 
         private void DrawHotbar(GameSession session)
         {
-            var label = session.SelectedDecoration.HasValue
-                ? $"[I] 가방   [Space] {ItemCatalog.GetLabel(session.SelectedDecoration.Value)} 설치   [E] 줍기"
-                : session.SelectedTool switch
+            const float bottom = HudLayout.ReferenceHeight - 53f;
+            const float gap = 8f;
+            var bagWidth = GetKeyHintWidth("I", "가방");
+            var actionKey = "E";
+            var action = $"{GetToolLabel(session.SelectedTool)} 장착";
+            var extraAction = string.Empty;
+            if (session.SelectedDecoration.HasValue)
             {
-                FarmTool.Hoe => "[I] 가방   [Space] 앞의 땅 갈기   [E] 상호작용",
-                FarmTool.Shovel => "[I] 가방   [E] 빈 밭 없애기",
-                _ => $"[I] 가방 열기   들고 있음: {GetToolLabel(session.SelectedTool)}"
-            };
-            var rect = new Rect((HudLayout.ReferenceWidth - 520f) / 2f, HudLayout.ReferenceHeight - 70f, 520f, 54f);
-            farmSkin.DrawButtonBackground(rect, true);
-            GUI.Label(rect, label, centeredStyle);
+                actionKey = "Space";
+                action = $"{ItemCatalog.GetLabel(session.SelectedDecoration.Value)} 설치";
+                extraAction = "줍기";
+            }
+            else if (session.SelectedTool == FarmTool.Hoe)
+            {
+                actionKey = "Space";
+                action = "땅 갈기";
+                extraAction = "상호작용";
+            }
+            else if (session.SelectedTool == FarmTool.Shovel)
+            {
+                action = "빈 밭 없애기";
+            }
+            else
+            {
+                actionKey = string.Empty;
+            }
+
+            var actionWidth = GetKeyHintWidth(actionKey, action);
+            var extraWidth = string.IsNullOrEmpty(extraAction) ? 0f : GetKeyHintWidth("E", extraAction) + gap;
+            var x = (HudLayout.ReferenceWidth - bagWidth - gap - actionWidth - extraWidth) * 0.5f;
+            DrawKeyHint(new Rect(x, bottom, bagWidth, 37f), "I", "가방");
+            x += bagWidth + gap;
+            DrawKeyHint(new Rect(x, bottom, actionWidth, 37f), actionKey, action);
+            if (extraWidth > 0f)
+                DrawKeyHint(new Rect(x + actionWidth + gap, bottom, extraWidth - gap, 37f), "E", extraAction);
         }
 
         private void DrawDogCommand(GameSession session)
         {
-            var rect = new Rect(16f, HudLayout.ReferenceHeight - 70f, 190f, 54f);
-            farmSkin.DrawButtonBackground(rect, false);
-            GUI.Label(rect, session.Data.dogSitting ? "[G] 강아지 따라와" : "[G] 강아지 앉아", centeredStyle);
+            var label = session.Data.dogSitting ? "강아지 따라와" : "강아지 앉아";
+            DrawKeyHint(new Rect(18f, HudLayout.ReferenceHeight - 53f, GetKeyHintWidth("G", label), 37f), "G", label);
         }
 
         private void DrawInventory(GameSession session)
@@ -345,10 +381,19 @@ namespace FarmGame2D.UI
 
         private void DrawPhone(GameSession session)
         {
-            var layout = HudLayout.CalculatePhoneLayout();
-            farmSkin.DrawWindow(layout.Panel);
-            if (phonePage != PhonePage.Achievements)
-                GUI.Label(layout.Title, "농장 휴대폰", titleStyle);
+            var settings = phonePage == PhonePage.Settings;
+            var layout = HudLayout.CalculatePhoneLayout(settings);
+            FarmGuiSkin.DrawSolid(new Rect(0f, 0f, HudLayout.ReferenceWidth, HudLayout.ReferenceHeight), CanvasScrim);
+            phoneSkin.DrawNotebook(layout.Panel, layout.Screen);
+            phoneSkin.DrawHeader(layout.Header, layout.Title);
+            GUI.Label(layout.Title, phonePage == PhonePage.Achievements ? "도전과제" : settings ? "설정" : "농장 수첩", phoneTitleStyle);
+
+            if (phoneSkin.DrawClose(layout.CloseButton))
+            {
+                exitConfirmationPending = false;
+                session.TogglePhone();
+                return;
+            }
 
             if (exitConfirmationPending)
             {
@@ -359,45 +404,48 @@ namespace FarmGame2D.UI
             DrawPhoneTabs(layout);
             if (phonePage == PhonePage.Achievements)
             {
-                DrawAchievements(session, new Rect(layout.Panel.x + 30f, layout.FarmTabButton.yMax + 14f,
-                    layout.Panel.width - 60f, layout.CloseButton.yMin - layout.FarmTabButton.yMax - 25f));
+                DrawAchievements(session, Rect.MinMaxRect(layout.Content.x, layout.Content.y, layout.CloudPanel.xMax, layout.Content.yMax));
+                return;
             }
-            else if (phonePage == PhonePage.Farm)
-            {
-                DrawPhoneFarmTab(session, layout);
-                DrawCloudSync(session, layout.Panel);
-            }
-            else
+
+            phoneSkin.DrawPageSeam(layout.Content, layout.CloudPanel);
+            if (settings)
             {
                 DrawPhoneSettingsTab(session, layout);
             }
-
-            if (farmSkin.DrawButton(layout.CloseButton, "닫기 (P)"))
+            else
             {
-                exitConfirmationPending = false;
-                session.TogglePhone();
+                DrawPhoneFarmTab(session, layout);
+                DrawCloudSync(session, layout.CloudPanel);
             }
         }
 
         private void DrawPhoneTabs(PhoneHudLayout layout)
         {
-            if (farmSkin.DrawButton(GetPhoneTab(layout, 0), "농장", phonePage == PhonePage.Farm))
+            if (DrawPhoneTab(GetPhoneTab(layout, 0), "농장", PhonePage.Farm))
             {
                 phonePage = PhonePage.Farm;
                 exitNotice = string.Empty;
             }
 
-            if (farmSkin.DrawButton(GetPhoneTab(layout, 1), "설정", phonePage == PhonePage.Settings))
+            if (DrawPhoneTab(GetPhoneTab(layout, 1), "설정", PhonePage.Settings))
             {
                 phonePage = PhonePage.Settings;
                 exitNotice = string.Empty;
             }
-            if (farmSkin.DrawButton(GetPhoneTab(layout, 2), "도전과제", phonePage == PhonePage.Achievements))
+
+            if (DrawPhoneTab(GetPhoneTab(layout, 2), "도전과제", PhonePage.Achievements))
             {
                 if (phonePage != PhonePage.Achievements) achievementScroll = Vector2.zero;
                 phonePage = PhonePage.Achievements;
                 exitNotice = string.Empty;
             }
+        }
+
+        private bool DrawPhoneTab(Rect rect, string title, PhonePage page)
+        {
+            var selected = phonePage == page;
+            return phoneSkin.DrawButton(rect, title, selected ? PhoneButtonTone.Gold : PhoneButtonTone.Paper);
         }
 
         private void DrawPhoneFarmTab(GameSession session, PhoneHudLayout layout)
@@ -411,27 +459,47 @@ namespace FarmGame2D.UI
                     completed++;
                 }
             }
+
             var active = StarterQuestProgress.GetCurrent(session.Data);
+            var card = layout.Content;
+            phoneSkin.DrawCard(card);
+            GUI.Label(HudLayout.InsetRow(card, 22f, 17f, 33f), "의뢰 수첩", phoneHeadingStyle);
+            GUI.Label(HudLayout.InsetRow(card, 22f, 50f, 28f),
+                $"완료한 의뢰  {completed} / {quests.Length}", phoneSectionStyle);
             GUI.Label(layout.QuestBody,
                 session.Data.activeQuestId < 0
-                    ? $"완료한 의뢰 {completed}/{quests.Length}\n광장 게시판에서 다음 의뢰를 선택하세요."
-                    : $"진행 중: {active.Title}\n{active.Current}/{active.Target} · 완료 {completed}/{quests.Length}", bodyStyle);
+                    ? "광장 게시판에서 다음 의뢰를 선택하세요."
+                    : $"{active.Title} · {active.Current}/{active.Target}", phoneBodyStyle);
 
-            if (farmSkin.DrawButton(layout.SaveButton, "저장"))
+            phoneSkin.DrawProgress(HudLayout.InsetRow(card, 22f, 139f, 14f),
+                quests.Length > 0 ? (float)completed / quests.Length : 0f);
+
+            FarmGuiSkin.DrawSolid(HudLayout.InsetRow(card, 22f, 179f, 2f), PaperEdge);
+            GUI.Label(HudLayout.InsetRow(card, 22f, 192f, 33f), "이 기기의 저장", phoneHeadingStyle);
+            GUI.Label(HudLayout.InsetRow(card, 22f, 226f, 36f), phoneSaveNotice, phoneBodyStyle);
+            if (phoneSkin.DrawButton(layout.SaveButton, "저장", PhoneButtonTone.Teal))
             {
                 session.Save(false);
+                phoneSaveNotice = session.Message;
             }
 
-            if (farmSkin.DrawButton(layout.LoadButton, "불러오기", true))
+            if (phoneSkin.DrawButton(layout.LoadButton, "불러오기", PhoneButtonTone.Paper))
             {
                 session.Load();
+                phoneSaveNotice = session.Message;
             }
         }
 
         private void DrawPhoneSettingsTab(GameSession session, PhoneHudLayout layout)
         {
-            GUI.Label(layout.VolumeLabel, $"전체 음량  {Mathf.RoundToInt(masterVolume * 100f)}%", centeredStyle);
-            var nextVolume = GUI.HorizontalSlider(layout.VolumeSlider, masterVolume, 0f, 1f);
+            phoneSkin.DrawCard(layout.Content);
+            phoneSkin.DrawCard(layout.CloudPanel, warm: true);
+            GUI.Label(HudLayout.InsetRow(layout.Content, 22f, 21f, 36f), "소리", phoneHeadingStyle);
+            GUI.Label(layout.VolumeLabel, $"전체 음량  {Mathf.RoundToInt(masterVolume * 100f)}%", phoneSectionStyle);
+            GUI.Label(HudLayout.InsetRow(layout.CloudPanel, 22f, 21f, 36f), "저장과 종료", phoneHeadingStyle);
+            GUI.Label(HudLayout.InsetRow(layout.CloudPanel, 22f, 59f, 39f),
+                "현재 진행 상황을 이 기기에 저장합니다.", phoneBodyStyle);
+            var nextVolume = phoneSkin.DrawVolumeSlider(layout.VolumeSlider, masterVolume);
             if (!Mathf.Approximately(nextVolume, masterVolume))
             {
                 ApplyMasterVolume(nextVolume);
@@ -439,7 +507,7 @@ namespace FarmGame2D.UI
             }
 
             var muteLabel = masterVolume <= 0.001f ? "소리 켜기" : "음소거";
-            if (farmSkin.DrawButton(layout.MuteButton, muteLabel))
+            if (phoneSkin.DrawButton(layout.MuteButton, muteLabel, PhoneButtonTone.Paper))
             {
                 var toggledVolume = masterVolume <= 0.001f
                     ? Mathf.Max(0.1f, volumeBeforeMute)
@@ -448,20 +516,20 @@ namespace FarmGame2D.UI
                 exitNotice = toggledVolume <= 0.001f ? "소리를 껐습니다." : "소리를 켰습니다.";
             }
 
-            if (farmSkin.DrawButton(layout.SaveButton, "지금 저장", true))
+            if (phoneSkin.DrawButton(layout.SaveButton, "지금 저장", PhoneButtonTone.Teal))
             {
                 session.Save(false);
-                exitNotice = "현재 진행 상황을 저장했습니다.";
+                exitNotice = session.Message;
             }
 
-            if (farmSkin.DrawButton(layout.QuitButton, "저장하고 나가기"))
+            if (phoneSkin.DrawButton(layout.QuitButton, "저장하고 나가기", PhoneButtonTone.Coral))
             {
                 exitConfirmationPending = true;
             }
 
             if (!string.IsNullOrEmpty(exitNotice))
             {
-                GUI.Label(layout.Notice, exitNotice, centeredStyle);
+                GUI.Label(layout.Notice, exitNotice, phoneBodyStyle);
             }
         }
 
@@ -477,17 +545,18 @@ namespace FarmGame2D.UI
 
         private void DrawExitConfirmation(GameSession session, PhoneHudLayout layout)
         {
-            farmSkin.DrawWindow(layout.ExitConfirmationPanel);
+            phoneSkin.DrawCard(layout.ExitConfirmationPanel, warm: true);
+            GUI.Label(HudLayout.InsetRow(layout.ExitConfirmationPanel, 25f, 21f, 36f), "게임 종료", phoneHeadingStyle);
             GUI.Label(layout.ExitConfirmationMessage,
                 "현재 진행 상황을 저장하고\n게임에서 나갈까요?",
-                centeredStyle);
+                phoneBodyStyle);
 
-            if (farmSkin.DrawButton(layout.CancelExitButton, "취소"))
+            if (phoneSkin.DrawButton(layout.CancelExitButton, "취소", PhoneButtonTone.Paper))
             {
                 exitConfirmationPending = false;
             }
 
-            if (!farmSkin.DrawButton(layout.ConfirmExitButton, "저장 후 나가기", true))
+            if (!phoneSkin.DrawButton(layout.ConfirmExitButton, "저장 후 나가기", PhoneButtonTone.Coral))
             {
                 return;
             }
@@ -536,56 +605,64 @@ namespace FarmGame2D.UI
             }
         }
 
-        private void DrawCloudSync(GameSession session, Rect phonePanel)
+        private void DrawCloudSync(GameSession session, Rect panel)
         {
-            var panel = new Rect(phonePanel.x + phonePanel.width + 12f, phonePanel.y, 400f, 350f);
-            farmSkin.DrawWindow(panel);
-            GUI.Label(new Rect(panel.x + 90f, panel.y + 34f, 270f, 40f), "브라우저 동기화", titleStyle);
+            phoneSkin.DrawCard(panel, warm: true);
+            GUI.Label(HudLayout.InsetRow(panel, 22f, 17f, 33f), "브라우저 동기화", phoneHeadingStyle);
 
             var previousEnabled = GUI.enabled;
-            GUI.enabled = !session.CloudSyncBusy;
-            if (session.CloudSyncLinked)
+            GUI.enabled = previousEnabled && !session.CloudSyncBusy;
+            try
             {
-                var connectionText = session.CloudLoadRequired
-                    ? "다른 브라우저의 저장이 있습니다.\n최신 저장 받기를 먼저 눌러 주세요."
-                    : string.IsNullOrEmpty(session.NewlyCreatedCloudPin)
-                    ? $"연결된 코드  {session.CloudSyncCode}\n클라우드에도 함께 저장됩니다."
-                    : $"연결 코드  {session.CloudSyncCode}\nPIN  {session.NewlyCreatedCloudPin}\n지금 메모해 두세요";
-                GUI.Label(new Rect(panel.x + 28f, panel.y + 96f, 344f, 78f),
-                    connectionText, centeredStyle);
-
-                if (farmSkin.DrawButton(new Rect(panel.x + 24f, panel.y + 286f, 170f, 46f), "최신 저장 받기", true))
-                {
-                    session.LoadCloudSave();
-                }
-
-                if (farmSkin.DrawButton(new Rect(panel.x + 206f, panel.y + 286f, 170f, 46f), "연결 해제"))
-                {
-                    session.DisconnectCloudSave();
-                }
+                if (session.CloudSyncLinked)
+                    DrawLinkedCloudSync(session, panel);
+                else
+                    DrawCloudConnectionForm(session, panel);
             }
-            else
+            finally
             {
-                GUI.Label(new Rect(panel.x + 40f, panel.y + 92f, 320f, 38f),
-                    "계정 없이 코드와 PIN으로 이어서 할 수 있어요.", centeredStyle);
-                if (farmSkin.DrawButton(new Rect(panel.x + 95f, panel.y + 132f, 210f, 42f), "새 동기화 코드 만들기", true))
-                {
-                    session.CreateCloudSave();
-                }
-
-                GUI.Label(new Rect(panel.x + 42f, panel.y + 188f, 88f, 34f), "코드", bodyStyle);
-                cloudCodeInput = GUI.TextField(new Rect(panel.x + 126f, panel.y + 188f, 232f, 34f),
-                    cloudCodeInput.ToUpperInvariant(), 10);
-                GUI.Label(new Rect(panel.x + 42f, panel.y + 232f, 88f, 34f), "PIN", bodyStyle);
-                cloudPinInput = GUI.PasswordField(new Rect(panel.x + 126f, panel.y + 232f, 232f, 34f),
-                    cloudPinInput, '●', 6);
-                if (farmSkin.DrawButton(new Rect(panel.x + 120f, panel.y + 278f, 160f, 42f), "기존 저장 연결"))
-                {
-                    session.ConnectCloudSave(cloudCodeInput, cloudPinInput);
-                }
+                GUI.enabled = previousEnabled;
             }
 
-            GUI.enabled = previousEnabled;
+            if (!string.IsNullOrEmpty(session.CloudSyncNotice))
+            {
+                GUI.Label(HudLayout.InsetRow(panel, 20f, 284f, 50f), session.CloudSyncNotice, phoneBodyStyle);
+            }
+        }
+
+        private void DrawCloudConnectionForm(GameSession session, Rect panel)
+        {
+            GUI.Label(HudLayout.InsetRow(panel, 20f, 49f, 43f),
+                "다른 브라우저의 코드와 PIN을 입력하세요.", phoneBodyStyle);
+            cloudCodeInput = DrawCloudField(HudLayout.InsetRow(panel, 20f, 99f, 36f),
+                "코드", "cloud-code", cloudCodeInput.ToUpperInvariant(), 10, false);
+            cloudPinInput = DrawCloudField(HudLayout.InsetRow(panel, 20f, 143f, 36f),
+                "PIN", "cloud-pin", cloudPinInput, 6, true);
+            if (phoneSkin.DrawButton(HudLayout.InsetRow(panel, 20f, 194f, 37f), "기존 저장 연결", PhoneButtonTone.Teal))
+                session.ConnectCloudSave(cloudCodeInput, cloudPinInput);
+
+            if (phoneSkin.DrawButton(HudLayout.InsetRow(panel, 20f, 239f, 37f), "새 동기화 코드 만들기", PhoneButtonTone.Gold))
+                session.CreateCloudSave();
+        }
+
+        private void DrawLinkedCloudSync(GameSession session, Rect panel)
+        {
+            var connectionText = session.CloudLoadRequired
+                ? "다른 브라우저의 저장이 있습니다.\n최신 저장 받기를 먼저 눌러 주세요."
+                : string.IsNullOrEmpty(session.NewlyCreatedCloudPin)
+                ? $"연결 코드  {session.CloudSyncCode}\n이 기기에서 저장하면 클라우드에도 저장됩니다."
+                : $"연결 코드  {session.CloudSyncCode}\nPIN  {session.NewlyCreatedCloudPin}  · 지금 메모해 두세요";
+            GUI.Label(HudLayout.InsetRow(panel, 20f, 59f, 93f), connectionText, phoneBodyStyle);
+
+            if (phoneSkin.DrawButton(new Rect(panel.x + 20f, panel.y + 166f, 172f, 41f),
+                "최신 저장 받기", PhoneButtonTone.Teal))
+                session.LoadCloudSave();
+            if (phoneSkin.DrawButton(new Rect(panel.xMax - 192f, panel.y + 166f, 172f, 41f),
+                "연결 해제", PhoneButtonTone.Paper))
+                session.DisconnectCloudSave();
+
+            GUI.Label(HudLayout.InsetRow(panel, 20f, 224f, 47f),
+                "다른 브라우저에서는 같은 코드와 PIN을 입력하세요.", phoneBodyStyle);
         }
 
         private void DrawSellBox(GameSession session)

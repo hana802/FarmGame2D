@@ -94,6 +94,8 @@ namespace FarmGame2D.UI
     {
         public PhoneHudLayout(
             Rect panel,
+            Rect content,
+            Rect cloudPanel,
             Rect title,
             Rect farmTabButton,
             Rect settingsTabButton,
@@ -112,6 +114,8 @@ namespace FarmGame2D.UI
             Rect confirmExitButton)
         {
             Panel = panel;
+            Content = content;
+            CloudPanel = cloudPanel;
             Title = title;
             FarmTabButton = farmTabButton;
             SettingsTabButton = settingsTabButton;
@@ -131,6 +135,10 @@ namespace FarmGame2D.UI
         }
 
         public Rect Panel { get; }
+        public Rect Content { get; }
+        public Rect CloudPanel { get; }
+        public Rect Screen => new(Panel.x + 44f, Panel.y + 21f, Panel.width - 69f, Panel.height - 48f);
+        public Rect Header => HudLayout.InsetRow(Screen, 14f, 12f, 60f);
         public Rect Title { get; }
         public Rect FarmTabButton { get; }
         public Rect SettingsTabButton { get; }
@@ -291,27 +299,39 @@ namespace FarmGame2D.UI
                 new Rect(panel.x + 220f, panel.y + 447f, 380f, 40f));
         }
 
-        public static PhoneHudLayout CalculatePhoneLayout()
+        public static PhoneHudLayout CalculatePhoneLayout(bool settings = false)
         {
-            var panel = new Rect(190f, 80f, 470f, 560f);
+            const float width = 992f;
+            var panel = new Rect((ReferenceWidth - width) * 0.5f, 64f, width, 592f);
+            var content = new Rect(panel.x + 78f, panel.y + 161f, 418f, 360f);
+            var cloud = new Rect(panel.x + 532f, content.y, 412f, content.height);
+            var confirmation = new Rect(panel.center.x - 202f, content.y + 29f, 404f, 270f);
             return new PhoneHudLayout(
                 panel,
-                new Rect(panel.x + 188f, panel.y + 28f, 240f, 42f),
-                new Rect(panel.x + 45f, panel.y + 88f, 180f, 42f),
-                new Rect(panel.x + 245f, panel.y + 88f, 180f, 42f),
-                new Rect(panel.x + 55f, panel.y + 166f, 360f, 92f),
-                new Rect(panel.x + 55f, panel.y + 158f, 360f, 32f),
-                new Rect(panel.x + 65f, panel.y + 198f, 340f, 24f),
-                new Rect(panel.x + 145f, panel.y + 234f, 180f, 44f),
-                new Rect(panel.x + 55f, panel.y + 292f, 170f, 46f),
-                new Rect(panel.x + 245f, panel.y + 292f, 170f, 46f),
-                new Rect(panel.x + 110f, panel.y + 352f, 250f, 44f),
-                new Rect(panel.x + 55f, panel.y + 408f, 360f, 32f),
-                new Rect(panel.x + 128f, panel.y + 458f, 214f, 44f),
-                new Rect(panel.x + 35f, panel.y + 158f, 400f, 250f),
-                new Rect(panel.x + 75f, panel.y + 200f, 320f, 76f),
-                new Rect(panel.x + 68f, panel.y + 318f, 145f, 48f),
-                new Rect(panel.x + 257f, panel.y + 318f, 145f, 48f));
+                content, cloud,
+                new Rect(panel.center.x - 140f, panel.y + 40f, 280f, 42f),
+                new Rect(content.x, panel.y + 103f, 116f, 39f),
+                new Rect(content.x + 128f, panel.y + 103f, 116f, 39f),
+                InsetRow(content, 22f, 83f, 43f),
+                InsetRow(content, 22f, 67f, 32f),
+                InsetRow(content, 22f, 119f, 32f),
+                new Rect(content.x + 22f, content.y + 178f, 144f, 43f),
+                settings
+                    ? InsetRow(cloud, 22f, 111f, 45f)
+                    : new Rect(content.x + 22f, content.y + 270f, 167f, 45f),
+                new Rect(content.xMax - 189f, content.y + 270f, 167f, 45f),
+                InsetRow(cloud, 22f, 171f, 45f),
+                InsetRow(cloud, 22f, 247f, 68f),
+                new Rect(panel.xMax - 88f, panel.y + 38f, 48f, 48f),
+                confirmation,
+                InsetRow(confirmation, 25f, 68f, 87f),
+                new Rect(confirmation.x + 25f, confirmation.y + 188f, 170f, 45f),
+                new Rect(confirmation.xMax - 195f, confirmation.y + 188f, 170f, 45f));
+        }
+
+        public static Rect InsetRow(Rect panel, float horizontalPadding, float top, float height)
+        {
+            return new Rect(panel.x + horizontalPadding, panel.y + top, panel.width - horizontalPadding * 2f, height);
         }
 
         public static QuestBoardHudLayout CalculateQuestBoardLayout()
