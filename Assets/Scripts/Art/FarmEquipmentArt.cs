@@ -4,7 +4,35 @@ namespace FarmGame2D.Art
 {
     public static class FarmEquipmentArt
     {
-        private static Sprite axe, sprinkler, stump, greenhouse, sign;
+        private static Sprite axe, sprinkler, stump, greenhouse, sign, feedSack;
+
+        public static Sprite FeedSack => feedSack ??= PixelSprite("Animal Feed Sack", 32f, new[]
+        {
+            "......................",
+            "......................",
+            ".......#######........",
+            "......#htthtwt#.......",
+            ".......#hhttw#........",
+            "........#tww#.........",
+            ".......#ggggg#........",
+            "......#httwgtw#.......",
+            ".....#hhtttgttw#......",
+            "....#hhttttttttw#.....",
+            "...#hhtttgggttttw#....",
+            "...#httgggggggttw#....",
+            "..#hhttgggygggtttw#...",
+            "..#httggyygygggttw#...",
+            "..#httgggyyggggttw#...",
+            "..#httggyygygggttw#...",
+            "..#httgggyyggggttw#...",
+            "..#htttgggygggttww#...",
+            "..#thttttgggtttwww#...",
+            "...#thttttttttwww#....",
+            "....#wwttttwwwww#.....",
+            ".....###########......",
+            "......................",
+            "......................",
+        });
 
         public static Sprite Axe => axe ??= PixelSprite("Held Axe", 20f, new[]
         {
@@ -97,7 +125,9 @@ namespace FarmGame2D.Art
         {
             '#' => new(50, 39, 35, 255), 'w' => new(147, 85, 49, 255), 't' => new(222, 168, 101, 255),
             's' => new(116, 162, 151, 255), 'l' => new(215, 227, 193, 255),
-            'b' => new(156, 196, 190, 255), 'g' => new(54, 96, 72, 255), _ => new(0, 0, 0, 0)
+            'b' => new(156, 196, 190, 255), 'g' => new(54, 96, 72, 255),
+            'h' => new(250, 207, 145, 255), 'y' => new(249, 218, 108, 255),
+            _ => new(0, 0, 0, 0)
         };
     }
 }
