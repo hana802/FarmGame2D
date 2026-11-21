@@ -224,9 +224,9 @@ namespace FarmGame2D.Player
             UpdateCharacterVisual(true);
         }
 
-        internal void PresentMiningSwing(Vector2 target, float pullback)
+        internal void PresentMiningSwing(Vector2 target, float pullback, FarmTool tool = FarmTool.Pickaxe)
         {
-            heldItemPresenter.PresentMining(facingRow, target, pullback);
+            heldItemPresenter.PresentMining(facingRow, target, pullback, tool);
         }
 
         internal void EndMining()
@@ -292,7 +292,7 @@ namespace FarmGame2D.Player
             return true;
         }
 
-        private Vector2 GetToolTarget()
+        internal Vector2 GetToolTarget()
         {
             var direction = facingRow switch
             {

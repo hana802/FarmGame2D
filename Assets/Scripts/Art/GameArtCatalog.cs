@@ -246,6 +246,8 @@ namespace FarmGame2D.Art
                 return cached;
             }
 
+            if (tool == FarmTool.Axe) return heldToolSprites[tool] = FarmEquipmentArt.Axe;
+
             if (tool == FarmTool.FishingRod)
             {
                 var fishingRod = CreateFishingRodSprite();

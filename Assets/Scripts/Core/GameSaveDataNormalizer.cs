@@ -24,9 +24,11 @@ namespace FarmGame2D.Core
             data.pulledWeedIds ??= new List<int>();
             data.farmPlots ??= new List<FarmPlotData>();
             data.miningNodes ??= new List<MiningNodeData>();
+            data.treeRegrowDays ??= new List<TreeRegrowth>();
+            data.treeRegrowDays.RemoveAll(tree => tree == null || tree.day <= 0);
             data.placedDecorations ??= new List<PlacedDecorationData>();
             data.placedDecorations.RemoveAll(decoration => decoration == null
-                || !TownDecorationCatalog.TryGet(decoration.item, out _));
+                || (decoration.item != GameItem.Sprinkler && !TownDecorationCatalog.TryGet(decoration.item, out _)));
             data.chickenJuvenileDays ??= new List<int>();
             data.cowJuvenileDays ??= new List<int>();
             data.ownedChickens = System.Math.Max(1, data.ownedChickens);

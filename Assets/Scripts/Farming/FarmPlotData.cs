@@ -20,6 +20,7 @@ namespace FarmGame2D.Farming
         public int gridX;
         public int gridY;
         public bool freeform;
+        public bool greenhouse;
         public float worldX;
         public float worldY;
         public GameItem plantedSeed = GameItem.WheatSeed;

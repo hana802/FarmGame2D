@@ -80,9 +80,9 @@ namespace FarmGame2D.Player
             return rod.TransformPoint(tip);
         }
 
-        internal void PresentMining(int facingRow, Vector2 target, float pullback)
+        internal void PresentMining(int facingRow, Vector2 target, float pullback, FarmTool tool)
         {
-            Present(FarmTool.Pickaxe, facingRow, false, true);
+            Present(tool, facingRow, false, true);
             var pickaxe = itemRenderer.transform;
             var direction = target - (Vector2)pickaxe.position;
             var side = facingRow == 2 ? -1f : 1f;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.U2D;
 using FarmGame2D.World;
+using FarmGame2D.Farming;
 
 namespace FarmGame2D.Player
 {
@@ -44,12 +45,15 @@ namespace FarmGame2D.Player
 
             const float pixelsPerUnit = 32f;
             var focusPosition = IsInteriorView
-                ? WorldAreaProfile.FarmhouseInteriorCenter
+                ? GetInteriorCenter(target.position)
                 : (Vector2)target.position;
             var x = Mathf.Round(focusPosition.x * pixelsPerUnit) / pixelsPerUnit;
             var y = Mathf.Round(focusPosition.y * pixelsPerUnit) / pixelsPerUnit;
             transform.position = new Vector3(x, y, -10f);
         }
+
+        private static Vector2 GetInteriorCenter(Vector2 position) => position.x > 46f
+            ? GreenhouseLayout.Interior : WorldAreaProfile.FarmhouseInteriorCenter;
 
         private void ApplyViewForPosition(Vector2 position)
         {
