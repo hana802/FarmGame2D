@@ -14,7 +14,12 @@ namespace FarmGame2D.Core
         public const int WoodPerTree = 4;
         public const int TreeRegrowthDays = 4;
 
-        public void PurchaseSprinkler() => Purchase(GameItem.Sprinkler, 1, SprinklerPrice, "스프링클러");
+        public void PurchaseSprinkler(int count = 1)
+        {
+            count = Mathf.Max(1, count);
+            Purchase(GameItem.Sprinkler, count, SprinklerPrice * count,
+                count == 1 ? "스프링클러" : $"스프링클러 {count}개");
+        }
 
         public bool IsTreeCut(int id) => Data.treeRegrowDays.TryGetTreeRegrowDay(id) > Data.day;
 

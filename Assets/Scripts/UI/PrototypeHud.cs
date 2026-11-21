@@ -695,39 +695,40 @@ namespace FarmGame2D.UI
                 "다른 브라우저에서는 같은 코드와 PIN을 입력하세요.", phoneBodyStyle);
         }
 
-        private static void ExecutePurchase(GameSession session, ShopPurchaseRequest request)
+        private static void ExecutePurchase(GameSession session, ShopPurchaseRequest request, int count)
         {
+            count = Mathf.Max(1, count);
             switch (request.Kind)
             {
                 case ShopPurchaseKind.Seed:
-                    session.PurchaseSeed(request.Item);
+                    session.PurchaseSeed(request.Item, count);
                     break;
                 case ShopPurchaseKind.Feed:
-                    session.PurchaseFeed();
+                    session.PurchaseFeed(count);
                     break;
                 case ShopPurchaseKind.Chicken:
-                    session.PurchaseChicken();
+                    session.PurchaseChicken(count);
                     break;
                 case ShopPurchaseKind.ChickenSale:
-                    session.SellChicken();
+                    session.SellChicken(count);
                     break;
                 case ShopPurchaseKind.Cow:
-                    session.PurchaseCow();
+                    session.PurchaseCow(count);
                     break;
                 case ShopPurchaseKind.CowSale:
-                    session.SellCow();
+                    session.SellCow(count);
                     break;
                 case ShopPurchaseKind.Pickaxe:
                     session.PurchasePickaxe();
                     break;
                 case ShopPurchaseKind.Ore:
-                    session.PurchaseOre(request.Item, request.Quantity, request.Price);
+                    session.PurchaseOre(request.Item, request.Quantity * count, request.Price * count);
                     break;
                 case ShopPurchaseKind.Sprinkler:
-                    session.PurchaseSprinkler();
+                    session.PurchaseSprinkler(count);
                     break;
                 case ShopPurchaseKind.Decoration:
-                    session.PurchaseDecoration(request.Item);
+                    session.PurchaseDecoration(request.Item, count);
                     break;
             }
         }

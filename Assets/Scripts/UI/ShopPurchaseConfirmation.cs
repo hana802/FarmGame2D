@@ -80,4 +80,29 @@ namespace FarmGame2D.UI
             return true;
         }
     }
+
+    public static class ShopOrderRules
+    {
+        public const int MaxCount = 99;
+
+        public static bool AllowsMultiple(ShopPurchaseKind kind) => kind != ShopPurchaseKind.Pickaxe;
+
+        public static int Maximum(ShopPurchaseRequest request, int money, int ownedChickens, int ownedCows)
+        {
+            if (request.Kind == ShopPurchaseKind.Pickaxe) return 1;
+            if (request.Kind == ShopPurchaseKind.ChickenSale) return Math.Max(0, ownedChickens - 1);
+            if (request.Kind == ShopPurchaseKind.CowSale) return Math.Max(0, ownedCows);
+            if (request.Price <= 0) return 1;
+            return Math.Min(MaxCount, Math.Max(0, money / request.Price));
+        }
+
+        public static string Summary(ShopPurchaseRequest request, int count)
+        {
+            count = Math.Max(1, count);
+            var total = request.Price * count;
+            var amount = request.IsSale ? "받는 금액" : "결제 금액";
+            var money = $"{(request.IsSale ? "+" : "")}{total:N0} G";
+            return count == 1 ? $"{amount}   {money}" : $"×{count}   {amount}   {money}";
+        }
+    }
 }

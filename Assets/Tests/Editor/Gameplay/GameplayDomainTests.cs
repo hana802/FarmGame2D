@@ -716,6 +716,26 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
+        public void ShopOrder_LimitsQuantityByMoneyAndKeepsTheLastChicken()
+        {
+            var seed = new ShopPurchaseRequest(ShopPurchaseKind.Seed, "감자 씨앗 5개", GameItem.PotatoSeed, 5, 18);
+            Assert.That(ShopOrderRules.Maximum(seed, 54, 1, 0), Is.EqualTo(3));
+            Assert.That(ShopOrderRules.Maximum(seed, 17, 1, 0), Is.EqualTo(0));
+            Assert.That(ShopOrderRules.Maximum(seed, 18 * 200, 1, 0), Is.EqualTo(ShopOrderRules.MaxCount));
+            Assert.That(ShopOrderRules.Summary(seed, 3), Is.EqualTo("×3   결제 금액   54 G"));
+            Assert.That(ShopOrderRules.Summary(seed, 1), Is.EqualTo("결제 금액   18 G"));
+
+            var pickaxe = new ShopPurchaseRequest(ShopPurchaseKind.Pickaxe, "곡괭이", price: 120);
+            Assert.That(ShopOrderRules.AllowsMultiple(pickaxe.Kind), Is.False);
+            Assert.That(ShopOrderRules.Maximum(pickaxe, 9999, 1, 0), Is.EqualTo(1));
+
+            var chickens = new ShopPurchaseRequest(ShopPurchaseKind.ChickenSale, "닭 1마리", price: 100);
+            Assert.That(ShopOrderRules.Maximum(chickens, 0, 4, 0), Is.EqualTo(3));
+            Assert.That(ShopOrderRules.Maximum(chickens, 0, 1, 0), Is.EqualTo(0));
+            Assert.That(ShopOrderRules.Summary(chickens, 3), Is.EqualTo("×3   받는 금액   +300 G"));
+        }
+
+        [Test]
         public void ShopPurchaseConfirmation_UsesSaleCopyForChickenSale()
         {
             var request = new ShopPurchaseRequest(ShopPurchaseKind.ChickenSale, "닭 1마리");

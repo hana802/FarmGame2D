@@ -16,11 +16,12 @@ namespace FarmGame2D.UI
         private static readonly Color ShopMuted = new Color32(98, 94, 74, 255);
 
         private readonly ShopPurchaseConfirmation shopPurchaseConfirmation = new();
+        private int shopOrderCount = 1;
         private bool shopWasOpen;
         private ShopKind shownShop;
         private int shopTab;
         private string shopNotice;
-        private GUIStyle shopHeading, shopLight, shopName, shopBody, shopSmall, shopAction, shopSecondary;
+        private GUIStyle shopHeading, shopLight, shopName, shopBody, shopSmall, shopAction, shopSecondary, shopQuantity;
 
         private void DrawShop(GameSession session)
         {
@@ -30,6 +31,7 @@ namespace FarmGame2D.UI
                 shownShop = session.ActiveShop;
                 shopTab = 0;
                 shopNotice = null;
+                shopOrderCount = 1;
                 shopPurchaseConfirmation.Cancel();
             }
 
@@ -104,6 +106,7 @@ namespace FarmGame2D.UI
                 GUI.Label(new Rect(card.xMax - 88f, card.y + 17f, 72f, 40f), "보기 ›", shopSecondary);
                 if (GUI.Button(card, GUIContent.none, GUIStyle.none))
                 {
+                    shopOrderCount = 1;
                     shopPurchaseConfirmation.Request(product);
                     shopNotice = null;
                 }
@@ -117,6 +120,7 @@ namespace FarmGame2D.UI
         {
             if (ShopButton(layout.BackButton, "‹  상품 목록", ShopLine, shopSecondary))
             {
+                shopOrderCount = 1;
                 shopPurchaseConfirmation.Cancel();
                 return;
             }
@@ -141,14 +145,40 @@ namespace FarmGame2D.UI
                 y += height + 3f;
             }
 
+            var maximum = ShopOrderRules.Maximum(request, session.Data.money, session.Data.ownedChickens, session.Data.ownedCows);
+            var chooseQuantity = ShopOrderRules.AllowsMultiple(request.Kind) && maximum > 1;
+            shopOrderCount = chooseQuantity ? Mathf.Clamp(shopOrderCount, 1, maximum) : 1;
+
             var unavailable = ShopUnavailableReason(session, request);
-            GUI.Label(layout.DetailFooter, unavailable ?? $"{(request.IsSale ? "받는 금액" : "결제 금액")}   {ShopPrice(request)}", shopName);
+            var summaryRect = layout.DetailFooter;
+            if (chooseQuantity) summaryRect.width -= 148f;
+            GUI.Label(summaryRect, unavailable ?? ShopOrderRules.Summary(request, shopOrderCount), shopName);
+            if (chooseQuantity) DrawShopQuantity(layout.DetailFooter, maximum);
+
             var label = request.IsSale ? "판매하기" : "구매하기";
             if (unavailable == null && ShopButton(layout.ConfirmButton, label, ShopGreen, shopAction))
             {
-                shopPurchaseConfirmation.Confirm(confirmed => ExecutePurchase(session, confirmed));
+                var count = shopOrderCount;
+                shopOrderCount = 1;
+                shopPurchaseConfirmation.Confirm(confirmed => ExecutePurchase(session, confirmed, count));
                 shopNotice = session.Message;
             }
+        }
+
+        private void DrawShopQuantity(Rect footer, int maximum)
+        {
+            var height = 40f;
+            var y = footer.y + (footer.height - height) * 0.5f;
+            var minus = new Rect(footer.xMax - 132f, y, 40f, height);
+            var value = new Rect(minus.xMax, y, 52f, height);
+            var plus = new Rect(value.xMax, y, 40f, height);
+            var idle = new Color32(236, 230, 214, 255);
+            if (ShopButton(minus, "−", shopOrderCount > 1 ? ShopLine : idle, shopSecondary) && shopOrderCount > 1)
+                shopOrderCount--;
+            GUI.Label(value, shopOrderCount.ToString(), shopQuantity);
+            var canIncrease = shopOrderCount < maximum;
+            if (ShopButton(plus, "+", canIncrease ? ShopGreen : idle, canIncrease ? shopAction : shopSecondary) && canIncrease)
+                shopOrderCount++;
         }
 
         private void EnsureShopStyles()
@@ -162,6 +192,7 @@ namespace FarmGame2D.UI
             shopSmall = ShopStyle(16, ShopMuted);
             shopAction = ShopStyle(20, ShopPaper, FontStyle.Bold, TextAnchor.MiddleCenter);
             shopSecondary = ShopStyle(17, ShopGreen, FontStyle.Bold, TextAnchor.MiddleCenter);
+            shopQuantity = ShopStyle(22, ShopInk, FontStyle.Bold, TextAnchor.MiddleCenter);
         }
 
         private GUIStyle ShopStyle(int size, Color color, FontStyle weight = FontStyle.Normal,
