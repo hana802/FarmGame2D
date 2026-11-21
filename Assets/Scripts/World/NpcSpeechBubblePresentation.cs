@@ -16,6 +16,13 @@ namespace FarmGame2D.World
             return !modalOpen && !string.IsNullOrEmpty(bubbleText);
         }
 
+        public static bool IsAnchorVisible(Vector3 viewportPoint)
+        {
+            return viewportPoint.z > 0f
+                && viewportPoint.x >= 0f && viewportPoint.x <= 1f
+                && viewportPoint.y >= 0f && viewportPoint.y <= 1f;
+        }
+
         public static GUIStyle CreateStyle(GUIStyle baseStyle, Font font)
         {
             return new GUIStyle(baseStyle)

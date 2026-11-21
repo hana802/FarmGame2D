@@ -247,6 +247,7 @@ namespace FarmGame2D.UI
     {
         public const float ReferenceWidth = 1280f;
         public const float ReferenceHeight = 720f;
+        public static Rect QuestTracker => new(18f, 16f, 292f, 76f);
         private const float DialogueAtlasWidth = 1618f;
         private const float DialogueAtlasHeight = 356f;
 

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using FarmGame2D.Core;
 using FarmGame2D.Interactions;
+using FarmGame2D.Player;
+using FarmGame2D.UI;
 using UnityEngine;
 
 namespace FarmGame2D.World
@@ -267,20 +269,27 @@ namespace FarmGame2D.World
 
         private void OnGUI()
         {
-            if (!NpcSpeechBubblePresentation.ShouldDraw(bubbleText, IsHudModalOpen()) || Camera.main == null)
+            if (!NpcSpeechBubblePresentation.ShouldDraw(bubbleText, IsHudModalOpen()))
             {
                 return;
             }
 
-            var screen = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1.35f));
-            if (screen.z <= 0f)
+            var camera = Camera.main;
+            if (camera == null || camera.GetComponent<PixelCameraFollow>()?.IsInteriorView == true)
             {
                 return;
             }
 
+            var anchor = camera.WorldToViewportPoint(transform.position + Vector3.up * 1.35f);
+            if (!NpcSpeechBubblePresentation.IsAnchorVisible(anchor))
+            {
+                return;
+            }
+
+            var screen = camera.ViewportToScreenPoint(anchor);
             bubbleStyle ??= CreateBubbleStyle();
             var spokenLine = NpcSpeechBubblePresentation.GetSpokenLine(bubbleText);
-            var width = 184f;
+            var width = Mathf.Min(184f, Mathf.Max(1f, Screen.width - 16f));
             var height = NpcSpeechBubblePresentation.CalculateHeight(bubbleStyle, spokenLine, width);
             var x = screen.x - (width * 0.5f);
             var y = Screen.height - screen.y - height - 8f;
@@ -288,6 +297,12 @@ namespace FarmGame2D.World
                 new Rect(x, y, width, height),
                 Screen.width,
                 Screen.height);
+            var viewport = HudLayout.CalculateViewport(Screen.width, Screen.height);
+            var tracker = HudLayout.QuestTracker;
+            var trackerOnScreen = new Rect(viewport.OffsetX + tracker.x * viewport.Scale,
+                viewport.OffsetY + tracker.y * viewport.Scale, tracker.width * viewport.Scale, tracker.height * viewport.Scale);
+            if (rect.Overlaps(trackerOnScreen)) return;
+
             NpcSpeechBubblePresentation.Draw(rect, spokenLine, bubbleStyle);
         }
 

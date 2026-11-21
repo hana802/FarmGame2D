@@ -448,6 +448,17 @@ namespace FarmGame2D.Tests
             Assert.That(NpcSpeechBubblePresentation.GetSpokenLine(source), Is.EqualTo(expected));
         }
 
+        [TestCase(0.5f, 0.5f, 10f, true)]
+        [TestCase(-0.01f, 0.5f, 10f, false)]
+        [TestCase(1.01f, 0.5f, 10f, false)]
+        [TestCase(0.5f, -0.01f, 10f, false)]
+        [TestCase(0.5f, 1.01f, 10f, false)]
+        [TestCase(0.5f, 0.5f, -1f, false)]
+        public void NpcSpeechBubble_RequiresAnAnchorInTheCameraView(float x, float y, float depth, bool visible)
+        {
+            Assert.That(NpcSpeechBubblePresentation.IsAnchorVisible(new Vector3(x, y, depth)), Is.EqualTo(visible));
+        }
+
         [Test]
         public void NpcSpeechBubble_StaysInsideTheVisibleScreen()
         {
