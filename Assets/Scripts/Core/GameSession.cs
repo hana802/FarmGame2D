@@ -1209,6 +1209,13 @@ namespace FarmGame2D.Core
                     return;
                 }
 
+                if (result.Conflict)
+                {
+                    // Another open game saved first. Bring that farm in so this computer stays on one save.
+                    LoadCloudSave();
+                    return;
+                }
+
                 ShowCloudMessage(result.Message);
             }));
         }

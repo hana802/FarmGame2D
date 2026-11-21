@@ -183,7 +183,7 @@ namespace FarmGame2D.UI
                 FarmTool.Shovel => "[I] 가방   [E] 빈 밭 없애기",
                 _ => $"[I] 가방 열기   들고 있음: {GetToolLabel(session.SelectedTool)}"
             };
-            var rect = new Rect((HudLayout.ReferenceWidth - 430f) / 2f, HudLayout.ReferenceHeight - 70f, 430f, 54f);
+            var rect = new Rect((HudLayout.ReferenceWidth - 520f) / 2f, HudLayout.ReferenceHeight - 70f, 520f, 54f);
             farmSkin.DrawButtonBackground(rect, true);
             GUI.Label(rect, label, centeredStyle);
         }
@@ -536,9 +536,9 @@ namespace FarmGame2D.UI
                 var connectionText = session.CloudLoadRequired
                     ? "다른 브라우저의 저장이 있습니다.\n최신 저장 받기를 먼저 눌러 주세요."
                     : string.IsNullOrEmpty(session.NewlyCreatedCloudPin)
-                    ? $"연결된 코드  {session.CloudSyncCode}\n저장을 누르면 클라우드에도 저장됩니다."
-                    : $"연결 코드  {session.CloudSyncCode}\nPIN  {session.NewlyCreatedCloudPin}  · 지금 메모해 두세요";
-                GUI.Label(new Rect(panel.x + 42f, panel.y + 102f, 316f, 62f),
+                    ? $"연결된 코드  {session.CloudSyncCode}\n클라우드에도 함께 저장됩니다."
+                    : $"연결 코드  {session.CloudSyncCode}\nPIN  {session.NewlyCreatedCloudPin}\n지금 메모해 두세요";
+                GUI.Label(new Rect(panel.x + 28f, panel.y + 96f, 344f, 78f),
                     connectionText, centeredStyle);
 
                 if (farmSkin.DrawButton(new Rect(panel.x + 40f, panel.y + 184f, 150f, 46f), "최신 저장 받기", true))
@@ -551,8 +551,8 @@ namespace FarmGame2D.UI
                     session.DisconnectCloudSave();
                 }
 
-                GUI.Label(new Rect(panel.x + 42f, panel.y + 240f, 316f, 50f),
-                    "다른 브라우저에서는 같은 코드와 PIN을 입력하세요.", centeredStyle);
+                GUI.Label(new Rect(panel.x + 28f, panel.y + 240f, 344f, 52f),
+                    "다른 브라우저에서는\n같은 코드와 PIN을 입력하세요.", centeredStyle);
             }
             else
             {

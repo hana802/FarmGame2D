@@ -607,7 +607,7 @@ namespace FarmGame2D.Tests
         {
             var layout = HudLayout.CalculatePhoneLayout();
 
-            Assert.That(layout.Title.xMin, Is.GreaterThanOrEqualTo(layout.Panel.xMin + 120f),
+            Assert.That(layout.Title.xMin, Is.GreaterThanOrEqualTo(layout.Panel.xMin + 180f),
                 "The phone title must clear the illustrated portrait slot.");
             Assert.That(layout.QuestBody.yMin, Is.GreaterThanOrEqualTo(layout.Panel.yMin + 100f),
                 "Quest lines must start below the illustrated header.");

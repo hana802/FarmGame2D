@@ -296,7 +296,7 @@ namespace FarmGame2D.UI
             var panel = new Rect(190f, 80f, 470f, 560f);
             return new PhoneHudLayout(
                 panel,
-                new Rect(panel.x + 120f, panel.y + 28f, 310f, 42f),
+                new Rect(panel.x + 188f, panel.y + 28f, 240f, 42f),
                 new Rect(panel.x + 45f, panel.y + 88f, 180f, 42f),
                 new Rect(panel.x + 245f, panel.y + 88f, 180f, 42f),
                 new Rect(panel.x + 55f, panel.y + 166f, 360f, 92f),
