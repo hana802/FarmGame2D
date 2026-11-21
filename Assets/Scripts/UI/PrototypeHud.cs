@@ -272,32 +272,35 @@ namespace FarmGame2D.UI
                 return;
             }
 
-            if (farmSkin.DrawButton(layout.HoeButton, "호미"))
+            var decorationSelected = session.SelectedDecoration.HasValue;
+            bool ToolSelected(FarmTool tool) => !decorationSelected && session.SelectedTool == tool;
+
+            if (farmSkin.DrawButton(layout.HoeButton, "호미", ToolSelected(FarmTool.Hoe)))
             {
                 session.SelectTool(FarmTool.Hoe);
             }
 
-            if (farmSkin.DrawButton(layout.ShovelButton, "삽"))
+            if (farmSkin.DrawButton(layout.ShovelButton, "삽", ToolSelected(FarmTool.Shovel)))
             {
                 session.SelectTool(FarmTool.Shovel);
             }
 
-            if (farmSkin.DrawButton(layout.SeedsButton, ItemCatalog.GetLabel(session.SelectedSeed), true))
+            if (farmSkin.DrawButton(layout.SeedsButton, ItemCatalog.GetLabel(session.SelectedSeed), ToolSelected(FarmTool.Seeds)))
             {
                 session.SelectSeed(session.SelectedSeed);
             }
 
-            if (farmSkin.DrawButton(layout.WateringCanButton, "물뿌리개"))
+            if (farmSkin.DrawButton(layout.WateringCanButton, "물뿌리개", ToolSelected(FarmTool.WateringCan)))
             {
                 session.SelectTool(FarmTool.WateringCan);
             }
 
-            if (farmSkin.DrawButton(layout.PickaxeButton, session.Data.hasPickaxe ? "곡괭이" : "곡괭이 (미보유)"))
+            if (farmSkin.DrawButton(layout.PickaxeButton, session.Data.hasPickaxe ? "곡괭이" : "곡괭이 (미보유)", ToolSelected(FarmTool.Pickaxe)))
             {
                 session.SelectTool(FarmTool.Pickaxe);
             }
 
-            if (farmSkin.DrawButton(layout.FishingRodButton, "낚싯대"))
+            if (farmSkin.DrawButton(layout.FishingRodButton, "낚싯대", ToolSelected(FarmTool.FishingRod)))
             {
                 session.SelectTool(FarmTool.FishingRod);
             }
@@ -307,7 +310,8 @@ namespace FarmGame2D.UI
             {
                 var count = session.Data.inventory.Count(crop.Seed);
                 var label = $"{crop.Label} 씨앗 ×{count} · {GetSeasonLabel(crop.Season)}";
-                if (farmSkin.DrawButton(layout.GetSeedButton(seedIndex), label, crop.Seed == session.SelectedSeed))
+                var seedSelected = ToolSelected(FarmTool.Seeds) && crop.Seed == session.SelectedSeed;
+                if (farmSkin.DrawButton(layout.GetSeedButton(seedIndex), label, seedSelected))
                 {
                     session.SelectSeed(crop.Seed);
                 }
@@ -328,8 +332,9 @@ namespace FarmGame2D.UI
 
             var axeButton = new Rect(layout.Panel.x + 48f, layout.CloseButton.y, 138f, layout.CloseButton.height);
             var sprinklerButton = new Rect(layout.Panel.xMax - 204f, layout.CloseButton.y, 156f, layout.CloseButton.height);
-            if (farmSkin.DrawButton(axeButton, "도끼")) session.SelectTool(FarmTool.Axe);
-            if (farmSkin.DrawButton(sprinklerButton, $"스프링클러 ×{session.Data.inventory.Count(GameItem.Sprinkler)}"))
+            if (farmSkin.DrawButton(axeButton, "도끼", ToolSelected(FarmTool.Axe))) session.SelectTool(FarmTool.Axe);
+            if (farmSkin.DrawButton(sprinklerButton, $"스프링클러 ×{session.Data.inventory.Count(GameItem.Sprinkler)}",
+                    session.SelectedDecoration == GameItem.Sprinkler))
                 session.SelectDecoration(GameItem.Sprinkler);
 
             if (farmSkin.DrawButton(layout.CloseButton, "닫기"))
