@@ -189,9 +189,7 @@ namespace FarmGame2D.Interactions
                 return;
             }
 
-            var replay = BondEventService.GetNpcEndingForReplay(data, npcId);
-            var weddingReplay = BondEventService.GetWeddingForReplay(data, npcId);
-            var height = replay.HasValue || weddingReplay.HasValue ? 138f : 94f;
+            const float height = 94f;
             var panel = new Rect(left, bottom - height, width, height);
             farmSkin.DrawBanner(panel);
             var points = NpcFriendshipService.GetPoints(data, npcId);
@@ -215,14 +213,6 @@ namespace FarmGame2D.Interactions
                 Close();
                 return;
             }
-            if (replay.HasValue && farmSkin.DrawButton(ActionButton(panel, 0, 1), "우정 엔딩 다시 보기"))
-            {
-                activeBondEvent = replay;
-                bondPage = 0;
-                KeepDialogueOpen();
-            }
-            if (weddingReplay.HasValue && farmSkin.DrawButton(ActionButton(panel, replay.HasValue ? 1 : 0, 1), "결혼식 다시 보기"))
-                PlayWedding(weddingReplay.Value);
         }
 
         private static Rect ActionButton(Rect panel, int column, int row) =>

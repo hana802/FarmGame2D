@@ -34,7 +34,7 @@ namespace FarmGame2D.Tests
             NpcInteractionOverlay.Show("Baker Yuna", "제빵사 유나", 6, () => "좋은 아침이에요.");
             Assert.That(WeddingCeremonyOverlay.IsPlaying, Is.True);
             Assert.That(NpcInteractionOverlay.IsOpen, Is.True);
-            Assert.That(BondEventService.GetPendingWedding(session.Data, "Baker Yuna").HasValue, Is.True);
+            Assert.That(BondEventService.GetPendingWedding(session.Data, "Baker Yuna"), Is.Null);
 
             var screenshotPath = Environment.GetEnvironmentVariable("FARM_GAME_WEDDING_SCREENSHOT");
             if (!string.IsNullOrWhiteSpace(screenshotPath))
@@ -48,7 +48,9 @@ namespace FarmGame2D.Tests
             UnityEngine.Object.Destroy(ceremony.gameObject);
             yield return null;
             Assert.That(WeddingCeremonyOverlay.IsPlaying, Is.False);
-            Assert.That(session.Data.weddingSeen, Is.False, "Leaving early must not mark the wedding complete.");
+            Assert.That(session.Data.weddingSeen, Is.True, "Leaving the first presentation must keep its achievement.");
+            NpcInteractionOverlay.Show("Baker Yuna", "제빵사 유나", 6, () => "좋은 아침이에요.");
+            Assert.That(WeddingCeremonyOverlay.IsPlaying, Is.False);
         }
     }
 }

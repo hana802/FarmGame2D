@@ -10,7 +10,8 @@ namespace FarmGame2D.UI
     internal enum PhonePage
     {
         Farm,
-        Settings
+        Settings,
+        Achievements
     }
 
     public sealed partial class PrototypeHud : MonoBehaviour
@@ -346,7 +347,7 @@ namespace FarmGame2D.UI
         {
             var layout = HudLayout.CalculatePhoneLayout();
             farmSkin.DrawWindow(layout.Panel);
-            GUI.Label(layout.Title, "농장 휴대폰", titleStyle);
+            GUI.Label(layout.Title, phonePage == PhonePage.Achievements ? "도전과제" : "농장 휴대폰", titleStyle);
 
             if (exitConfirmationPending)
             {
@@ -355,7 +356,12 @@ namespace FarmGame2D.UI
             }
 
             DrawPhoneTabs(layout);
-            if (phonePage == PhonePage.Farm)
+            if (phonePage == PhonePage.Achievements)
+            {
+                DrawAchievements(session, new Rect(layout.Panel.x + 30f, layout.FarmTabButton.yMax + 14f,
+                    layout.Panel.width - 60f, layout.CloseButton.yMin - layout.FarmTabButton.yMax - 25f));
+            }
+            else if (phonePage == PhonePage.Farm)
             {
                 DrawPhoneFarmTab(session, layout);
                 DrawCloudSync(session, layout.Panel);
@@ -374,15 +380,21 @@ namespace FarmGame2D.UI
 
         private void DrawPhoneTabs(PhoneHudLayout layout)
         {
-            if (farmSkin.DrawButton(layout.FarmTabButton, "농장", phonePage == PhonePage.Farm))
+            if (farmSkin.DrawButton(GetPhoneTab(layout, 0), "농장", phonePage == PhonePage.Farm))
             {
                 phonePage = PhonePage.Farm;
                 exitNotice = string.Empty;
             }
 
-            if (farmSkin.DrawButton(layout.SettingsTabButton, "설정", phonePage == PhonePage.Settings))
+            if (farmSkin.DrawButton(GetPhoneTab(layout, 1), "설정", phonePage == PhonePage.Settings))
             {
                 phonePage = PhonePage.Settings;
+                exitNotice = string.Empty;
+            }
+            if (farmSkin.DrawButton(GetPhoneTab(layout, 2), "도전과제", phonePage == PhonePage.Achievements))
+            {
+                if (phonePage != PhonePage.Achievements) achievementScroll = Vector2.zero;
+                phonePage = PhonePage.Achievements;
                 exitNotice = string.Empty;
             }
         }

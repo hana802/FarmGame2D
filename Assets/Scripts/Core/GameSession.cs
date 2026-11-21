@@ -230,8 +230,9 @@ namespace FarmGame2D.Core
                 var collected = Data.readyEggs;
                 Data.readyEggs = 0;
                 Data.inventory.Add(GameItem.Egg, collected);
+                var firstEgg = !Data.firstEggAchievement;
                 Data.firstEggAchievement = true;
-                Message = $"달걀을 {collected}개 모았습니다. 도전 과제: 첫 달걀!";
+                Message = $"달걀을 {collected}개 모았습니다." + (firstEgg ? " 도전 과제: 첫 달걀!" : string.Empty);
                 CompleteCurrentStarterQuest();
                 NotifyChanged();
                 return;
@@ -301,8 +302,7 @@ namespace FarmGame2D.Core
             };
             NotifyChanged();
             SaveSilently();
-            var bondEvent = BondEventService.GetPendingDogEvent(Data)
-                ?? BondEventService.GetDogEventForReplay(Data);
+            var bondEvent = BondEventService.GetPendingDogEvent(Data);
             if (bondEvent.HasValue) DogBondCelebration.Show(bondEvent.Value, this);
         }
 
@@ -1063,8 +1063,9 @@ namespace FarmGame2D.Core
             plot.ResetToTilled();
             Data.inventory.Add(produce, 1);
             Data.wheatHarvested++;
+            var firstHarvest = !Data.firstHarvestAchievement;
             Data.firstHarvestAchievement = true;
-            Message = $"{ItemCatalog.GetLabel(produce)}을 수확했습니다. 도전 과제: 첫 수확!";
+            Message = $"{ItemCatalog.GetLabel(produce)}을 수확했습니다." + (firstHarvest ? " 도전 과제: 첫 수확!" : string.Empty);
             GameAudioController.Play(GameAudioCue.HarvestCrop);
 
             CompleteCurrentStarterQuest();
