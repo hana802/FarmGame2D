@@ -32,12 +32,6 @@ namespace FarmGame2D.Core
             return CreateNpcEnding(npcId);
         }
 
-        public static BondEventDefinition? GetNpcEndingForReplay(GameSaveData data, string npcId)
-        {
-            var friendship = NpcFriendshipService.GetOrCreate(data, npcId);
-            return friendship != null && friendship.points >= NpcFriendshipService.MaxPoints ? CreateNpcEnding(npcId) : null;
-        }
-
         public static BondEventDefinition? GetMarriageProposal(GameSaveData data, string npcId)
         {
             var friendship = NpcFriendshipService.GetOrCreate(data, npcId);
@@ -60,27 +54,12 @@ namespace FarmGame2D.Core
             return IsSpouse(data, npcId) && !data.weddingSeen ? CreateWedding(npcId) : null;
         }
 
-        public static BondEventDefinition? GetWeddingForReplay(GameSaveData data, string npcId)
-        {
-            return IsSpouse(data, npcId) && data.weddingSeen ? CreateWedding(npcId) : null;
-        }
-
         public static BondEventDefinition? GetPendingDogEvent(GameSaveData data)
         {
             if (data == null) return null;
             if (data.dogAffection >= DogEndingThreshold && !data.dogEndingSeen)
                 return CreateDogEnding();
             if (data.dogAffection >= DogCompanionThreshold && !data.dogCompanionEventSeen && !data.dogEndingSeen)
-                return CreateDogCompanion();
-            return null;
-        }
-
-        public static BondEventDefinition? GetDogEventForReplay(GameSaveData data)
-        {
-            if (data == null) return null;
-            if (data.dogAffection >= DogEndingThreshold && data.dogEndingSeen)
-                return CreateDogEnding();
-            if (data.dogAffection >= DogCompanionThreshold && data.dogCompanionEventSeen)
                 return CreateDogCompanion();
             return null;
         }
@@ -128,14 +107,19 @@ namespace FarmGame2D.Core
                    string.Equals(data.spouseNpcId, npcId, StringComparison.Ordinal);
         }
 
-        private static BondEventDefinition CreateWedding(string npcId)
+        internal static string GetResidentName(string npcId)
         {
-            var name = npcId switch
+            return npcId switch
             {
                 "Guide" => "하람", "Elder" => "순자", "Young Villager" => "도윤",
                 "Fisher Minseo" => "민서", "Florist Taeo" => "태오",
                 "Baker Yuna" => "유나", "Rancher Sora" => "소라", _ => "소중한 사람"
             };
+        }
+
+        private static BondEventDefinition CreateWedding(string npcId)
+        {
+            var name = GetResidentName(npcId);
             return new BondEventDefinition(BondEventKind.Wedding, npcId, "우리의 결혼식",
                 $"마을 사람들의 축하 속에서 당신과 {name}가 나란히 섰습니다.",
                 $"{name}가 당신의 손을 잡습니다. 함께 기쁜 날도 어려운 날도 나누기로 약속합니다.",

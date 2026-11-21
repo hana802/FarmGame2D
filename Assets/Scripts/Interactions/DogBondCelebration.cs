@@ -15,7 +15,6 @@ namespace FarmGame2D.Interactions
         private static DogBondCelebration instance;
 
         private BondEventDefinition bondEvent;
-        private GameSession session;
         private DogCompanionController dog;
         private float elapsed;
         private int currentLine;
@@ -26,15 +25,17 @@ namespace FarmGame2D.Interactions
 
         public static void Show(BondEventDefinition eventToShow, GameSession gameSession)
         {
-            if (instance != null || gameSession == null || eventToShow.Lines == null || eventToShow.Lines.Length == 0)
+            if (instance != null || eventToShow.Lines == null || eventToShow.Lines.Length == 0
+                || BondEventService.GetPendingDogEvent(gameSession?.Data)?.Kind != eventToShow.Kind)
                 return;
 
             var host = new GameObject("Dog Bond Celebration");
             instance = host.AddComponent<DogBondCelebration>();
             instance.bondEvent = eventToShow;
-            instance.session = gameSession;
             instance.dog = FindAnyObjectByType<DogCompanionController>();
             instance.dog?.Celebrate();
+            BondEventService.Complete(gameSession.Data, eventToShow);
+            gameSession.SaveCurrentStateSilently();
         }
 
         private void Update()
@@ -43,8 +44,6 @@ namespace FarmGame2D.Interactions
             var nextLine = Mathf.FloorToInt(elapsed / LineDuration);
             if (nextLine >= bondEvent.Lines.Length)
             {
-                BondEventService.Complete(session.Data, bondEvent);
-                session.SaveCurrentStateSilently();
                 Destroy(gameObject);
                 return;
             }

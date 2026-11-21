@@ -196,7 +196,9 @@ namespace FarmGame2D.Interactions
                 return;
             }
 
-            DrawOptionalActions(gift, data);
+            var chore = new Rect(gift.x, gift.yMax + 5f, gift.width, 33f);
+            if (GameSession.Instance.HasSpouseFarmHelp(npcId) && farmSkin.DrawButton(chore, "농장일 부탁하기", true))
+                OpenFarmHelp();
         }
 
         private void DrawFriendship(Rect badge, GameSaveData data)
@@ -208,36 +210,6 @@ namespace FarmGame2D.Interactions
             farmSkin.DrawPixelPanel(badge, new Color32(250, 235, 208, 255), new Color32(198, 155, 116, 255), false);
             GUI.Label(badge, $"{relation}   <color=#984C44>{heartText}</color>   {points}/{NpcFriendshipService.MaxPoints}",
                 actionCaptionStyle);
-        }
-
-        private void DrawOptionalActions(Rect gift, GameSaveData data)
-        {
-            const float gap = 10f;
-            var width = (gift.width - gap) * 0.5f;
-            var replay = BondEventService.GetNpcEndingForReplay(data, npcId);
-            var wedding = BondEventService.GetWeddingForReplay(data, npcId);
-            var row = new Rect(gift.x, gift.yMax + 5f, width, 26f);
-            if (replay.HasValue && farmSkin.DrawButton(row, "우정 엔딩 다시 보기"))
-            {
-                OpenBondReplay(replay.Value);
-                return;
-            }
-            if (replay.HasValue) row.x += width + gap;
-            if (wedding.HasValue && farmSkin.DrawButton(row, "결혼식 다시 보기"))
-            {
-                PlayWedding(wedding.Value);
-                return;
-            }
-
-            var chore = new Rect(gift.x, gift.yMax + 34f, gift.width, 26f);
-            if (GameSession.Instance.HasSpouseFarmHelp(npcId) && farmSkin.DrawButton(chore, "농장일 부탁하기", true))
-                OpenFarmHelp();
-        }
-
-        private void OpenBondReplay(BondEventDefinition replay)
-        {
-            activeBondEvent = replay;
-            bondPage = 0;
         }
 
         private void DrawGiftSelection(Rect panel, GameSaveData data)

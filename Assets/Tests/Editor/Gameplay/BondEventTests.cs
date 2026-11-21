@@ -1,3 +1,4 @@
+using System.Linq;
 using FarmGame2D.Core;
 using NUnit.Framework;
 
@@ -6,7 +7,7 @@ namespace FarmGame2D.Tests.Editor.Gameplay
     public sealed class BondEventTests
     {
         [Test]
-        public void NpcEnding_UnlocksAtOneHundredAndStaysReplayable()
+        public void NpcEnding_UnlocksAtOneHundredAndRemainsRecorded()
         {
             var save = GameSaveData.CreateNew(0, 1);
             var friend = NpcFriendshipService.GetOrCreate(save, "Baker Yuna");
@@ -19,7 +20,7 @@ namespace FarmGame2D.Tests.Editor.Gameplay
             Assert.That(ending.Value.Lines.Length, Is.GreaterThanOrEqualTo(2));
             BondEventService.Complete(save, ending.Value);
             Assert.That(BondEventService.GetPendingNpcEnding(save, "Baker Yuna"), Is.Null);
-            Assert.That(BondEventService.GetNpcEndingForReplay(save, "Baker Yuna").HasValue, Is.True);
+            Assert.That(NpcFriendshipService.GetOrCreate(save, "Baker Yuna").endingSeen, Is.True);
         }
 
         [Test]
@@ -47,11 +48,11 @@ namespace FarmGame2D.Tests.Editor.Gameplay
             Assert.That(final.HasValue, Is.True);
             BondEventService.Complete(save, final.Value);
             Assert.That(BondEventService.GetPendingDogEvent(save), Is.Null);
-            Assert.That(BondEventService.GetDogEventForReplay(save)?.Kind, Is.EqualTo(BondEventKind.DogEnding));
+            Assert.That(save.dogEndingSeen, Is.True);
         }
 
         [Test]
-        public void SeenDogEnding_CanBeReplayedWithoutResettingProgress()
+        public void SeenDogEnding_IsNotPendingAgain()
         {
             var save = GameSaveData.CreateNew(0, 1);
             save.dogAffection = 361;
@@ -59,7 +60,6 @@ namespace FarmGame2D.Tests.Editor.Gameplay
             save.dogEndingSeen = true;
 
             Assert.That(BondEventService.GetPendingDogEvent(save), Is.Null);
-            Assert.That(BondEventService.GetDogEventForReplay(save)?.Title, Is.EqualTo("언제나 함께"));
             Assert.That(save.dogAffection, Is.EqualTo(361));
             Assert.That(save.dogEndingSeen, Is.True);
         }
@@ -74,6 +74,22 @@ namespace FarmGame2D.Tests.Editor.Gameplay
             BondEventService.Complete(save, ending.Value);
             Assert.That(save.dogCompanionEventSeen, Is.True);
             Assert.That(save.dogEndingSeen, Is.True);
+        }
+
+        [Test]
+        public void Achievements_UseLegacySeenFlagsAfterReload()
+        {
+            var save = GameSaveData.CreateNew(0, 1);
+            save.spouseNpcId = "Baker Yuna";
+            save.weddingSeen = true;
+            save.dogCompanionEventSeen = true;
+            NpcFriendshipService.GetOrCreate(save, "Guide").endingSeen = true;
+            var restored = UnityEngine.JsonUtility.FromJson<GameSaveData>(UnityEngine.JsonUtility.ToJson(save));
+            var records = FarmAchievements.GetAll(restored).ToArray();
+
+            Assert.That(records.First(record => record.Title == "우리의 결혼식").Detail, Does.Contain("유나"));
+            Assert.That(records.Where(record => record.Earned).Select(record => record.Title),
+                Is.EqualTo(new[] { "우리의 결혼식", "친구가 된 날", "하람 님과의 우정" }));
         }
 
         [Test]
@@ -122,7 +138,7 @@ namespace FarmGame2D.Tests.Editor.Gameplay
             Assert.That(BondEventService.GetPendingWedding(save, "Florist Taeo").HasValue, Is.True);
             BondEventService.Complete(save, wedding.Value);
             Assert.That(BondEventService.GetPendingWedding(save, "Florist Taeo"), Is.Null);
-            Assert.That(BondEventService.GetWeddingForReplay(save, "Florist Taeo").HasValue, Is.True);
+            Assert.That(save.weddingSeen, Is.True);
 
             var service = new SaveService();
             Assert.That(service.TrySerialize(save, out var json), Is.True);

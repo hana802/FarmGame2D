@@ -11,7 +11,8 @@ namespace FarmGame2D.UI
     internal enum PhonePage
     {
         Farm,
-        Settings
+        Settings,
+        Achievements
     }
 
     public sealed partial class PrototypeHud : MonoBehaviour
@@ -406,7 +407,7 @@ namespace FarmGame2D.UI
             FarmGuiSkin.DrawSolid(new Rect(0f, 0f, HudLayout.ReferenceWidth, HudLayout.ReferenceHeight), CanvasScrim);
             phoneSkin.DrawNotebook(layout.Panel, layout.Screen);
             phoneSkin.DrawHeader(layout.Header, layout.Title);
-            GUI.Label(layout.Title, settings ? "설정" : "농장 수첩", phoneTitleStyle);
+            GUI.Label(layout.Title, phonePage == PhonePage.Achievements ? "도전과제" : settings ? "설정" : "농장 수첩", phoneTitleStyle);
 
             if (phoneSkin.DrawClose(layout.CloseButton))
             {
@@ -422,6 +423,11 @@ namespace FarmGame2D.UI
             }
 
             DrawPhoneTabs(layout);
+            if (phonePage == PhonePage.Achievements)
+            {
+                DrawAchievements(session, Rect.MinMaxRect(layout.Content.x, layout.Content.y, layout.CloudPanel.xMax, layout.Content.yMax));
+                return;
+            }
             phoneSkin.DrawPageSeam(layout.Content, layout.CloudPanel);
             if (settings)
             {
@@ -436,15 +442,21 @@ namespace FarmGame2D.UI
 
         private void DrawPhoneTabs(PhoneHudLayout layout)
         {
-            if (DrawPhoneTab(layout.FarmTabButton, "농장", PhonePage.Farm))
+            if (DrawPhoneTab(GetPhoneTab(layout, 0), "농장", PhonePage.Farm))
             {
                 phonePage = PhonePage.Farm;
                 exitNotice = string.Empty;
             }
 
-            if (DrawPhoneTab(layout.SettingsTabButton, "설정", PhonePage.Settings))
+            if (DrawPhoneTab(GetPhoneTab(layout, 1), "설정", PhonePage.Settings))
             {
                 phonePage = PhonePage.Settings;
+                exitNotice = string.Empty;
+            }
+            if (DrawPhoneTab(GetPhoneTab(layout, 2), "도전과제", PhonePage.Achievements))
+            {
+                if (phonePage != PhonePage.Achievements) achievementScroll = Vector2.zero;
+                phonePage = PhonePage.Achievements;
                 exitNotice = string.Empty;
             }
         }

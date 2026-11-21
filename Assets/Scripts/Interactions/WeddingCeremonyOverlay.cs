@@ -26,7 +26,8 @@ namespace FarmGame2D.Interactions
 
         public static void Show(BondEventDefinition wedding, GameSession gameSession, string displayName)
         {
-            if (instance != null || gameSession == null || wedding.Kind != BondEventKind.Wedding) return;
+            if (instance != null || wedding.Kind != BondEventKind.Wedding
+                || BondEventService.GetPendingWedding(gameSession?.Data, wedding.NpcId) == null) return;
 
             var host = new GameObject("Wedding Ceremony");
             DontDestroyOnLoad(host);
@@ -34,6 +35,8 @@ namespace FarmGame2D.Interactions
             instance.ceremony = wedding;
             instance.session = gameSession;
             instance.spouseName = displayName;
+            BondEventService.Complete(gameSession.Data, wedding);
+            gameSession.SaveCurrentStateSilently();
         }
 
         private void Update()
@@ -75,22 +78,15 @@ namespace FarmGame2D.Interactions
 
             if (elapsed >= CeremonyDuration)
             {
-                if (GUI.Button(new Rect(650f, 842f, 300f, 48f), "결혼식 마치기", buttonStyle)) Finish();
+                if (GUI.Button(new Rect(650f, 842f, 300f, 48f), "결혼식 마치기", buttonStyle)) Destroy(gameObject);
             }
-            else if (GUI.Button(new Rect(1390f, 20f, 170f, 45f), "나중에 보기", buttonStyle))
+            else if (GUI.Button(new Rect(1390f, 20f, 170f, 45f), "건너뛰기", buttonStyle))
             {
                 Destroy(gameObject);
             }
 
             GUI.matrix = oldMatrix;
             GUI.depth = oldDepth;
-        }
-
-        private void Finish()
-        {
-            BondEventService.Complete(session.Data, ceremony);
-            session.SaveCurrentStateSilently();
-            Destroy(gameObject);
         }
 
         private void EnsureStyles()
