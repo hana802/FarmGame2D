@@ -541,12 +541,12 @@ namespace FarmGame2D.UI
                 GUI.Label(new Rect(panel.x + 28f, panel.y + 96f, 344f, 78f),
                     connectionText, centeredStyle);
 
-                if (farmSkin.DrawButton(new Rect(panel.x + 24f, panel.y + 268f, 170f, 46f), "최신 저장 받기", true))
+                if (farmSkin.DrawButton(new Rect(panel.x + 24f, panel.y + 286f, 170f, 46f), "최신 저장 받기", true))
                 {
                     session.LoadCloudSave();
                 }
 
-                if (farmSkin.DrawButton(new Rect(panel.x + 206f, panel.y + 268f, 170f, 46f), "연결 해제"))
+                if (farmSkin.DrawButton(new Rect(panel.x + 206f, panel.y + 286f, 170f, 46f), "연결 해제"))
                 {
                     session.DisconnectCloudSave();
                 }
