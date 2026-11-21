@@ -35,7 +35,9 @@ namespace FarmGame2D.Core
             { GameItem.StreetLamp, "가로등" },
             { GameItem.TownBench, "마을 벤치" },
             { GameItem.Wood, "목재" },
-            { GameItem.Sprinkler, "스프링클러" }
+            { GameItem.Sprinkler, "스프링클러" },
+            { GameItem.PotatoSoup, "감자 수프" },
+            { GameItem.TomatoOmelet, "토마토 오믈렛" }
         };
 
         private static readonly Dictionary<GameItem, int> SellPrices = new()
@@ -63,6 +65,9 @@ namespace FarmGame2D.Core
             {
                 return crop.SellPrice;
             }
+
+            foreach (var recipe in BuildingUpgradeCatalog.Recipes)
+                if (recipe.Result == item) return recipe.SellPrice;
 
             return SellPrices.TryGetValue(item, out var price) ? price : 0;
         }

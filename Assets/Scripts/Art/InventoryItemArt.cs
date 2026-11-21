@@ -24,6 +24,8 @@ namespace FarmGame2D.Art
                 GameItem.RiverFish => (Fish, 0x4e807b, 0x82ad83, 0xc1e4ac),
                 GameItem.SeaBass => (Fish, 0x4f7e9c, 0x82b3ca, 0xc9e9ee),
                 GameItem.GoldenCarp => (Fish, 0xb16b38, 0xeaa44c, 0xffe28e),
+                GameItem.PotatoSoup => (Soup, 0x9c6241, 0xeca752, 0xffe2ad),
+                GameItem.TomatoOmelet => (Omelet, 0xbb623c, 0xf4bc52, 0xfff0a6),
                 _ => (null, 0, 0, 0)
             };
             if (rows == null) return null;
@@ -74,6 +76,16 @@ namespace FarmGame2D.Art
         {
             ".....00.....", "....0210...0", "..0032220.00", ".03222021010", "032223221210",
             "022222221210", ".01222111010", "..0011100.00", ".....010...0", "......0....."
+        };
+        private static readonly string[] Soup =
+        {
+            "..3...3.....", "...3...3....", "..3...3.....", "..00000000..", ".0223332220.",
+            "032222222230", "021111111120", ".0222222220.", "..01111110..", "...000000..."
+        };
+        private static readonly string[] Omelet =
+        {
+            "............", "....0000....", "..00333200..", ".0333222220.", "032322121220",
+            "022221221220", ".0111222110.", "..00111100..", "....0000....", "............"
         };
     }
 }

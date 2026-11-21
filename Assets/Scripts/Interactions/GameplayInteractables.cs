@@ -109,40 +109,6 @@ namespace FarmGame2D.Interactions
         }
     }
 
-    public sealed class HouseUpgradeInteractable : InteractableBehaviour
-    {
-        private float confirmUntil;
-
-        public override string Prompt => GameSession.Instance != null && GameSession.Instance.Data.houseUpgraded
-            ? "고친 집 살펴보기"
-            : "집 고치기";
-
-        public override void Interact(PrototypePlayerController player)
-        {
-            var session = GameSession.Instance;
-            if (session == null)
-            {
-                return;
-            }
-
-            if (session.Data.houseUpgraded)
-            {
-                session.ShowMessage("마루와 벽을 목재, 돌, 철 광석으로 고쳐 두었습니다.");
-                return;
-            }
-
-            if (Time.unscaledTime >= confirmUntil)
-            {
-                confirmUntil = Time.unscaledTime + 6f;
-                session.ShowMessage(MaterialProject.Describe("집 수리", MaterialProject.House) + ". E로 고칩니다.");
-                return;
-            }
-
-            confirmUntil = 0f;
-            session.UpgradeHouse();
-        }
-    }
-
     public sealed class BedInteractable : InteractableBehaviour
     {
         public override string Prompt => "취침하고 다음 날로 이동";

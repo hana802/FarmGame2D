@@ -11,6 +11,8 @@ namespace FarmGame2D.World
         public const int OutdoorReferenceHeight = 270;
         public const int InteriorReferenceWidth = 400;
         public const int InteriorReferenceHeight = 225;
+        public const float HouseExpansionDepth = 3.4f;
+        public static readonly Vector2 FarmConstructionSite = new(3.05f, -13.15f);
         public static readonly Vector2 FarmhouseInteriorCenter = new(40f, -9.25f);
 
         public static bool IsInterior(Vector2 position)

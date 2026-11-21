@@ -132,14 +132,17 @@ namespace FarmGame2D.UI
         private bool TryOpenClickedSellBox(Vector2 screenPosition)
         {
             if (!(Camera.main is Camera worldCamera)) return false;
-            var sellBox = FindAnyObjectByType<SellBoxInteractable>();
-            if (sellBox == null || Vector2.Distance(player.transform.position, sellBox.transform.position) > 1.8f) return false;
-            if (!sellBox.TryGetComponent<SpriteRenderer>(out var boxRenderer)) return false;
             var point = worldCamera.ScreenToWorldPoint(screenPosition);
-            point.z = boxRenderer.bounds.center.z;
-            if (!boxRenderer.bounds.Contains(point)) return false;
-            sellBox.Interact(player);
-            return true;
+            foreach (var sellBox in FindObjectsByType<SellBoxInteractable>(FindObjectsSortMode.None))
+            {
+                if (Vector2.Distance(player.transform.position, sellBox.transform.position) > 1.8f
+                    || !sellBox.TryGetComponent<SpriteRenderer>(out var boxRenderer)) continue;
+                point.z = boxRenderer.bounds.center.z;
+                if (!boxRenderer.bounds.Contains(point)) continue;
+                sellBox.Interact(player);
+                return true;
+            }
+            return false;
         }
     }
 }

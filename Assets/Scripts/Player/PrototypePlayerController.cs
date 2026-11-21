@@ -61,7 +61,8 @@ namespace FarmGame2D.Player
             if (IsMining) return;
 
             if (GameSession.Instance.InventoryOpen || GameSession.Instance.PhoneOpen || GameSession.Instance.ShopOpen
-                || GameSession.Instance.QuestBoardOpen || GameSession.Instance.SellBoxOpen || NpcInteractionOverlay.IsOpen)
+                || GameSession.Instance.QuestBoardOpen || GameSession.Instance.SellBoxOpen
+                || GameSession.Instance.OpenFacility != FarmFacility.None || NpcInteractionOverlay.IsOpen)
             {
                 moveInput = Vector2.zero;
                 UpdateCharacterVisual(false);

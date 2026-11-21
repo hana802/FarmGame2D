@@ -11,6 +11,8 @@ namespace FarmGame2D.World
     {
         private GameSession session;
         private GameObject building, interior, sign;
+        private GameObject glassWingLeft, glassWingRight, vent;
+        private GameObject baseBackWall, firstExtension, firstBackWall, finalExtension;
         private float confirmUntil;
 
         public override string Prompt => Time.unscaledTime < confirmUntil
@@ -55,12 +57,23 @@ namespace FarmGame2D.World
             GetComponent<BoxCollider2D>().enabled = !built;
             building.SetActive(built);
             interior.SetActive(built);
+            var level = session.Data.greenhouseUpgradeLevel;
+            glassWingLeft.SetActive(level >= 1);
+            glassWingRight.SetActive(level >= 2);
+            vent.SetActive(level >= 2);
+            baseBackWall.SetActive(level == 0);
+            firstExtension.SetActive(level >= 1);
+            firstBackWall.SetActive(level == 1);
+            finalExtension.SetActive(level >= 2);
         }
 
         private GameObject CreateExterior()
         {
             var site = GreenhouseLayout.Site;
             var outside = CreateSprite("Greenhouse Exterior", site, FarmEquipmentArt.Greenhouse, transform);
+            glassWingLeft = AddExteriorGlass("West glass wing", site + new Vector2(-1.5f, 1.12f), FarmBuildingArt.GlassWing, outside);
+            glassWingRight = AddExteriorGlass("East glass wing", site + new Vector2(1.5f, 1.12f), FarmBuildingArt.GlassWing, outside);
+            vent = AddExteriorGlass("Roof vent", site + Vector2.up * 2.93f, FarmBuildingArt.RoofVent, outside);
             var wall = outside.AddComponent<BoxCollider2D>();
             wall.size = new Vector2(4.5f, 1.3f);
             wall.offset = Vector2.up * 0.82f;
@@ -82,15 +95,12 @@ namespace FarmGame2D.World
                 PrototypeSpriteFactory.CreateBlock("Greenhouse Floor Tile", center + new Vector2(x + 0.5f, y + 0.5f),
                     Vector2.one, (x + y) % 2 == 0 ? tile : lightTile, room.transform);
 
-            AddWall(room.transform, center + Vector2.up * 2.9f, new Vector2(8.2f, 0.36f), jade);
+            baseBackWall = AddBackWall(room.transform, center, 0, jade);
             AddWall(room.transform, center + Vector2.left * 3.9f, new Vector2(0.35f, 6f), jade);
             AddWall(room.transform, center + Vector2.right * 3.9f, new Vector2(0.35f, 6f), jade);
             AddWall(room.transform, center + new Vector2(-2.25f, -2.9f), new Vector2(3.5f, 0.36f), jade);
             AddWall(room.transform, center + new Vector2(2.25f, -2.9f), new Vector2(3.5f, 0.36f), jade);
             AddWall(room.transform, center - Vector2.up * 2.98f, new Vector2(1f, 0.2f), jade);
-            for (var x = -3; x <= 3; x++)
-                PrototypeSpriteFactory.CreateBlock("Glass Pane", center + new Vector2(x, 2.55f),
-                    new Vector2(0.92f, 0.28f), new Color32(163, 209, 190, 255), room.transform);
             AddDoor(room.transform, center - Vector2.up * 2.7f,
                 GreenhouseLayout.Site - Vector2.up * 1.1f, "온실에서 나가기");
             var shelf = PrototypeSpriteFactory.CreateBlock(
@@ -102,7 +112,49 @@ namespace FarmGame2D.World
                 true);
             shelf.GetComponent<BoxCollider2D>().isTrigger = true;
             shelf.AddComponent<ShopInteractable>().Configure(ShopKind.Greenhouse);
+            firstExtension = AddGrowingRoom(room.transform, center, 1, jade, tile, lightTile);
+            firstBackWall = AddBackWall(firstExtension.transform, center, 1, jade);
+            finalExtension = AddGrowingRoom(room.transform, center, 2, jade, tile, lightTile);
+            AddBackWall(finalExtension.transform, center, 2, jade);
+            var pipe = PrototypeSpriteFactory.CreateBlock("Irrigation main", center + new Vector2(0f, 4.25f),
+                new Vector2(7.4f, 0.14f), new Color32(86, 135, 146, 255), finalExtension.transform);
+            pipe.GetComponent<SpriteRenderer>().sortingOrder = 1;
             return room;
+        }
+
+        private static GameObject AddExteriorGlass(string name, Vector2 position, Sprite sprite, GameObject exterior)
+        {
+            var detail = CreateSprite(name, position, sprite, exterior.transform);
+            detail.GetComponent<SpriteRenderer>().sortingOrder = exterior.GetComponent<SpriteRenderer>().sortingOrder + 1;
+            return detail;
+        }
+
+        private static GameObject AddGrowingRoom(Transform parent, Vector2 center, int stage, Color wall, Color tile, Color lightTile)
+        {
+            var room = new GameObject($"Greenhouse Extension {stage}");
+            room.transform.SetParent(parent);
+            var depth = GreenhouseLayout.ExpansionDepth;
+            var lowerEdge = 3f + (stage - 1) * depth;
+            for (var x = -4; x < 4; x++)
+            for (var y = 0; y < (int)depth; y++)
+                PrototypeSpriteFactory.CreateBlock("Extension Floor Tile", center + new Vector2(x + 0.5f, lowerEdge + y + 0.5f),
+                    Vector2.one, (x + y) % 2 == 0 ? lightTile : tile, room.transform);
+
+            foreach (var x in new[] { -3.9f, 3.9f })
+                AddWall(room.transform, center + new Vector2(x, lowerEdge + depth / 2f), new Vector2(0.35f, depth + 0.14f), wall);
+            return room;
+        }
+
+        private static GameObject AddBackWall(Transform parent, Vector2 center, int stage, Color jade)
+        {
+            var wall = new GameObject("Greenhouse Back Wall");
+            wall.transform.SetParent(parent);
+            var top = 2.9f + stage * GreenhouseLayout.ExpansionDepth;
+            AddWall(wall.transform, center + Vector2.up * top, new Vector2(8.2f, 0.36f), jade);
+            for (var x = -3; x <= 3; x++)
+                PrototypeSpriteFactory.CreateBlock("Glass Pane", center + new Vector2(x, top - 0.35f),
+                    new Vector2(0.92f, 0.28f), new Color32(163, 209, 190, 255), wall.transform);
+            return wall;
         }
 
         private static void AddWall(Transform parent, Vector2 position, Vector2 size, Color color)

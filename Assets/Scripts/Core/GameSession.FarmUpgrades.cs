@@ -52,32 +52,9 @@ namespace FarmGame2D.Core
             }
 
             Data.greenhouseBuilt = true;
-            foreach (var position in GreenhouseLayout.PlotPositions())
-                Data.farmPlots.Add(new FarmPlotData { state = SoilState.Tilled, freeform = true,
-                    greenhouse = true, worldX = position.x, worldY = position.y });
+            GreenhouseLayout.EnsurePlots(Data);
 
             Message = "온실을 지었습니다. 안쪽 선반에서 사계절 씨앗을 사고, 밭은 아침에 스스로 물을 머금어요.";
-            NotifyChanged();
-            SaveSilently();
-            return true;
-        }
-
-        public bool UpgradeHouse()
-        {
-            if (Data.houseUpgraded)
-            {
-                ShowMessage("집은 이미 고쳐 두었습니다.");
-                return false;
-            }
-
-            if (!MaterialProject.TryPay(Data, MaterialProject.House))
-            {
-                ShowMessage(MaterialProject.Describe("집 수리", MaterialProject.House) + ". 재료가 부족합니다.");
-                return false;
-            }
-
-            Data.houseUpgraded = true;
-            Message = "집을 고쳤습니다. 목재와 돌, 철 광석으로 마루와 벽을 다졌어요.";
             NotifyChanged();
             SaveSilently();
             return true;
@@ -133,7 +110,7 @@ namespace FarmGame2D.Core
             GameSession.GreenhouseCopper,
             0);
 
-        public static Cost House { get; } = new(0, 10, 8, 0, 4);
+        public static Cost House { get; } = BuildingUpgradeCatalog.Get(FarmBuilding.House, 0).Cost;
 
         public static bool HasMaterials(GameSaveData data, Cost cost)
         {

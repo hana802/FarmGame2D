@@ -9,11 +9,27 @@ namespace FarmGame2D.Farming
         public static readonly Vector2 Site = new(8.5f, -7.65f);
         public static readonly Vector2 Interior = new(52f, -9.25f);
 
-        public static IEnumerable<Vector2> PlotPositions()
+        public const float ExpansionDepth = 2f;
+
+        public static IEnumerable<Vector2> PlotPositions(int upgradeLevel = 0)
         {
-            for (var row = 0; row < 2; row++)
+            for (var row = 0; row < 2 + upgradeLevel; row++)
             for (var column = 0; column < 4; column++)
-                yield return Interior + new Vector2((column - 1.5f) * 1.6f, row == 0 ? -0.85f : 1.2f);
+                yield return Interior + new Vector2((column - 1.5f) * 1.6f, row == 0 ? -0.85f : 1.2f + (row - 1) * ExpansionDepth);
+        }
+
+        public static void EnsurePlots(GameSaveData data)
+        {
+            if (!data.greenhouseBuilt) return;
+            foreach (var position in PlotPositions(data.greenhouseUpgradeLevel))
+            {
+                if (data.farmPlots.Exists(plot => plot.greenhouse && (FarmFieldLayout.GetWorldPosition(plot) - position).sqrMagnitude < 0.01f))
+                    continue;
+                data.farmPlots.Add(new FarmPlotData
+                {
+                    state = SoilState.Tilled, freeform = true, greenhouse = true, worldX = position.x, worldY = position.y
+                });
+            }
         }
 
         public static bool IsSiteOccupied(GameSaveData data)
