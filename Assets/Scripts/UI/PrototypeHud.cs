@@ -208,7 +208,7 @@ namespace FarmGame2D.UI
         {
             var current = StarterQuestProgress.GetCurrent(session.Data);
             var active = session.Data.activeQuestId >= 0;
-            var rect = new Rect(18f, 16f, 292f, 76f);
+            var rect = HudLayout.QuestTracker;
             farmSkin.DrawPixelPanel(rect, Paper, PaperEdge);
             FarmGuiSkin.DrawSolid(new Rect(rect.x + 10f, rect.y + 12f, 4f, 51f), Clay);
             GUI.Label(new Rect(rect.x + 24f, rect.y + 8f, 248f, 25f),
