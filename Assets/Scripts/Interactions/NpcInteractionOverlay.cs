@@ -1,4 +1,5 @@
 using System;
+using FarmGame2D.Art;
 using FarmGame2D.Core;
 using FarmGame2D.UI;
 using UnityEngine;
@@ -23,6 +24,8 @@ namespace FarmGame2D.Interactions
         private GUIStyle titleStyle;
         private GUIStyle centeredStyle;
         private GUIStyle actionCaptionStyle;
+        private GUIStyle dialogueNameStyle;
+        private GUIStyle dialogueBodyStyle;
         private GUIStyle buttonStyle;
         private GUIStyle panelStyle;
         private Texture2D panelTexture;
@@ -157,48 +160,87 @@ namespace FarmGame2D.Interactions
                 return;
             }
 
-            var dialogue = HudLayout.CalculateDialogueLayout();
-            var badge = new Rect(dialogue.Panel.xMax - 418f, dialogue.Panel.y + 64f, 364f, 37f);
-            var body = dialogue.Body;
-            body.yMin = Mathf.Max(body.yMin, badge.yMax + 8f);
-            var layout = new DialogueHudLayout(dialogue.Panel, dialogue.Portrait, dialogue.Name, body);
-            farmSkin.DrawDialogue(layout, speaker, dialogueLine, portraitRow);
-            DrawFriendship(badge, data);
-            if (!choosingGift && GUI.Button(dialogue.Panel, GUIContent.none, GUIStyle.none))
+            var panel = new Rect((HudLayout.ReferenceWidth - 840f) * 0.5f,
+                HudLayout.ReferenceHeight - 252f, 840f, 204f);
+            var body = new Rect(panel.x + 28f, panel.y + 65f, panel.width - 56f, 80f);
+            DrawDialogueCard(panel, body);
+
+            var footer = new Rect(body.x, body.yMax + 10f, body.width, 36f);
+            DrawFriendship(new Rect(footer.x, footer.y, 340f, footer.height), data);
+            if (choosingGift)
+            {
+                DrawGiftSelection(new Rect(footer.xMax - 400f, panel.y - 258f, 400f, 246f), data);
+                return;
+            }
+
+            if (GUI.Button(body, GUIContent.none, GUIStyle.none))
             {
                 Close();
                 return;
             }
 
-            const float actionWidth = 400f;
-            var right = dialogue.Panel.xMax - 34f;
-            var top = dialogue.Panel.yMin;
-            var gift = new Rect(right - actionWidth, top - 223f, actionWidth, 52f);
-            var close = new Rect(gift.x, top - 106f, actionWidth, 52f);
-            if (choosingGift)
+            DrawDialogueActions(footer, data);
+        }
+
+        private void DrawDialogueCard(Rect panel, Rect body)
+        {
+            DrawRoundedSurface(new Rect(panel.x, panel.y + 4f, panel.width, panel.height),
+                new Color(0.15f, 0.12f, 0.08f, 0.32f), 20f);
+            DrawRoundedSurface(panel, new Color32(255, 246, 223, 255), 20f);
+
+            var portrait = GameArtCatalog.GetNpcPortrait(portraitRow);
+            var nameX = body.x;
+            if (portrait != null)
             {
-                DrawGiftSelection(new Rect(gift.x, top - 266f, actionWidth, 246f), data);
-                return;
+                var portraitRect = new Rect(body.x, panel.y + 11f, 44f, 44f);
+                DrawRoundedSurface(portraitRect, new Color32(231, 226, 196, 255), 8f);
+                farmSkin.DrawSprite(new Rect(portraitRect.x + 2f, portraitRect.y + 2f, 40f, 40f), portrait);
+                nameX = portraitRect.xMax + 8f;
             }
 
+            var nameWidth = Mathf.Min(dialogueNameStyle.CalcSize(new GUIContent(speaker)).x, body.xMax - nameX);
+            var name = new Rect(nameX, panel.y + 17f, nameWidth, 32f);
+            DrawRoundedSurface(name, new Color32(69, 94, 68, 255), 9f);
+            GUI.Label(name, speaker, dialogueNameStyle);
+            GUI.Label(body, dialogueLine, dialogueBodyStyle);
+            FarmGuiSkin.DrawSolid(new Rect(body.x, body.yMax, body.width, 1f), new Color32(220, 205, 174, 255));
+        }
+
+        private void DrawDialogueActions(Rect footer, GameSaveData data)
+        {
+            var close = new Rect(footer.xMax - 76f, footer.y, 76f, footer.height);
+            var gift = new Rect(close.x - 148f, footer.y, 140f, footer.height);
             var giftedToday = NpcFriendshipService.HasGiftedToday(data, npcId);
             var previousEnabled = GUI.enabled;
             GUI.enabled = previousEnabled && !giftedToday;
-            if (farmSkin.DrawButton(gift, giftedToday ? "오늘 선물 완료" : "선물하기", true))
+            if (DrawDialogueButton(gift, giftedToday ? "오늘 선물 완료" : "선물하기",
+                    giftedToday ? new Color32(237, 227, 205, 255) : new Color32(244, 211, 162, 255)))
             {
                 choosingGift = true;
                 giftScroll = Vector2.zero;
             }
             GUI.enabled = previousEnabled;
-            if (farmSkin.DrawButton(close, "닫기"))
+            if (DrawDialogueButton(close, "닫기", new Color32(219, 228, 192, 255)))
             {
                 Close();
                 return;
             }
 
-            var chore = new Rect(gift.x, gift.yMax + 5f, gift.width, 33f);
-            if (GameSession.Instance.HasSpouseFarmHelp(npcId) && farmSkin.DrawButton(chore, "농장일 부탁하기", true))
+            var chore = new Rect(gift.x - 158f, footer.y, 150f, footer.height);
+            if (GameSession.Instance.HasSpouseFarmHelp(npcId)
+                && DrawDialogueButton(chore, "농장일 부탁하기", new Color32(237, 227, 205, 255)))
                 OpenFarmHelp();
+        }
+
+        private bool DrawDialogueButton(Rect rect, string label, Color fill)
+        {
+            DrawRoundedSurface(rect, fill, 8f);
+            return farmSkin.DrawTextButton(rect, label);
+        }
+
+        private static void DrawRoundedSurface(Rect rect, Color color, float radius)
+        {
+            GUI.DrawTexture(rect, Texture2D.whiteTexture, ScaleMode.StretchToFill, true, 0f, color, 0f, radius);
         }
 
         private void DrawFriendship(Rect badge, GameSaveData data)
@@ -207,7 +249,6 @@ namespace FarmGame2D.Interactions
             var hearts = NpcFriendshipService.GetHeartCount(data, npcId);
             var heartText = new string('♥', hearts) + new string('♡', 5 - hearts);
             var relation = data.spouseNpcId == npcId ? "배우자 호감도" : "호감도";
-            farmSkin.DrawPixelPanel(badge, new Color32(250, 235, 208, 255), new Color32(198, 155, 116, 255), false);
             GUI.Label(badge, $"{relation}   <color=#984C44>{heartText}</color>   {points}/{NpcFriendshipService.MaxPoints}",
                 actionCaptionStyle);
         }
@@ -347,6 +388,16 @@ namespace FarmGame2D.Interactions
                 normal = { textColor = new Color(0.25f, 0.16f, 0.09f) }
             };
             actionCaptionStyle = new GUIStyle(centeredStyle) { fontSize = 17, fontStyle = FontStyle.Bold, richText = true };
+            dialogueNameStyle = new GUIStyle(centeredStyle)
+            {
+                fontSize = 18, fontStyle = FontStyle.Bold, wordWrap = false, clipping = TextClipping.Clip,
+                padding = new RectOffset(12, 12, 0, 0), normal = { textColor = new Color32(255, 250, 237, 255) }
+            };
+            dialogueBodyStyle = new GUIStyle(centeredStyle)
+            {
+                fontSize = 25, fontStyle = FontStyle.Bold, alignment = TextAnchor.UpperLeft, clipping = TextClipping.Clip,
+                padding = new RectOffset(0, 0, 0, 0)
+            };
             buttonStyle = new GUIStyle(GUI.skin.button)
             {
                 font = font, fontSize = 24, fontStyle = FontStyle.Bold,
