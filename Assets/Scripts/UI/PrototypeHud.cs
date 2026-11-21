@@ -104,6 +104,7 @@ namespace FarmGame2D.UI
                     || NpcInteractionOverlay.IsOpen;
                 if (!modalOpen)
                 {
+                    DrawInventorySummary(session);
                     DrawFishingMarker(viewport);
                 }
 

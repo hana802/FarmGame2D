@@ -38,7 +38,11 @@ namespace FarmGame2D.UI
         private static readonly Color BagShadow = new Color32(18, 38, 30, 110);
 
         private InventoryPage inventoryPage;
-        private GUIStyle bagTitle, bagTab, bagItem, bagMutedItem, bagBadge, bagActiveBadge, bagValue;
+        private GUIStyle bagTitle, bagTab, bagItem, bagMutedItem, bagBadge, bagActiveBadge;
+        private GUIStyle summaryHeading, summaryLabel, summaryCount, summaryItem;
+        private static readonly Color SummaryInk = new Color32(74, 49, 36, 255);
+        private static readonly Color SummaryBanner = new Color32(235, 205, 160, 255);
+        private static readonly Color SummaryStripe = new Color32(253, 243, 218, 255);
 
         private void DrawInventory(GameSession session)
         {
@@ -74,54 +78,61 @@ namespace FarmGame2D.UI
 
         private void DrawInventorySummary(GameSession session)
         {
-            var panel = new Rect(28f, 110f, 258f, 540f);
-            DrawInventoryPanel(panel);
-            var profile = new Rect(panel.x + 2f, panel.y + 2f, panel.width - 4f, 140f);
-            ShopFill(profile, ShopGreen, 12f);
-            var portrait = new Rect(panel.x + 12f, panel.y + 18f, 104f, 106f);
-            ShopFill(portrait, BagDark, 8f);
-            DrawShopArt(new Rect(portrait.x + 5f, portrait.y + 5f, portrait.width - 10f, portrait.height - 10f),
+            EnsureInventoryStyles();
+            var quest = HudLayout.QuestTracker;
+            var panel = new Rect(quest.x, quest.yMax + 10f, 220f, 300f);
+            farmSkin.DrawPixelPanel(panel, Paper, PaperEdge);
+            var profile = new Rect(panel.x + 3f, panel.y + 3f, panel.width - 6f, 57f);
+            FarmGuiSkin.DrawSolid(profile, SummaryBanner);
+            var portrait = new Rect(panel.x + 10f, panel.y + 8f, 46f, 46f);
+            ShopFill(portrait, SummaryStripe, 6f);
+            DrawShopArt(portrait,
                 GameArtCatalog.GetPlayerPortrait(session.Data.characterChoice));
 
             var item = session.SelectedDecoration;
             if (!item.HasValue && session.SelectedTool == FarmTool.Seeds) item = session.SelectedSeed;
             var activeArt = item.HasValue ? GetInventoryArt(item.Value) : GameArtCatalog.GetHeldToolSprite(session.SelectedTool);
             var activeLabel = item.HasValue ? ItemCatalog.GetLabel(item.Value) : GetToolLabel(session.SelectedTool);
-            var equipmentX = panel.x + 122f;
-            GUI.Label(new Rect(equipmentX, panel.y + 14f, 120f, 26f), "사용 중", bagActiveBadge);
-            DrawShopArt(new Rect(equipmentX + 35f, panel.y + 43f, 50f, 50f), activeArt);
-            GUI.Label(new Rect(equipmentX, panel.y + 95f, 120f, 28f), activeLabel, bagActiveBadge);
+            GUI.Label(new Rect(panel.x + 65f, panel.y + 7f, 143f, 25f), "보유 현황", summaryHeading);
+            DrawShopArt(new Rect(panel.x + 65f, panel.y + 33f, 20f, 20f), activeArt);
+            GUI.Label(new Rect(panel.x + 90f, panel.y + 32f, 119f, 22f), activeLabel, summaryLabel);
 
             var data = session.Data;
             var inventory = data.inventory;
             var fishCount = inventory.Count(GameItem.RiverFish) + inventory.Count(GameItem.SeaBass)
                 + inventory.Count(GameItem.GoldenCarp);
             var juvenileCount = data.chickenJuvenileDays.Count + data.cowJuvenileDays.Count;
-            var x = panel.x + 14f;
-            var right = x + 116f;
-            GUI.Label(new Rect(x, panel.y + 148f, 220f, 30f), "보유 현황", shopName);
-            GUI.Label(new Rect(x, panel.y + 186f, 220f, 24f), "가축 · 생산품", shopSmall);
-            DrawBagCount(x, panel.y + 214f, "닭", data.ownedChickens);
-            DrawBagCount(right, panel.y + 214f, "소", data.ownedCows);
-            DrawBagCount(x, panel.y + 250f, "새끼", juvenileCount);
-            DrawBagCount(right, panel.y + 250f, "사료", inventory.Count(GameItem.Feed));
-            DrawBagCount(x, panel.y + 286f, "달걀", inventory.Count(GameItem.Egg));
-            DrawBagCount(right, panel.y + 286f, "우유", inventory.Count(GameItem.Milk));
-            GUI.Label(new Rect(x, panel.y + 330f, 220f, 24f), "채집 · 낚시", shopSmall);
-            DrawBagCount(x, panel.y + 358f, "돌", inventory.Count(GameItem.Stone));
-            DrawBagCount(right, panel.y + 358f, "구리", inventory.Count(GameItem.CopperOre));
-            DrawBagCount(x, panel.y + 394f, "철", inventory.Count(GameItem.IronOre));
-            DrawBagCount(right, panel.y + 394f, "금", inventory.Count(GameItem.GoldOre));
-            DrawBagCount(x, panel.y + 430f, "잡초", inventory.Count(GameItem.Weed));
-            DrawBagCount(right, panel.y + 430f, "목재", inventory.Count(GameItem.Wood));
-            DrawBagCount(x, panel.y + 466f, "물고기", fishCount);
+            var x = panel.x + 10f;
+            var right = x + 103f;
+            var y = panel.y;
+            DrawSummaryGroup(x, y + 66f, "가축 · 생산품");
+            DrawSummaryCount(x, y + 91f, "닭", data.ownedChickens);
+            DrawSummaryCount(right, y + 91f, "소", data.ownedCows);
+            DrawSummaryCount(x, y + 116f, "새끼", juvenileCount);
+            DrawSummaryCount(right, y + 116f, "사료", inventory.Count(GameItem.Feed));
+            DrawSummaryCount(x, y + 141f, "달걀", inventory.Count(GameItem.Egg));
+            DrawSummaryCount(right, y + 141f, "우유", inventory.Count(GameItem.Milk));
+            DrawSummaryGroup(x, y + 167f, "채집 · 낚시");
+            DrawSummaryCount(x, y + 192f, "돌", inventory.Count(GameItem.Stone));
+            DrawSummaryCount(right, y + 192f, "구리", inventory.Count(GameItem.CopperOre));
+            DrawSummaryCount(x, y + 217f, "철", inventory.Count(GameItem.IronOre));
+            DrawSummaryCount(right, y + 217f, "금", inventory.Count(GameItem.GoldOre));
+            DrawSummaryCount(x, y + 242f, "잡초", inventory.Count(GameItem.Weed));
+            DrawSummaryCount(right, y + 242f, "목재", inventory.Count(GameItem.Wood));
+            DrawSummaryCount(x, y + 267f, "물고기", fishCount);
         }
 
-        private void DrawBagCount(float x, float y, string label, int count)
+        private void DrawSummaryGroup(float x, float y, string title)
         {
-            ShopFill(new Rect(x, y, 112f, 32f), ShopCard, 5f);
-            GUI.Label(new Rect(x + 6f, y, 52f, 32f), label, shopSmall);
-            GUI.Label(new Rect(x + 58f, y, 47f, 32f), count.ToString(), bagValue);
+            FarmGuiSkin.DrawSolid(new Rect(x, y + 7f, 3f, 12f), Clay);
+            GUI.Label(new Rect(x + 8f, y, 192f, 25f), title, summaryLabel);
+        }
+
+        private void DrawSummaryCount(float x, float y, string label, int count)
+        {
+            ShopFill(new Rect(x, y, 97f, 22f), SummaryStripe, 3f);
+            GUI.Label(new Rect(x + 5f, y, 44f, 22f), label, summaryItem);
+            GUI.Label(new Rect(x + 39f, y, 53f, 22f), count.ToString(), summaryCount);
         }
 
         private void DrawInventoryItems(GameSession session, Rect well)
@@ -259,7 +270,10 @@ namespace FarmGame2D.UI
             bagMutedItem = ShopStyle(18, ShopMuted, FontStyle.Normal, TextAnchor.MiddleCenter);
             bagBadge = ShopStyle(14, ShopGreen, FontStyle.Bold, TextAnchor.MiddleCenter);
             bagActiveBadge = ShopStyle(14, ShopPaper, FontStyle.Bold, TextAnchor.MiddleCenter);
-            bagValue = ShopStyle(17, ShopGreen, FontStyle.Bold, TextAnchor.MiddleRight);
+            summaryHeading = ShopStyle(18, SummaryInk, FontStyle.Bold);
+            summaryLabel = ShopStyle(14, SummaryInk, FontStyle.Bold);
+            summaryItem = ShopStyle(14, SummaryInk);
+            summaryCount = ShopStyle(16, SummaryInk, FontStyle.Bold, TextAnchor.MiddleRight);
         }
     }
 }
