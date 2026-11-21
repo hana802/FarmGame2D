@@ -15,11 +15,11 @@ namespace FarmGame2D.UI
                 case ShopPurchaseKind.Feed:
                     return "동물 사료\n닭과 소에게 주는 먹이입니다. 한 번에 3개를 삽니다.\n동물 한 마리당 하루에 사료 1개가 필요합니다.\n먹이를 주면 다음 날 어른 닭은 달걀을, 어른 소는 우유를 냅니다.";
                 case ShopPurchaseKind.Chicken:
-                    return "닭\n농장에서 키우는 어른 닭입니다.\n매일 사료를 주면 다음 날 달걀을 낳습니다.\n달걀은 개당 25G에 팔 수 있습니다.";
+                    return $"닭\n농장에서 키우는 어른 닭입니다.\n매일 사료를 주면 다음 날 달걀을 낳습니다.\n달걀은 개당 25G에 팔 수 있습니다.\n닭은 {AnimalBreedingRules.PopulationCap}마리까지 키울 수 있습니다.";
                 case ShopPurchaseKind.ChickenSale:
                     return "닭 판매\n키우던 닭 1마리를 100G에 팝니다.\n마지막 한 마리는 팔 수 없습니다.";
                 case ShopPurchaseKind.Cow:
-                    return "소\n농장에서 키우는 어른 소입니다.\n매일 사료를 주면 다음 날 우유를 냅니다.\n우유는 개당 55G에 팔 수 있습니다.";
+                    return $"소\n농장에서 키우는 어른 소입니다.\n매일 사료를 주면 다음 날 우유를 냅니다.\n우유는 개당 55G에 팔 수 있습니다.\n소는 {AnimalBreedingRules.PopulationCap}마리까지 키울 수 있습니다.";
                 case ShopPurchaseKind.CowSale:
                     return "소 판매\n키우던 소 1마리를 250G에 팝니다.";
                 case ShopPurchaseKind.Pickaxe:

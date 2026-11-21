@@ -7,11 +7,11 @@ namespace FarmGame2D.Core
     public static class AnimalBreedingRules
     {
         public const int JuvenileDays = 3;
+        public const int PopulationCap = 10;
 
         public static bool ShouldBreed(int worldSeed, int day, FarmAnimalKind kind, int adultCount, int totalCount)
         {
-            var populationCap = kind == FarmAnimalKind.Chicken ? 12 : 8;
-            if (adultCount < 2 || totalCount >= populationCap)
+            if (adultCount < 2 || totalCount >= PopulationCap)
             {
                 return false;
             }

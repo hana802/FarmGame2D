@@ -76,8 +76,8 @@ namespace FarmGame2D.UI
                 ShopPurchaseKind.Seed when CropCatalog.TryGetBySeed(request.Item, out var crop) =>
                     $"{GetSeasonLabel(crop.Season)} 작물  ·  물 준 날 {crop.GrowthDays}일 뒤 수확",
                 ShopPurchaseKind.Feed => "닭과 소의 하루 먹이",
-                ShopPurchaseKind.Chicken => "달걀을 낳는 어른 닭",
-                ShopPurchaseKind.Cow => "우유를 내는 어른 소",
+                ShopPurchaseKind.Chicken => $"달걀을 낳는 어른 닭  ·  최대 {AnimalBreedingRules.PopulationCap}마리",
+                ShopPurchaseKind.Cow => $"우유를 내는 어른 소  ·  최대 {AnimalBreedingRules.PopulationCap}마리",
                 ShopPurchaseKind.ChickenSale => $"보유 {session.Data.ownedChickens}마리  ·  마지막 한 마리는 판매할 수 없어요",
                 ShopPurchaseKind.CowSale => $"보유 {session.Data.ownedCows}마리",
                 ShopPurchaseKind.Pickaxe => session.Data.hasPickaxe ? "구입 완료" : "광맥을 캐는 도구",
@@ -93,6 +93,10 @@ namespace FarmGame2D.UI
                 return "마지막 닭은 판매할 수 없어요.";
             if (request.Kind == ShopPurchaseKind.CowSale && session.Data.ownedCows == 0)
                 return "판매할 소가 없어요.";
+            if (request.Kind == ShopPurchaseKind.Chicken && session.Data.ownedChickens >= AnimalBreedingRules.PopulationCap)
+                return $"닭은 {AnimalBreedingRules.PopulationCap}마리까지 키울 수 있어요.";
+            if (request.Kind == ShopPurchaseKind.Cow && session.Data.ownedCows >= AnimalBreedingRules.PopulationCap)
+                return $"소는 {AnimalBreedingRules.PopulationCap}마리까지 키울 수 있어요.";
             if (request.Kind == ShopPurchaseKind.Pickaxe && session.Data.hasPickaxe)
                 return "이미 곡괭이를 가지고 있어요.";
             if (!request.IsSale && session.Data.money < request.Price)

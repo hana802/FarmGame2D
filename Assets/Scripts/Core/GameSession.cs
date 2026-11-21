@@ -345,6 +345,13 @@ namespace FarmGame2D.Core
         public void PurchaseChicken(int count = 1)
         {
             count = Mathf.Max(1, count);
+            if (Data.ownedChickens + count > AnimalBreedingRules.PopulationCap)
+            {
+                Message = $"닭은 {AnimalBreedingRules.PopulationCap}마리까지 키울 수 있습니다.";
+                NotifyChanged();
+                return;
+            }
+
             if (PurchaseWithoutItem(150 * count, $"닭 {count}마리"))
             {
                 Data.ownedChickens += count;
@@ -384,6 +391,13 @@ namespace FarmGame2D.Core
         public void PurchaseCow(int count = 1)
         {
             count = Mathf.Max(1, count);
+            if (Data.ownedCows + count > AnimalBreedingRules.PopulationCap)
+            {
+                Message = $"소는 {AnimalBreedingRules.PopulationCap}마리까지 키울 수 있습니다.";
+                NotifyChanged();
+                return;
+            }
+
             if (PurchaseWithoutItem(350 * count, $"소 {count}마리"))
             {
                 Data.ownedCows += count;
@@ -1040,22 +1054,6 @@ namespace FarmGame2D.Core
             Data.chickenFedToday = plan.ChickensFed;
             Data.cowFedToday = plan.CowsFed;
             Data.dogLastCareDay = Data.day;
-            if (plan.ChickensFed && plan.CowsFed)
-            {
-                AppendMorningEvent("강아지가 닭과 소에게 아침 사료를 주었습니다.");
-            }
-            else if (plan.ChickensFed)
-            {
-                AppendMorningEvent("강아지가 닭에게 아침 사료를 주었습니다.");
-            }
-            else if (plan.CowsFed)
-            {
-                AppendMorningEvent("강아지가 소에게 아침 사료를 주었습니다.");
-            }
-            else
-            {
-                AppendMorningEvent("강아지가 사료가 부족하다고 알려줍니다.");
-            }
         }
 
         private void AppendMorningEvent(string eventMessage)

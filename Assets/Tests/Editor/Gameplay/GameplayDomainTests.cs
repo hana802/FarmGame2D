@@ -97,6 +97,8 @@ namespace FarmGame2D.Tests
             var first = AnimalBreedingRules.ShouldBreed(1234, 17, FarmAnimalKind.Chicken, 2, 2);
             var repeated = AnimalBreedingRules.ShouldBreed(1234, 17, FarmAnimalKind.Chicken, 2, 2);
             Assert.That(repeated, Is.EqualTo(first));
+            Assert.That(AnimalBreedingRules.ShouldBreed(1234, 17, FarmAnimalKind.Chicken, 2, AnimalBreedingRules.PopulationCap), Is.False);
+            Assert.That(AnimalBreedingRules.ShouldBreed(1234, 17, FarmAnimalKind.Cow, 2, AnimalBreedingRules.PopulationCap), Is.False);
         }
 
         [Test]
@@ -733,6 +735,13 @@ namespace FarmGame2D.Tests
             Assert.That(ShopOrderRules.Maximum(chickens, 0, 4, 0), Is.EqualTo(3));
             Assert.That(ShopOrderRules.Maximum(chickens, 0, 1, 0), Is.EqualTo(0));
             Assert.That(ShopOrderRules.Summary(chickens, 3), Is.EqualTo("×3   받는 금액   +300 G"));
+
+            var buyChickens = new ShopPurchaseRequest(ShopPurchaseKind.Chicken, "닭 1마리", price: 150);
+            Assert.That(ShopOrderRules.Maximum(buyChickens, 150 * 20, 7, 0), Is.EqualTo(3));
+            Assert.That(ShopOrderRules.Maximum(buyChickens, 150 * 20, AnimalBreedingRules.PopulationCap, 0), Is.EqualTo(0));
+            var buyCows = new ShopPurchaseRequest(ShopPurchaseKind.Cow, "소 1마리", price: 350);
+            Assert.That(ShopOrderRules.Maximum(buyCows, 350, 0, 0), Is.EqualTo(1));
+            Assert.That(ShopOrderRules.Maximum(buyCows, 350 * 20, 0, 9), Is.EqualTo(1));
         }
 
         [Test]

@@ -93,7 +93,12 @@ namespace FarmGame2D.UI
             if (request.Kind == ShopPurchaseKind.ChickenSale) return Math.Max(0, ownedChickens - 1);
             if (request.Kind == ShopPurchaseKind.CowSale) return Math.Max(0, ownedCows);
             if (request.Price <= 0) return 1;
-            return Math.Min(MaxCount, Math.Max(0, money / request.Price));
+            var affordable = Math.Min(MaxCount, Math.Max(0, money / request.Price));
+            if (request.Kind == ShopPurchaseKind.Chicken)
+                return Math.Min(affordable, Math.Max(0, AnimalBreedingRules.PopulationCap - ownedChickens));
+            if (request.Kind == ShopPurchaseKind.Cow)
+                return Math.Min(affordable, Math.Max(0, AnimalBreedingRules.PopulationCap - ownedCows));
+            return affordable;
         }
 
         public static string Summary(ShopPurchaseRequest request, int count)
