@@ -22,6 +22,7 @@ namespace FarmGame2D.UI
 
         public const string CharacterChoiceHeader = "선택해주세요.";
         public const string CharacterChoicePrompt = "당신의 성별을 골라주세요";
+        public const int ToastMessageFontSize = 14;
 
         private PrototypePlayerController player;
         private GUIStyle bodyStyle;
@@ -32,6 +33,7 @@ namespace FarmGame2D.UI
         private GUIStyle speakerStyle;
         private GUIStyle dialogueBodyStyle;
         private GUIStyle panelStyle;
+        private GUIStyle toastStyle;
         private GUIStyle interactionPromptStyle;
         private GUIStyle interactionKeyStyle;
         private GUIStyle fishingMarkerStyle;
@@ -345,7 +347,7 @@ namespace FarmGame2D.UI
             {
                 var toastLayout = HudLayout.CalculateToastLayout();
                 farmSkin.DrawBanner(toastLayout.Panel);
-                GUI.Label(toastLayout.Message, session.Message, centeredStyle);
+                GUI.Label(toastLayout.Message, session.Message, toastStyle);
                 return;
             }
 
@@ -881,6 +883,13 @@ namespace FarmGame2D.UI
                 wordWrap = true,
                 clipping = TextClipping.Clip,
                 alignment = TextAnchor.MiddleLeft
+            };
+            toastStyle ??= new GUIStyle(panelStyle)
+            {
+                fontSize = ToastMessageFontSize,
+                wordWrap = true,
+                clipping = TextClipping.Clip,
+                alignment = TextAnchor.MiddleCenter
             };
             interactionPromptStyle ??= new GUIStyle(bodyStyle)
             {

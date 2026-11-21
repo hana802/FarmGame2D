@@ -83,11 +83,10 @@ namespace FarmGame2D.World
         {
             IsSitting = sitting;
             if (sitting) celebrationElapsed = 0f;
-            visual.localPosition = sitting ? Vector3.down * 0.10f : Vector3.zero;
+            // Sitting only stops movement. Squashing Y makes the standing sprite look flattened.
+            visual.localPosition = Vector3.zero;
             visual.localRotation = Quaternion.identity;
-            visual.localScale = sitting
-                ? new Vector3(VisualScale, VisualScale * 0.72f, VisualScale)
-                : Vector3.one * VisualScale;
+            visual.localScale = Vector3.one * VisualScale;
         }
 
         public void Celebrate()
