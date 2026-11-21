@@ -978,7 +978,6 @@ namespace FarmGame2D.Core
 
             Data.chickenFedToday = false;
             Data.cowFedToday = false;
-            ProcessDogMorningCare();
 
             AnimalBreedingRules.AdvanceJuveniles(Data.chickenJuvenileDays);
             AnimalBreedingRules.AdvanceJuveniles(Data.cowJuvenileDays);
@@ -1011,27 +1010,6 @@ namespace FarmGame2D.Core
             }
 
             juveniles.Add(AnimalBreedingRules.JuvenileDays);
-        }
-
-        private void ProcessDogMorningCare()
-        {
-            if (Data.dogLastCareDay >= Data.day)
-            {
-                return;
-            }
-
-            var plan = DogCompanionRules.PlanMorningCare(
-                Data.inventory.Count(GameItem.Feed),
-                Data.ownedChickens,
-                Data.ownedCows);
-            if (plan.FeedSpent > 0)
-            {
-                Data.inventory.TrySpend(GameItem.Feed, plan.FeedSpent);
-            }
-
-            Data.chickenFedToday = plan.ChickensFed;
-            Data.cowFedToday = plan.CowsFed;
-            Data.dogLastCareDay = Data.day;
         }
 
         private void Plant(FarmPlotData plot)
