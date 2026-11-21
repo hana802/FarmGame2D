@@ -152,14 +152,18 @@ namespace FarmGame2D.World
             var top = 2.9f + stage * GreenhouseLayout.ExpansionDepth;
             AddWall(wall.transform, center + Vector2.up * top, new Vector2(8.2f, 0.36f), jade);
             for (var x = -3; x <= 3; x++)
-                PrototypeSpriteFactory.CreateBlock("Glass Pane", center + new Vector2(x, top - 0.35f),
+            {
+                var pane = PrototypeSpriteFactory.CreateBlock("Glass Pane", center + new Vector2(x, top - 0.35f),
                     new Vector2(0.92f, 0.28f), new Color32(163, 209, 190, 255), wall.transform);
+                pane.GetComponent<SpriteRenderer>().sortingOrder = 1;
+            }
             return wall;
         }
 
         private static void AddWall(Transform parent, Vector2 position, Vector2 size, Color color)
         {
-            PrototypeSpriteFactory.CreateBlock("Greenhouse Frame", position, size, color, parent, true);
+            var wall = PrototypeSpriteFactory.CreateBlock("Greenhouse Frame", position, size, color, parent, true);
+            wall.GetComponent<SpriteRenderer>().sortingOrder = 1;
         }
 
         private static void AddDoor(Transform parent, Vector2 position, Vector2 destination, string prompt)
