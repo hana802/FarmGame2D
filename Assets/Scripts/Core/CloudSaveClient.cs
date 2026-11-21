@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -271,34 +272,20 @@ namespace FarmGame2D.Core
 
         public static string PrepareSaveJsonForCloud(string json)
         {
-            // The live sync function still accepts save versions 1 through 3. The farm data stays intact.
+            // The live sync function still accepts save versions 1 through 3. Only the version number is capped.
             const int deployedServerMaxVersion = 3;
             if (string.IsNullOrWhiteSpace(json))
             {
                 return json;
             }
 
-            GameSaveData data;
-            try
+            var versionField = new Regex("(\"version\"\\s*:\\s*)(\\d+)", RegexOptions.None, TimeSpan.FromSeconds(1));
+            return versionField.Replace(json, match =>
             {
-                data = JsonUtility.FromJson<GameSaveData>(json);
-            }
-            catch (Exception)
-            {
-                return json;
-            }
-
-            if (data == null)
-            {
-                return json;
-            }
-
-            if (data.version > deployedServerMaxVersion)
-            {
-                data.version = deployedServerMaxVersion;
-            }
-
-            return JsonUtility.ToJson(data);
+                var version = int.Parse(match.Groups[2].Value);
+                var capped = Math.Min(version, deployedServerMaxVersion);
+                return match.Groups[1].Value + capped.ToString();
+            }, 1);
         }
 
         private static IEnumerator Send(CloudSyncRequest payload, Action<CloudSyncResult> completed)
