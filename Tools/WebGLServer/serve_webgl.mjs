@@ -26,7 +26,9 @@ const server = createServer((request, response) => {
 
   const compressed = filePath.endsWith(".gz");
   const logicalPath = compressed ? filePath.slice(0, -3) : filePath;
+  const stat = statSync(filePath);
   response.setHeader("Content-Type", contentTypes[extname(logicalPath)] ?? "application/octet-stream");
+  response.setHeader("Content-Length", stat.size);
   response.setHeader("Cache-Control", "no-store");
   if (compressed) response.setHeader("Content-Encoding", "gzip");
   response.writeHead(200);
