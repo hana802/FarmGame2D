@@ -43,6 +43,10 @@ namespace FarmGame2D.Core
             }
 
             FarmFieldLayout.RemoveLegacyPlots(data.farmPlots);
+            data.houseUpgradeLevel = System.Math.Clamp(data.houseUpgradeLevel, data.houseUpgraded ? 1 : 0, BuildingUpgradeCatalog.MaximumLevel);
+            data.greenhouseUpgradeLevel = data.greenhouseBuilt
+                ? System.Math.Clamp(data.greenhouseUpgradeLevel, 0, BuildingUpgradeCatalog.MaximumLevel) : 0;
+            GreenhouseLayout.EnsurePlots(data);
             while (data.miningNodes.Count < MiningOres.Length)
             {
                 var id = data.miningNodes.Count;

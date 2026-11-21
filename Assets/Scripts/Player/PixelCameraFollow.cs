@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.U2D;
 using FarmGame2D.World;
 using FarmGame2D.Farming;
+using FarmGame2D.Core;
 
 namespace FarmGame2D.Player
 {
@@ -52,8 +53,17 @@ namespace FarmGame2D.Player
             transform.position = new Vector3(x, y, -10f);
         }
 
-        private static Vector2 GetInteriorCenter(Vector2 position) => position.x > 46f
-            ? GreenhouseLayout.Interior : WorldAreaProfile.FarmhouseInteriorCenter;
+        private static Vector2 GetInteriorCenter(Vector2 position)
+        {
+            var greenhouse = position.x > 46f;
+            var center = greenhouse ? GreenhouseLayout.Interior : WorldAreaProfile.FarmhouseInteriorCenter;
+            var data = GameSession.Instance?.Data;
+            if (data == null) return center;
+            var expansion = greenhouse ? GreenhouseLayout.ExpansionDepth * data.greenhouseUpgradeLevel
+                : WorldAreaProfile.HouseExpansionDepth * data.houseUpgradeLevel;
+            center.y += Mathf.Clamp(position.y - center.y, 0f, expansion);
+            return center;
+        }
 
         private void ApplyViewForPosition(Vector2 position)
         {

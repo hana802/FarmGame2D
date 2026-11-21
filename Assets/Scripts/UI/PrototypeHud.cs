@@ -98,6 +98,7 @@ namespace FarmGame2D.UI
                 var modalOpen = session.PhoneOpen
                     || session.ShopOpen
                     || session.InventoryOpen
+                    || session.OpenFacility != FarmFacility.None
                     || session.QuestBoardOpen
                     || session.SellBoxOpen
                     || NpcInteractionOverlay.IsOpen;
@@ -133,6 +134,9 @@ namespace FarmGame2D.UI
                 {
                     DrawInventory(session);
                 }
+
+                if (session.OpenFacility != FarmFacility.None)
+                    DrawFarmFacility(session);
 
                 if (session.QuestBoardOpen)
                 {

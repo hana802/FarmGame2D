@@ -31,7 +31,9 @@ namespace FarmGame2D.Core
         StreetLamp,
         TownBench,
         Wood,
-        Sprinkler
+        Sprinkler,
+        PotatoSoup,
+        TomatoOmelet
     }
 
     public enum FarmTool

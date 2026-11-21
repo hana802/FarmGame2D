@@ -129,6 +129,12 @@ namespace FarmGame2D.Core
                 return;
             }
 
+            if (OpenFacility != FarmFacility.None)
+            {
+                if (Input.GetKeyDown(KeyCode.Escape)) CloseFarmFacility();
+                return;
+            }
+
             if (SellBoxOpen && Input.GetKeyDown(KeyCode.Escape)) CloseSellBox();
 
             if (Input.GetKeyDown(KeyCode.G) && !PhoneOpen && !ShopOpen && !InventoryOpen && !QuestBoardOpen && !SellBoxOpen)
@@ -1086,7 +1092,13 @@ namespace FarmGame2D.Core
             }
 
             plot.Plant(SelectedSeed);
-            Message = $"{crop.Label} 씨앗을 심었습니다.";
+            if (plot.greenhouse && Data.greenhouseUpgradeLevel >= 2)
+            {
+                plot.state = SoilState.Watered;
+                Message = $"{crop.Label} 씨앗을 심고 급수 설비로 물을 주었습니다.";
+            }
+            else
+                Message = $"{crop.Label} 씨앗을 심었습니다.";
             GameAudioController.Play(GameAudioCue.PlantSeed);
         }
 
@@ -1297,6 +1309,7 @@ namespace FarmGame2D.Core
 
         private void ApplyLoadedData(GameSaveData loaded, string successMessage)
         {
+            CloseFarmFacility();
             Data = loaded;
             EnsurePlotCount();
             SelectFirstOwnedSeed();

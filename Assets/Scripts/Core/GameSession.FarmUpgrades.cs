@@ -57,9 +57,7 @@ namespace FarmGame2D.Core
             inventory.TrySpend(GameItem.Stone, GreenhouseStone);
             inventory.TrySpend(GameItem.CopperOre, GreenhouseCopper);
             Data.greenhouseBuilt = true;
-            foreach (var position in GreenhouseLayout.PlotPositions())
-                Data.farmPlots.Add(new FarmPlotData { state = SoilState.Tilled, freeform = true,
-                    greenhouse = true, worldX = position.x, worldY = position.y });
+            GreenhouseLayout.EnsurePlots(Data);
 
             Message = "온실을 지었습니다. 안에서는 계절과 상관없이 씨앗을 심을 수 있어요.";
             NotifyChanged();
@@ -71,11 +69,11 @@ namespace FarmGame2D.Core
         {
             if (Data.sprinklersWateredDay == day) return;
             Data.sprinklersWateredDay = day;
-            if (FarmUpgradeRules.WaterWithSprinklers(Data) > 0)
-            {
-                AppendMorningEvent("스프링클러가 밭에 물을 주었습니다.");
-                SaveSilently();
-            }
+            var wateredOutdoors = FarmUpgradeRules.WaterWithSprinklers(Data);
+            var wateredIndoors = GreenhouseLayout.WaterUpgradedGreenhouse(Data);
+            if (wateredOutdoors > 0) AppendMorningEvent("스프링클러가 밭에 물을 주었습니다.");
+            if (wateredIndoors > 0) AppendMorningEvent("온실의 급수 설비가 작물에 물을 주었습니다.");
+            if (wateredOutdoors + wateredIndoors > 0) SaveSilently();
         }
     }
 }

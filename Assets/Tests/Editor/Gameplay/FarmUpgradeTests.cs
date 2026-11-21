@@ -90,6 +90,61 @@ namespace FarmGame2D.Tests
             Assert.That(save.treeRegrowDays.TryGetTreeRegrowDay(2), Is.EqualTo(12));
         }
 
+        [TestCase(0, 8)]
+        [TestCase(1, 12)]
+        [TestCase(2, 16)]
+        public void GreenhouseSave_FillsMissingPlotsWithoutReplacingPlantedCrops(int level, int expectedPlots)
+        {
+            var original = GreenhouseLayout.PlotPositions().First();
+            var save = JsonUtility.FromJson<GameSaveData>(
+                "{\"greenhouseBuilt\":true,\"farmPlots\":[{\"greenhouse\":true,\"freeform\":true}]}");
+            var crop = save.farmPlots.Single();
+            crop.worldX = original.x;
+            crop.worldY = original.y;
+            crop.state = SoilState.Watered;
+            save.greenhouseUpgradeLevel = level;
+
+            GameSaveDataNormalizer.Normalize(save);
+            GreenhouseLayout.EnsurePlots(save);
+            Assert.That(save.farmPlots, Has.Count.EqualTo(expectedPlots));
+            Assert.That(save.farmPlots, Does.Contain(crop));
+            Assert.That(crop.state, Is.EqualTo(SoilState.Watered));
+
+            var restored = JsonUtility.FromJson<GameSaveData>(JsonUtility.ToJson(save));
+            GameSaveDataNormalizer.Normalize(restored);
+            Assert.That(restored.greenhouseUpgradeLevel, Is.EqualTo(level));
+            Assert.That(restored.farmPlots, Has.Count.EqualTo(expectedPlots));
+            Assert.That(restored.farmPlots.Count(plot => plot.state == SoilState.Watered), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void GreenhouseIrrigation_OnlyWatersPlantedIndoorCropsAfterSecondUpgrade()
+        {
+            var save = new GameSaveData { greenhouseBuilt = true, greenhouseUpgradeLevel = 1 };
+            var crop = Plot(52f, -8f);
+            crop.greenhouse = true;
+            save.farmPlots.Add(crop);
+            var outdoors = Plot(5f, -7f);
+            save.farmPlots.Add(outdoors);
+
+            Assert.That(GreenhouseLayout.WaterUpgradedGreenhouse(save), Is.Zero);
+            save.greenhouseUpgradeLevel = 2;
+            Assert.That(GreenhouseLayout.WaterUpgradedGreenhouse(save), Is.EqualTo(1));
+            Assert.That(crop.state, Is.EqualTo(SoilState.Watered));
+            Assert.That(outdoors.state, Is.EqualTo(SoilState.Planted));
+            Assert.That(GreenhouseLayout.WaterUpgradedGreenhouse(save), Is.Zero);
+        }
+
+        [Test]
+        public void OldHouseRepair_OpensTheWorkshopWithoutChargingAgain()
+        {
+            var save = JsonUtility.FromJson<GameSaveData>("{\"houseUpgraded\":true,\"money\":700}");
+            GameSaveDataNormalizer.Normalize(save);
+
+            Assert.That(save.houseUpgradeLevel, Is.EqualTo(1));
+            Assert.That(save.money, Is.EqualTo(700));
+        }
+
         private static FarmPlotData Plot(float x, float y) => new()
         {
             freeform = true, state = SoilState.Planted, worldX = x, worldY = y

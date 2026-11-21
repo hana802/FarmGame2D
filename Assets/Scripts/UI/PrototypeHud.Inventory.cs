@@ -14,7 +14,7 @@ namespace FarmGame2D.UI
         {
             "도구를 선택하면 바로 장착해요.",
             "심을 씨앗을 선택하세요. 카드에서 심는 계절을 확인할 수 있어요.",
-            "수확한 작물과 동물 생산품, 낚은 물고기를 확인할 수 있어요.",
+            "수확한 작물, 동물 생산품, 물고기와 요리를 확인할 수 있어요.",
             "농장에 보관 중인 사료, 광물, 건축 재료의 수량이에요.",
             "스프링클러는 농장 밭 근처에, 마을 장식은 빈 잔디에 Space로 놓으세요."
         };
@@ -155,6 +155,9 @@ namespace FarmGame2D.UI
                 case InventoryPage.Produce:
                     foreach (var crop in crops) DrawBagStack(session, well, index++, crop.Produce);
                     foreach (var item in AnimalAndFishProducts) DrawBagStack(session, well, index++, item);
+                    if (session.Data.houseUpgradeLevel >= 2)
+                        foreach (var recipe in BuildingUpgradeCatalog.Recipes)
+                            DrawBagStack(session, well, index++, recipe.Result);
                     break;
                 case InventoryPage.Materials:
                     foreach (var item in InventoryMaterials) DrawBagStack(session, well, index++, item);
@@ -187,16 +190,17 @@ namespace FarmGame2D.UI
         {
             const int columns = 6;
             const float gap = 8f;
+            var cardHeight = inventoryPage == InventoryPage.Produce ? 109f : 140f;
             var width = (well.width - (columns + 1) * gap) / columns;
             var slot = new Rect(well.x + gap + index % columns * (width + gap),
-                well.y + gap + index / columns * 148f, width, 140f);
+                well.y + gap + index / columns * (cardHeight + gap), width, cardHeight);
             var surface = selected ? BagAccent : owned ? ShopCard : ShopPaper;
             if (actionable && slot.Contains(Event.current.mousePosition))
                 surface = Color.Lerp(surface, BagAccent, 0.36f);
             ShopFill(slot, selected ? ShopGreen : ShopLine, 8f);
             ShopFill(new Rect(slot.x + 2f, slot.y + 2f, slot.width - 4f, slot.height - 4f), surface, 6f);
 
-            DrawInventoryIcon(new Rect(slot.x + 25f, slot.y + 26f, slot.width - 50f, 76f), art, owned || selected);
+            DrawInventoryIcon(new Rect(slot.x + 25f, slot.y + 25f, slot.width - 50f, cardHeight - 63f), art, owned || selected);
             if (countBadge != null)
             {
                 var badgeWidth = Mathf.Max(32f, bagBadge.CalcSize(new GUIContent(countBadge)).x + 12f);
