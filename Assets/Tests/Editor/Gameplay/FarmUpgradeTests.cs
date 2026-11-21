@@ -10,18 +10,27 @@ namespace FarmGame2D.Tests
     public sealed class FarmUpgradeTests
     {
         [Test]
-        public void Sprinkler_WatersExactlyTheFourAdjacentPlantedPlots()
+        public void Sprinkler_WatersTheTwoColumnsDrawnBelowIt()
         {
+            var expected = new[]
+            {
+                new Vector2(-1f, -1f), new Vector2(0f, -1f),
+                new Vector2(-1f, -2f), new Vector2(0f, -2f),
+                new Vector2(-1f, -3f), new Vector2(0f, -3f)
+            };
+            Assert.That(FarmUpgradeRules.SprinklerOffsets, Is.EqualTo(expected));
+
             var save = new GameSaveData();
             save.placedDecorations.Add(new PlacedDecorationData { item = GameItem.Sprinkler, worldX = 2.5f, worldY = -8.5f });
-            foreach (var offset in FarmUpgradeRules.SprinklerOffsets)
+            foreach (var offset in expected)
                 save.farmPlots.Add(Plot(2.5f + offset.x, -8.5f + offset.y));
-            save.farmPlots.Add(Plot(3.5f, -7.5f));
+            save.farmPlots.Add(Plot(3.5f, -9.5f));
+            save.farmPlots.Add(Plot(2.5f, -12.5f));
             save.farmPlots.Add(Plot(2.5f, -8.5f));
 
-            Assert.That(FarmUpgradeRules.WaterWithSprinklers(save), Is.EqualTo(4));
-            Assert.That(save.farmPlots.Take(4).All(plot => plot.state == SoilState.Watered), Is.True);
-            Assert.That(save.farmPlots.Skip(4).All(plot => plot.state == SoilState.Planted), Is.True);
+            Assert.That(FarmUpgradeRules.WaterWithSprinklers(save), Is.EqualTo(expected.Length));
+            Assert.That(save.farmPlots.Take(expected.Length).All(plot => plot.state == SoilState.Watered), Is.True);
+            Assert.That(save.farmPlots.Skip(expected.Length).All(plot => plot.state == SoilState.Planted), Is.True);
             Assert.That(FarmUpgradeRules.WaterWithSprinklers(save), Is.Zero);
         }
 

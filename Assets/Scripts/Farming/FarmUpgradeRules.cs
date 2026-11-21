@@ -8,7 +8,9 @@ namespace FarmGame2D.Farming
     {
         public static IReadOnlyList<Vector2> SprinklerOffsets { get; } = new[]
         {
-            Vector2.up, Vector2.right, Vector2.down, Vector2.left
+            new Vector2(-1f, -1f), new Vector2(0f, -1f),
+            new Vector2(-1f, -2f), new Vector2(0f, -2f),
+            new Vector2(-1f, -3f), new Vector2(0f, -3f)
         };
 
         public static int WaterGreenhousePlots(GameSaveData data)
