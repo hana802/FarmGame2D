@@ -710,6 +710,22 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
+        public void ShopBulkOrder_BuysSeveralPacksUntilMoneyOrStockRunsOut()
+        {
+            var seeds = new ShopPurchaseRequest(ShopPurchaseKind.Seed, "감자 씨앗 5개", GameItem.PotatoSeed, 5, 40);
+            var chickens = new ShopPurchaseRequest(ShopPurchaseKind.ChickenSale, "닭 1마리", price: 100);
+            var pickaxe = new ShopPurchaseRequest(ShopPurchaseKind.Pickaxe, "곡괭이", price: 120);
+
+            Assert.That(ShopBulkOrder.MaxCountFor(seeds, 100, 1, 0), Is.EqualTo(2));
+            Assert.That(ShopBulkOrder.ClampCount(seeds, 9, 100, 1, 0), Is.EqualTo(2));
+            Assert.That(ShopBulkOrder.DescribeTotal(seeds, 2), Is.EqualTo("10개  ·  80 G"));
+            Assert.That(ShopBulkOrder.MaxCountFor(chickens, 0, 4, 0), Is.EqualTo(3));
+            Assert.That(ShopBulkOrder.DescribeTotal(chickens, 3), Is.EqualTo("3마리  ·  +300 G"));
+            Assert.That(ShopBulkOrder.AllowsCount(pickaxe.Kind), Is.False);
+            Assert.That(ShopBulkOrder.MaxCountFor(pickaxe, 9999, 1, 0), Is.EqualTo(1));
+        }
+
+        [Test]
         public void CharacterChoice_UsesRequestedHeaderAndPrompt()
         {
             Assert.That(PrototypeHud.CharacterChoiceHeader, Is.EqualTo("선택해주세요."));

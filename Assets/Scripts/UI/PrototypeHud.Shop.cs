@@ -16,6 +16,7 @@ namespace FarmGame2D.UI
         private static readonly Color ShopMuted = new Color32(98, 94, 74, 255);
 
         private readonly ShopPurchaseConfirmation shopPurchaseConfirmation = new();
+        private int shopQuantity = 1;
         private bool shopWasOpen;
         private ShopKind shownShop;
         private int shopTab;
@@ -30,6 +31,7 @@ namespace FarmGame2D.UI
                 shownShop = session.ActiveShop;
                 shopTab = 0;
                 shopNotice = null;
+                shopQuantity = 1;
                 shopPurchaseConfirmation.Cancel();
             }
 
@@ -104,6 +106,7 @@ namespace FarmGame2D.UI
                 GUI.Label(new Rect(card.xMax - 88f, card.y + 17f, 72f, 40f), "보기 ›", shopSecondary);
                 if (GUI.Button(card, GUIContent.none, GUIStyle.none))
                 {
+                    shopQuantity = 1;
                     shopPurchaseConfirmation.Request(product);
                     shopNotice = null;
                 }
@@ -117,6 +120,7 @@ namespace FarmGame2D.UI
         {
             if (ShopButton(layout.BackButton, "‹  상품 목록", ShopLine, shopSecondary))
             {
+                shopQuantity = 1;
                 shopPurchaseConfirmation.Cancel();
                 return;
             }
@@ -142,7 +146,33 @@ namespace FarmGame2D.UI
             }
 
             var unavailable = ShopUnavailableReason(session, request);
-            GUI.Label(layout.DetailFooter, unavailable ?? $"{(request.IsSale ? "받는 금액" : "결제 금액")}   {ShopPrice(request)}", shopName);
+            var priceRect = layout.DetailFooter;
+            if (unavailable == null && ShopBulkOrder.AllowsCount(request.Kind))
+            {
+                var max = ShopBulkOrder.MaxCountFor(
+                    request, session.Data.money, session.Data.ownedChickens, session.Data.ownedCows);
+                shopQuantity = ShopBulkOrder.ClampCount(
+                    request, shopQuantity, session.Data.money, session.Data.ownedChickens, session.Data.ownedCows);
+                var minus = new Rect(priceRect.x, priceRect.y + 4f, 44f, 44f);
+                if (ShopButton(minus, "-", ShopLine, shopSecondary) && shopQuantity > 1)
+                {
+                    shopQuantity--;
+                }
+
+                var value = new Rect(minus.xMax + 8f, minus.y, 64f, 44f);
+                ShopFill(value, ShopPaper, 8f);
+                GUI.Label(value, shopQuantity.ToString(), shopSecondary);
+                var plus = new Rect(value.xMax + 8f, minus.y, 44f, 44f);
+                if (ShopButton(plus, "+", ShopLine, shopSecondary) && shopQuantity < max)
+                {
+                    shopQuantity++;
+                }
+
+                priceRect = new Rect(plus.xMax + 14f, priceRect.y, priceRect.xMax - plus.xMax - 14f, priceRect.height);
+            }
+
+            var total = unavailable ?? ShopBulkOrder.DescribeTotal(request, Mathf.Max(1, shopQuantity));
+            GUI.Label(priceRect, total, shopName);
             var label = request.IsSale ? "판매하기" : "구매하기";
             if (unavailable == null && ShopButton(layout.ConfirmButton, label, ShopGreen, shopAction))
             {

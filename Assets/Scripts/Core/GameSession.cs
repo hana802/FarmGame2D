@@ -327,85 +327,103 @@ namespace FarmGame2D.Core
             SaveSilently();
         }
 
-        public void PurchaseSeed(GameItem seed)
+        public void PurchaseSeed(GameItem seed, int packs = 1)
         {
+            packs = Mathf.Max(1, packs);
             if (!CropCatalog.TryGetBySeed(seed, out var crop) || crop.Season != CurrentSeason)
             {
                 Message = "지금 계절에는 판매하지 않는 씨앗입니다.";
                 return;
             }
 
-            Purchase(seed, 5, crop.PackPrice, $"{crop.Label} 씨앗 5개");
+            var quantity = 5 * packs;
+            Purchase(seed, quantity, crop.PackPrice * packs, $"{crop.Label} 씨앗 {quantity}개");
         }
 
-        public void PurchaseFeed()
+        public void PurchaseFeed(int packs = 1)
         {
-            Purchase(GameItem.Feed, 3, 15, "사료 3개");
+            packs = Mathf.Max(1, packs);
+            var quantity = 3 * packs;
+            Purchase(GameItem.Feed, quantity, 15 * packs, $"사료 {quantity}개");
         }
 
-        public void PurchaseChicken()
+        public void PurchaseChicken(int count = 1)
         {
-            if (PurchaseWithoutItem(150, "닭 1마리"))
+            count = Mathf.Max(1, count);
+            if (PurchaseWithoutItem(150 * count, $"닭 {count}마리"))
             {
-                Data.ownedChickens++;
+                Data.ownedChickens += count;
                 NotifyChanged();
                 SaveSilently();
             }
         }
 
-        public bool SellChicken()
+        public bool SellChicken(int count = 1)
         {
+            count = Mathf.Max(1, count);
             const int salePrice = 100;
-            if (Data.ownedChickens <= 1)
+            if (Data.ownedChickens - count < 1)
             {
                 Message = "마지막 닭은 판매할 수 없습니다.";
                 NotifyChanged();
                 return false;
             }
 
-            var adultCount = Data.ownedChickens - Data.chickenJuvenileDays.Count;
-            if (adultCount <= 0 && Data.chickenJuvenileDays.Count > 0)
+            for (var sold = 0; sold < count; sold++)
             {
-                Data.chickenJuvenileDays.RemoveAt(Data.chickenJuvenileDays.Count - 1);
+                var adultCount = Data.ownedChickens - Data.chickenJuvenileDays.Count;
+                if (adultCount <= 0 && Data.chickenJuvenileDays.Count > 0)
+                {
+                    Data.chickenJuvenileDays.RemoveAt(Data.chickenJuvenileDays.Count - 1);
+                }
+
+                Data.ownedChickens--;
             }
 
-            Data.ownedChickens--;
-            Data.money += salePrice;
-            Message = $"닭 1마리를 판매해 {salePrice}G를 받았습니다.";
+            var income = salePrice * count;
+            Data.money += income;
+            Message = $"닭 {count}마리를 판매해 {income}G를 받았습니다.";
             NotifyChanged();
             SaveSilently();
             return true;
         }
 
-        public void PurchaseCow()
+        public void PurchaseCow(int count = 1)
         {
-            if (PurchaseWithoutItem(350, "소 1마리"))
+            count = Mathf.Max(1, count);
+            if (PurchaseWithoutItem(350 * count, $"소 {count}마리"))
             {
-                Data.ownedCows++;
+                Data.ownedCows += count;
                 NotifyChanged();
                 SaveSilently();
             }
         }
 
-        public bool SellCow()
+        public bool SellCow(int count = 1)
         {
+            count = Mathf.Max(1, count);
             const int salePrice = 250;
-            if (Data.ownedCows <= 0)
+            if (Data.ownedCows < count)
             {
                 Message = "판매할 소가 없습니다.";
                 NotifyChanged();
                 return false;
             }
 
-            var adultCount = Data.ownedCows - Data.cowJuvenileDays.Count;
-            if (adultCount <= 0 && Data.cowJuvenileDays.Count > 0)
+            for (var sold = 0; sold < count; sold++)
             {
-                Data.cowJuvenileDays.RemoveAt(Data.cowJuvenileDays.Count - 1);
+                var adultCount = Data.ownedCows - Data.cowJuvenileDays.Count;
+                if (adultCount <= 0 && Data.cowJuvenileDays.Count > 0)
+                {
+                    Data.cowJuvenileDays.RemoveAt(Data.cowJuvenileDays.Count - 1);
+                }
+
+                Data.ownedCows--;
             }
 
-            Data.ownedCows--;
-            Data.money += salePrice;
-            Message = $"소 1마리를 판매해 {salePrice}G를 받았습니다.";
+            var income = salePrice * count;
+            Data.money += income;
+            Message = $"소 {count}마리를 판매해 {income}G를 받았습니다.";
             NotifyChanged();
             SaveSilently();
             return true;
@@ -437,10 +455,11 @@ namespace FarmGame2D.Core
             Purchase(ore, quantity, price, $"{ItemCatalog.GetLabel(ore)} {quantity}개");
         }
 
-        public void PurchaseDecoration(GameItem item)
+        public void PurchaseDecoration(GameItem item, int count = 1)
         {
+            count = Mathf.Max(1, count);
             if (!TownDecorationCatalog.TryGet(item, out var decoration)) return;
-            Purchase(item, 1, decoration.Price, ItemCatalog.GetLabel(item));
+            Purchase(item, count, decoration.Price * count, $"{ItemCatalog.GetLabel(item)} {count}개");
         }
 
         public void OpenSellBox()
