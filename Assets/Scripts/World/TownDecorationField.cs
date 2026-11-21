@@ -54,14 +54,18 @@ namespace FarmGame2D.World
             sprinklerPreview.SetActive(!WorldAreaProfile.IsInterior(center));
             var valid = CanPlace(center, cell, GameItem.Sprinkler);
             var marker = sprinklerPreview.transform.GetChild(0).GetComponent<SpriteRenderer>();
-            marker.color = valid ? new Color(0.67f, 0.94f, 1f, 0.66f) : new Color(1f, 0.38f, 0.29f, 0.65f);
+            marker.color = valid ? Color.white : new Color(1f, 0.55f, 0.5f, 1f);
         }
 
         private GameObject CreateSprinklerPreview()
         {
             var preview = new GameObject("Sprinkler Placement Preview");
             preview.transform.SetParent(transform, false);
-            AddPreviewTile(preview.transform, Vector2.zero);
+            var markerObject = new GameObject("Sprinkler");
+            markerObject.transform.SetParent(preview.transform, false);
+            var marker = markerObject.AddComponent<SpriteRenderer>();
+            marker.sprite = FarmEquipmentArt.Sprinkler;
+            marker.sortingOrder = 1200;
             foreach (var offset in FarmUpgradeRules.SprinklerOffsets) AddPreviewTile(preview.transform, offset);
             return preview;
         }

@@ -817,7 +817,18 @@ namespace FarmGame2D.Core
                 worldY = position.y
             });
             if (Data.inventory.Count(item) == 0) SelectedDecoration = null;
-            Message = $"{ItemCatalog.GetLabel(item)}을 설치했습니다. E로 다시 주울 수 있어요.";
+            if (item == GameItem.Sprinkler)
+            {
+                var watered = FarmUpgradeRules.WaterWithSprinklers(Data);
+                Message = watered > 0
+                    ? $"스프링클러가 주변 작물 {watered}칸에 물을 주었습니다. E로 다시 주울 수 있어요."
+                    : "스프링클러를 설치했습니다. 매일 아침 6시에 상하좌우 작물에 물을 줍니다. E로 다시 주울 수 있어요.";
+            }
+            else
+            {
+                Message = $"{ItemCatalog.GetLabel(item)}을 설치했습니다. E로 다시 주울 수 있어요.";
+            }
+
             NotifyChanged();
             SaveSilently();
             return true;

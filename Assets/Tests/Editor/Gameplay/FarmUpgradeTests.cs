@@ -1,4 +1,5 @@
 using System.Linq;
+using FarmGame2D.Art;
 using FarmGame2D.Core;
 using FarmGame2D.Farming;
 using FarmGame2D.World;
@@ -23,6 +24,22 @@ namespace FarmGame2D.Tests
             Assert.That(save.farmPlots.Take(4).All(plot => plot.state == SoilState.Watered), Is.True);
             Assert.That(save.farmPlots.Skip(4).All(plot => plot.state == SoilState.Planted), Is.True);
             Assert.That(FarmUpgradeRules.WaterWithSprinklers(save), Is.Zero);
+        }
+
+        [Test]
+        public void SprinklerSprite_StandsClearlyOnAFarmTile()
+        {
+            var sprite = FarmEquipmentArt.Sprinkler;
+            var pixels = sprite.texture.GetPixels32();
+            var opaque = 0;
+            foreach (var pixel in pixels)
+            {
+                if (pixel.a > 200) opaque++;
+            }
+
+            Assert.That(sprite.bounds.size.x, Is.GreaterThan(0.7f));
+            Assert.That(sprite.bounds.size.y, Is.GreaterThan(0.7f));
+            Assert.That(opaque, Is.GreaterThan(pixels.Length / 4));
         }
 
         [Test]
