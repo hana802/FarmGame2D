@@ -1,0 +1,13 @@
+---
+description: Commit each finished change before starting the next one
+alwaysApply: true
+---
+
+# 수정할 때마다 저장
+
+코드를 수정하면 그 변경이 끝나는 즉시 git commit으로 저장한다. 코덱스와 커서가 같은 기준으로 따른다.
+
+- 한 가지 이유가 끝나면 작은 커밋으로 남긴다. 메시지는 왜 바꿨는지를 한두 문장으로 쓴다.
+- `Logs/`, `Builds/`, `Library/`, 비밀이 들어 있는 파일은 커밋하지 않는다.
+- 원격 push는 사용자가 명시적으로 요청할 때만 한다.
+- 컴파일이 깨진 상태로는 커밋하지 않는다. 고친 다음 저장한다.
