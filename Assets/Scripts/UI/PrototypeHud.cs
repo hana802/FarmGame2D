@@ -42,6 +42,8 @@ namespace FarmGame2D.UI
         private readonly HudMessageVisibility messageVisibility = new();
         private readonly ShopPurchaseConfirmation shopPurchaseConfirmation = new();
         private Vector2 shopScrollPosition;
+        private string shopPreview = string.Empty;
+        private bool shopPointerInProducts;
         private bool inventoryDecorationsPage;
         private string cloudCodeInput = string.Empty;
         private string cloudPinInput = string.Empty;
@@ -666,6 +668,10 @@ namespace FarmGame2D.UI
         private void DrawShop(GameSession session)
         {
             var layout = HudLayout.CalculateShopLayout();
+            shopPreview = shopPurchaseConfirmation.Pending.HasValue
+                ? ShopItemGuide.Describe(shopPurchaseConfirmation.Pending.Value)
+                : string.Empty;
+            shopPointerInProducts = layout.ProductsViewport.Contains(Event.current.mousePosition);
             farmSkin.DrawWindow(layout.Panel);
             GUI.Label(layout.Title, ShopTitle, titleStyle);
 
@@ -689,19 +695,21 @@ namespace FarmGame2D.UI
 
             GUI.enabled = previousEnabled;
             DrawPurchaseConfirmation(session, layout);
+            DrawShopPreview(layout);
         }
 
         private void DrawFarmShop(GameSession session, ShopHudLayout layout)
         {
             var crops = CropCatalog.GetForSeason(session.CurrentSeason);
-            var productRows = crops.Count + 4;
+            var productRows = crops.Count + 5;
             BeginShopScroll(layout, productRows, 72f);
             var row = 0;
             for (var index = 0; index < crops.Count; index++)
             {
                 var crop = crops[index];
                 var displayName = $"{crop.Label} 씨앗 5개";
-                if (farmSkin.DrawButton(layout.GetScrollableProductButton(row), $"{displayName} — {crop.PackPrice}G"))
+                if (DrawShopButton(layout.GetScrollableProductButton(row), $"{displayName} — {crop.PackPrice}G", false,
+                        ShopItemGuide.DescribeSeed(crop)))
                 {
                     shopPurchaseConfirmation.Request(new ShopPurchaseRequest(
                         ShopPurchaseKind.Seed,
@@ -712,24 +720,34 @@ namespace FarmGame2D.UI
                 row++;
             }
 
-            if (farmSkin.DrawButton(layout.GetScrollableProductButton(row++), "동물 사료 3개 — 15G", true))
+            if (DrawShopButton(layout.GetScrollableProductButton(row++), "동물 사료 3개 — 15G", true,
+                    ShopItemGuide.Describe(new ShopPurchaseRequest(ShopPurchaseKind.Feed, "동물 사료 3개"))))
             {
                 shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Feed, "동물 사료 3개"));
             }
 
-            if (farmSkin.DrawButton(layout.GetScrollableProductButton(row++), "닭 1마리 — 150G"))
+            if (DrawShopButton(layout.GetScrollableProductButton(row++), "닭 1마리 — 150G", false,
+                    ShopItemGuide.Describe(new ShopPurchaseRequest(ShopPurchaseKind.Chicken, "닭 1마리"))))
             {
                 shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Chicken, "닭 1마리"));
             }
 
-            if (farmSkin.DrawButton(layout.GetScrollableProductButton(row++), "닭 1마리 판매 — +100G", true))
+            if (DrawShopButton(layout.GetScrollableProductButton(row++), "닭 1마리 판매 — +100G", true,
+                    ShopItemGuide.Describe(new ShopPurchaseRequest(ShopPurchaseKind.ChickenSale, "닭 1마리", price: 100))))
             {
                 shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.ChickenSale, "닭 1마리", price: 100));
             }
 
-            if (farmSkin.DrawButton(layout.GetScrollableProductButton(row++), "소 1마리 — 350G"))
+            if (DrawShopButton(layout.GetScrollableProductButton(row++), "소 1마리 — 350G", false,
+                    ShopItemGuide.Describe(new ShopPurchaseRequest(ShopPurchaseKind.Cow, "소 1마리"))))
             {
                 shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Cow, "소 1마리"));
+            }
+
+            if (DrawShopButton(layout.GetScrollableProductButton(row++), "소 1마리 판매 — +250G", true,
+                    ShopItemGuide.Describe(new ShopPurchaseRequest(ShopPurchaseKind.CowSale, "소 1마리", price: 250))))
+            {
+                shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.CowSale, "소 1마리", price: 250));
             }
 
             GUI.Label(layout.GetScrollableInfoLabel(row, 64f), $"현재 보유: 닭 {session.Data.ownedChickens}마리 · 소 {session.Data.ownedCows}마리\n먹이를 주면 다음 날 달걀과 우유를 얻습니다.", centeredStyle);
@@ -740,22 +758,26 @@ namespace FarmGame2D.UI
         {
             const int productRows = 7;
             BeginShopScroll(layout, productRows, 92f);
-            if (farmSkin.DrawButton(layout.GetScrollableProductButton(0), session.Data.hasPickaxe ? "곡괭이 — 구입 완료" : "곡괭이 — 120G"))
+            if (DrawShopButton(layout.GetScrollableProductButton(0), session.Data.hasPickaxe ? "곡괭이 — 구입 완료" : "곡괭이 — 120G", false,
+                    ShopItemGuide.Describe(new ShopPurchaseRequest(ShopPurchaseKind.Pickaxe, "곡괭이"))))
             {
                 shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Pickaxe, "곡괭이"));
             }
 
-            if (farmSkin.DrawButton(layout.GetScrollableProductButton(1), "돌 5개 — 30G", true))
+            if (DrawShopButton(layout.GetScrollableProductButton(1), "돌 5개 — 30G", true,
+                    ShopItemGuide.Describe(new ShopPurchaseRequest(ShopPurchaseKind.Ore, "돌 5개", GameItem.Stone, 5, 30))))
             {
                 shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Ore, "돌 5개", GameItem.Stone, 5, 30));
             }
 
-            if (farmSkin.DrawButton(layout.GetScrollableProductButton(2), "구리 광석 3개 — 75G"))
+            if (DrawShopButton(layout.GetScrollableProductButton(2), "구리 광석 3개 — 75G", false,
+                    ShopItemGuide.Describe(new ShopPurchaseRequest(ShopPurchaseKind.Ore, "구리 광석 3개", GameItem.CopperOre, 3, 75))))
             {
                 shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Ore, "구리 광석 3개", GameItem.CopperOre, 3, 75));
             }
 
-            if (farmSkin.DrawButton(layout.GetScrollableProductButton(3), "철 광석 2개 — 110G", true))
+            if (DrawShopButton(layout.GetScrollableProductButton(3), "철 광석 2개 — 110G", true,
+                    ShopItemGuide.Describe(new ShopPurchaseRequest(ShopPurchaseKind.Ore, "철 광석 2개", GameItem.IronOre, 2, 110))))
             {
                 shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Ore, "철 광석 2개", GameItem.IronOre, 2, 110));
             }
@@ -765,12 +787,42 @@ namespace FarmGame2D.UI
             {
                 var decoration = decorations[index];
                 var label = ItemCatalog.GetLabel(decoration.Item);
-                if (farmSkin.DrawButton(layout.GetScrollableProductButton(4 + index), $"{label} — {decoration.Price}G", index % 2 == 0))
+                if (DrawShopButton(layout.GetScrollableProductButton(4 + index), $"{label} — {decoration.Price}G", index % 2 == 0,
+                        ShopItemGuide.DescribeDecoration(decoration.Item)))
                     shopPurchaseConfirmation.Request(new ShopPurchaseRequest(ShopPurchaseKind.Decoration, label, decoration.Item));
             }
 
-            GUI.Label(layout.GetScrollableInfoLabel(productRows, 84f), "장식품은 가방의 마을 장식 탭에서 골라 설치하세요.\n마을 잔디에 Space로 놓고 E로 다시 주울 수 있습니다.", centeredStyle);
+            GUI.Label(layout.GetScrollableInfoLabel(productRows, 84f), "장식품은 가방의 마을 장식 탭에서 골라 설치하세요.\n빈 잔디에 Space로 놓고 E로 다시 주울 수 있습니다.", centeredStyle);
             GUI.EndScrollView();
+        }
+
+        private bool DrawShopButton(Rect rect, string label, bool orange, string description)
+        {
+            var pointer = Event.current;
+            if (shopPointerInProducts && GUI.enabled && (pointer.type == EventType.Repaint || pointer.type == EventType.MouseMove || pointer.type == EventType.MouseDrag)
+                && rect.Contains(pointer.mousePosition))
+            {
+                shopPreview = description;
+            }
+
+            return farmSkin.DrawButton(rect, label, orange);
+        }
+
+        private void DrawShopPreview(ShopHudLayout layout)
+        {
+            if (string.IsNullOrEmpty(shopPreview))
+            {
+                return;
+            }
+
+            var card = new Rect(layout.Panel.xMax + 14f, layout.Panel.y + 58f, 286f, 292f);
+            if (card.xMax > HudLayout.ReferenceWidth - 8f)
+            {
+                card.x = layout.Panel.xMin - card.width - 14f;
+            }
+
+            farmSkin.DrawWindow(card);
+            GUI.Label(new Rect(card.x + 28f, card.y + 46f, card.width - 56f, card.height - 72f), shopPreview, panelStyle);
         }
 
         private void BeginShopScroll(ShopHudLayout layout, int productRows, float infoHeight)
@@ -822,6 +874,9 @@ namespace FarmGame2D.UI
                     break;
                 case ShopPurchaseKind.Cow:
                     session.PurchaseCow();
+                    break;
+                case ShopPurchaseKind.CowSale:
+                    session.SellCow();
                     break;
                 case ShopPurchaseKind.Pickaxe:
                     session.PurchasePickaxe();

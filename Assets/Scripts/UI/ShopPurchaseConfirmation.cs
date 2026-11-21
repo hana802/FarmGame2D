@@ -10,6 +10,7 @@ namespace FarmGame2D.UI
         Chicken,
         ChickenSale,
         Cow,
+        CowSale,
         Pickaxe,
         Ore,
         Decoration
@@ -36,7 +37,7 @@ namespace FarmGame2D.UI
         public GameItem Item { get; }
         public int Quantity { get; }
         public int Price { get; }
-        public bool IsSale => Kind == ShopPurchaseKind.ChickenSale;
+        public bool IsSale => Kind == ShopPurchaseKind.ChickenSale || Kind == ShopPurchaseKind.CowSale;
     }
 
     public sealed class ShopPurchaseConfirmation

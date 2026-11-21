@@ -377,6 +377,30 @@ namespace FarmGame2D.Core
             }
         }
 
+        public bool SellCow()
+        {
+            const int salePrice = 250;
+            if (Data.ownedCows <= 0)
+            {
+                Message = "판매할 소가 없습니다.";
+                NotifyChanged();
+                return false;
+            }
+
+            var adultCount = Data.ownedCows - Data.cowJuvenileDays.Count;
+            if (adultCount <= 0 && Data.cowJuvenileDays.Count > 0)
+            {
+                Data.cowJuvenileDays.RemoveAt(Data.cowJuvenileDays.Count - 1);
+            }
+
+            Data.ownedCows--;
+            Data.money += salePrice;
+            Message = $"소 1마리를 판매해 {salePrice}G를 받았습니다.";
+            NotifyChanged();
+            SaveSilently();
+            return true;
+        }
+
         public void PurchasePickaxe()
         {
             if (Data.hasPickaxe)
