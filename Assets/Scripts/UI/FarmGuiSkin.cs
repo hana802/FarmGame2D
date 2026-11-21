@@ -109,7 +109,7 @@ namespace FarmGame2D.UI
             return buttonStyle;
         }
 
-        private static void DrawSolid(Rect rect, Color color)
+        internal static void DrawSolid(Rect rect, Color color)
         {
             var previousColor = GUI.color;
             GUI.color = color;

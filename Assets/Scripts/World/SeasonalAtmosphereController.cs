@@ -299,7 +299,8 @@ namespace FarmGame2D.World
 
         private void OnGUI()
         {
-            if (player == null || worldCamera == null || Time.unscaledTime >= remarkVisibleUntil)
+            if (player == null || worldCamera == null || Time.unscaledTime >= remarkVisibleUntil
+                || GameSession.Instance?.ShopOpen == true)
             {
                 return;
             }

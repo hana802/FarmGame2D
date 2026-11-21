@@ -643,45 +643,38 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
-        public void ShopLayout_KeepsHeaderTextInsideArtworkSafeArea()
+        public void ShopLayout_KeepsHeaderTitleBalanceAndCloseSeparate()
         {
             var layout = HudLayout.CalculateShopLayout();
 
-            Assert.That(layout.Title.xMin, Is.GreaterThanOrEqualTo(layout.Panel.xMin + 120f),
-                "The shop title must clear the illustrated decoration on the left side of the header.");
-            Assert.That(layout.Title.yMin, Is.GreaterThanOrEqualTo(layout.Panel.yMin + 58f),
-                "The shop title must sit below the illustrated top frame.");
-            Assert.That(layout.ProductsViewport.yMin, Is.GreaterThanOrEqualTo(layout.Title.yMax + 24f),
-                "The first product must start below the header.");
-            Assert.That(layout.CloseButton.yMax, Is.LessThanOrEqualTo(layout.Panel.yMax - 18f));
+            Assert.That(layout.Title.xMin, Is.GreaterThan(layout.Header.xMin));
+            Assert.That(layout.Title.xMax, Is.LessThan(layout.Balance.xMin));
+            Assert.That(layout.Balance.xMax, Is.LessThan(layout.CloseButton.xMin));
+            Assert.That(layout.CloseButton.xMax, Is.LessThan(layout.Header.xMax));
+            Assert.That(layout.Tabs.yMin, Is.GreaterThan(layout.Header.yMax));
         }
 
         [Test]
-        public void ShopLayout_UsesCenteredHeaderAndSingleFooterAction()
+        public void ShopLayout_FitsFourCardsAndFooterWithinThePanel()
         {
             var layout = HudLayout.CalculateShopLayout();
 
-            Assert.That(PrototypeHud.ShopTitle, Is.EqualTo("상점"));
-            Assert.That(layout.Title.center.x, Is.EqualTo(layout.Panel.center.x).Within(0.01f),
-                "The shop title must be centered on the whole panel.");
-            Assert.That(layout.CloseButton.center.x, Is.EqualTo(layout.Panel.center.x).Within(0.01f));
-            Assert.That(layout.CloseButton.width, Is.GreaterThanOrEqualTo(270f),
-                "One close button must cover both baked footer slots.");
-            Assert.That(layout.CloseButton.yMin, Is.InRange(layout.Panel.yMin + 440f, layout.Panel.yMin + 462f),
-                "The close button must sit over the two illustrated footer slots.");
+            Assert.That(layout.GetProduct(0).yMin, Is.GreaterThan(layout.Tabs.yMax));
+            Assert.That(layout.GetProduct(3).yMin, Is.GreaterThan(layout.GetProduct(2).yMax));
+            Assert.That(layout.GetProduct(3).yMax, Is.LessThan(layout.ListFooter.yMin));
+            Assert.That(layout.ListFooter.yMax, Is.LessThan(layout.Panel.yMax));
         }
 
         [Test]
-        public void ShopLayout_ProvidesScrollableProductsAndConfirmationActions()
+        public void ShopLayout_KeepsDetailAndConfirmationInsideTheSamePanel()
         {
             var layout = HudLayout.CalculateShopLayout();
 
-            Assert.That(layout.GetContentHeight(5, 72f), Is.GreaterThan(layout.ProductsViewport.height));
-            Assert.That(layout.ProductsViewport.yMax, Is.LessThan(layout.CloseButton.yMin));
-            Assert.That(layout.ConfirmationMessage.xMin, Is.GreaterThan(layout.ConfirmationPanel.xMin));
-            Assert.That(layout.CancelButton.yMin, Is.GreaterThan(layout.ConfirmationMessage.yMax));
-            Assert.That(layout.CancelButton.xMax, Is.LessThan(layout.PurchaseButton.xMin));
-            Assert.That(layout.CancelButton.center.y, Is.EqualTo(layout.PurchaseButton.center.y).Within(0.01f));
+            Assert.That(layout.BackButton.yMax, Is.LessThan(layout.Detail.yMin));
+            Assert.That(layout.Detail.yMax, Is.LessThan(layout.ConfirmButton.yMin));
+            Assert.That(layout.DetailFooter.xMax, Is.LessThan(layout.ConfirmButton.xMin));
+            Assert.That(layout.ConfirmButton.xMax, Is.LessThan(layout.Panel.xMax));
+            Assert.That(layout.ConfirmButton.yMax, Is.LessThan(layout.Panel.yMax));
         }
 
         [Test]
