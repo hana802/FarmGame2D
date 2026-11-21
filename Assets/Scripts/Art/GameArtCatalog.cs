@@ -218,12 +218,31 @@ namespace FarmGame2D.Art
                 return shovel;
             }
 
+            if (tool == FarmTool.Pickaxe)
+            {
+                var pickaxeTexture = LoadTexture("Art/Items/held_pickaxe_v1");
+                if (pickaxeTexture == null)
+                {
+                    return null;
+                }
+
+                var pickaxe = Sprite.Create(
+                    pickaxeTexture,
+                    new Rect(0f, 0f, pickaxeTexture.width, pickaxeTexture.height),
+                    new Vector2(0.5f, 0.5f),
+                    320f,
+                    0,
+                    SpriteMeshType.FullRect);
+                pickaxe.name = "held_pickaxe";
+                heldToolSprites[tool] = pickaxe;
+                return pickaxe;
+            }
+
             var (path, rect) = tool switch
             {
                 FarmTool.Hoe => ("Art/Items/held_hoe_v1", new Rect(528f, 269f, 513f, 467f)),
                 FarmTool.Seeds => ("Art/Items/held_seeds_v1", new Rect(571f, 292f, 360f, 425f)),
                 FarmTool.WateringCan => ("Art/Items/held_watering_can_v1", new Rect(547f, 324f, 441f, 357f)),
-                FarmTool.Pickaxe => ("Art/Items/held_hoe_v1", new Rect(528f, 269f, 513f, 467f)),
                 _ => (string.Empty, default)
             };
 
