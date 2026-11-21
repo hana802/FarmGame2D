@@ -34,3 +34,4 @@ WebGL 검토용 빌드는 Unity 메뉴 `FarmGame2D > Build WebGL Site`로 생성
 ## 진행 기록
 
 - [2026년 11월 7일 프로젝트 기록](records/2026-11-07-project-record.md): 프로젝트 생성부터 GitHub 공개와 최신 기획 결정까지의 전체 요약
+- [2026년 11월 20–21일 대화 기록](records/2026-11-21-conversation-record.md): 이틀간 나눈 요청, 고른 안, 들어간 기능과 아직 남은 일
