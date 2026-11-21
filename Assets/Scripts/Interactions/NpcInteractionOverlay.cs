@@ -21,16 +21,16 @@ namespace FarmGame2D.Interactions
         private int bondPage;
         private Vector2 giftScroll;
         private GUIStyle titleStyle;
-        private GUIStyle actionCaptionStyle;
-        private FarmGuiSkin farmSkin;
         private GUIStyle centeredStyle;
+        private GUIStyle actionCaptionStyle;
         private GUIStyle buttonStyle;
         private GUIStyle panelStyle;
         private Texture2D panelTexture;
         private Texture2D buttonTexture;
         private Font koreanFont;
+        private FarmGuiSkin farmSkin;
 
-        public static bool IsOpen => instance != null && instance.enabled;
+        public static bool IsOpen => (instance != null && instance.enabled) || WeddingCeremonyOverlay.IsPlaying;
 
         public static void Show(string id, string displayName, int dialoguePortraitRow, Func<string> dialogueProvider)
         {
@@ -58,6 +58,8 @@ namespace FarmGame2D.Interactions
                 ? string.Empty
                 : dialogueProvider?.Invoke() ?? "좋은 하루예요.";
             instance.enabled = true;
+            if (instance.activeBondEvent?.Kind == BondEventKind.Wedding)
+                instance.PlayWedding(instance.activeBondEvent.Value);
         }
 
         public static void ShowDogEvent(BondEventDefinition bondEvent)
@@ -223,7 +225,7 @@ namespace FarmGame2D.Interactions
             if (replay.HasValue) row.x += width + gap;
             if (wedding.HasValue && farmSkin.DrawButton(row, "결혼식 다시 보기"))
             {
-                OpenBondReplay(wedding.Value);
+                PlayWedding(wedding.Value);
                 return;
             }
 
@@ -302,8 +304,8 @@ namespace FarmGame2D.Interactions
                     BondEventService.TryAcceptMarriage(data, bondEvent.NpcId))
                 {
                     GameSession.Instance.SaveCurrentStateSilently();
-                    activeBondEvent = BondEventService.GetPendingWedding(data, bondEvent.NpcId);
-                    bondPage = 0;
+                    var wedding = BondEventService.GetPendingWedding(data, bondEvent.NpcId);
+                    if (wedding.HasValue) PlayWedding(wedding.Value);
                 }
                 if (GUI.Button(new Rect(panel.x + 420f, panel.y + 500f, 280f, 56f), "나중에", buttonStyle)) Close();
                 return;
@@ -317,8 +319,13 @@ namespace FarmGame2D.Interactions
                     GameSession.Instance.SaveCurrentStateSilently();
                     if (bondEvent.Kind == BondEventKind.NpcEnding)
                     {
-                        activeBondEvent = BondEventService.GetPendingWedding(data, bondEvent.NpcId) ??
-                            BondEventService.GetMarriageProposal(data, bondEvent.NpcId);
+                        var wedding = BondEventService.GetPendingWedding(data, bondEvent.NpcId);
+                        if (wedding.HasValue)
+                        {
+                            PlayWedding(wedding.Value);
+                            return;
+                        }
+                        activeBondEvent = BondEventService.GetMarriageProposal(data, bondEvent.NpcId);
                         bondPage = 0;
                         if (!activeBondEvent.HasValue) Close();
                     }
@@ -326,6 +333,12 @@ namespace FarmGame2D.Interactions
                 }
                 else bondPage++;
             }
+        }
+
+        private void PlayWedding(BondEventDefinition wedding)
+        {
+            Close();
+            WeddingCeremonyOverlay.Show(wedding, GameSession.Instance, speaker);
         }
 
         private void Close()

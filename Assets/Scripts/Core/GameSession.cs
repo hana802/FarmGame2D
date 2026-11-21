@@ -293,8 +293,9 @@ namespace FarmGame2D.Core
             };
             NotifyChanged();
             SaveSilently();
-            var bondEvent = BondEventService.GetPendingDogEvent(Data);
-            if (bondEvent.HasValue) NpcInteractionOverlay.ShowDogEvent(bondEvent.Value);
+            var bondEvent = BondEventService.GetPendingDogEvent(Data)
+                ?? BondEventService.GetDogEventForReplay(Data);
+            if (bondEvent.HasValue) DogBondCelebration.Show(bondEvent.Value, this);
         }
 
         public void ToggleDogSit()

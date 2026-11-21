@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Reflection;
+using FarmGame2D.Core;
+using FarmGame2D.Interactions;
 using FarmGame2D.World;
 using NUnit.Framework;
 using UnityEngine;
@@ -10,6 +12,50 @@ namespace FarmGame2D.Tests
 {
     public sealed class DogObstacleSafetyTests
     {
+        [UnityTest]
+        public IEnumerator BondMilestone_PlaysBesideDogWithoutOpeningModal()
+        {
+            SceneManager.LoadScene("Main");
+            yield return null;
+            yield return null;
+
+            var session = GameSession.Instance;
+            Assert.That(session, Is.Not.Null);
+            session.Data.dogAffection = 9;
+            session.Data.dogCompanionEventSeen = false;
+            session.Data.dogEndingSeen = false;
+
+            session.PetDog();
+            Assert.That(DogBondCelebration.IsPlaying, Is.True);
+            Assert.That(NpcInteractionOverlay.IsOpen, Is.False,
+                "Dog bond scenes should not cover the game with a modal panel.");
+
+            yield return new WaitForSecondsRealtime(6.6f);
+            Assert.That(DogBondCelebration.IsPlaying, Is.False);
+            Assert.That(session.Data.dogCompanionEventSeen, Is.True);
+        }
+
+        [UnityTest]
+        public IEnumerator SeenBondEnding_ReplaysWithoutOpeningModal()
+        {
+            SceneManager.LoadScene("Main");
+            yield return null;
+            yield return null;
+
+            var session = GameSession.Instance;
+            session.Data.dogAffection = 361;
+            session.Data.dogCompanionEventSeen = true;
+            session.Data.dogEndingSeen = true;
+
+            session.PetDog();
+            Assert.That(DogBondCelebration.IsPlaying, Is.True);
+            Assert.That(NpcInteractionOverlay.IsOpen, Is.False);
+            Assert.That(session.Data.dogEndingSeen, Is.True);
+
+            Object.Destroy(Object.FindFirstObjectByType<DogBondCelebration>().gameObject);
+            yield return null;
+        }
+
         [UnityTest]
         public IEnumerator CelebrationOrbit_DoesNotLeaveDogInsideSolidObstacle()
         {

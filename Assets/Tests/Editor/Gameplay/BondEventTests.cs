@@ -47,6 +47,21 @@ namespace FarmGame2D.Tests.Editor.Gameplay
             Assert.That(final.HasValue, Is.True);
             BondEventService.Complete(save, final.Value);
             Assert.That(BondEventService.GetPendingDogEvent(save), Is.Null);
+            Assert.That(BondEventService.GetDogEventForReplay(save)?.Kind, Is.EqualTo(BondEventKind.DogEnding));
+        }
+
+        [Test]
+        public void SeenDogEnding_CanBeReplayedWithoutResettingProgress()
+        {
+            var save = GameSaveData.CreateNew(0, 1);
+            save.dogAffection = 361;
+            save.dogCompanionEventSeen = true;
+            save.dogEndingSeen = true;
+
+            Assert.That(BondEventService.GetPendingDogEvent(save), Is.Null);
+            Assert.That(BondEventService.GetDogEventForReplay(save)?.Title, Is.EqualTo("언제나 함께"));
+            Assert.That(save.dogAffection, Is.EqualTo(361));
+            Assert.That(save.dogEndingSeen, Is.True);
         }
 
         [Test]

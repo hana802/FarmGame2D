@@ -25,8 +25,6 @@ namespace FarmGame2D.UI
 
         public bool IsReady => atlas != null;
 
-        public void DrawDialogue(Rect rect) => DrawAtlas(rect, DialogueAtlasRect);
-
         public void DrawDialogue(DialogueHudLayout layout, string speaker, string line, int portraitRow)
         {
             dialogueSpeakerStyle ??= new GUIStyle(GUI.skin.label)
