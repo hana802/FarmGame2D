@@ -51,7 +51,6 @@ namespace FarmGame2D.Player
 
         private void Update()
         {
-            HandleCharacterSelection();
             if (GameSession.Instance == null || GameSession.Instance.Data.characterChoice == CharacterChoice.None)
             {
                 moveInput = Vector2.zero;
@@ -122,20 +121,6 @@ namespace FarmGame2D.Player
             }
 
             return Input.GetKey(positive) || Input.GetKey(alternatePositive) ? 1f : 0f;
-        }
-
-        private void HandleCharacterSelection()
-        {
-            if (Input.GetKeyDown(KeyCode.M))
-            {
-                GameSession.Instance?.ChooseCharacter(CharacterChoice.Male);
-                UpdateCharacterVisual(true);
-            }
-            else if (Input.GetKeyDown(KeyCode.F))
-            {
-                GameSession.Instance?.ChooseCharacter(CharacterChoice.Female);
-                UpdateCharacterVisual(true);
-            }
         }
 
         private void UpdateFacingDirection()
