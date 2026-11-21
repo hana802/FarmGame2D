@@ -264,7 +264,22 @@ namespace FarmGame2D.Art
 
             if (tool == FarmTool.Pickaxe)
             {
-                return heldToolSprites[tool] = CreatePickaxeSprite();
+                var pickaxeTexture = LoadTexture("Art/Items/held_pickaxe_v1");
+                if (pickaxeTexture == null)
+                {
+                    return null;
+                }
+
+                var pickaxe = Sprite.Create(
+                    pickaxeTexture,
+                    new Rect(0f, 0f, pickaxeTexture.width, pickaxeTexture.height),
+                    new Vector2(0.5f, 0.5f),
+                    320f,
+                    0,
+                    SpriteMeshType.FullRect);
+                pickaxe.name = "held_pickaxe";
+                heldToolSprites[tool] = pickaxe;
+                return pickaxe;
             }
 
             var (path, rect) = tool switch
@@ -289,44 +304,6 @@ namespace FarmGame2D.Art
             var sprite = Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f), 420f, 0, SpriteMeshType.FullRect);
             sprite.name = $"held_{tool}";
             heldToolSprites[tool] = sprite;
-            return sprite;
-        }
-
-        private static Sprite CreatePickaxeSprite()
-        {
-            const int width = 22;
-            const int height = 24;
-            var texture = new Texture2D(width, height, TextureFormat.RGBA32, false)
-            {
-                filterMode = FilterMode.Point,
-                wrapMode = TextureWrapMode.Clamp,
-                name = "held_pickaxe"
-            };
-            texture.SetPixels32(new Color32[width * height]);
-            var outline = new Color32(56, 37, 30, 255);
-            var wood = new Color32(175, 109, 52, 255);
-            var steel = new Color32(127, 152, 159, 255);
-            var edge = new Color32(209, 226, 224, 255);
-
-            for (var y = 2; y < 21; y++)
-            {
-                texture.SetPixel(9, y, outline);
-                texture.SetPixel(10, y, wood);
-                texture.SetPixel(11, y, outline);
-            }
-            for (var x = 2; x < 20; x++)
-            {
-                var y = 21 - Mathf.Abs(x - 10) / 3;
-                texture.SetPixel(x, y - 1, outline);
-                texture.SetPixel(x, y, steel);
-                texture.SetPixel(x, y + 1, edge);
-            }
-            texture.SetPixel(1, 17, edge);
-            texture.SetPixel(20, 17, edge);
-            texture.Apply(false, true);
-            var sprite = Sprite.Create(texture, new Rect(0f, 0f, width, height),
-                new Vector2(10.5f / width, 5f / height), 18f, 0, SpriteMeshType.FullRect);
-            sprite.name = texture.name;
             return sprite;
         }
 
