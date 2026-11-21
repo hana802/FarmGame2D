@@ -175,7 +175,7 @@ namespace FarmGame2D.World
             ConfigureNpcMovement(villager, villageRoutes, 13, 0.75f, seed + 33, new Vector2(11.5f, 7.2f), "주민 도윤");
 
             var fisher = CreateNpc("Fisher Minseo", new Vector2(-9f, 0f), new Color(0.3f, 0.58f, 0.72f), townRoot);
-            ApplyNpcArt(fisher, 1);
+            ApplyNpcVariant(fisher, 1);
             fisher.Configure("어부 민서", new[]
             {
                 "낚싯대를 들고 연못이나 바닷가의 낚시 자리를 찾아보세요.",
@@ -188,7 +188,7 @@ namespace FarmGame2D.World
             ConfigureNpcMovement(fisher, villageRoutes, 10, 0.68f, seed + 44, new Vector2(-11.5f, 2.5f), "어부 민서");
 
             var florist = CreateNpc("Florist Taeo", new Vector2(5f, 0f), new Color(0.64f, 0.45f, 0.72f), townRoot);
-            ApplyNpcArt(florist, 0);
+            ApplyNpcVariant(florist, 2);
             florist.Configure("원예가 태오", new[]
             {
                 "마을 길과 광장은 모두가 쓰는 곳이라 밭을 만들 수 없어요.",
@@ -216,7 +216,7 @@ namespace FarmGame2D.World
             ConfigureNpcMovement(baker, villageRoutes, 7, 0.66f, seed + 66, new Vector2(-5.8f, 6.1f), "제빵사 유나");
 
             var rancher = CreateNpc("Rancher Sora", new Vector2(3.6f, -0.8f), new Color(0.68f, 0.34f, 0.28f), townRoot);
-            ApplyPlayerStyleNpcArt(rancher, CharacterChoice.Female);
+            ApplyNpcVariant(rancher, 3);
             rancher.Configure("목장 관리인 소라", new[]
             {
                 "동물들은 생각보다 표정이 풍부해요. 매일 보다 보면 기분이 눈에 보일 정도라니까요.",
@@ -538,6 +538,12 @@ namespace FarmGame2D.World
             var herdObject = new GameObject(name);
             herdObject.transform.SetParent(parent);
             herdObject.AddComponent<FarmAnimalHerd>().Configure(session, kind, area, speed, separationGroup);
+        }
+
+        private static void ApplyNpcVariant(DialogueInteractable npc, int variant)
+        {
+            ApplyCharacterArt(npc, GameArtCatalog.GetVillagerVariantSprite(variant, 3, false));
+            npc.gameObject.AddComponent<NpcMotionPresenter>().Configure(0, CharacterChoice.None, variant);
         }
 
         private static void ApplyNpcArt(DialogueInteractable npc, int characterRowFromTop)

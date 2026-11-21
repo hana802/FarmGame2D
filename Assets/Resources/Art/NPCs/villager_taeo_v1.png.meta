@@ -1,0 +1,730 @@
+fileFormatVersion: 2
+guid: dff0b43b7d7218c4bb2b0df833cd6dd2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1622477407120438903
+    second: villager_taeo_v1_0
+  - first:
+      213: 7552859788564924430
+    second: villager_taeo_v1_1
+  - first:
+      213: 3210070410659939611
+    second: villager_taeo_v1_2
+  - first:
+      213: -1403630349593058934
+    second: villager_taeo_v1_3
+  - first:
+      213: 5729516437502006896
+    second: villager_taeo_v1_4
+  - first:
+      213: -2324918879860910622
+    second: villager_taeo_v1_5
+  - first:
+      213: 5092836485373943413
+    second: villager_taeo_v1_6
+  - first:
+      213: -3933509918464664749
+    second: villager_taeo_v1_7
+  - first:
+      213: -9180465299850401398
+    second: villager_taeo_v1_8
+  - first:
+      213: -9152544859899482705
+    second: villager_taeo_v1_9
+  - first:
+      213: -7948482995387937353
+    second: villager_taeo_v1_10
+  - first:
+      213: 7159263831001349527
+    second: villager_taeo_v1_11
+  - first:
+      213: -1697445115177877618
+    second: villager_taeo_v1_12
+  - first:
+      213: 9116826901674995774
+    second: villager_taeo_v1_13
+  - first:
+      213: -3631279598210395466
+    second: villager_taeo_v1_14
+  - first:
+      213: -2921897318800129057
+    second: villager_taeo_v1_15
+  - first:
+      213: -5142580161332297727
+    second: villager_taeo_v1_16
+  - first:
+      213: 2475109261775011957
+    second: villager_taeo_v1_17
+  - first:
+      213: 2409110330820541461
+    second: villager_taeo_v1_18
+  - first:
+      213: -4592050108104884897
+    second: villager_taeo_v1_19
+  - first:
+      213: -8099639512993617951
+    second: villager_taeo_v1_20
+  - first:
+      213: 6577574468362611765
+    second: villager_taeo_v1_21
+  - first:
+      213: -6621638164653942062
+    second: villager_taeo_v1_22
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: villager_taeo_v1_0
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 221
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 776b2830b92348610800000000000000
+      internalID: 1622477407120438903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_1
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 169
+        width: 13
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e088ebff5f521d860800000000000000
+      internalID: 7552859788564924430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_2
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 161
+        width: 27
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b15c063e7067c8c20800000000000000
+      internalID: 3210070410659939611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_3
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 0
+        width: 163
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a816c8042ad458ce0800000000000000
+      internalID: -1403630349593058934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_4
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 3
+        width: 153
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0769118f7d4538f40800000000000000
+      internalID: 5729516437502006896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_5
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 0
+        width: 135
+        height: 202
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e59a42c89a3cbfd0800000000000000
+      internalID: -2324918879860910622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_6
+      rect:
+        serializedVersion: 2
+        x: 710
+        y: 93
+        width: 83
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57edcd9ecc36da640800000000000000
+      internalID: 5092836485373943413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_7
+      rect:
+        serializedVersion: 2
+        x: 736
+        y: 0
+        width: 225
+        height: 206
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35b107dd19d5969c0800000000000000
+      internalID: -3933509918464664749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_8
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 190
+        width: 23
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a89ed91337f689080800000000000000
+      internalID: -9180465299850401398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_9
+      rect:
+        serializedVersion: 2
+        x: 968
+        y: 0
+        width: 149
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fad2dd231f0abf080800000000000000
+      internalID: -9152544859899482705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_10
+      rect:
+        serializedVersion: 2
+        x: 1128
+        y: 3
+        width: 173
+        height: 205
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bd4bac14d051b190800000000000000
+      internalID: -7948482995387937353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_11
+      rect:
+        serializedVersion: 2
+        x: 1302
+        y: 0
+        width: 151
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79d332cd580da5360800000000000000
+      internalID: 7159263831001349527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_12
+      rect:
+        serializedVersion: 2
+        x: 1438
+        y: 107
+        width: 61
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8fb91449a67178e0800000000000000
+      internalID: -1697445115177877618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_13
+      rect:
+        serializedVersion: 2
+        x: 1288
+        y: 175
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e30301993c9758e70800000000000000
+      internalID: 9116826901674995774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_14
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 75
+        width: 55
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b2db8cd17a1b9dc0800000000000000
+      internalID: -3631279598210395466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_15
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 81
+        width: 17
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd380c29ed55377d0800000000000000
+      internalID: -2921897318800129057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_16
+      rect:
+        serializedVersion: 2
+        x: 736
+        y: 39
+        width: 41
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10041def692e1a8b0800000000000000
+      internalID: -5142580161332297727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_17
+      rect:
+        serializedVersion: 2
+        x: 1116
+        y: 73
+        width: 15
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 570016882ca595220800000000000000
+      internalID: 2475109261775011957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_18
+      rect:
+        serializedVersion: 2
+        x: 1132
+        y: 85
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51c3845f411ee6120800000000000000
+      internalID: 2409110330820541461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_19
+      rect:
+        serializedVersion: 2
+        x: 1502
+        y: 139
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5d3d93a1c2c540c0800000000000000
+      internalID: -4592050108104884897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_20
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 0
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e72c43d6cc489f80800000000000000
+      internalID: -8099639512993617951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_21
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 6
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53cae66212d384b50800000000000000
+      internalID: 6577574468362611765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_taeo_v1_22
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 0
+        width: 10
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dad1a41c273b14a0800000000000000
+      internalID: -6621638164653942062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      villager_taeo_v1_0: 1622477407120438903
+      villager_taeo_v1_1: 7552859788564924430
+      villager_taeo_v1_10: -7948482995387937353
+      villager_taeo_v1_11: 7159263831001349527
+      villager_taeo_v1_12: -1697445115177877618
+      villager_taeo_v1_13: 9116826901674995774
+      villager_taeo_v1_14: -3631279598210395466
+      villager_taeo_v1_15: -2921897318800129057
+      villager_taeo_v1_16: -5142580161332297727
+      villager_taeo_v1_17: 2475109261775011957
+      villager_taeo_v1_18: 2409110330820541461
+      villager_taeo_v1_19: -4592050108104884897
+      villager_taeo_v1_2: 3210070410659939611
+      villager_taeo_v1_20: -8099639512993617951
+      villager_taeo_v1_21: 6577574468362611765
+      villager_taeo_v1_22: -6621638164653942062
+      villager_taeo_v1_3: -1403630349593058934
+      villager_taeo_v1_4: 5729516437502006896
+      villager_taeo_v1_5: -2324918879860910622
+      villager_taeo_v1_6: 5092836485373943413
+      villager_taeo_v1_7: -3933509918464664749
+      villager_taeo_v1_8: -9180465299850401398
+      villager_taeo_v1_9: -9152544859899482705
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -18,6 +18,8 @@ namespace FarmGame2D.Art
         private static readonly Dictionary<int, Sprite> playerSprites = new();
         private static readonly Dictionary<CharacterChoice, Sprite> playerPortraits = new();
         private static readonly Dictionary<int, Sprite> npcSprites = new();
+        private static readonly Dictionary<int, Sprite> villagerVariantSprites = new();
+        private static readonly Texture2D[] villagerVariantSheets = new Texture2D[3];
         private static readonly Dictionary<int, Sprite> npcPortraits = new();
         private static readonly Dictionary<FarmTool, Sprite> heldToolSprites = new();
         private static Texture2D playerSheet;
@@ -93,6 +95,35 @@ namespace FarmGame2D.Art
             // The sheet lists front, left, right and back, followed by a stride in each direction.
             var column = facingRow switch { 0 => 3, 1 => 2, 2 => 1, _ => 0 };
             return GetNpcSprite(characterRowFromTop, column + (stepping ? 4 : 0));
+        }
+
+        public static Sprite GetVillagerVariantSprite(int variant, int facingRow, bool stepping)
+        {
+            var index = variant - 1;
+            if (index < 0 || index >= villagerVariantSheets.Length)
+            {
+                return null;
+            }
+
+            villagerVariantSheets[index] ??= LoadTexture(index switch
+            {
+                0 => "Art/NPCs/villager_minseo_v1",
+                1 => "Art/NPCs/villager_taeo_v1",
+                _ => "Art/NPCs/villager_sora_v1"
+            });
+            if (villagerVariantSheets[index] == null)
+            {
+                return null;
+            }
+
+            var column = facingRow switch { 0 => 3, 1 => 2, 2 => 1, _ => 0 };
+            if (stepping)
+            {
+                column += 4;
+            }
+
+            var rect = new Rect(NpcFrameLefts[column], 0f, PlayerFrameWidth, PlayerFrameHeight);
+            return GetOrCreate(villagerVariantSprites, (variant * 100) + column, villagerVariantSheets[index], rect, new Vector2(0.5f, 0.12f));
         }
 
         public static Sprite GetNpcPortrait(int characterRowFromTop)

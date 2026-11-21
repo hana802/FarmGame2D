@@ -1,0 +1,600 @@
+fileFormatVersion: 2
+guid: 30f25dd9236a27e47b4767fb917fec34
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4127454603584777653
+    second: villager_sora_v1_0
+  - first:
+      213: -6582652876421061421
+    second: villager_sora_v1_1
+  - first:
+      213: 2355726218923239387
+    second: villager_sora_v1_2
+  - first:
+      213: 6298772071908651090
+    second: villager_sora_v1_3
+  - first:
+      213: 90948101188293189
+    second: villager_sora_v1_4
+  - first:
+      213: 1386945017607455596
+    second: villager_sora_v1_5
+  - first:
+      213: -1571277798248753978
+    second: villager_sora_v1_6
+  - first:
+      213: 8509424699722588230
+    second: villager_sora_v1_7
+  - first:
+      213: -5677270534468728290
+    second: villager_sora_v1_8
+  - first:
+      213: 3746260199375973914
+    second: villager_sora_v1_9
+  - first:
+      213: -7790869081275943739
+    second: villager_sora_v1_10
+  - first:
+      213: -6206592607241297238
+    second: villager_sora_v1_11
+  - first:
+      213: 7958158649399141829
+    second: villager_sora_v1_12
+  - first:
+      213: 2556523111322409894
+    second: villager_sora_v1_13
+  - first:
+      213: -4875741055373822794
+    second: villager_sora_v1_14
+  - first:
+      213: 2247253044291436953
+    second: villager_sora_v1_15
+  - first:
+      213: 505049495444397205
+    second: villager_sora_v1_16
+  - first:
+      213: -3582947332209688849
+    second: villager_sora_v1_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: villager_sora_v1_0
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 0
+        width: 172
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4257cef7e558b6c0800000000000000
+      internalID: -4127454603584777653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_1
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 0
+        width: 179
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d42835d518b5a4a0800000000000000
+      internalID: -6582652876421061421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_2
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 197
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd76ef2d38831b020800000000000000
+      internalID: 2355726218923239387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_3
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 0
+        width: 139
+        height: 205
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 250344bb3dbb96750800000000000000
+      internalID: 6298772071908651090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_4
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 195
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5421350f0dc134100800000000000000
+      internalID: 90948101188293189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_5
+      rect:
+        serializedVersion: 2
+        x: 538
+        y: 191
+        width: 25
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c638d79252b6f3310800000000000000
+      internalID: 1386945017607455596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_6
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 0
+        width: 217
+        height: 204
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c4dcefda23b13ae0800000000000000
+      internalID: -1571277798248753978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_7
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 181
+        width: 49
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64066e5fdac871670800000000000000
+      internalID: 8509424699722588230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_8
+      rect:
+        serializedVersion: 2
+        x: 790
+        y: 0
+        width: 143
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1a033347884631b0800000000000000
+      internalID: -5677270534468728290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_9
+      rect:
+        serializedVersion: 2
+        x: 1094
+        y: 195
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1e2df38dc36df330800000000000000
+      internalID: 3746260199375973914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_10
+      rect:
+        serializedVersion: 2
+        x: 1114
+        y: 0
+        width: 153
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c439fe29d541e390800000000000000
+      internalID: -7790869081275943739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_11
+      rect:
+        serializedVersion: 2
+        x: 1250
+        y: 194
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa221db58e0cdd9a0800000000000000
+      internalID: -6206592607241297238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_12
+      rect:
+        serializedVersion: 2
+        x: 1270
+        y: 5
+        width: 245
+        height: 197
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c563a3a02f017e60800000000000000
+      internalID: 7958158649399141829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_13
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 85
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6abd27689389a7320800000000000000
+      internalID: 2556523111322409894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_14
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 65
+        width: 17
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b4b7a9c753e55cb0800000000000000
+      internalID: -4875741055373822794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_15
+      rect:
+        serializedVersion: 2
+        x: 942
+        y: 0
+        width: 173
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9910861ccb8df2f10800000000000000
+      internalID: 2247253044291436953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_16
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 37
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59c14f917db420700800000000000000
+      internalID: 505049495444397205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: villager_sora_v1_17
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 3
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fee35b67260d64ec0800000000000000
+      internalID: -3582947332209688849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      villager_sora_v1_0: -4127454603584777653
+      villager_sora_v1_1: -6582652876421061421
+      villager_sora_v1_10: -7790869081275943739
+      villager_sora_v1_11: -6206592607241297238
+      villager_sora_v1_12: 7958158649399141829
+      villager_sora_v1_13: 2556523111322409894
+      villager_sora_v1_14: -4875741055373822794
+      villager_sora_v1_15: 2247253044291436953
+      villager_sora_v1_16: 505049495444397205
+      villager_sora_v1_17: -3582947332209688849
+      villager_sora_v1_2: 2355726218923239387
+      villager_sora_v1_3: 6298772071908651090
+      villager_sora_v1_4: 90948101188293189
+      villager_sora_v1_5: 1386945017607455596
+      villager_sora_v1_6: -1571277798248753978
+      villager_sora_v1_7: 8509424699722588230
+      villager_sora_v1_8: -5677270534468728290
+      villager_sora_v1_9: 3746260199375973914
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

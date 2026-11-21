@@ -10,16 +10,18 @@ namespace FarmGame2D.World
         private SpriteRenderer spriteRenderer;
         private WanderingMover mover;
         private int sheetRow;
+        private int worldVariant;
         private CharacterChoice playerArt;
         private int facingRow = 3;
         private int displayedRow = -1;
         private int displayedFrame = -1;
 
-        public void Configure(int npcSheetRow, CharacterChoice characterArt = CharacterChoice.None)
+        public void Configure(int npcSheetRow, CharacterChoice characterArt = CharacterChoice.None, int variant = 0)
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
             sheetRow = npcSheetRow;
             playerArt = characterArt;
+            worldVariant = variant;
         }
 
         public void Face(Vector2 target)
@@ -46,7 +48,9 @@ namespace FarmGame2D.World
                 : PlayerMotionPresentation.GetAnimationFrame(Time.time, moving);
             if (facingRow == displayedRow && frame == displayedFrame) return;
 
-            var sprite = playerArt == CharacterChoice.None
+            var sprite = worldVariant > 0
+                ? GameArtCatalog.GetVillagerVariantSprite(worldVariant, facingRow, frame != 0)
+                : playerArt == CharacterChoice.None
                 ? GameArtCatalog.GetNpcDirectionalSprite(sheetRow, facingRow, frame != 0)
                 : GameArtCatalog.GetPlayerSprite(playerArt, facingRow, frame);
             if (sprite == null) return;
