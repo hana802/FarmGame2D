@@ -6,6 +6,8 @@ const PIN_PATTERN = /^\d{6}$/;
 const DEVICE_FINGERPRINT_PATTERN = /^[a-f0-9]{64}$/;
 const MAX_BODY_BYTES = 160 * 1024;
 const MAX_SAVE_BYTES = 128 * 1024;
+// Keep this aligned with GameSaveData.CurrentVersion. Older servers rejected version 8 and every device started a new farm.
+const MAX_SAVE_VERSION = 8;
 const PBKDF2_ITERATIONS = 120_000;
 
 const corsHeaders = {
@@ -107,7 +109,7 @@ function parseSaveJson(value: unknown): { parsed: Record<string, unknown>; text:
     const parsed = JSON.parse(value);
     if (!parsed || Array.isArray(parsed) || typeof parsed !== "object") return null;
     const version = (parsed as Record<string, unknown>).version;
-    if (!Number.isInteger(version) || (version as number) < 1 || (version as number) > 3) return null;
+    if (!Number.isInteger(version) || (version as number) < 1 || (version as number) > MAX_SAVE_VERSION) return null;
     return { parsed: parsed as Record<string, unknown>, text: JSON.stringify(parsed) };
   } catch {
     return null;

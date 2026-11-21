@@ -224,6 +224,23 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
+        public void CloudSaveClient_CloudPayloadKeepsProgressWhenServerVersionIsCapped()
+        {
+            var data = GameSaveData.CreateNew(FarmFieldLayout.PlotCount, 1234);
+            data.money = 321;
+            data.characterChoice = CharacterChoice.Female;
+            Assert.That(new SaveService().TrySerialize(data, out var json), Is.True);
+
+            var cloudJson = CloudSaveClient.PrepareSaveJsonForCloud(json);
+            var restored = JsonUtility.FromJson<GameSaveData>(cloudJson);
+
+            Assert.That(restored.version, Is.EqualTo(3));
+            Assert.That(restored.money, Is.EqualTo(321));
+            Assert.That(restored.characterChoice, Is.EqualTo(CharacterChoice.Female));
+            Assert.That(restored.worldSeed, Is.EqualTo(1234));
+        }
+
+        [Test]
         public void CloudSaveClient_DeviceSignatureProducesStableOpaqueFingerprint()
         {
             var first = CloudSaveClient.HashDeviceSignature("Windows|8|1920|1080|Korean|540");

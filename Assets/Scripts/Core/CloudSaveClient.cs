@@ -259,20 +259,51 @@ namespace FarmGame2D.Core
 
         private static string CreateDeviceFingerprint()
         {
-            var resolution = Screen.currentResolution;
+            // Window size is omitted. A resized browser would otherwise look like a different computer and start a new farm.
             var timeZoneMinutes = (int)TimeZoneInfo.Local.BaseUtcOffset.TotalMinutes;
             var signature = string.Join("|",
                 SystemInfo.operatingSystemFamily,
                 SystemInfo.processorCount,
-                resolution.width,
-                resolution.height,
                 Application.systemLanguage,
                 timeZoneMinutes);
             return HashDeviceSignature(signature);
         }
 
+        public static string PrepareSaveJsonForCloud(string json)
+        {
+            // The live sync function still accepts save versions 1 through 3. The farm data stays intact.
+            const int deployedServerMaxVersion = 3;
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return json;
+            }
+
+            GameSaveData data;
+            try
+            {
+                data = JsonUtility.FromJson<GameSaveData>(json);
+            }
+            catch (Exception)
+            {
+                return json;
+            }
+
+            if (data == null)
+            {
+                return json;
+            }
+
+            if (data.version > deployedServerMaxVersion)
+            {
+                data.version = deployedServerMaxVersion;
+            }
+
+            return JsonUtility.ToJson(data);
+        }
+
         private static IEnumerator Send(CloudSyncRequest payload, Action<CloudSyncResult> completed)
         {
+            payload.saveJson = PrepareSaveJsonForCloud(payload.saveJson);
             var bytes = System.Text.Encoding.UTF8.GetBytes(JsonUtility.ToJson(payload));
             using var request = new UnityWebRequest(Endpoint, UnityWebRequest.kHttpVerbPOST)
             {
