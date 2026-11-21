@@ -26,7 +26,7 @@ namespace FarmGame2D.World
 
             workshop = BuildHouseRoom("Farmhouse Workshop", interior, 1);
             workshopBackWall = workshop.transform.Find("Back Wall").gameObject;
-            AddHouseFurniture("Workshop Tool Bench", FarmhouseFurnitureArt.Workbench, new Vector2(43.45f, -5.12f),
+            AddHouseFurniture("Workshop Tool Bench", FarmhouseFurnitureArt.Workbench, new Vector2(44.0f, -5.0f),
                 new Vector2(2.15f, 0.66f), workshop.transform);
             AddHouseFurniture("Workshop Tool Chest", FarmhouseFurnitureArt.Chest, new Vector2(35.35f, -4.76f),
                 new Vector2(1.15f, 0.62f), workshop.transform);
