@@ -22,7 +22,6 @@ namespace FarmGame2D.Core
         private bool cloudSyncBusy;
         private bool hadLocalSaveAtStartup;
         private bool cloudLoadRequired;
-        private string lastMorningEvent = string.Empty;
 
         public static GameSession Instance { get; private set; }
         public GameSaveData Data { get; private set; }
@@ -539,9 +538,6 @@ namespace FarmGame2D.Core
             }
 
             clock.SetTime(Data.day + 1, 6, 0);
-            Message = string.IsNullOrEmpty(lastMorningEvent)
-                ? "새로운 아침입니다. 자동 저장했습니다."
-                : $"새로운 아침입니다. {lastMorningEvent} 자동 저장했습니다.";
             SaveSilently();
             NotifyChanged();
         }
@@ -974,7 +970,6 @@ namespace FarmGame2D.Core
 
         private void ProcessNewDay()
         {
-            lastMorningEvent = string.Empty;
             FarmUpgradeRules.WaterGreenhousePlots(Data);
             foreach (var plot in Data.farmPlots)
             {
@@ -993,7 +988,6 @@ namespace FarmGame2D.Core
 
             Data.chickenFedToday = false;
             Data.cowFedToday = false;
-            ProcessDogMorningCare();
 
             AnimalBreedingRules.AdvanceJuveniles(Data.chickenJuvenileDays);
             AnimalBreedingRules.AdvanceJuveniles(Data.cowJuvenileDays);
@@ -1026,51 +1020,6 @@ namespace FarmGame2D.Core
             }
 
             juveniles.Add(AnimalBreedingRules.JuvenileDays);
-            AppendMorningEvent(chickens ? "병아리가 태어났습니다!" : "송아지가 태어났습니다!");
-        }
-
-        private void ProcessDogMorningCare()
-        {
-            if (Data.dogLastCareDay >= Data.day)
-            {
-                return;
-            }
-
-            var plan = DogCompanionRules.PlanMorningCare(
-                Data.inventory.Count(GameItem.Feed),
-                Data.ownedChickens,
-                Data.ownedCows);
-            if (plan.FeedSpent > 0)
-            {
-                Data.inventory.TrySpend(GameItem.Feed, plan.FeedSpent);
-            }
-
-            Data.chickenFedToday = plan.ChickensFed;
-            Data.cowFedToday = plan.CowsFed;
-            Data.dogLastCareDay = Data.day;
-            if (plan.ChickensFed && plan.CowsFed)
-            {
-                AppendMorningEvent("강아지가 닭과 소에게 아침 사료를 주었습니다.");
-            }
-            else if (plan.ChickensFed)
-            {
-                AppendMorningEvent("강아지가 닭에게 아침 사료를 주었습니다.");
-            }
-            else if (plan.CowsFed)
-            {
-                AppendMorningEvent("강아지가 소에게 아침 사료를 주었습니다.");
-            }
-            else
-            {
-                AppendMorningEvent("강아지가 사료가 부족하다고 알려줍니다.");
-            }
-        }
-
-        private void AppendMorningEvent(string eventMessage)
-        {
-            lastMorningEvent = string.IsNullOrEmpty(lastMorningEvent)
-                ? eventMessage
-                : $"{lastMorningEvent} {eventMessage}";
         }
 
         private void Plant(FarmPlotData plot)
