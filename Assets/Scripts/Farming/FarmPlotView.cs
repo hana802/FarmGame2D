@@ -9,8 +9,10 @@ namespace FarmGame2D.Farming
     [RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
     public sealed class FarmPlotView : InteractableBehaviour
     {
+        private static readonly Color WateredSoil = new Color32(167, 154, 149, 255);
         private int plotIndex;
         private SpriteRenderer plotRenderer;
+        private SpriteRenderer cropRenderer;
 
         public override string Prompt => GetPrompt();
 
@@ -18,6 +20,12 @@ namespace FarmGame2D.Farming
         {
             plotIndex = index;
             plotRenderer = GetComponent<SpriteRenderer>();
+            var crop = new GameObject("Crop");
+            crop.transform.SetParent(transform, false);
+            crop.transform.localPosition = new Vector3(0f, -0.22f, 0f);
+            cropRenderer = crop.AddComponent<SpriteRenderer>();
+            cropRenderer.sortingLayerID = plotRenderer.sortingLayerID;
+            cropRenderer.sortingOrder = plotRenderer.sortingOrder + 1;
             GameSession.Instance.StateChanged += Refresh;
             Refresh();
         }
@@ -74,12 +82,21 @@ namespace FarmGame2D.Farming
                 return;
             }
 
-            var state = GameSession.Instance.Data.farmPlots[plotIndex].state;
-            var stateSprite = FarmPlotArtCatalog.GetSprite(state);
+            var plot = GameSession.Instance.Data.farmPlots[plotIndex];
+            var state = plot.state;
+            var ripe = state == SoilState.Ready;
+            var crop = state is SoilState.Planted or SoilState.Watered or SoilState.Ready
+                ? FarmPlotArtCatalog.GetCropSprite(plot.plantedSeed, ripe)
+                : null;
+            cropRenderer.sprite = crop;
+            var cropScale = ripe ? 1f : Mathf.Clamp(0.55f + plot.growthDays * 0.10f, 0.55f, 0.85f);
+            cropRenderer.transform.localScale = Vector3.one * cropScale;
+
+            var stateSprite = FarmPlotArtCatalog.GetSprite(crop != null ? SoilState.Tilled : state);
             if (stateSprite != null)
             {
                 plotRenderer.sprite = stateSprite;
-                plotRenderer.color = Color.white;
+                plotRenderer.color = crop != null && state == SoilState.Watered ? WateredSoil : Color.white;
                 return;
             }
 
