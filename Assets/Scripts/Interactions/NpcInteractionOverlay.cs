@@ -26,6 +26,7 @@ namespace FarmGame2D.Interactions
         private GUIStyle actionCaptionStyle;
         private GUIStyle dialogueNameStyle;
         private GUIStyle dialogueBodyStyle;
+        private GUIStyle dialogueButtonStyle;
         private GUIStyle buttonStyle;
         private GUIStyle panelStyle;
         private Texture2D panelTexture;
@@ -234,8 +235,10 @@ namespace FarmGame2D.Interactions
 
         private bool DrawDialogueButton(Rect rect, string label, Color fill)
         {
+            if (GUI.enabled && rect.Contains(Event.current.mousePosition))
+                fill = Color.Lerp(fill, new Color32(119, 100, 64, 255), 0.16f);
             DrawRoundedSurface(rect, fill, 8f);
-            return farmSkin.DrawTextButton(rect, label);
+            return GUI.Button(rect, label, dialogueButtonStyle);
         }
 
         private static void DrawRoundedSurface(Rect rect, Color color, float radius)
@@ -397,6 +400,11 @@ namespace FarmGame2D.Interactions
             {
                 fontSize = 25, fontStyle = FontStyle.Bold, alignment = TextAnchor.UpperLeft, clipping = TextClipping.Clip,
                 padding = new RectOffset(0, 0, 0, 0)
+            };
+            dialogueButtonStyle = new GUIStyle(GUIStyle.none)
+            {
+                font = font, fontSize = 17, fontStyle = FontStyle.Bold, alignment = TextAnchor.MiddleCenter,
+                normal = { textColor = new Color32(67, 49, 34, 255) }
             };
             buttonStyle = new GUIStyle(GUI.skin.button)
             {
