@@ -926,6 +926,15 @@ namespace FarmGame2D.Core
 
         public bool PullWeed(int weedId)
         {
+            if (!CollectWeed(weedId)) return false;
+            Message = "잡초를 뽑아 가방에 넣었습니다.";
+            CompleteCurrentStarterQuest();
+            NotifyChanged();
+            return true;
+        }
+
+        private bool CollectWeed(int weedId)
+        {
             Data.pulledWeedIds ??= new System.Collections.Generic.List<int>();
             if (Data.pulledWeedIds.Contains(weedId))
             {
@@ -934,9 +943,6 @@ namespace FarmGame2D.Core
 
             Data.pulledWeedIds.Add(weedId);
             Data.inventory.Add(GameItem.Weed, 1);
-            Message = "잡초를 뽑아 가방에 넣었습니다.";
-            CompleteCurrentStarterQuest();
-            NotifyChanged();
             return true;
         }
 

@@ -1,5 +1,4 @@
 using FarmGame2D.Core;
-using FarmGame2D.Interactions;
 using NUnit.Framework;
 
 namespace FarmGame2D.Tests
@@ -51,19 +50,6 @@ namespace FarmGame2D.Tests
             Assert.That(income, Is.EqualTo(50));
             Assert.That(inventory.Count(GameItem.Egg), Is.Zero);
             Assert.That(inventory.Count(GameItem.WheatSeed), Is.EqualTo(3));
-        }
-
-        [Test]
-        public void VillagerDialogue_ClosesAfterNineTenthsOfASecond()
-        {
-            const float openedAt = 10f;
-            var visibleUntil = openedAt + VillagerDialogueDismiss.Seconds;
-
-            Assert.That(VillagerDialogueDismiss.Seconds, Is.EqualTo(0.9f));
-            Assert.That(VillagerDialogueDismiss.ShouldClose(false, false, visibleUntil, openedAt + 0.89f), Is.False);
-            Assert.That(VillagerDialogueDismiss.ShouldClose(false, false, visibleUntil, visibleUntil), Is.True);
-            Assert.That(VillagerDialogueDismiss.ShouldClose(true, false, visibleUntil, visibleUntil), Is.False);
-            Assert.That(VillagerDialogueDismiss.ShouldClose(false, true, visibleUntil, visibleUntil), Is.False);
         }
     }
 }

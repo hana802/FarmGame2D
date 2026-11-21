@@ -23,6 +23,7 @@ namespace FarmGame2D.Core
         public List<NpcFriendshipData> npcFriendships = new();
         public string spouseNpcId = string.Empty;
         public bool weddingSeen;
+        public int spouseHelpLastDay;
         public List<FarmPlotData> farmPlots = new();
         public bool chickenFedToday;
         public bool eggReady;

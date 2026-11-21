@@ -452,6 +452,8 @@ namespace FarmGame2D.Tests
             florist.GetComponent<DialogueInteractable>().Interact(player);
             Assert.That(GameSession.Instance.ActivePortraitRow, Is.EqualTo(5));
             Assert.That(GameSession.Instance.ActiveSpeaker, Is.EqualTo("원예가 태오"));
+            yield return new WaitForSecondsRealtime(1f);
+            Assert.That(NpcInteractionOverlay.IsOpen, Is.True, "Conversation actions must stay available until the player dismisses the card.");
         }
     }
 }

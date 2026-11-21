@@ -228,21 +228,32 @@ namespace FarmGame2D.Interactions
 
     public sealed class WeedInteractable : InteractableBehaviour
     {
+        private GameSession session;
         private int weedId;
 
         public override string Prompt => "잡초 뽑기";
 
-        public void Configure(int id)
+        public void Configure(GameSession gameSession, int id)
         {
+            session = gameSession;
             weedId = id;
+            session.StateChanged += Refresh;
+            Refresh();
         }
 
         public override void Interact(PrototypePlayerController player)
         {
-            if (GameSession.Instance?.PullWeed(weedId) == true)
-            {
-                UnityEngine.Object.Destroy(gameObject);
-            }
+            session?.PullWeed(weedId);
+        }
+
+        private void Refresh()
+        {
+            gameObject.SetActive(session.Data.pulledWeedIds?.Contains(weedId) != true);
+        }
+
+        private void OnDestroy()
+        {
+            if (session != null) session.StateChanged -= Refresh;
         }
     }
 }
