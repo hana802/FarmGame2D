@@ -105,6 +105,7 @@ namespace FarmGame2D.UI
             return request.Kind switch
             {
                 ShopPurchaseKind.Seed => FarmPlotArtCatalog.GetCropSprite(request.Item, true),
+                ShopPurchaseKind.Feed => FarmEquipmentArt.FeedSack,
                 ShopPurchaseKind.Chicken or ShopPurchaseKind.ChickenSale => WorldArtCatalog.GetSprite(WorldArtKind.Chicken),
                 ShopPurchaseKind.Cow or ShopPurchaseKind.CowSale => WorldArtCatalog.GetSprite(WorldArtKind.Cow),
                 ShopPurchaseKind.Pickaxe => GameArtCatalog.GetHeldToolSprite(FarmTool.Pickaxe),
