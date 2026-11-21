@@ -31,8 +31,9 @@ namespace FarmGame2D.UI
         {
             if (phoneTitleStyle != null) return;
             phoneSkin = new FarmPhoneSkin(koreanFont);
-            phoneTitleStyle = CreateSurfaceStyle(30, new Color32(101, 48, 27, 255), FontStyle.Bold);
-            phoneHeadingStyle = CreateSurfaceStyle(23, new Color32(101, 48, 27, 255), FontStyle.Bold);
+            phoneTitleStyle = CreateSurfaceStyle(30, new Color32(70, 42, 27, 255),
+                FontStyle.Bold, TextAnchor.MiddleCenter);
+            phoneHeadingStyle = CreateSurfaceStyle(24, Pine, FontStyle.Bold);
             phoneSectionStyle = CreateSurfaceStyle(18, Ink, FontStyle.Bold);
             phoneBodyStyle = CreateSurfaceStyle(17, Ink);
             phoneLightStyle = CreateSurfaceStyle(16, Cream);

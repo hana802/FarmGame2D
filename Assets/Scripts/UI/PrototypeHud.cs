@@ -45,7 +45,7 @@ namespace FarmGame2D.UI
         private bool inventoryDecorationsPage;
         private string cloudCodeInput = string.Empty;
         private string cloudPinInput = string.Empty;
-        private PhonePage phonePage;
+        private PhonePage phonePage = PhonePage.Settings;
         private bool exitConfirmationPending;
         private float masterVolume;
         private float volumeBeforeMute = GameAudioSettings.DefaultMasterVolume;
@@ -396,9 +396,9 @@ namespace FarmGame2D.UI
             var settings = phonePage == PhonePage.Settings;
             var layout = HudLayout.CalculatePhoneLayout(settings);
             FarmGuiSkin.DrawSolid(new Rect(0f, 0f, HudLayout.ReferenceWidth, HudLayout.ReferenceHeight), CanvasScrim);
-            phoneSkin.DrawDevice(layout.Panel, layout.Screen);
-            phoneSkin.DrawHeader(layout.Header);
-            GUI.Label(layout.Title, settings ? "휴대폰 설정" : "농장 휴대폰", phoneTitleStyle);
+            phoneSkin.DrawNotebook(layout.Panel, layout.Screen);
+            phoneSkin.DrawHeader(layout.Header, layout.Title);
+            GUI.Label(layout.Title, settings ? "설정" : "농장 수첩", phoneTitleStyle);
 
             if (phoneSkin.DrawClose(layout.CloseButton))
             {
@@ -414,6 +414,7 @@ namespace FarmGame2D.UI
             }
 
             DrawPhoneTabs(layout);
+            phoneSkin.DrawPageSeam(layout.Content, layout.CloudPanel);
             if (settings)
             {
                 DrawPhoneSettingsTab(session, layout);

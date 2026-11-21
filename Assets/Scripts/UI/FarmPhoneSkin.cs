@@ -15,6 +15,7 @@ namespace FarmGame2D.UI
         private static readonly Color32 Cocoa = new(79, 44, 32, 255);
         private static readonly Color32 Cream = new(255, 246, 218, 255);
         private static readonly Color32 Gold = new(255, 190, 65, 255);
+        private static readonly Color32 Cover = new(53, 83, 65, 255);
         private readonly GUIStyle button;
         private readonly GUIStyle closeButton;
         private readonly GUIStyle sliderThumb = new() { fixedWidth = 26f, fixedHeight = 26f };
@@ -34,37 +35,50 @@ namespace FarmGame2D.UI
             SetTextColor(closeButton, Color.white);
         }
 
-        public void DrawDevice(Rect device, Rect screen)
+        public void DrawNotebook(Rect cover, Rect paper)
         {
             if (Event.current.type != EventType.Repaint) return;
-            Rounded(new Rect(device.x + 145f, device.y - 4f, 55f, 16f), 6f, Cocoa);
-            Rounded(new Rect(device.x + 211f, device.y - 4f, 36f, 16f), 6f, Cocoa);
-            Rounded(new Rect(device.x, device.y + 9f, device.width, device.height), 51f, new Color(0.13f, 0.06f, 0.04f, 0.54f));
-            Rounded(device, 51f, Cocoa);
-            Rounded(Inset(device, 3f), 48f, new Color32(179, 101, 67, 255));
-            Rounded(Inset(device, 7f), 44f, new Color32(210, 133, 84, 255));
-            Rounded(new Rect(device.x + 48f, device.y + 9f, 168f, 5f), 2.5f, new Color32(241, 172, 115, 255));
-            Rounded(Inset(screen, -3f), 32f, Cocoa);
-            Rounded(screen, 29f, new Color32(247, 229, 180, 255));
-            Rounded(Inset(screen, 3f), 26f, new Color32(255, 243, 206, 255));
+            Rounded(new Rect(cover.x, cover.y + 10f, cover.width, cover.height), 31f, new Color(0.12f, 0.09f, 0.05f, 0.54f));
+            Rounded(cover, 31f, new Color32(42, 57, 45, 255));
+            Rounded(Inset(cover, 4f), 27f, Cover);
+            Rounded(new Rect(cover.x + 13f, cover.y + 27f, 19f, cover.height - 54f),
+                9f, new Color32(45, 68, 54, 255));
+            Rounded(new Rect(paper.x, paper.y + 8f, paper.width, paper.height), 24f, new Color32(179, 149, 103, 255));
+            Rounded(new Rect(paper.x, paper.y + 4f, paper.width, paper.height), 24f, new Color32(224, 195, 141, 255));
+            Rounded(paper, 24f, new Color32(248, 237, 203, 255));
 
-            var grid = new Rect(screen.x + 18f, screen.y + 21f, screen.width - 36f, screen.height - 42f);
-            var gridColor = new Color(0.67f, 0.43f, 0.24f, 0.12f);
-            for (var x = grid.xMin; x < grid.xMax; x += 22f)
+            var grid = Inset(paper, 18f);
+            var gridColor = new Color(0.58f, 0.43f, 0.28f, 0.11f);
+            for (var x = grid.xMin; x < grid.xMax; x += 24f)
                 FarmGuiSkin.DrawSolid(new Rect(x, grid.y, 1f, grid.height), gridColor);
-            for (var y = grid.yMin; y < grid.yMax; y += 22f)
+            for (var y = grid.yMin; y < grid.yMax; y += 24f)
                 FarmGuiSkin.DrawSolid(new Rect(grid.x, y, grid.width, 1f), gridColor);
 
-            Rounded(new Rect(device.x + 12f, device.center.y - 22f, 8f, 45f), 4f, Cocoa);
-            Rounded(new Rect(device.x + 12f, device.center.y + 33f, 8f, 8f), 4f, new Color32(67, 79, 78, 255));
-            Rounded(new Rect(screen.center.x - 47f, screen.yMax - 10f, 94f, 4f), 2f, new Color32(162, 117, 77, 255));
+            for (var y = paper.y + 87f; y < paper.yMax - 50f; y += 119f)
+            {
+                Rounded(new Rect(paper.x + 11f, y - 3f, 14f, 24f), 7f, new Color32(123, 94, 59, 255));
+                DrawRaised(new Rect(cover.x + 9f, y, paper.x - cover.x + 14f, 15f),
+                    new Color32(216, 172, 91, 255), new Color32(110, 78, 45, 255), 7.5f);
+            }
         }
 
-        public void DrawHeader(Rect rect)
+        public void DrawHeader(Rect rect, Rect title)
         {
-            Rounded(rect, 14f, new Color32(227, 151, 77, 255));
-            Rounded(Inset(rect, 2f), 12f, new Color32(255, 207, 121, 255));
-            Rounded(new Rect(rect.x + 14f, rect.y + 4f, rect.width - 28f, 3f), 1.5f, new Color32(255, 229, 166, 255));
+            if (Event.current.type != EventType.Repaint) return;
+            var line = new Color32(195, 157, 104, 255);
+            var lineY = title.center.y;
+            FarmGuiSkin.DrawSolid(new Rect(rect.x + 25f, lineY, title.xMin - rect.x - 41f, 2f), line);
+            FarmGuiSkin.DrawSolid(new Rect(title.xMax + 16f, lineY, rect.xMax - title.xMax - 76f, 2f), line);
+            DrawRaised(new Rect(title.x - 12f, title.y - 3f, title.width + 24f, title.height + 6f),
+                new Color32(223, 150, 103, 255), new Color32(152, 89, 61, 255), 12f);
+        }
+
+        public void DrawPageSeam(Rect leftCard, Rect rightCard)
+        {
+            if (Event.current.type != EventType.Repaint) return;
+            var center = (leftCard.xMax + rightCard.xMin) * 0.5f;
+            for (var y = leftCard.y + 8f; y < leftCard.yMax - 5f; y += 13f)
+                Rounded(new Rect(center - 2f, y, 4f, 4f), 2f, new Color32(191, 159, 108, 168));
         }
 
         public void DrawCard(Rect rect, bool warm = false)
