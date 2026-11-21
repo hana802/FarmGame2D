@@ -1,5 +1,6 @@
 using FarmGame2D.Core;
 using FarmGame2D.Player;
+using UnityEngine;
 
 namespace FarmGame2D.Interactions
 {
@@ -61,9 +62,12 @@ namespace FarmGame2D.Interactions
     {
         private ShopKind shopKind = ShopKind.SeedsAndAnimals;
 
-        public override string Prompt => shopKind == ShopKind.Mining
-            ? "광물 상점 열기"
-            : "씨앗·동물 상점 열기";
+        public override string Prompt => shopKind switch
+        {
+            ShopKind.Mining => "광물 상점 열기",
+            ShopKind.Greenhouse => "온실 씨앗 선반 열기",
+            _ => "씨앗·동물 상점 열기"
+        };
 
         public void Configure(ShopKind kind)
         {
@@ -102,6 +106,40 @@ namespace FarmGame2D.Interactions
         public override void Interact(PrototypePlayerController player)
         {
             GameSession.Instance?.OpenQuestBoard();
+        }
+    }
+
+    public sealed class HouseUpgradeInteractable : InteractableBehaviour
+    {
+        private float confirmUntil;
+
+        public override string Prompt => GameSession.Instance != null && GameSession.Instance.Data.houseUpgraded
+            ? "고친 집 살펴보기"
+            : "집 고치기";
+
+        public override void Interact(PrototypePlayerController player)
+        {
+            var session = GameSession.Instance;
+            if (session == null)
+            {
+                return;
+            }
+
+            if (session.Data.houseUpgraded)
+            {
+                session.ShowMessage("마루와 벽을 목재, 돌, 철 광석으로 고쳐 두었습니다.");
+                return;
+            }
+
+            if (Time.unscaledTime >= confirmUntil)
+            {
+                confirmUntil = Time.unscaledTime + 6f;
+                session.ShowMessage(MaterialProject.Describe("집 수리", MaterialProject.House) + ". E로 고칩니다.");
+                return;
+            }
+
+            confirmUntil = 0f;
+            session.UpgradeHouse();
         }
     }
 

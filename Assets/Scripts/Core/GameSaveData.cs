@@ -42,6 +42,7 @@ namespace FarmGame2D.Core
         public float dogSitY;
         public bool hasPickaxe;
         public bool greenhouseBuilt;
+        public bool houseUpgraded;
         public int sprinklersWateredDay;
         public List<TreeRegrowth> treeRegrowDays = new();
         public int wheatHarvested;
@@ -50,6 +51,10 @@ namespace FarmGame2D.Core
         public bool weedQuestCompleted;
         public bool fishingQuestCompleted;
         public bool miningQuestCompleted;
+        public bool woodDeliveryQuestCompleted;
+        public bool stoneDeliveryQuestCompleted;
+        public bool copperDeliveryQuestCompleted;
+        public bool ironDeliveryQuestCompleted;
         public int activeQuestId = -1;
         public int fishCaught;
         public int oreMined;

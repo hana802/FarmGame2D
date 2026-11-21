@@ -9,6 +9,10 @@ namespace FarmGame2D.Core
         Weeds,
         Fishing,
         Mining,
+        DeliverWood,
+        DeliverStone,
+        DeliverCopper,
+        DeliverIron,
         Complete
     }
 
@@ -51,13 +55,21 @@ namespace FarmGame2D.Core
         private const int WeedTarget = 3;
         private const int FishingTarget = 2;
         private const int MiningTarget = 3;
+        private const int WoodDeliveryTarget = 8;
+        private const int StoneDeliveryTarget = 6;
+        private const int CopperDeliveryTarget = 4;
+        private const int IronDeliveryTarget = 3;
         private static readonly StarterQuestId[] BoardQuestIds =
         {
             StarterQuestId.Harvest,
             StarterQuestId.Egg,
             StarterQuestId.Weeds,
             StarterQuestId.Fishing,
-            StarterQuestId.Mining
+            StarterQuestId.Mining,
+            StarterQuestId.DeliverWood,
+            StarterQuestId.DeliverStone,
+            StarterQuestId.DeliverCopper,
+            StarterQuestId.DeliverIron
         };
 
         public static StarterQuestStatus GetCurrent(GameSaveData data)
@@ -69,7 +81,14 @@ namespace FarmGame2D.Core
 
         public static StarterQuestStatus[] GetAll(GameSaveData data)
         {
-            return new[] { GetHarvest(data), GetEgg(data), GetWeeds(data), GetFishing(data), GetMining(data) };
+            return new[]
+            {
+                GetHarvest(data), GetEgg(data), GetWeeds(data), GetFishing(data), GetMining(data),
+                GetDelivery(data, StarterQuestId.DeliverWood),
+                GetDelivery(data, StarterQuestId.DeliverStone),
+                GetDelivery(data, StarterQuestId.DeliverCopper),
+                GetDelivery(data, StarterQuestId.DeliverIron)
+            };
         }
 
         public static StarterQuestStatus[] GetBoardOffers(GameSaveData data)
@@ -125,9 +144,12 @@ namespace FarmGame2D.Core
             }
 
             var status = GetStatus(data, (StarterQuestId)data.activeQuestId);
-            return status.Current >= status.Target
-                ? Complete(data, status.Id, status.Title, GetReward(status.Id))
-                : default;
+            if (status.Current < status.Target || !TrySpendDelivery(data, status.Id))
+            {
+                return default;
+            }
+
+            return Complete(data, status.Id, status.Title, GetReward(status.Id));
         }
 
         private static StarterQuestCompletion Complete(GameSaveData data, StarterQuestId id, string title, int reward)
@@ -149,6 +171,18 @@ namespace FarmGame2D.Core
                 case StarterQuestId.Mining:
                     data.miningQuestCompleted = true;
                     break;
+                case StarterQuestId.DeliverWood:
+                    data.woodDeliveryQuestCompleted = true;
+                    break;
+                case StarterQuestId.DeliverStone:
+                    data.stoneDeliveryQuestCompleted = true;
+                    break;
+                case StarterQuestId.DeliverCopper:
+                    data.copperDeliveryQuestCompleted = true;
+                    break;
+                case StarterQuestId.DeliverIron:
+                    data.ironDeliveryQuestCompleted = true;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(id), id, null);
             }
@@ -167,6 +201,8 @@ namespace FarmGame2D.Core
                 StarterQuestId.Weeds => GetWeeds(data),
                 StarterQuestId.Fishing => GetFishing(data),
                 StarterQuestId.Mining => GetMining(data),
+                StarterQuestId.DeliverWood or StarterQuestId.DeliverStone
+                    or StarterQuestId.DeliverCopper or StarterQuestId.DeliverIron => GetDelivery(data, id),
                 _ => new StarterQuestStatus(StarterQuestId.Complete, "의뢰 없음", 0, 1, false)
             };
         }
@@ -180,6 +216,10 @@ namespace FarmGame2D.Core
                 StarterQuestId.Weeds => data.weedQuestCompleted,
                 StarterQuestId.Fishing => data.fishingQuestCompleted,
                 StarterQuestId.Mining => data.miningQuestCompleted,
+                StarterQuestId.DeliverWood => data.woodDeliveryQuestCompleted,
+                StarterQuestId.DeliverStone => data.stoneDeliveryQuestCompleted,
+                StarterQuestId.DeliverCopper => data.copperDeliveryQuestCompleted,
+                StarterQuestId.DeliverIron => data.ironDeliveryQuestCompleted,
                 _ => true
             };
         }
@@ -191,6 +231,10 @@ namespace FarmGame2D.Core
                 StarterQuestId.Egg => 75,
                 StarterQuestId.Fishing => 120,
                 StarterQuestId.Mining => 140,
+                StarterQuestId.DeliverWood => 160,
+                StarterQuestId.DeliverStone => 140,
+                StarterQuestId.DeliverCopper => 200,
+                StarterQuestId.DeliverIron => 220,
                 _ => 100
             };
         }
@@ -241,6 +285,31 @@ namespace FarmGame2D.Core
         {
             return new StarterQuestStatus(StarterQuestId.Mining, "광석 3개 캐기",
                 Math.Min(data.oreMined, MiningTarget), MiningTarget, data.miningQuestCompleted);
+        }
+
+        private static StarterQuestStatus GetDelivery(GameSaveData data, StarterQuestId id)
+        {
+            var (item, target, title, completed) = id switch
+            {
+                StarterQuestId.DeliverWood => (GameItem.Wood, WoodDeliveryTarget, "순자에게 목재 8개", data.woodDeliveryQuestCompleted),
+                StarterQuestId.DeliverStone => (GameItem.Stone, StoneDeliveryTarget, "도윤에게 돌 6개", data.stoneDeliveryQuestCompleted),
+                StarterQuestId.DeliverCopper => (GameItem.CopperOre, CopperDeliveryTarget, "태오에게 구리 4개", data.copperDeliveryQuestCompleted),
+                _ => (GameItem.IronOre, IronDeliveryTarget, "민서에게 철 3개", data.ironDeliveryQuestCompleted)
+            };
+            var owned = data.inventory?.Count(item) ?? 0;
+            return new StarterQuestStatus(id, title, completed ? target : Math.Min(owned, target), target, completed);
+        }
+
+        private static bool TrySpendDelivery(GameSaveData data, StarterQuestId id)
+        {
+            return id switch
+            {
+                StarterQuestId.DeliverWood => data.inventory.TrySpend(GameItem.Wood, WoodDeliveryTarget),
+                StarterQuestId.DeliverStone => data.inventory.TrySpend(GameItem.Stone, StoneDeliveryTarget),
+                StarterQuestId.DeliverCopper => data.inventory.TrySpend(GameItem.CopperOre, CopperDeliveryTarget),
+                StarterQuestId.DeliverIron => data.inventory.TrySpend(GameItem.IronOre, IronDeliveryTarget),
+                _ => true
+            };
         }
     }
 }

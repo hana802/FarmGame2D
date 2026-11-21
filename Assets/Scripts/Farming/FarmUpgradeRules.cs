@@ -11,6 +11,23 @@ namespace FarmGame2D.Farming
             Vector2.up, Vector2.right, Vector2.down, Vector2.left
         };
 
+        public static int WaterGreenhousePlots(GameSaveData data)
+        {
+            var watered = 0;
+            foreach (var plot in data.farmPlots)
+            {
+                if (!plot.greenhouse || plot.state != SoilState.Planted)
+                {
+                    continue;
+                }
+
+                plot.state = SoilState.Watered;
+                watered++;
+            }
+
+            return watered;
+        }
+
         public static int WaterWithSprinklers(GameSaveData data)
         {
             var watered = 0;

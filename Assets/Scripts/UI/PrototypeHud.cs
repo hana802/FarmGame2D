@@ -573,7 +573,7 @@ namespace FarmGame2D.UI
             switch (request.Kind)
             {
                 case ShopPurchaseKind.Seed:
-                    session.PurchaseSeed(request.Item, count);
+                    session.PurchaseSeed(request.Item, count, session.ActiveShop == ShopKind.Greenhouse);
                     break;
                 case ShopPurchaseKind.Feed:
                     session.PurchaseFeed(count);

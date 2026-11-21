@@ -63,6 +63,7 @@ namespace FarmGame2D.Core
     public enum ShopKind
     {
         SeedsAndAnimals,
-        Mining
+        Mining,
+        Greenhouse
     }
 }

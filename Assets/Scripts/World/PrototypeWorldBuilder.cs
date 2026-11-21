@@ -114,7 +114,8 @@ namespace FarmGame2D.World
 
             CreateArtInteractable<BedInteractable>("Interior Bed Art", WorldArtKind.InteriorBed, new Vector2(37.4f, -8.6f), new Vector2(1.3f, 2.2f), interior);
             CreateWorldArt("Interior Table", WorldArtKind.InteriorTable, new Vector2(40.6f, -8.8f), interior, 4, new Vector2(1.7f, 0.8f), new Vector2(0f, 0.35f));
-            CreateWorldArt("Interior Cabinet", WorldArtKind.InteriorCabinet, new Vector2(42.4f, -7.2f), interior, 3, new Vector2(1.3f, 0.65f), new Vector2(0f, 0.6f));
+            CreateArtInteractable<HouseUpgradeInteractable>(
+                "Interior Cabinet", WorldArtKind.InteriorCabinet, new Vector2(42.4f, -7.2f), new Vector2(1.3f, 0.9f), interior);
             var exit = CreateInteractable<DoorInteractable>("Farm House Exit", new Vector2(40f, -12.2f), new Vector2(1.1f, 0.6f), new Color(0.5f, 0.28f, 0.13f), interior);
             exit.Configure(new Vector2(6f, -13f), "밖으로 나가기", "농장으로 나왔습니다.");
         }
@@ -176,7 +177,7 @@ namespace FarmGame2D.World
                 "작물, 축산물, 광석은 상점 옆 판매 상자에 한꺼번에 넣을 수 있어요.",
                 "판매 상자는 씨앗·동물 상점 오른쪽에 있어요. 이제 밭 주변이 훨씬 넓어졌죠?",
                 "돈이 모이면 닭부터 키워 보세요. 달걀은 꾸준히 팔기 좋아요.",
-                "광석도 판매할 수 있지만 필요한 물건을 만들 날을 위해 조금 남겨 두는 것도 좋아요.",
+                "목재와 광석은 온실, 집 수리, 마을 의뢰에 쓰여요. 팔기 전에 조금 남겨 두세요.",
                 "가방에서 씨앗 종류를 바꿀 수 있어요. 계절 표시를 꼭 확인하세요.",
                 "마을 사람들에게 자주 말을 걸어 보세요. 그날그날 다른 이야기를 들을 수 있을 거예요."
             }, 3);

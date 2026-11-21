@@ -326,7 +326,7 @@ namespace FarmGame2D.Tests
                 "The E interaction hint must remain visible while the player stays near the board.");
             questBoard.Interact(player);
             Assert.That(GameSession.Instance.QuestBoardOpen, Is.True);
-            Assert.That(StarterQuestProgress.GetAll(GameSession.Instance.Data), Has.Length.EqualTo(5));
+            Assert.That(StarterQuestProgress.GetAll(GameSession.Instance.Data), Has.Length.EqualTo(9));
             GameSession.Instance.CloseQuestBoard();
 
             var fishingSpot = GameObject.Find("Pond Fishing Spot").GetComponent<FishingSpotInteractable>();

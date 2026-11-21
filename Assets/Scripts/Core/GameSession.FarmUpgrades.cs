@@ -29,6 +29,7 @@ namespace FarmGame2D.Core
             Data.treeRegrowDays.SetTreeRegrowDay(id, Data.day + TreeRegrowthDays);
             Data.inventory.Add(GameItem.Wood, WoodPerTree);
             Message = $"목재 {WoodPerTree}개를 얻었습니다.";
+            CompleteCurrentStarterQuest();
             GameAudioController.Play(GameAudioCue.TillSoil);
             NotifyChanged();
             SaveSilently();
@@ -44,24 +45,39 @@ namespace FarmGame2D.Core
                 return false;
             }
 
-            var inventory = Data.inventory;
-            if (Data.money < GreenhousePrice || inventory.Count(GameItem.Wood) < GreenhouseWood
-                || inventory.Count(GameItem.Stone) < GreenhouseStone || inventory.Count(GameItem.CopperOre) < GreenhouseCopper)
+            if (!MaterialProject.TryPay(Data, MaterialProject.Greenhouse))
             {
-                ShowMessage($"온실 재료 · {GreenhousePrice}G / 목재 {GreenhouseWood} / 돌 {GreenhouseStone} / 구리 광석 {GreenhouseCopper}");
+                ShowMessage(MaterialProject.Describe("온실", MaterialProject.Greenhouse) + ". 재료가 부족합니다.");
                 return false;
             }
 
-            Data.money -= GreenhousePrice;
-            inventory.TrySpend(GameItem.Wood, GreenhouseWood);
-            inventory.TrySpend(GameItem.Stone, GreenhouseStone);
-            inventory.TrySpend(GameItem.CopperOre, GreenhouseCopper);
             Data.greenhouseBuilt = true;
             foreach (var position in GreenhouseLayout.PlotPositions())
                 Data.farmPlots.Add(new FarmPlotData { state = SoilState.Tilled, freeform = true,
                     greenhouse = true, worldX = position.x, worldY = position.y });
 
-            Message = "온실을 지었습니다. 안에서는 계절과 상관없이 씨앗을 심을 수 있어요.";
+            Message = "온실을 지었습니다. 안쪽 선반에서 사계절 씨앗을 사고, 밭은 아침에 스스로 물을 머금어요.";
+            NotifyChanged();
+            SaveSilently();
+            return true;
+        }
+
+        public bool UpgradeHouse()
+        {
+            if (Data.houseUpgraded)
+            {
+                ShowMessage("집은 이미 고쳐 두었습니다.");
+                return false;
+            }
+
+            if (!MaterialProject.TryPay(Data, MaterialProject.House))
+            {
+                ShowMessage(MaterialProject.Describe("집 수리", MaterialProject.House) + ". 재료가 부족합니다.");
+                return false;
+            }
+
+            Data.houseUpgraded = true;
+            Message = "집을 고쳤습니다. 목재와 돌, 철 광석으로 마루와 벽을 다졌어요.";
             NotifyChanged();
             SaveSilently();
             return true;
@@ -71,10 +87,95 @@ namespace FarmGame2D.Core
         {
             if (Data.sprinklersWateredDay == day) return;
             Data.sprinklersWateredDay = day;
-            if (FarmUpgradeRules.WaterWithSprinklers(Data) > 0)
+            var greenhouseWatered = FarmUpgradeRules.WaterGreenhousePlots(Data) > 0;
+            var sprinklersWatered = FarmUpgradeRules.WaterWithSprinklers(Data) > 0;
+            if (greenhouseWatered)
+            {
+                AppendMorningEvent("온실 밭이 아침 물을 머금었습니다.");
+            }
+
+            if (sprinklersWatered)
             {
                 AppendMorningEvent("스프링클러가 밭에 물을 주었습니다.");
+            }
+
+            if (greenhouseWatered || sprinklersWatered)
+            {
                 SaveSilently();
+            }
+        }
+    }
+
+    public static class MaterialProject
+    {
+        public readonly struct Cost
+        {
+            public Cost(int money, int wood, int stone, int copper, int iron)
+            {
+                Money = money;
+                Wood = wood;
+                Stone = stone;
+                Copper = copper;
+                Iron = iron;
+            }
+
+            public int Money { get; }
+            public int Wood { get; }
+            public int Stone { get; }
+            public int Copper { get; }
+            public int Iron { get; }
+        }
+
+        public static Cost Greenhouse { get; } = new(
+            GameSession.GreenhousePrice,
+            GameSession.GreenhouseWood,
+            GameSession.GreenhouseStone,
+            GameSession.GreenhouseCopper,
+            0);
+
+        public static Cost House { get; } = new(0, 10, 8, 0, 4);
+
+        public static bool HasMaterials(GameSaveData data, Cost cost)
+        {
+            var inventory = data.inventory;
+            return data.money >= cost.Money
+                && inventory.Count(GameItem.Wood) >= cost.Wood
+                && inventory.Count(GameItem.Stone) >= cost.Stone
+                && inventory.Count(GameItem.CopperOre) >= cost.Copper
+                && inventory.Count(GameItem.IronOre) >= cost.Iron;
+        }
+
+        public static bool TryPay(GameSaveData data, Cost cost)
+        {
+            if (!HasMaterials(data, cost))
+            {
+                return false;
+            }
+
+            data.money -= cost.Money;
+            Spend(data, GameItem.Wood, cost.Wood);
+            Spend(data, GameItem.Stone, cost.Stone);
+            Spend(data, GameItem.CopperOre, cost.Copper);
+            Spend(data, GameItem.IronOre, cost.Iron);
+            return true;
+        }
+
+        public static string Describe(string name, Cost cost)
+        {
+            var parts = new System.Collections.Generic.List<string>();
+            if (cost.Money > 0) parts.Add($"{cost.Money}G");
+            if (cost.Wood > 0) parts.Add($"목재 {cost.Wood}");
+            if (cost.Stone > 0) parts.Add($"돌 {cost.Stone}");
+            if (cost.Copper > 0) parts.Add($"구리 광석 {cost.Copper}");
+            if (cost.Iron > 0) parts.Add($"철 광석 {cost.Iron}");
+            return $"{name} · {string.Join(" / ", parts)}";
+        }
+
+        private static void Spend(GameSaveData data, GameItem item, int amount)
+        {
+            if (amount > 0)
+            {
+                data.inventory.TrySpend(item, amount);
             }
         }
     }

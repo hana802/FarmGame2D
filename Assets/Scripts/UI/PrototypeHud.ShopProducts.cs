@@ -10,6 +10,7 @@ namespace FarmGame2D.UI
     {
         private static readonly string[] FarmShopTabs = { "씨앗", "가축 · 사료", "가축 판매", "농장 설비" };
         private static readonly string[] GeneralShopTabs = { "도구 · 광물", "마을 장식" };
+        private static readonly string[] GreenhouseShopTabs = { "봄", "여름", "가을", "겨울" };
 
         private static readonly ShopPurchaseRequest[] LivestockProducts =
         {
@@ -37,12 +38,17 @@ namespace FarmGame2D.UI
             new(ShopPurchaseKind.Ore, "철 광석 2개", GameItem.IronOre, 2, 110)
         };
 
-        private static IEnumerable<ShopPurchaseRequest> GetShopProducts(GameSession session, bool mining, int tab)
+        private static IEnumerable<ShopPurchaseRequest> GetShopProducts(GameSession session, ShopKind shop, int tab)
         {
-            if (mining)
+            if (shop == ShopKind.Mining)
             {
                 if (tab == 0) return MiningProducts;
                 return GetDecorationProducts();
+            }
+
+            if (shop == ShopKind.Greenhouse)
+            {
+                return GetSeedProducts((Season)Mathf.Clamp(tab, 0, 3));
             }
 
             return tab switch

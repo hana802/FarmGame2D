@@ -35,7 +35,7 @@ namespace FarmGame2D.World
             if (Time.unscaledTime >= confirmUntil)
             {
                 confirmUntil = Time.unscaledTime + 6f;
-                session.ShowMessage($"온실 · {GameSession.GreenhousePrice}G / 목재 {GameSession.GreenhouseWood} / 돌 {GameSession.GreenhouseStone} / 구리 광석 {GameSession.GreenhouseCopper}. E로 건설합니다.");
+                session.ShowMessage(MaterialProject.Describe("온실", MaterialProject.Greenhouse) + ". E로 건설합니다.");
                 return;
             }
 
@@ -93,6 +93,15 @@ namespace FarmGame2D.World
                     new Vector2(0.92f, 0.28f), new Color32(163, 209, 190, 255), room.transform);
             AddDoor(room.transform, center - Vector2.up * 2.7f,
                 GreenhouseLayout.Site - Vector2.up * 1.1f, "온실에서 나가기");
+            var shelf = PrototypeSpriteFactory.CreateBlock(
+                "Greenhouse Seed Shelf",
+                center + new Vector2(0f, 2.15f),
+                new Vector2(1.8f, 0.42f),
+                new Color32(92, 64, 42, 255),
+                room.transform,
+                true);
+            shelf.GetComponent<BoxCollider2D>().isTrigger = true;
+            shelf.AddComponent<ShopInteractable>().Configure(ShopKind.Greenhouse);
             return room;
         }
 

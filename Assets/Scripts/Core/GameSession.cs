@@ -327,10 +327,10 @@ namespace FarmGame2D.Core
             SaveSilently();
         }
 
-        public void PurchaseSeed(GameItem seed, int packs = 1)
+        public void PurchaseSeed(GameItem seed, int packs = 1, bool anySeason = false)
         {
             packs = Mathf.Max(1, packs);
-            if (!CropCatalog.TryGetBySeed(seed, out var crop) || crop.Season != CurrentSeason)
+            if (!CropCatalog.TryGetBySeed(seed, out var crop) || (!anySeason && crop.Season != CurrentSeason))
             {
                 Message = "지금 계절에는 판매하지 않는 씨앗입니다.";
                 return;
@@ -953,6 +953,7 @@ namespace FarmGame2D.Core
         private void ProcessNewDay()
         {
             lastMorningEvent = string.Empty;
+            FarmUpgradeRules.WaterGreenhousePlots(Data);
             foreach (var plot in Data.farmPlots)
             {
                 plot.AdvanceDay();
@@ -1115,6 +1116,7 @@ namespace FarmGame2D.Core
             Data.money -= price;
             Data.inventory.Add(item, quantity);
             Message = $"{label}를 구입했습니다.";
+            CompleteCurrentStarterQuest();
             NotifyChanged();
             SaveSilently();
         }

@@ -38,6 +38,7 @@ namespace FarmGame2D.UI
             EnsureShopStyles();
             var layout = HudLayout.CalculateShopLayout();
             var mining = shownShop == ShopKind.Mining;
+            var greenhouse = shownShop == ShopKind.Greenhouse;
             var input = Event.current;
             if (input.type == EventType.KeyDown && input.keyCode == KeyCode.Escape)
             {
@@ -57,7 +58,7 @@ namespace FarmGame2D.UI
                 layout.Header.height - 24f), ShopGreen);
             DrawShopArt(new Rect(layout.Header.x + 23f, layout.Header.y + 12f, 56f, 50f),
                 WorldArtCatalog.GetSprite(mining ? WorldArtKind.GeneralStore : WorldArtKind.SeedFeedShop));
-            GUI.Label(layout.Title, mining ? "마을 잡화점" : "씨앗과 가축 상점", shopHeading);
+            GUI.Label(layout.Title, greenhouse ? "온실 씨앗 선반" : mining ? "마을 잡화점" : "씨앗과 가축 상점", shopHeading);
             GUI.Label(layout.Balance, $"{session.Data.money:N0} G", shopLight);
             if (ShopButton(layout.CloseButton, "×", new Color32(61, 98, 82, 255), shopAction))
             {
@@ -68,7 +69,7 @@ namespace FarmGame2D.UI
             if (shopPurchaseConfirmation.Pending is ShopPurchaseRequest request)
                 DrawShopDetail(session, layout, request);
             else
-                DrawShopList(session, layout, mining);
+                DrawShopList(session, layout, shownShop);
         }
 
         private void CloseShop(GameSession session)
@@ -78,9 +79,14 @@ namespace FarmGame2D.UI
             session.OpenShop(session.ActiveShop);
         }
 
-        private void DrawShopList(GameSession session, ShopHudLayout layout, bool mining)
+        private void DrawShopList(GameSession session, ShopHudLayout layout, ShopKind shop)
         {
-            var tabs = mining ? GeneralShopTabs : FarmShopTabs;
+            var tabs = shop switch
+            {
+                ShopKind.Mining => GeneralShopTabs,
+                ShopKind.Greenhouse => GreenhouseShopTabs,
+                _ => FarmShopTabs
+            };
             ShopFill(layout.Tabs, ShopLine, 12f);
             for (var index = 0; index < tabs.Length; index++)
             {
@@ -92,7 +98,7 @@ namespace FarmGame2D.UI
             }
 
             var row = 0;
-            foreach (var product in GetShopProducts(session, mining, shopTab))
+            foreach (var product in GetShopProducts(session, shop, shopTab))
             {
                 var card = layout.GetProduct(row++);
                 var hover = card.Contains(Event.current.mousePosition);
@@ -112,7 +118,12 @@ namespace FarmGame2D.UI
                 }
             }
 
-            var footer = shopNotice ?? (mining ? string.Empty : $"보유 가축  ·  닭 {session.Data.ownedChickens}마리   소 {session.Data.ownedCows}마리");
+            var footer = shopNotice ?? shop switch
+            {
+                ShopKind.Mining => string.Empty,
+                ShopKind.Greenhouse => "여기서 산 씨앗은 온실 안에서 계절과 상관없이 심을 수 있어요.",
+                _ => $"보유 가축  ·  닭 {session.Data.ownedChickens}마리   소 {session.Data.ownedCows}마리"
+            };
             GUI.Label(layout.ListFooter, footer, shopSmall);
         }
 

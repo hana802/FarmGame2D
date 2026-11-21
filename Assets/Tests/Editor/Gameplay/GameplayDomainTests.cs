@@ -46,6 +46,23 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
+        public void MaterialQuest_TurnsWoodInToTheVillagerAndPaysOnce()
+        {
+            var data = GameSaveData.CreateNew(FarmFieldLayout.PlotCount, 7);
+            data.inventory.Add(GameItem.Wood, 8);
+            var before = data.money;
+
+            Assert.That(StarterQuestProgress.TryAccept(data, StarterQuestId.DeliverWood), Is.True);
+            var done = StarterQuestProgress.TryCompleteCurrent(data);
+
+            Assert.That(done.Reward, Is.EqualTo(160));
+            Assert.That(data.money, Is.EqualTo(before + 160));
+            Assert.That(data.inventory.Count(GameItem.Wood), Is.Zero);
+            Assert.That(data.woodDeliveryQuestCompleted, Is.True);
+            Assert.That(StarterQuestProgress.TryAccept(data, StarterQuestId.DeliverWood), Is.False);
+        }
+
+        [Test]
         public void QuestBoardOffers_RotateEveryThreeDaysAndKeepActiveQuest()
         {
             var data = GameSaveData.CreateNew(FarmFieldLayout.PlotCount, 1234);

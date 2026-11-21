@@ -26,6 +26,43 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
+        public void GreenhousePlot_GrowsAfterTheMorningWateringWithoutACan()
+        {
+            var save = new GameSaveData();
+            var indoor = new FarmPlotData
+            {
+                greenhouse = true,
+                state = SoilState.Planted,
+                plantedSeed = GameItem.PotatoSeed
+            };
+            var outdoor = new FarmPlotData { state = SoilState.Planted, plantedSeed = GameItem.PotatoSeed };
+            save.farmPlots.Add(indoor);
+            save.farmPlots.Add(outdoor);
+
+            Assert.That(FarmUpgradeRules.WaterGreenhousePlots(save), Is.EqualTo(1));
+            Assert.That(indoor.state, Is.EqualTo(SoilState.Watered));
+            Assert.That(outdoor.state, Is.EqualTo(SoilState.Planted));
+
+            indoor.AdvanceDay();
+            Assert.That(indoor.growthDays, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void HouseRepair_SpendsWoodStoneAndIronOnce()
+        {
+            var save = new GameSaveData();
+            save.inventory.Add(GameItem.Wood, MaterialProject.House.Wood);
+            save.inventory.Add(GameItem.Stone, MaterialProject.House.Stone);
+            save.inventory.Add(GameItem.IronOre, MaterialProject.House.Iron);
+
+            Assert.That(MaterialProject.TryPay(save, MaterialProject.House), Is.True);
+            Assert.That(save.inventory.Count(GameItem.Wood), Is.Zero);
+            Assert.That(save.inventory.Count(GameItem.Stone), Is.Zero);
+            Assert.That(save.inventory.Count(GameItem.IronOre), Is.Zero);
+            Assert.That(MaterialProject.HasMaterials(save, MaterialProject.House), Is.False);
+        }
+
+        [Test]
         public void Greenhouse_HasEightDistinctPlotsAndChecksForExistingConstructionObstacles()
         {
             var positions = GreenhouseLayout.PlotPositions().ToArray();
