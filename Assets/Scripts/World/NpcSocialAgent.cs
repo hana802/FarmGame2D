@@ -299,6 +299,7 @@ namespace FarmGame2D.World
                     || session.InventoryOpen
                     || session.PhoneOpen
                     || session.QuestBoardOpen
+                    || session.SellBoxOpen
                     || NpcInteractionOverlay.IsOpen);
         }
 

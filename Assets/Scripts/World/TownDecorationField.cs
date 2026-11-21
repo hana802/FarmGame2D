@@ -38,7 +38,7 @@ namespace FarmGame2D.World
             var center = (Vector2)ground.GetCellCenterWorld(cell);
             if (!CanPlace(center, cell, session.SelectedDecoration.Value))
             {
-                session.ShowMessage("마을의 비어 있는 잔디 위에 설치해 주세요.");
+                session.ShowMessage("비어 있는 잔디 위에 설치해 주세요.");
                 return false;
             }
 
@@ -47,13 +47,14 @@ namespace FarmGame2D.World
 
         private bool CanPlace(Vector2 center, Vector3Int cell, GameItem item)
         {
-            if (center.x < -16f || center.x > 16f || center.y < -0.5f || center.y > 9.5f)
-                return false;
             if (!ground.HasTile(cell) || road.HasTile(cell)) return false;
 
             foreach (var hit in Physics2D.OverlapBoxAll(center, GetFootprint(item), 0f))
             {
                 if (hit.GetComponent<PrototypePlayerController>() != null) continue;
+                var renderer = hit.GetComponent<SpriteRenderer>();
+                if (hit.isTrigger && renderer != null && renderer.color.a < 0.1f)
+                    continue;
                 return false;
             }
 

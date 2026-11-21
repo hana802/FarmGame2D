@@ -56,5 +56,35 @@ namespace FarmGame2D.Tests
             Assert.That(session.Data.inventory.Count(item), Is.EqualTo(inventoryBefore + 1));
             Assert.That(session.Data.placedDecorations.Count, Is.EqualTo(placedBefore));
         }
+
+        [UnityTest]
+        public IEnumerator TownDecoration_CanPlaceOnEmptyFarmGrassOutsideOldTownLimit()
+        {
+            SceneManager.LoadScene("Main");
+            yield return null;
+            yield return null;
+
+            var session = GameSession.Instance;
+            var field = Object.FindFirstObjectByType<TownDecorationField>();
+            Assert.That(session, Is.Not.Null);
+            Assert.That(field, Is.Not.Null);
+
+            session.Data.inventory.Add(GameItem.FlowerPot, 1);
+            session.SelectDecoration(GameItem.FlowerPot);
+            var candidates = new[]
+            {
+                new Vector2(15.5f, -3.5f), new Vector2(-15.5f, -3.5f),
+                new Vector2(14.5f, -4.5f), new Vector2(-14.5f, -4.5f)
+            };
+            var placed = false;
+            foreach (var candidate in candidates)
+            {
+                if (!field.TryPlace(candidate)) continue;
+                placed = true;
+                break;
+            }
+
+            Assert.That(placed, Is.True, "Empty grass outside the old town-only bounds should accept flowers.");
+        }
     }
 }

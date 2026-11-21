@@ -1,0 +1,548 @@
+fileFormatVersion: 2
+guid: af6462fd697fe4a46a4184a0a6257503
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7041554428591220885
+    second: wedding_character_bride_spouse_v2_0
+  - first:
+      213: -1976954775041626133
+    second: wedding_character_bride_spouse_v2_1
+  - first:
+      213: 667298526807797319
+    second: wedding_character_bride_spouse_v2_2
+  - first:
+      213: 5461418062878799648
+    second: wedding_character_bride_spouse_v2_3
+  - first:
+      213: -768553218764089678
+    second: wedding_character_bride_spouse_v2_4
+  - first:
+      213: -7997244856562664032
+    second: wedding_character_bride_spouse_v2_5
+  - first:
+      213: 5913375977343750102
+    second: wedding_character_bride_spouse_v2_6
+  - first:
+      213: -8036760060424968444
+    second: wedding_character_bride_spouse_v2_7
+  - first:
+      213: -8703673859330295561
+    second: wedding_character_bride_spouse_v2_8
+  - first:
+      213: -3200220302293158170
+    second: wedding_character_bride_spouse_v2_9
+  - first:
+      213: -5810033963513911010
+    second: wedding_character_bride_spouse_v2_10
+  - first:
+      213: 2692261523172134986
+    second: wedding_character_bride_spouse_v2_11
+  - first:
+      213: 7696541329774739185
+    second: wedding_character_bride_spouse_v2_12
+  - first:
+      213: 2537126480627048197
+    second: wedding_character_bride_spouse_v2_13
+  - first:
+      213: 6988849891896938936
+    second: wedding_character_bride_spouse_v2_14
+  - first:
+      213: -6692573335466495431
+    second: wedding_character_bride_spouse_v2_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 714
+        width: 211
+        height: 637
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59822cee170a8b160800000000000000
+      internalID: 7041554428591220885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_1
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 1193
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: befa1a04b127094e0800000000000000
+      internalID: -1976954775041626133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_2
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 17
+        width: 845
+        height: 1331
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74e25818978b24900800000000000000
+      internalID: 667298526807797319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_3
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 1189
+        width: 113
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 027fac7dacadacb40800000000000000
+      internalID: 5461418062878799648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_4
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 1111
+        width: 26
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b655946bec8555f0800000000000000
+      internalID: -768553218764089678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_5
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 1110
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ad33c69c24140190800000000000000
+      internalID: -7997244856562664032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_6
+      rect:
+        serializedVersion: 2
+        x: 966
+        y: 1032
+        width: 139
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6df07e8fe18801250800000000000000
+      internalID: 5913375977343750102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_7
+      rect:
+        serializedVersion: 2
+        x: 871
+        y: 950
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 407a25d3e41b77090800000000000000
+      internalID: -8036760060424968444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_8
+      rect:
+        serializedVersion: 2
+        x: 871
+        y: 908
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f8b3cd2db6563780800000000000000
+      internalID: -8703673859330295561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_9
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 907
+        width: 17
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e6b2de27988693d0800000000000000
+      internalID: -3200220302293158170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_10
+      rect:
+        serializedVersion: 2
+        x: 857
+        y: 893
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e196ccf94ec9e5fa0800000000000000
+      internalID: -5810033963513911010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_11
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 899
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4090235795dc5520800000000000000
+      internalID: 2692261523172134986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_12
+      rect:
+        serializedVersion: 2
+        x: 879
+        y: 893
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fef558bf8b9fca60800000000000000
+      internalID: 7696541329774739185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_13
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 725
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50f1304871fa53320800000000000000
+      internalID: 2537126480627048197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_14
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 637
+        width: 33
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b15b0bb2f16df060800000000000000
+      internalID: 6988849891896938936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_bride_spouse_v2_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 47
+        width: 193
+        height: 482
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 932b44a92043f13a0800000000000000
+      internalID: -6692573335466495431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      wedding_character_bride_spouse_v2_0: 7041554428591220885
+      wedding_character_bride_spouse_v2_1: -1976954775041626133
+      wedding_character_bride_spouse_v2_10: -5810033963513911010
+      wedding_character_bride_spouse_v2_11: 2692261523172134986
+      wedding_character_bride_spouse_v2_12: 7696541329774739185
+      wedding_character_bride_spouse_v2_13: 2537126480627048197
+      wedding_character_bride_spouse_v2_14: 6988849891896938936
+      wedding_character_bride_spouse_v2_15: -6692573335466495431
+      wedding_character_bride_spouse_v2_2: 667298526807797319
+      wedding_character_bride_spouse_v2_3: 5461418062878799648
+      wedding_character_bride_spouse_v2_4: -768553218764089678
+      wedding_character_bride_spouse_v2_5: -7997244856562664032
+      wedding_character_bride_spouse_v2_6: 5913375977343750102
+      wedding_character_bride_spouse_v2_7: -8036760060424968444
+      wedding_character_bride_spouse_v2_8: -8703673859330295561
+      wedding_character_bride_spouse_v2_9: -3200220302293158170
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

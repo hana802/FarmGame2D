@@ -33,6 +33,7 @@ namespace FarmGame2D.Core
         public bool ShopOpen { get; private set; }
         public bool InventoryOpen { get; private set; }
         public bool QuestBoardOpen { get; private set; }
+        public bool SellBoxOpen { get; private set; }
         public Vector2 PlayerPosition => playerTransform == null ? Vector2.zero : playerTransform.position;
         public bool CloudSyncBusy => cloudSyncBusy;
         public bool CloudSyncLinked => cloudSaveClient.IsLinked;
@@ -125,7 +126,12 @@ namespace FarmGame2D.Core
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.G) && !PhoneOpen && !ShopOpen && !InventoryOpen && !QuestBoardOpen)
+            if (SellBoxOpen && Input.GetKeyDown(KeyCode.Escape))
+            {
+                CloseSellBox();
+            }
+
+            if (Input.GetKeyDown(KeyCode.G) && !PhoneOpen && !ShopOpen && !InventoryOpen && !QuestBoardOpen && !SellBoxOpen)
             {
                 ToggleDogSit();
             }
@@ -292,8 +298,9 @@ namespace FarmGame2D.Core
             };
             NotifyChanged();
             SaveSilently();
-            var bondEvent = BondEventService.GetPendingDogEvent(Data);
-            if (bondEvent.HasValue) NpcInteractionOverlay.ShowDogEvent(bondEvent.Value);
+            var bondEvent = BondEventService.GetPendingDogEvent(Data)
+                ?? BondEventService.GetDogEventForReplay(Data);
+            if (bondEvent.HasValue) DogBondCelebration.Show(bondEvent.Value, this);
         }
 
         public void ToggleDogSit()
@@ -376,6 +383,30 @@ namespace FarmGame2D.Core
             }
         }
 
+        public bool SellCow()
+        {
+            const int salePrice = 250;
+            if (Data.ownedCows <= 0)
+            {
+                Message = "판매할 소가 없습니다.";
+                NotifyChanged();
+                return false;
+            }
+
+            var adultCount = Data.ownedCows - Data.cowJuvenileDays.Count;
+            if (adultCount <= 0 && Data.cowJuvenileDays.Count > 0)
+            {
+                Data.cowJuvenileDays.RemoveAt(Data.cowJuvenileDays.Count - 1);
+            }
+
+            Data.ownedCows--;
+            Data.money += salePrice;
+            Message = $"소 1마리를 판매해 {salePrice}G를 받았습니다.";
+            NotifyChanged();
+            SaveSilently();
+            return true;
+        }
+
         public void PurchasePickaxe()
         {
             if (Data.hasPickaxe)
@@ -408,22 +439,46 @@ namespace FarmGame2D.Core
             Purchase(item, 1, decoration.Price, ItemCatalog.GetLabel(item));
         }
 
-        public void SellAllProduce()
+        public void OpenSellBox()
         {
-            var income = 0;
-            foreach (GameItem item in Enum.GetValues(typeof(GameItem)))
-            {
-                var price = ItemCatalog.GetSellPrice(item);
-                var quantity = Data.inventory.Count(item);
-                if (price <= 0 || quantity <= 0)
-                {
-                    continue;
-                }
+            SellBoxOpen = true;
+            PhoneOpen = false;
+            ShopOpen = false;
+            InventoryOpen = false;
+            QuestBoardOpen = false;
+            NotifyChanged();
+        }
 
-                Data.inventory.TrySpend(item, quantity);
-                income += quantity * price;
+        public void CloseSellBox()
+        {
+            if (!SellBoxOpen)
+            {
+                return;
             }
 
+            SellBoxOpen = false;
+            NotifyChanged();
+        }
+
+        public void SellProduce(GameItem item, int quantity)
+        {
+            var income = ProduceSale.Sell(Data.inventory, item, quantity);
+            if (income <= 0)
+            {
+                Message = "판매할 수 없는 물품입니다.";
+                NotifyChanged();
+                return;
+            }
+
+            Data.money += income;
+            Message = $"{ItemCatalog.GetLabel(item)} {quantity}개를 판매해 {income}G를 받았습니다.";
+            NotifyChanged();
+            SaveSilently();
+        }
+
+        public void SellAllProduce()
+        {
+            var income = ProduceSale.SellAll(Data.inventory);
             if (income == 0)
             {
                 Message = "판매할 농산물이나 광물이 없습니다.";
@@ -458,6 +513,7 @@ namespace FarmGame2D.Core
             ShopOpen = false;
             InventoryOpen = false;
             QuestBoardOpen = false;
+            SellBoxOpen = false;
             NotifyChanged();
         }
 
@@ -474,6 +530,7 @@ namespace FarmGame2D.Core
             PhoneOpen = false;
             InventoryOpen = false;
             QuestBoardOpen = false;
+            SellBoxOpen = false;
             NotifyChanged();
         }
 
@@ -483,6 +540,7 @@ namespace FarmGame2D.Core
             PhoneOpen = false;
             ShopOpen = false;
             QuestBoardOpen = false;
+            SellBoxOpen = false;
             NotifyChanged();
         }
 
@@ -492,6 +550,7 @@ namespace FarmGame2D.Core
             PhoneOpen = false;
             ShopOpen = false;
             InventoryOpen = false;
+            SellBoxOpen = false;
             NotifyChanged();
         }
 

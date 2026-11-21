@@ -1,6 +1,7 @@
 using System;
 using FarmGame2D.Core;
 using FarmGame2D.UI;
+using FarmGame2D.World;
 using UnityEngine;
 
 namespace FarmGame2D.Interactions
@@ -19,6 +20,8 @@ namespace FarmGame2D.Interactions
         private BondEventDefinition? activeBondEvent;
         private int bondPage;
         private Vector2 giftScroll;
+        private WanderingMover speakerMover;
+        private float dialogueVisibleUntil;
         private GUIStyle titleStyle;
         private GUIStyle centeredStyle;
         private GUIStyle actionCaptionStyle;
@@ -29,7 +32,7 @@ namespace FarmGame2D.Interactions
         private Font koreanFont;
         private FarmGuiSkin farmSkin;
 
-        public static bool IsOpen => instance != null && instance.enabled;
+        public static bool IsOpen => (instance != null && instance.enabled) || WeddingCeremonyOverlay.IsPlaying;
 
         public static void Show(string id, string displayName, int dialoguePortraitRow, Func<string> dialogueProvider)
         {
@@ -55,8 +58,15 @@ namespace FarmGame2D.Interactions
                 ? string.Empty
                 : dialogueProvider?.Invoke() ?? "좋은 하루예요.";
             instance.enabled = true;
+            instance.BindSpeaker();
+            if (instance.activeBondEvent.HasValue)
+                instance.KeepDialogueOpen();
+            else
+                instance.ShowDialogueLine();
             if (!instance.activeBondEvent.HasValue && dialogueProvider != null)
                 GameSession.Instance?.ShowDialogue(instance.speaker, instance.dialogueLine, dialoguePortraitRow, inInteraction: true);
+            if (instance.activeBondEvent?.Kind == BondEventKind.Wedding)
+                instance.PlayWedding(instance.activeBondEvent.Value);
         }
 
         public static void ShowDogEvent(BondEventDefinition bondEvent)
@@ -64,6 +74,7 @@ namespace FarmGame2D.Interactions
             Show(string.Empty, "강아지", -1, null);
             instance.activeBondEvent = bondEvent;
             instance.bondPage = 0;
+            instance.KeepDialogueOpen();
         }
 
         private void Awake()
@@ -80,15 +91,30 @@ namespace FarmGame2D.Interactions
 
         private void Update()
         {
+            speakerMover?.Pause(0.25f);
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (choosingGift) choosingGift = false;
-                else Close();
+                if (choosingGift)
+                {
+                    choosingGift = false;
+                    ShowDialogueLine();
+                }
+                else
+                {
+                    Close();
+                }
+
+                return;
             }
-            else if (!choosingGift && !activeBondEvent.HasValue && Input.GetKeyDown(KeyCode.Return))
+
+            if (!choosingGift && !activeBondEvent.HasValue && Input.GetKeyDown(KeyCode.Return))
             {
                 Close();
+                return;
             }
+
+            if (VillagerDialogueDismiss.ShouldClose(choosingGift, activeBondEvent.HasValue, dialogueVisibleUntil, Time.unscaledTime))
+                Close();
         }
 
         private void OnGUI()
@@ -193,12 +219,10 @@ namespace FarmGame2D.Interactions
             {
                 activeBondEvent = replay;
                 bondPage = 0;
+                KeepDialogueOpen();
             }
             if (weddingReplay.HasValue && farmSkin.DrawButton(ActionButton(panel, replay.HasValue ? 1 : 0, 1), "결혼식 다시 보기"))
-            {
-                activeBondEvent = weddingReplay;
-                bondPage = 0;
-            }
+                PlayWedding(weddingReplay.Value);
         }
 
         private static Rect ActionButton(Rect panel, int column, int row) =>
@@ -234,7 +258,10 @@ namespace FarmGame2D.Interactions
 
             GUI.EndScrollView();
             if (farmSkin.DrawButton(new Rect(panel.center.x - 70f, panel.yMax - 48f, 140f, 34f), "뒤로"))
+            {
                 choosingGift = false;
+                ShowDialogueLine();
+            }
         }
 
         private void GiveGift(GameSaveData data, GameItem item)
@@ -248,12 +275,14 @@ namespace FarmGame2D.Interactions
                 choosingGift = false;
                 activeBondEvent = pending;
                 bondPage = 0;
+                KeepDialogueOpen();
                 return;
             }
 
             choosingGift = false;
             dialogueLine = result.Message;
             GameSession.Instance.ShowDialogue(speaker, dialogueLine, portraitRow, inInteraction: true);
+            ShowDialogueLine();
         }
 
         private void DrawBondEvent(Rect panel, GameSaveData data)
@@ -269,8 +298,8 @@ namespace FarmGame2D.Interactions
                     BondEventService.TryAcceptMarriage(data, bondEvent.NpcId))
                 {
                     GameSession.Instance.SaveCurrentStateSilently();
-                    activeBondEvent = BondEventService.GetPendingWedding(data, bondEvent.NpcId);
-                    bondPage = 0;
+                    var wedding = BondEventService.GetPendingWedding(data, bondEvent.NpcId);
+                    if (wedding.HasValue) PlayWedding(wedding.Value);
                 }
                 if (GUI.Button(new Rect(panel.x + 420f, panel.y + 500f, 280f, 56f), "나중에", buttonStyle)) Close();
                 return;
@@ -284,8 +313,13 @@ namespace FarmGame2D.Interactions
                     GameSession.Instance.SaveCurrentStateSilently();
                     if (bondEvent.Kind == BondEventKind.NpcEnding)
                     {
-                        activeBondEvent = BondEventService.GetPendingWedding(data, bondEvent.NpcId) ??
-                            BondEventService.GetMarriageProposal(data, bondEvent.NpcId);
+                        var wedding = BondEventService.GetPendingWedding(data, bondEvent.NpcId);
+                        if (wedding.HasValue)
+                        {
+                            PlayWedding(wedding.Value);
+                            return;
+                        }
+                        activeBondEvent = BondEventService.GetMarriageProposal(data, bondEvent.NpcId);
                         bondPage = 0;
                         if (!activeBondEvent.HasValue) Close();
                     }
@@ -295,10 +329,35 @@ namespace FarmGame2D.Interactions
             }
         }
 
+        private void PlayWedding(BondEventDefinition wedding)
+        {
+            Close();
+            WeddingCeremonyOverlay.Show(wedding, GameSession.Instance, speaker);
+        }
+
+        private void BindSpeaker()
+        {
+            speakerMover = string.IsNullOrEmpty(npcId)
+                ? null
+                : GameObject.Find(npcId)?.GetComponent<WanderingMover>();
+        }
+
+        private void ShowDialogueLine()
+        {
+            dialogueVisibleUntil = Time.unscaledTime + VillagerDialogueDismiss.Seconds;
+        }
+
+        private void KeepDialogueOpen()
+        {
+            dialogueVisibleUntil = float.PositiveInfinity;
+        }
+
         private void Close()
         {
             choosingGift = false;
             activeBondEvent = null;
+            speakerMover?.Resume();
+            speakerMover = null;
             enabled = false;
         }
 

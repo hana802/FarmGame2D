@@ -69,15 +69,35 @@ namespace FarmGame2D.Core
         {
             if (data == null) return null;
             if (data.dogAffection >= DogEndingThreshold && !data.dogEndingSeen)
-                return new BondEventDefinition(BondEventKind.DogEnding, string.Empty, "언제나 함께",
-                    "처음 만났을 때는 조심스레 다가오던 강아지가 이제는 당신의 발소리만 들어도 달려옵니다.",
-                    "당신이 밭을 돌보고 마을을 거닐던 모든 날에, 이 작은 친구도 곁에 있었습니다.",
-                    "강아지가 손바닥에 머리를 기대고 꼬리를 흔듭니다. 앞으로도 함께할 거예요. — 강아지 우정 엔딩");
+                return CreateDogEnding();
             if (data.dogAffection >= DogCompanionThreshold && !data.dogCompanionEventSeen && !data.dogEndingSeen)
-                return new BondEventDefinition(BondEventKind.DogCompanion, string.Empty, "친구가 된 날",
-                    "강아지가 당신을 보자마자 신나게 달려와 빙글빙글 돕니다.",
-                    "이제 강아지는 당신을 믿고 따릅니다. 마을에서 가장 든든한 작은 친구가 생겼어요.");
+                return CreateDogCompanion();
             return null;
+        }
+
+        public static BondEventDefinition? GetDogEventForReplay(GameSaveData data)
+        {
+            if (data == null) return null;
+            if (data.dogAffection >= DogEndingThreshold && data.dogEndingSeen)
+                return CreateDogEnding();
+            if (data.dogAffection >= DogCompanionThreshold && data.dogCompanionEventSeen)
+                return CreateDogCompanion();
+            return null;
+        }
+
+        private static BondEventDefinition CreateDogEnding()
+        {
+            return new BondEventDefinition(BondEventKind.DogEnding, string.Empty, "언제나 함께",
+                "처음 만났을 때는 조심스레 다가오던 강아지가 이제는 당신의 발소리만 들어도 달려옵니다.",
+                "당신이 밭을 돌보고 마을을 거닐던 모든 날에, 이 작은 친구도 곁에 있었습니다.",
+                "강아지가 손바닥에 머리를 기대고 꼬리를 흔듭니다. 앞으로도 함께할 거예요. — 강아지 우정 엔딩");
+        }
+
+        private static BondEventDefinition CreateDogCompanion()
+        {
+            return new BondEventDefinition(BondEventKind.DogCompanion, string.Empty, "친구가 된 날",
+                "강아지가 당신을 보자마자 신나게 달려와 빙글빙글 돕니다.",
+                "이제 강아지는 당신을 믿고 따릅니다. 마을에서 가장 든든한 작은 친구가 생겼어요.");
         }
 
         public static void Complete(GameSaveData data, BondEventDefinition bondEvent)

@@ -240,6 +240,18 @@ namespace FarmGame2D.Tests
             Assert.That(GameSession.Instance.SellChicken(), Is.False, "The last chicken must remain on the farm.");
             Assert.That(GameSession.Instance.Data.ownedChickens, Is.EqualTo(1));
 
+            var cowsBeforeSale = GameSession.Instance.Data.ownedCows;
+            var moneyBeforeCowSale = GameSession.Instance.Data.money;
+            Assert.That(GameSession.Instance.SellCow(), Is.True);
+            Assert.That(GameSession.Instance.Data.ownedCows, Is.EqualTo(cowsBeforeSale - 1));
+            Assert.That(GameSession.Instance.Data.money, Is.EqualTo(moneyBeforeCowSale + 250));
+            if (GameSession.Instance.Data.ownedCows == 0)
+            {
+                Assert.That(GameSession.Instance.SellCow(), Is.False, "Selling without a cow must not grant money.");
+                GameSession.Instance.PurchaseCow();
+            }
+            yield return null;
+
             var chickenHerd = GameObject.Find("Chicken Herd").GetComponent<FarmAnimalHerd>();
             var cowHerd = GameObject.Find("Cow Herd").GetComponent<FarmAnimalHerd>();
             Assert.That(chickenHerd.VisibleCount, Is.EqualTo(GameSession.Instance.Data.ownedChickens));

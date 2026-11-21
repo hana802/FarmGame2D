@@ -72,6 +72,15 @@ namespace FarmGame2D.World
             AbandonTarget(seconds);
         }
 
+        public void Resume()
+        {
+            pausedUntil = Time.time;
+            if (!hasTarget)
+            {
+                waitUntil = Time.time;
+            }
+        }
+
         private void FixedUpdate()
         {
             if (random == null || Time.time < pausedUntil)

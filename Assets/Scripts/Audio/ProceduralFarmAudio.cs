@@ -23,6 +23,9 @@ namespace FarmGame2D.Audio
                     Envelope(t, 0.48f, 5f) * (0.16f * Noise(i, 51) + 0.2f * Sine(240f + 520f * t, t))),
                 GameAudioCue.FishingCatch => Generate(sampleRate, 0.62f, (t, i) =>
                     Envelope(t, 0.62f, 6f) * (0.2f * Noise(i, 73) + 0.28f * Sine(t < 0.25f ? 520f : 780f, t))),
+                GameAudioCue.WeddingChime => Generate(sampleRate, 1.6f, (t, i) =>
+                    Envelope(t, 1.6f, 1.4f) * 0.18f *
+                    (Sine(523.25f, t) + Sine(659.25f, t) + Sine(783.99f, t) + 0.5f * Sine(1046.5f, t))),
                 _ => Array.Empty<float>()
             };
         }

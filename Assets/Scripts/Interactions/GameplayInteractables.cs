@@ -117,11 +117,11 @@ namespace FarmGame2D.Interactions
 
     public sealed class SellBoxInteractable : InteractableBehaviour
     {
-        public override string Prompt => "농산물과 광물 모두 판매";
+        public override string Prompt => "판매할 물품 고르기";
 
         public override void Interact(PrototypePlayerController player)
         {
-            GameSession.Instance?.SellAllProduce();
+            GameSession.Instance?.OpenSellBox();
         }
     }
 

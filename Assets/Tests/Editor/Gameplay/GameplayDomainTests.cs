@@ -570,6 +570,22 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
+        public void VillagerWorldSprites_GiveMinseoTaeoAndSoraSeparateSheets()
+        {
+            var minseo = GameArtCatalog.GetVillagerVariantSprite(1, 3, false);
+            var taeo = GameArtCatalog.GetVillagerVariantSprite(2, 3, false);
+            var sora = GameArtCatalog.GetVillagerVariantSprite(3, 3, false);
+            var haram = GameArtCatalog.GetNpcDirectionalSprite(0, 3, false);
+
+            Assert.That(minseo.texture.name, Is.EqualTo("villager_minseo_v1"));
+            Assert.That(taeo.texture.name, Is.EqualTo("villager_taeo_v1"));
+            Assert.That(sora.texture.name, Is.EqualTo("villager_sora_v1"));
+            Assert.That(minseo.texture, Is.Not.SameAs(haram.texture));
+            Assert.That(taeo.texture, Is.Not.SameAs(minseo.texture));
+            Assert.That(sora.texture, Is.Not.SameAs(taeo.texture));
+        }
+
+        [Test]
         public void PhoneLayout_KeepsQuestTextBelowHeaderArtwork()
         {
             var layout = HudLayout.CalculatePhoneLayout();
@@ -680,6 +696,9 @@ namespace FarmGame2D.Tests
 
             Assert.That(ShopPurchaseConfirmation.GetPrompt(request),
                 Is.EqualTo("\"닭 1마리\"를 판매하시겠습니까?"));
+            var cowRequest = new ShopPurchaseRequest(ShopPurchaseKind.CowSale, "소 1마리");
+            Assert.That(ShopPurchaseConfirmation.GetPrompt(cowRequest),
+                Is.EqualTo("\"소 1마리\"를 판매하시겠습니까?"));
         }
 
         [Test]

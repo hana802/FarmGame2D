@@ -58,7 +58,7 @@ namespace FarmGame2D.Player
             }
 
             if (GameSession.Instance.InventoryOpen || GameSession.Instance.PhoneOpen || GameSession.Instance.ShopOpen
-                || GameSession.Instance.QuestBoardOpen || NpcInteractionOverlay.IsOpen)
+                || GameSession.Instance.QuestBoardOpen || GameSession.Instance.SellBoxOpen || NpcInteractionOverlay.IsOpen)
             {
                 moveInput = Vector2.zero;
                 UpdateCharacterVisual(false);

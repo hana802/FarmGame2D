@@ -1,0 +1,496 @@
+fileFormatVersion: 2
+guid: 7537ea436eca15e46a8656744ab8eac0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8096664000902961978
+    second: wedding_character_groom_player_v2_0
+  - first:
+      213: -3714770879558708409
+    second: wedding_character_groom_player_v2_1
+  - first:
+      213: 224537960357486505
+    second: wedding_character_groom_player_v2_2
+  - first:
+      213: 5894121451790614296
+    second: wedding_character_groom_player_v2_3
+  - first:
+      213: -5969021924540616116
+    second: wedding_character_groom_player_v2_4
+  - first:
+      213: -4344555360687928732
+    second: wedding_character_groom_player_v2_5
+  - first:
+      213: -740087654815205877
+    second: wedding_character_groom_player_v2_6
+  - first:
+      213: -1496425206995195824
+    second: wedding_character_groom_player_v2_7
+  - first:
+      213: 7130431663734745729
+    second: wedding_character_groom_player_v2_8
+  - first:
+      213: -2234127044127356820
+    second: wedding_character_groom_player_v2_9
+  - first:
+      213: 3779503531907690999
+    second: wedding_character_groom_player_v2_10
+  - first:
+      213: -8579054971630147340
+    second: wedding_character_groom_player_v2_11
+  - first:
+      213: 1808553359269895609
+    second: wedding_character_groom_player_v2_12
+  - first:
+      213: 8895188139294708411
+    second: wedding_character_groom_player_v2_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: wedding_character_groom_player_v2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 26
+        width: 1005
+        height: 1472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3b9387c2012d5070800000000000000
+      internalID: 8096664000902961978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_groom_player_v2_1
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 1233
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74310f5119b727cc0800000000000000
+      internalID: -3714770879558708409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_groom_player_v2_2
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 1147
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9afd2b5d518bd1300800000000000000
+      internalID: 224537960357486505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_groom_player_v2_3
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 1040
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81f3df46b302cc150800000000000000
+      internalID: 5894121451790614296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_groom_player_v2_4
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 1041
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c42fc335f26c92da0800000000000000
+      internalID: -5969021924540616116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_groom_player_v2_5
+      rect:
+        serializedVersion: 2
+        x: 784
+        y: 991
+        width: 17
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46a4d2bfae905b3c0800000000000000
+      internalID: -4344555360687928732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_groom_player_v2_6
+      rect:
+        serializedVersion: 2
+        x: 816
+        y: 959
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b067618f23eaab5f0800000000000000
+      internalID: -740087654815205877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_groom_player_v2_7
+      rect:
+        serializedVersion: 2
+        x: 786
+        y: 925
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0586c10e331ab3be0800000000000000
+      internalID: -1496425206995195824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_groom_player_v2_8
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 879
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18a6b1cc1d164f260800000000000000
+      internalID: 7130431663734745729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_groom_player_v2_9
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 835
+        width: 27
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6802bf4a49cef0e0800000000000000
+      internalID: -2234127044127356820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_groom_player_v2_10
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 831
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f131b6007e737430800000000000000
+      internalID: 3779503531907690999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_groom_player_v2_11
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 751
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f8af6305f211f880800000000000000
+      internalID: -8579054971630147340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_groom_player_v2_12
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 725
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bd1f98b2b5491910800000000000000
+      internalID: 1808553359269895609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wedding_character_groom_player_v2_13
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 169
+        width: 25
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb2dde4eb7e027b70800000000000000
+      internalID: 8895188139294708411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      wedding_character_groom_player_v2_0: 8096664000902961978
+      wedding_character_groom_player_v2_1: -3714770879558708409
+      wedding_character_groom_player_v2_10: 3779503531907690999
+      wedding_character_groom_player_v2_11: -8579054971630147340
+      wedding_character_groom_player_v2_12: 1808553359269895609
+      wedding_character_groom_player_v2_13: 8895188139294708411
+      wedding_character_groom_player_v2_2: 224537960357486505
+      wedding_character_groom_player_v2_3: 5894121451790614296
+      wedding_character_groom_player_v2_4: -5969021924540616116
+      wedding_character_groom_player_v2_5: -4344555360687928732
+      wedding_character_groom_player_v2_6: -740087654815205877
+      wedding_character_groom_player_v2_7: -1496425206995195824
+      wedding_character_groom_player_v2_8: 7130431663734745729
+      wedding_character_groom_player_v2_9: -2234127044127356820
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

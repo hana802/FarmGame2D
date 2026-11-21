@@ -7,6 +7,7 @@ namespace FarmGame2D.Audio
         WaterCrop,
         HarvestCrop,
         FishingCast,
-        FishingCatch
+        FishingCatch,
+        WeddingChime
     }
 }
