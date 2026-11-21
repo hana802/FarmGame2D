@@ -30,7 +30,6 @@ namespace FarmGame2D.UI
         private GUIStyle smallStyle;
         private GUIStyle centeredStyle;
         private GUIStyle titleStyle;
-        private GUIStyle inventoryTitleStyle;
         private GUIStyle panelStyle;
         private GUIStyle toastStyle;
         private GUIStyle interactionPromptStyle;
@@ -39,7 +38,6 @@ namespace FarmGame2D.UI
         private Font koreanFont;
         private FarmGuiSkin farmSkin;
         private readonly HudMessageVisibility messageVisibility = new();
-        private bool inventoryDecorationsPage;
         private string cloudCodeInput = string.Empty;
         private string cloudPinInput = string.Empty;
         private PhonePage phonePage = PhonePage.Settings;
@@ -258,113 +256,6 @@ namespace FarmGame2D.UI
         {
             var label = session.Data.dogSitting ? "강아지 따라와" : "강아지 앉아";
             DrawKeyHint(new Rect(18f, HudLayout.ReferenceHeight - 53f, GetKeyHintWidth("G", label), 37f), "G", label);
-        }
-
-        private void DrawInventory(GameSession session)
-        {
-            var layout = HudLayout.CalculateInventoryLayout();
-            farmSkin.DrawWindow(layout.Panel);
-            farmSkin.DrawSprite(layout.Portrait, GameArtCatalog.GetPlayerPortrait(session.Data.characterChoice));
-            GUI.Label(layout.Title, InventoryTitle, inventoryTitleStyle);
-
-            var tabY = layout.Panel.y + 132f;
-            if (farmSkin.DrawButton(new Rect(layout.Panel.x + 205f, tabY, 180f, 36f), "도구와 씨앗", !inventoryDecorationsPage))
-                inventoryDecorationsPage = false;
-            if (farmSkin.DrawButton(new Rect(layout.Panel.x + 405f, tabY, 180f, 36f), "마을 장식", inventoryDecorationsPage))
-                inventoryDecorationsPage = true;
-
-            if (inventoryDecorationsPage)
-            {
-                DrawInventoryDecorations(session, layout);
-                return;
-            }
-
-            var decorationSelected = session.SelectedDecoration.HasValue;
-            bool ToolSelected(FarmTool tool) => !decorationSelected && session.SelectedTool == tool;
-
-            if (farmSkin.DrawButton(layout.HoeButton, "호미", ToolSelected(FarmTool.Hoe)))
-            {
-                session.SelectTool(FarmTool.Hoe);
-            }
-
-            if (farmSkin.DrawButton(layout.ShovelButton, "삽", ToolSelected(FarmTool.Shovel)))
-            {
-                session.SelectTool(FarmTool.Shovel);
-            }
-
-            if (farmSkin.DrawButton(layout.SeedsButton, ItemCatalog.GetLabel(session.SelectedSeed), ToolSelected(FarmTool.Seeds)))
-            {
-                session.SelectSeed(session.SelectedSeed);
-            }
-
-            if (farmSkin.DrawButton(layout.WateringCanButton, "물뿌리개", ToolSelected(FarmTool.WateringCan)))
-            {
-                session.SelectTool(FarmTool.WateringCan);
-            }
-
-            if (farmSkin.DrawButton(layout.PickaxeButton, session.Data.hasPickaxe ? "곡괭이" : "곡괭이 (미보유)", ToolSelected(FarmTool.Pickaxe)))
-            {
-                session.SelectTool(FarmTool.Pickaxe);
-            }
-
-            if (farmSkin.DrawButton(layout.FishingRodButton, "낚싯대", ToolSelected(FarmTool.FishingRod)))
-            {
-                session.SelectTool(FarmTool.FishingRod);
-            }
-
-            var seedIndex = 0;
-            foreach (var crop in CropCatalog.GetAll())
-            {
-                var count = session.Data.inventory.Count(crop.Seed);
-                var label = $"{crop.Label} 씨앗 ×{count} · {GetSeasonLabel(crop.Season)}";
-                var seedSelected = ToolSelected(FarmTool.Seeds) && crop.Seed == session.SelectedSeed;
-                if (farmSkin.DrawButton(layout.GetSeedButton(seedIndex), label, seedSelected))
-                {
-                    session.SelectSeed(crop.Seed);
-                }
-
-                seedIndex++;
-            }
-
-            var juvenileCount = session.Data.chickenJuvenileDays.Count + session.Data.cowJuvenileDays.Count;
-            var fishCount = session.Data.inventory.Count(GameItem.RiverFish)
-                + session.Data.inventory.Count(GameItem.SeaBass)
-                + session.Data.inventory.Count(GameItem.GoldenCarp);
-            GUI.Label(layout.GetStatsLabel(0, 0),
-                $"사료 {session.Data.inventory.Count(GameItem.Feed)} · 달걀 {session.Data.inventory.Count(GameItem.Egg)} · 우유 {session.Data.inventory.Count(GameItem.Milk)}\n닭 {session.Data.ownedChickens} · 소 {session.Data.ownedCows} · 새끼 {juvenileCount}",
-                smallStyle);
-            GUI.Label(layout.GetStatsLabel(1, 0),
-                $"돌 {session.Data.inventory.Count(GameItem.Stone)} · 구리 {session.Data.inventory.Count(GameItem.CopperOre)} · 철 {session.Data.inventory.Count(GameItem.IronOre)} · 금 {session.Data.inventory.Count(GameItem.GoldOre)}\n물고기 {fishCount} · 잡초 {session.Data.inventory.Count(GameItem.Weed)} · 목재 {session.Data.inventory.Count(GameItem.Wood)}",
-                smallStyle);
-
-            var axeButton = new Rect(layout.Panel.x + 48f, layout.CloseButton.y, 138f, layout.CloseButton.height);
-            var sprinklerButton = new Rect(layout.Panel.xMax - 204f, layout.CloseButton.y, 156f, layout.CloseButton.height);
-            if (farmSkin.DrawButton(axeButton, "도끼", ToolSelected(FarmTool.Axe))) session.SelectTool(FarmTool.Axe);
-            if (farmSkin.DrawButton(sprinklerButton, $"스프링클러 ×{session.Data.inventory.Count(GameItem.Sprinkler)}",
-                    session.SelectedDecoration == GameItem.Sprinkler))
-                session.SelectDecoration(GameItem.Sprinkler);
-
-            if (farmSkin.DrawButton(layout.CloseButton, "닫기"))
-            {
-                session.ToggleInventory();
-            }
-        }
-
-        private void DrawInventoryDecorations(GameSession session, InventoryHudLayout layout)
-        {
-            var decorations = TownDecorationCatalog.GetAll();
-            for (var index = 0; index < decorations.Count; index++)
-            {
-                var item = decorations[index].Item;
-                var label = $"{ItemCatalog.GetLabel(item)}  ×{session.Data.inventory.Count(item)}";
-                var button = new Rect(layout.Panel.x + 120f, layout.Panel.y + 188f + index * 66f, 580f, 54f);
-                if (farmSkin.DrawButton(button, label, session.SelectedDecoration == item))
-                    session.SelectDecoration(item);
-            }
-
-            GUI.Label(new Rect(layout.Panel.x + 98f, layout.Panel.y + 395f, 630f, 42f),
-                "잡화점에서 구입 · 마을 잔디 앞에서 Space로 설치 · E로 줍기", centeredStyle);
-            if (farmSkin.DrawButton(layout.CloseButton, "닫기")) session.ToggleInventory();
         }
 
         private void DrawMessage(GameSession session)
@@ -756,10 +647,6 @@ namespace FarmGame2D.UI
                 fontSize = 24,
                 fontStyle = FontStyle.Bold,
                 alignment = TextAnchor.MiddleCenter
-            };
-            inventoryTitleStyle ??= new GUIStyle(titleStyle)
-            {
-                fontSize = InventoryTitleFontSize
             };
             panelStyle ??= new GUIStyle(smallStyle)
             {
