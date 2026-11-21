@@ -16,6 +16,10 @@ namespace FarmGame2D.Interactions
 
         private void DrawFarmHelpMenu(Rect panel, GameSession session)
         {
+            DrawRoundedSurface(new Rect(panel.x, panel.y + 5f, panel.width, panel.height),
+                new Color32(45, 30, 17, 105), 20f);
+            DrawRoundedSurface(panel, new Color32(255, 246, 223, 255), 20f);
+
             GUI.Label(new Rect(panel.x + 24f, panel.y + 22f, panel.width - 48f, 48f), "농장일 부탁하기", titleStyle);
 
             var restriction = session.GetSpouseFarmHelpRestriction(npcId);
