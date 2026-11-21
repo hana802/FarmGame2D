@@ -206,6 +206,11 @@ namespace FarmGame2D.Player
             heldItemPresenter.PresentMining(facingRow, target, pullback, tool);
         }
 
+        internal Vector3 PresentFishingCast(Vector2 target, float pullback)
+        {
+            return heldItemPresenter.PresentFishingCast(facingRow, target, pullback);
+        }
+
         internal void EndMining()
         {
             IsMining = false;

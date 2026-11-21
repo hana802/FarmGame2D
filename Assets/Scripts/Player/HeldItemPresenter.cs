@@ -63,6 +63,23 @@ namespace FarmGame2D.Player
                 Vector2.SignedAngle(Vector2.up, direction) + side * pullback);
         }
 
+        internal Vector3 PresentFishingCast(int facingRow, Vector2 target, float pullback)
+        {
+            Present(FarmTool.FishingRod, facingRow, false, true);
+            var rod = itemRenderer.transform;
+            var direction = target - (Vector2)rod.position;
+            if (direction.sqrMagnitude < 0.0001f)
+            {
+                direction = Vector2.up;
+            }
+
+            var side = facingRow == 2 ? -1f : 1f;
+            rod.localRotation = Quaternion.Euler(0f, 0f,
+                Vector2.SignedAngle(Vector2.up, direction) + side * pullback);
+            var tip = itemRenderer.sprite == null ? 0.7f : itemRenderer.sprite.bounds.max.y;
+            return rod.TransformPoint(new Vector3(0f, tip, 0f));
+        }
+
         private static Vector3 GetLocalPosition(int facingRow)
         {
             return facingRow switch

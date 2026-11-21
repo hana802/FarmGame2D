@@ -22,6 +22,14 @@ namespace FarmGame2D.Tests.Editor.Gameplay
         }
 
         [Test]
+        public void FishingCastMotion_CocksTheRodBeforePointingAtTheWater()
+        {
+            Assert.That(FishingCastMotion.Pullback(0f), Is.EqualTo(95f).Within(0.01f));
+            Assert.That(FishingCastMotion.Pullback(FishingCastMotion.ReleaseTime), Is.LessThan(0f));
+            Assert.That(FishingCastMotion.Pullback(1.2f), Is.EqualTo(-4f).Within(0.01f));
+        }
+
+        [Test]
         public void ProceduralAudio_GeneratesAudibleNormalizedCueSamples()
         {
             foreach (GameAudioCue cue in Enum.GetValues(typeof(GameAudioCue)))

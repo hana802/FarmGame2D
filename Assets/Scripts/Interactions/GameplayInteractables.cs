@@ -1,3 +1,4 @@
+using System.Collections;
 using FarmGame2D.Core;
 using FarmGame2D.Player;
 using UnityEngine;
@@ -156,6 +157,7 @@ namespace FarmGame2D.Interactions
         private int nodeId;
         private UnityEngine.SpriteRenderer nodeRenderer;
         private FarmGame2D.World.MiningNodeDepletionPresentation depletionPresentation;
+        private PrototypePlayerController miner;
 
         public override string Prompt
         {
@@ -195,11 +197,64 @@ namespace FarmGame2D.Interactions
             {
                 GameSession.Instance.StateChanged -= Refresh;
             }
+
+            if (miner != null)
+            {
+                miner.EndMining();
+            }
         }
 
         public override void Interact(PrototypePlayerController player)
         {
-            GameSession.Instance?.MineNode(nodeId);
+            var session = GameSession.Instance;
+            if (session == null || miner != null || player.IsMining)
+            {
+                return;
+            }
+
+            if (session.SelectedTool != FarmTool.Pickaxe || !session.Data.hasPickaxe
+                || nodeId < 0 || nodeId >= session.Data.miningNodes.Count
+                || !session.Data.miningNodes[nodeId].IsAvailable)
+            {
+                session.MineNode(nodeId);
+                return;
+            }
+
+            miner = player;
+            StartCoroutine(SwingPickaxe());
+        }
+
+        private IEnumerator SwingPickaxe()
+        {
+            var contact = (Vector2)transform.position;
+            miner.BeginMining(contact);
+            var struck = false;
+            for (var elapsed = 0f; elapsed < 0.5f && miner != null; elapsed += Time.deltaTime)
+            {
+                var recoil = elapsed < 0.24f
+                    ? Mathf.Lerp(105f, 0f, elapsed / 0.24f)
+                    : Mathf.Lerp(0f, 38f, (elapsed - 0.24f) / 0.26f);
+                miner.PresentMiningSwing(contact, recoil);
+                if (!struck && elapsed >= 0.24f)
+                {
+                    GameSession.Instance?.MineNode(nodeId);
+                    struck = true;
+                }
+
+                yield return null;
+            }
+
+            if (!struck && miner != null)
+            {
+                GameSession.Instance?.MineNode(nodeId);
+            }
+
+            if (miner != null)
+            {
+                miner.EndMining();
+            }
+
+            miner = null;
         }
 
         private void Refresh()
