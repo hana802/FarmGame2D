@@ -12,36 +12,32 @@ namespace FarmGame2D.World
         private void BuildHouseUpgrades(GameSession session, Transform house, Transform farm, Transform interior, GameObject topWall)
         {
             baseHouseWall = topWall;
-            porch = CreateBuildingDetail("Farmhouse Porch", FarmBuildingArt.Porch, new Vector2(6f, -12.33f), house);
-            chimney = CreateBuildingDetail("Farmhouse Stone Chimney", FarmBuildingArt.Chimney, new Vector2(7.5f, -10.13f), house);
-            chimney.GetComponent<SpriteRenderer>().sortingOrder = porch.GetComponent<SpriteRenderer>().sortingOrder;
+            var exterior = house.GetComponent<SpriteRenderer>();
+            porch = CreateBuildingDetail("Farmhouse Masonry Landing", FarmBuildingArt.Porch, new Vector2(6f, -12.51f), house);
+            porch.transform.localScale = new Vector3(1.28f, 1.1f, 1f);
+            porch.GetComponent<SpriteRenderer>().sortingOrder = exterior.sortingOrder - 1;
+            chimney = CreateBuildingDetail("Farmhouse Kitchen Chimney", FarmBuildingArt.Chimney, new Vector2(4.67f, -8.77f), house);
+            chimney.GetComponent<SpriteRenderer>().sortingOrder = exterior.sortingOrder + 1;
 
             var board = CreateInteractable<FarmFacilityInteractable>("Construction Noticeboard", WorldAreaProfile.FarmConstructionSite,
                 new Vector2(0.9f, 0.48f), Color.clear, farm);
             board.Configure(FarmFacility.Construction);
             CreateBuildingDetail("Construction Noticeboard Art", FarmEquipmentArt.Sign, board.transform.position, farm);
 
-            workshop = BuildHouseRoom("Farmhouse Workshop", interior, 1, new Color32(185, 134, 82, 255));
+            workshop = BuildHouseRoom("Farmhouse Workshop", interior, 1);
             workshopBackWall = workshop.transform.Find("Back Wall").gameObject;
-            CreateWorldArt("Workshop Bench", WorldArtKind.InteriorTable, new Vector2(42.4f, -4.6f),
-                workshop.transform, 4, new Vector2(1.5f, 0.65f));
+            AddHouseFurniture("Workshop Tool Bench", FarmhouseFurnitureArt.Workbench, new Vector2(43.45f, -5.12f),
+                new Vector2(2.15f, 0.66f), workshop.transform);
+            AddHouseFurniture("Workshop Tool Chest", FarmhouseFurnitureArt.Chest, new Vector2(35.35f, -4.76f),
+                new Vector2(1.15f, 0.62f), workshop.transform);
             CreateArtInteractable<SellBoxInteractable>("Workshop Selling Box", WorldArtKind.SellingBox,
                 new Vector2(37.5f, -4.7f), new Vector2(1.2f, 0.65f), workshop.transform);
 
-            kitchen = BuildHouseRoom("Farmhouse Kitchen", interior, 2, new Color32(190, 157, 114, 255));
-            for (var x = -3; x <= 3; x++)
-            for (var y = 0; y < 2; y++)
-            {
-                var color = (x + y) % 2 == 0 ? new Color32(168, 181, 146, 255) : new Color32(210, 201, 164, 255);
-                var tile = PrototypeSpriteFactory.CreateBlock("Kitchen Tile", new Vector2(40f + x, -1.0f + 0.8f * y),
-                    new Vector2(1f, 0.8f), color, kitchen.transform);
-                tile.GetComponent<SpriteRenderer>().sortingOrder = 1;
-            }
-            CreateWorldArt("Kitchen Cupboard", WorldArtKind.InteriorCabinet, new Vector2(37.1f, -0.7f), kitchen.transform,
-                4, new Vector2(1.15f, 0.65f));
-            var stovePosition = new Vector2(42.35f, -0.7f);
-            var stoveArt = CreateBuildingDetail("Kitchen Stove", FarmBuildingArt.Stove, stovePosition, kitchen.transform);
-            CreateSolidCollider("Stove Base", stoveArt.transform, new Vector2(0f, 0.22f), new Vector2(1.05f, 0.62f));
+            kitchen = BuildHouseRoom("Farmhouse Kitchen", interior, 2);
+            AddHouseFurniture("Kitchen Sink Counter", FarmhouseFurnitureArt.Sink, new Vector2(35.45f, -1.42f),
+                new Vector2(2.45f, 0.65f), kitchen.transform);
+            var stovePosition = new Vector2(42.35f, -1.22f);
+            AddHouseFurniture("Kitchen Stove", FarmhouseFurnitureArt.Range, stovePosition, new Vector2(1.25f, 0.6f), kitchen.transform);
             CreateInteractable<FarmFacilityInteractable>("Kitchen Worktop", stovePosition - Vector2.up * 0.45f,
                 new Vector2(1.2f, 0.68f), Color.clear, kitchen.transform).Configure(FarmFacility.Kitchen);
 
@@ -60,27 +56,47 @@ namespace FarmGame2D.World
             workshopBackWall.SetActive(level == 1);
         }
 
-        private static GameObject BuildHouseRoom(string name, Transform parent, int stage, Color floor)
+        private static void AddHouseFurniture(string name, Sprite art, Vector2 position, Vector2 footprint, Transform parent)
         {
-            const float floorWidth = 8f;
+            var item = CreateBuildingDetail(name, art, position, parent);
+            CreateSolidCollider($"{name} Blocker", item.transform, new Vector2(0f, 0.25f), footprint);
+        }
+
+        private static GameObject BuildHouseRoom(string name, Transform parent, int stage)
+        {
+            var floorWidth = WorldAreaProfile.HouseRoomWidth(stage);
+            var priorWidth = WorldAreaProfile.HouseRoomWidth(stage - 1);
             var depth = WorldAreaProfile.HouseExpansionDepth;
             var top = -6.5f + stage * depth;
+            var bottom = top - depth;
+            var right = WorldAreaProfile.FarmhouseInteriorCenter.x + WorldAreaProfile.HouseWorkshopWidth * 0.5f;
+            var left = right - floorWidth;
+            var center = (left + right) * 0.5f;
             var room = new GameObject(name);
             room.transform.SetParent(parent);
             var wall = new Color32(88, 55, 39, 255);
-            PrototypeSpriteFactory.CreateBlock("Extension Floor", new Vector2(40f, top - depth * 0.5f),
-                new Vector2(floorWidth, depth), floor, room.transform);
-            for (var row = 0; row < 5; row++)
-            {
-                var trim = PrototypeSpriteFactory.CreateBlock("Floorboard Seam", new Vector2(40f, top - (row + 0.5f) * depth / 5f),
-                    new Vector2(floorWidth, 0.025f), Color.Lerp(floor, wall, 0.22f), room.transform);
-                trim.GetComponent<SpriteRenderer>().sortingOrder = 1;
-            }
-            PrototypeSpriteFactory.CreateBlock("Back Wall", new Vector2(40f, top + 0.05f), new Vector2(8.4f, 0.5f), wall, room.transform, true);
-            foreach (var x in new[] { 35.8f, 44.2f })
-                PrototypeSpriteFactory.CreateBlock("Side Wall", new Vector2(x, top - depth * 0.49f),
+            var floor = PrototypeSpriteFactory.CreateBlock("Extension Floor", new Vector2(center, (top + bottom) * 0.5f),
+                new Vector2(floorWidth, depth), Color.white, room.transform);
+            var floorRenderer = floor.GetComponent<SpriteRenderer>();
+            floorRenderer.sprite = FarmhouseFurnitureArt.GetFloor((int)floorWidth, stage == 2);
+            PrototypeSpriteFactory.CreateBlock("Back Wall", new Vector2(center, top + 0.05f),
+                new Vector2(floorWidth + 0.4f, 0.5f), wall, room.transform, true);
+            foreach (var x in new[] { left - 0.2f, right + 0.2f })
+                PrototypeSpriteFactory.CreateBlock("Side Wall", new Vector2(x, (top + bottom) * 0.5f),
                     new Vector2(0.5f, depth + 0.23f), wall, room.transform, true);
+
+            var oldRight = stage == 1 ? WorldAreaProfile.FarmhouseInteriorCenter.x + priorWidth * 0.5f : right;
+            var oldLeft = oldRight - priorWidth;
+            AddShoulderWall(room.transform, left, oldLeft, bottom, wall);
+            AddShoulderWall(room.transform, oldRight, right, bottom, wall);
             return room;
+        }
+
+        private static void AddShoulderWall(Transform parent, float left, float right, float y, Color wall)
+        {
+            if (right <= left) return;
+            PrototypeSpriteFactory.CreateBlock("Side Extension End Wall", new Vector2((left + right) * 0.5f, y - 0.1f),
+                new Vector2(right - left + 0.2f, 0.32f), wall, parent, true);
         }
 
         private static GameObject CreateBuildingDetail(string name, Sprite sprite, Vector2 point, Transform parent)
