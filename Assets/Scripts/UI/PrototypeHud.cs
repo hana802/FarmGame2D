@@ -101,6 +101,7 @@ namespace FarmGame2D.UI
                     || session.ShopOpen
                     || session.InventoryOpen
                     || session.QuestBoardOpen
+                    || session.SellBoxOpen
                     || NpcInteractionOverlay.IsOpen;
                 if (!modalOpen)
                 {
@@ -140,9 +141,15 @@ namespace FarmGame2D.UI
                     DrawQuestBoard(session);
                 }
 
+                if (session.SellBoxOpen)
+                    DrawSellBox(session);
+                else
+                    sellBoxWasOpen = false;
+
                 var input = Event.current;
                 if (!modalOpen && input.type == EventType.MouseDown && input.button == 0
-                    && player != null && player.TryInteractWithClickedNpc(Input.mousePosition))
+                    && player != null && (TryOpenClickedSellBox(Input.mousePosition)
+                        || player.TryInteractWithClickedNpc(Input.mousePosition)))
                 {
                     input.Use();
                 }
