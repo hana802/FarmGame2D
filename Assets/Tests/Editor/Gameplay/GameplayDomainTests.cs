@@ -635,17 +635,21 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
-        public void QuestBoardLayout_KeepsTextAndButtonsInsideArtworkSlots()
+        public void QuestBoardLayout_KeepsParchmentAtRightWithRoomForAllOffers()
         {
             var layout = HudLayout.CalculateQuestBoardLayout();
 
-            Assert.That(layout.Title.xMin, Is.GreaterThanOrEqualTo(layout.Panel.xMin + 220f));
-            Assert.That(layout.Title.yMin, Is.GreaterThanOrEqualTo(layout.Panel.yMin + 50f));
+            Assert.That(layout.Panel.xMin, Is.GreaterThan(HudLayout.ReferenceWidth / 2f));
+            Assert.That(layout.Panel.xMax, Is.LessThan(HudLayout.ReferenceWidth));
+            Assert.That(layout.Panel.height, Is.GreaterThan(layout.Panel.width));
+            Assert.That(layout.Title.xMin, Is.GreaterThan(layout.Panel.xMin));
+            Assert.That(layout.Title.yMin, Is.GreaterThan(layout.Panel.yMin));
             Assert.That(layout.Title.yMax, Is.LessThanOrEqualTo(layout.Status.yMin));
             Assert.That(layout.Status.yMax, Is.LessThanOrEqualTo(layout.Refresh.yMin));
             Assert.That(layout.Refresh.yMax, Is.LessThanOrEqualTo(layout.GetQuestButton(0).yMin));
             Assert.That(layout.GetQuestButton(2).yMax, Is.LessThan(layout.CloseButton.yMin));
-            Assert.That(layout.CloseButton.yMax, Is.LessThanOrEqualTo(layout.Panel.yMax - 50f));
+            Assert.That(layout.CloseButton.xMax, Is.LessThan(layout.Panel.xMax));
+            Assert.That(layout.CloseButton.yMax, Is.LessThan(layout.Panel.yMax));
         }
 
         [Test]
