@@ -18,6 +18,7 @@ namespace FarmGame2D.Interactions
         private int portraitRow = -1;
         private string dialogueLine;
         private int openedFrame;
+        private float dialogueVisibleUntil;
         private bool choosingGift;
         private WanderingMover speakerMover;
         private BondEventDefinition? activeBondEvent;
@@ -60,6 +61,7 @@ namespace FarmGame2D.Interactions
             instance.bondPage = 0;
             instance.giftScroll = Vector2.zero;
             instance.openedFrame = Time.frameCount;
+            instance.dialogueVisibleUntil = Time.unscaledTime + VillagerDialogueDismiss.Seconds;
             instance.dialogueLine = instance.activeBondEvent.HasValue
                 ? string.Empty
                 : dialogueProvider?.Invoke() ?? "좋은 하루예요.";
@@ -103,6 +105,15 @@ namespace FarmGame2D.Interactions
             }
             else if (!choosingFarmHelp && !choosingGift && !activeBondEvent.HasValue && Time.frameCount != openedFrame
                 && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return)))
+            {
+                Close();
+            }
+
+            if (choosingGift || choosingFarmHelp || activeBondEvent.HasValue)
+            {
+                dialogueVisibleUntil = Time.unscaledTime + VillagerDialogueDismiss.Seconds;
+            }
+            else if (VillagerDialogueDismiss.ShouldClose(choosingGift, choosingFarmHelp, activeBondEvent.HasValue, dialogueVisibleUntil, Time.unscaledTime))
             {
                 Close();
             }
@@ -313,6 +324,7 @@ namespace FarmGame2D.Interactions
 
             choosingGift = false;
             dialogueLine = result.Message;
+            dialogueVisibleUntil = Time.unscaledTime + VillagerDialogueDismiss.Seconds;
             GameSession.Instance.ShowDialogue(speaker, dialogueLine, portraitRow, inInteraction: true);
         }
 

@@ -66,6 +66,16 @@ namespace FarmGame2D.Core
             Data.sprinklersWateredDay = day;
             var greenhouseWatered = FarmUpgradeRules.WaterGreenhousePlots(Data) > 0;
             var sprinklersWatered = FarmUpgradeRules.WaterWithSprinklers(Data) > 0;
+            if (greenhouseWatered)
+            {
+                AppendMorningEvent("온실 밭이 아침 물을 머금었습니다.");
+            }
+
+            if (sprinklersWatered)
+            {
+                AppendMorningEvent("스프링클러가 밭에 물을 주었습니다.");
+            }
+
             if (greenhouseWatered || sprinklersWatered)
             {
                 SaveSilently();

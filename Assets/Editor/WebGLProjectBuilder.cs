@@ -57,6 +57,9 @@ namespace FarmGame2D.Editor
                 .Replace("/WebGL.data.gz", $"/WebGL.data.gz?v={cacheVersion}")
                 .Replace("/WebGL.framework.js.gz", $"/WebGL.framework.js.gz?v={cacheVersion}")
                 .Replace("/WebGL.wasm.gz", $"/WebGL.wasm.gz?v={cacheVersion}")
+                .Replace("/WebGL.data.unityweb", $"/WebGL.data.unityweb?v={cacheVersion}")
+                .Replace("/WebGL.framework.js.unityweb", $"/WebGL.framework.js.unityweb?v={cacheVersion}")
+                .Replace("/WebGL.wasm.unityweb", $"/WebGL.wasm.unityweb?v={cacheVersion}")
                 .Replace("// config.autoSyncPersistentDataPath = true;", "config.autoSyncPersistentDataPath = true;")
                 .Replace(
                     "fullscreenContainer.style.width = \"960px\";\n        fullscreenContainer.style.height = \"600px\";",
