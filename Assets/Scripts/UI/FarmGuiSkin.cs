@@ -48,6 +48,37 @@ namespace FarmGame2D.UI
 
         public void DrawBanner(Rect rect) => DrawAtlas(rect, BannerAtlasRect);
 
+        public static void DrawParchment(Rect rect)
+        {
+            if (Event.current.type != EventType.Repaint) return;
+
+            DrawRounded(new Rect(rect.x + 4f, rect.y + 7f, rect.width, rect.height),
+                new Color32(45, 30, 17, 120), 10f);
+            DrawRounded(rect, new Color32(126, 88, 55, 255), 9f);
+            DrawRounded(new Rect(rect.x + 2f, rect.y + 2f, rect.width - 4f, rect.height - 4f),
+                new Color32(215, 176, 121, 255), 8f);
+            DrawRounded(new Rect(rect.x + 6f, rect.y + 5f, rect.width - 12f, rect.height - 10f),
+                new Color32(239, 207, 153, 255), 7f);
+            DrawRounded(new Rect(rect.x + 10f, rect.y + 5f, rect.width - 20f, rect.height - 10f),
+                new Color32(249, 225, 178, 255), 7f);
+            DrawParchmentRoll(new Rect(rect.x - 4f, rect.y, rect.width + 8f, 12f));
+            DrawParchmentRoll(new Rect(rect.x - 4f, rect.yMax - 12f, rect.width + 8f, 12f));
+        }
+
+        private static void DrawParchmentRoll(Rect rect)
+        {
+            DrawRounded(rect, new Color32(151, 103, 63, 255), 5f);
+            DrawRounded(new Rect(rect.x + 2f, rect.y + 1f, rect.width - 4f, 8f),
+                new Color32(213, 168, 114, 255), 4f);
+            DrawRounded(new Rect(rect.x + 9f, rect.y + 2f, rect.width - 18f, 3f),
+                new Color32(239, 202, 148, 255), 1.5f);
+        }
+
+        private static void DrawRounded(Rect rect, Color color, float radius)
+        {
+            GUI.DrawTexture(rect, Texture2D.whiteTexture, ScaleMode.StretchToFill, true, 0f, color, 0f, radius);
+        }
+
         public bool DrawButton(Rect rect, string label, bool orange = false)
         {
             DrawButtonBackground(rect, orange);

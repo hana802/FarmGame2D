@@ -325,14 +325,15 @@ namespace FarmGame2D.UI
 
         public static QuestBoardHudLayout CalculateQuestBoardLayout()
         {
-            var panel = new Rect((ReferenceWidth - 820f) * 0.5f, 70f, 820f, 550f);
+            const float width = 392f;
+            var panel = new Rect(ReferenceWidth - width - 36f, 144f, width, 430f);
             return new QuestBoardHudLayout(
                 panel,
-                new Rect(panel.x + 235f, panel.y + 58f, panel.width - 275f, 38f),
-                new Rect(panel.x + 55f, panel.y + 112f, panel.width - 110f, 32f),
-                new Rect(panel.x + 55f, panel.y + 150f, panel.width - 110f, 28f),
-                new Rect(panel.x + 100f, panel.y + 194f, panel.width - 200f, 48f),
-                new Rect(panel.x + 220f, panel.y + 447f, 380f, 40f));
+                InsetRow(panel, 28f, 26f, 38f),
+                InsetRow(panel, 28f, 79f, 32f),
+                InsetRow(panel, 28f, 116f, 28f),
+                InsetRow(panel, 28f, 154f, 52f),
+                new Rect(panel.xMax - 137f, panel.yMax - 66f, 109f, 36f));
         }
 
         public static ToastHudLayout CalculateToastLayout()

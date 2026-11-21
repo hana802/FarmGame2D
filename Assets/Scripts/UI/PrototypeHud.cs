@@ -474,35 +474,56 @@ namespace FarmGame2D.UI
 
         private void DrawQuestBoard(GameSession session)
         {
+            var input = Event.current;
+            if (input.type == EventType.KeyDown && input.keyCode == KeyCode.Escape)
+            {
+                input.Use();
+                session.CloseQuestBoard();
+                return;
+            }
+
             var layout = HudLayout.CalculateQuestBoardLayout();
-            farmSkin.DrawWindow(layout.Panel);
-            GUI.Label(layout.Title, "마을 광장 의뢰 게시판", titleStyle);
+            FarmGuiSkin.DrawParchment(layout.Panel);
+            GUI.Label(layout.Title, "마을 광장 의뢰", phoneHeadingStyle);
+            FarmGuiSkin.DrawSolid(new Rect(layout.Title.x, layout.Title.yMax + 5f, layout.Title.width, 1f),
+                new Color32(166, 122, 76, 255));
+            var activeQuestId = session.Data.activeQuestId;
             GUI.Label(layout.Status,
-                session.Data.activeQuestId >= 0 ? "진행 중인 의뢰를 먼저 끝내 주세요." : "하고 싶은 의뢰를 하나 골라 보세요.", centeredStyle);
+                activeQuestId >= 0 ? "진행 중인 의뢰를 먼저 끝내 주세요." : "하고 싶은 의뢰를 하나 골라 보세요.", phoneBodyStyle);
             var refreshDays = StarterQuestProgress.GetDaysUntilBoardRefresh(session.Data.day);
-            GUI.Label(layout.Refresh, $"의뢰는 3일마다 갱신됩니다 · 다음 갱신까지 {refreshDays}일", smallStyle);
+            GUI.Label(layout.Refresh, $"{StarterQuestProgress.BoardRefreshDays}일마다 갱신 · 다음 갱신까지 {refreshDays}일",
+                phoneBodyStyle);
 
             var quests = StarterQuestProgress.GetBoardOffers(session.Data);
             for (var index = 0; index < quests.Length; index++)
             {
                 var quest = quests[index];
-                var label = quest.Completed
-                    ? $"완료 · {quest.Title}"
-                    : $"{quest.Title}  ({quest.Current}/{quest.Target})";
-                var previousEnabled = GUI.enabled;
-                GUI.enabled = !quest.Completed && session.Data.activeQuestId < 0;
-                if (farmSkin.DrawButton(layout.GetQuestButton(index), label,
-                        session.Data.activeQuestId == (int)quest.Id))
+                if (DrawQuestOffer(layout.GetQuestButton(index), quest, activeQuestId))
                 {
                     session.AcceptQuest(quest.Id);
+                    return;
                 }
-                GUI.enabled = previousEnabled;
             }
 
-            if (farmSkin.DrawButton(layout.CloseButton, "게시판 닫기"))
+            if (phoneSkin.DrawButton(layout.CloseButton, "Esc  닫기", PhoneButtonTone.Paper))
             {
                 session.CloseQuestBoard();
             }
+        }
+
+        private bool DrawQuestOffer(Rect row, StarterQuestStatus quest, int activeQuestId)
+        {
+            var isActive = activeQuestId == (int)quest.Id;
+            var canAccept = activeQuestId < 0 && !quest.Completed;
+            var fill = isActive ? new Color32(225, 222, 170, 255) : new Color32(247, 230, 193, 255);
+            if (canAccept && row.Contains(Event.current.mousePosition)) fill = Color.Lerp(fill, Color.white, 0.45f);
+            farmSkin.DrawPixelPanel(row, fill, new Color32(194, 154, 104, 255), false);
+            GUI.Label(new Rect(row.x + 12f, row.y, row.width - 127f, row.height), quest.Title, phoneSectionStyle);
+            var status = quest.Completed ? "완료"
+                : isActive ? $"진행 {quest.Current}/{quest.Target}"
+                : canAccept ? $"{quest.Current}/{quest.Target} · 수락" : $"{quest.Current}/{quest.Target}";
+            GUI.Label(new Rect(row.xMax - 102f, row.y, 90f, row.height), status, phoneBodyStyle);
+            return canAccept && GUI.Button(row, GUIContent.none, GUIStyle.none);
         }
 
         private void DrawCloudSync(GameSession session, Rect panel)
