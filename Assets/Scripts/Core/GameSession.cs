@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using FarmGame2D.Audio;
 using FarmGame2D.Farming;
 using FarmGame2D.Interactions;
@@ -91,6 +92,7 @@ namespace FarmGame2D.Core
             clock.TimeChanged += HandleTimeChanged;
             if (!Application.isBatchMode)
             {
+                StartCoroutine(AutosaveRoutine());
                 BeginAutomaticDeviceSync();
             }
         }
@@ -173,6 +175,7 @@ namespace FarmGame2D.Core
             Data.characterChoice = choice;
             Message = choice == CharacterChoice.Male ? "남성형 농부를 선택했습니다." : "여성형 농부를 선택했습니다.";
             NotifyChanged();
+            SaveSilently();
         }
 
         public void UsePlot(int index)
@@ -1124,6 +1127,19 @@ namespace FarmGame2D.Core
             Data.playerY = playerTransform.position.y;
         }
 
+        private IEnumerator AutosaveRoutine()
+        {
+            var wait = new WaitForSecondsRealtime(15f);
+            while (enabled)
+            {
+                yield return wait;
+                if (Data != null && Data.characterChoice != CharacterChoice.None)
+                {
+                    SaveSilently();
+                }
+            }
+        }
+
         private void SaveSilently()
         {
             if (Application.isBatchMode)
@@ -1201,6 +1217,10 @@ namespace FarmGame2D.Core
                 else if (hadLocalSaveAtStartup && !string.IsNullOrWhiteSpace(result.SaveJson))
                 {
                     cloudLoadRequired = true;
+                }
+                else
+                {
+                    UploadCloudSave(false);
                 }
             }));
         }

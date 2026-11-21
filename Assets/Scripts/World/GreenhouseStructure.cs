@@ -20,7 +20,7 @@ namespace FarmGame2D.World
         {
             session = gameSession;
             transform.position = GreenhouseLayout.Site;
-            var construction = gameObject.AddComponent<BoxCollider2D>();
+            var construction = GetComponent<BoxCollider2D>();
             construction.size = new Vector2(1.1f, 0.5f);
             construction.isTrigger = true;
             sign = CreateSprite("Construction Sign", transform.position, FarmEquipmentArt.Sign, transform);

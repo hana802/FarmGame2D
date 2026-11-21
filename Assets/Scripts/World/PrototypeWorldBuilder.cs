@@ -92,7 +92,8 @@ namespace FarmGame2D.World
             freeformField.transform.SetParent(farmRoot);
             freeformField.Configure(session, groundTilemap, roadTilemap, farmRoot);
 
-            var greenhouse = new GameObject("Greenhouse Construction").AddComponent<GreenhouseStructure>();
+            var greenhouseObject = new GameObject("Greenhouse Construction", typeof(BoxCollider2D));
+            var greenhouse = greenhouseObject.AddComponent<GreenhouseStructure>();
             greenhouse.transform.SetParent(farmRoot);
             greenhouse.Configure(session);
 
