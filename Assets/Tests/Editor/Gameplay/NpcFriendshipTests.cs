@@ -59,6 +59,17 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
+        public void PreferenceList_NamesTheGiftsThatRaiseFriendship()
+        {
+            CollectionAssert.AreEqual(new[] { GameItem.Potato },
+                NpcFriendshipService.GetPreferredItems("Guide", NpcGiftReaction.Loved));
+            CollectionAssert.AreEqual(new[] { GameItem.Strawberry, GameItem.GoldenCarp },
+                NpcFriendshipService.GetPreferredItems("Guide", NpcGiftReaction.Liked));
+            CollectionAssert.AreEqual(new[] { GameItem.Wheat },
+                NpcFriendshipService.GetPreferredItems("Baker Yuna", NpcGiftReaction.Loved));
+            Assert.That(NpcFriendshipService.GetPreferredItems("Guide", NpcGiftReaction.Neutral), Is.Empty);
+        }
+
         public void GiftableInventory_ExcludesSeedsAndFeed()
         {
             var inventory = new InventoryModel();

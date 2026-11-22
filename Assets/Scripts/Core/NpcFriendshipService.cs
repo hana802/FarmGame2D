@@ -80,6 +80,19 @@ namespace FarmGame2D.Core
             return friendship != null && friendship.lastGiftDay == data.day;
         }
 
+        public static IReadOnlyList<GameItem> GetPreferredItems(string npcId, NpcGiftReaction reaction)
+        {
+            var preferred = new List<GameItem>();
+            if (string.IsNullOrWhiteSpace(npcId) || reaction == NpcGiftReaction.Neutral) return preferred;
+
+            foreach (var item in GiftableItems)
+            {
+                if (GetReaction(npcId, item) == reaction) preferred.Add(item);
+            }
+
+            return preferred;
+        }
+
         public static IReadOnlyList<GameItem> GetOwnedGiftableItems(InventoryModel inventory)
         {
             var ownedItems = new List<GameItem>();

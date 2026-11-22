@@ -369,6 +369,7 @@ namespace FarmGame2D.UI
 
             if (DrawPhoneTab(GetPhoneTab(layout, 3), "호감도", PhonePage.Friendship))
             {
+                if (phonePage != PhonePage.Friendship) friendshipScroll = Vector2.zero;
                 RefreshFriendshipResidents();
                 phonePage = PhonePage.Friendship;
                 exitNotice = string.Empty;
