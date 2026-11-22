@@ -18,6 +18,57 @@ namespace FarmGame2D.Tests
     public sealed class MainSceneSmokeTests
     {
         [UnityTest]
+        public IEnumerator FarmhouseUpgrades_ConnectTheBedroomAndKeepDailyFacilitiesOnTheGroundFloor()
+        {
+            SceneManager.LoadScene("Main");
+            yield return null;
+            yield return null;
+
+            var session = GameSession.Instance;
+            var player = Object.FindFirstObjectByType<PrototypePlayerController>();
+            session.Data.houseUpgraded = false;
+            session.Data.houseUpgradeLevel = 0;
+            session.ShowMessage(string.Empty);
+            Assert.That(GameObject.Find("Interior Bed Art"), Is.Not.Null);
+            Assert.That(GameObject.Find("Stairs to Bedroom"), Is.Null);
+
+            session.Data.houseUpgradeLevel = 1;
+            session.ShowMessage(string.Empty);
+            Assert.That(GameObject.Find("Interior Bed Art"), Is.Null);
+            Assert.That(GameObject.Find("Workshop Selling Box").GetComponent<SellBoxInteractable>(), Is.Not.Null);
+            Assert.That(GameObject.Find("Workshop Tool Bench"), Is.Not.Null);
+            Assert.That(GameObject.Find("Kitchen Stove"), Is.Null);
+
+            var up = GameObject.Find("Stairs to Bedroom").GetComponent<DoorInteractable>();
+            up.Interact(player);
+            yield return null;
+            Assert.That((Vector2)player.transform.position, Is.EqualTo(WorldAreaProfile.FarmhouseBedroomEntry));
+            Assert.That(Camera.main.transform.position.x, Is.EqualTo(WorldAreaProfile.FarmhouseBedroomCenter.x).Within(0.05f));
+
+            var day = session.Data.day;
+            var bed = GameObject.Find("Upstairs Bed").GetComponent<BedInteractable>();
+            player.Teleport((Vector2)bed.transform.position + Vector2.down * 0.85f);
+            bed.Interact(player);
+            yield return new WaitForSecondsRealtime(1.65f);
+            Assert.That(session.Data.day, Is.EqualTo(day + 1));
+            Assert.That(session.Data.hour, Is.EqualTo(6));
+            Assert.That(WorldAreaProfile.IsFarmhouseBedroom(player.transform.position), Is.True);
+
+            var down = GameObject.Find("Stairs to Ground Floor").GetComponent<DoorInteractable>();
+            down.Interact(player);
+            yield return null;
+            Assert.That(Camera.main.transform.position.x, Is.EqualTo(WorldAreaProfile.FarmhouseInteriorCenter.x).Within(0.05f));
+            Assert.That(WorldAreaProfile.IsFarmhouseBedroom(player.transform.position), Is.False);
+
+            session.Data.houseUpgradeLevel = 2;
+            session.ShowMessage(string.Empty);
+            var kitchen = GameObject.Find("Kitchen Worktop").GetComponent<FarmFacilityInteractable>();
+            Assert.That(kitchen.transform.parent.parent, Is.EqualTo(up.transform.parent.parent));
+            kitchen.Interact(player);
+            Assert.That(session.OpenFacility, Is.EqualTo(FarmFacility.Kitchen));
+        }
+
+        [UnityTest]
         public IEnumerator MainScene_CreatesPlayableFarmWorld()
         {
             SceneManager.LoadScene("Main");

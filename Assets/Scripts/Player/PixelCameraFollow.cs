@@ -55,20 +55,12 @@ namespace FarmGame2D.Player
 
         private static Vector2 GetInteriorCenter(Vector2 position)
         {
-            var greenhouse = position.x > WorldAreaProfile.HouseInteriorBoundaryX;
-            var center = greenhouse ? GreenhouseLayout.Interior : WorldAreaProfile.FarmhouseInteriorCenter;
-            var data = GameSession.Instance?.Data;
-            if (data == null) return center;
-            var expansion = greenhouse ? GreenhouseLayout.ExpansionDepth * data.greenhouseUpgradeLevel
-                : WorldAreaProfile.HouseExpansionDepth * data.houseUpgradeLevel;
-            center.y += Mathf.Clamp(position.y - center.y, 0f, expansion);
-            if (!greenhouse && data.houseUpgradeLevel > 0)
-            {
-                const float cameraMargin = 5.5f;
-                var right = WorldAreaProfile.FarmhouseInteriorCenter.x + WorldAreaProfile.HouseWorkshopWidth * 0.5f;
-                var left = right - WorldAreaProfile.HouseRoomWidth(data.houseUpgradeLevel);
-                center.x = Mathf.Clamp(position.x, left + cameraMargin, right - cameraMargin);
-            }
+            if (WorldAreaProfile.IsFarmhouseBedroom(position)) return WorldAreaProfile.FarmhouseBedroomCenter;
+            if (position.x <= WorldAreaProfile.HouseInteriorBoundaryX) return WorldAreaProfile.FarmhouseInteriorCenter;
+
+            var center = GreenhouseLayout.Interior;
+            var level = GameSession.Instance?.Data.greenhouseUpgradeLevel ?? 0;
+            center.y += Mathf.Clamp(position.y - center.y, 0f, GreenhouseLayout.ExpansionDepth * level);
             return center;
         }
 

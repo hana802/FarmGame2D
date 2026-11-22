@@ -48,8 +48,8 @@ namespace FarmGame2D.Core
         public const int MaximumLevel = 2;
         private static readonly BuildingUpgrade[] HouseUpgrades =
         {
-            new(0, 10, 8, GameItem.IronOre, 4, "목조 현관 · 작업실과 실내 판매함"),
-            new(700, 28, 12, GameItem.IronOre, 4, "돌 굴뚝 · 주방에서 요리하기")
+            new(0, 10, 8, GameItem.IronOre, 4, "2층 침실 · 1층 작업대와 판매함"),
+            new(700, 28, 12, GameItem.IronOre, 4, "굴뚝 · 1층 난로에서 요리하기")
         };
         private static readonly BuildingUpgrade[] GreenhouseUpgrades =
         {

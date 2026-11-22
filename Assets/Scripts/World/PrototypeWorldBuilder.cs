@@ -72,7 +72,7 @@ namespace FarmGame2D.World
             CreateDepthSortedStructureArt("Chicken Coop", WorldArtKind.ChickenCoop, new Vector2(-6.3f, -9.6f), farmRoot, new Vector2(3.1f, 0.85f), new Vector2(0f, 1.05f));
 
             var entrance = CreateInteractable<DoorInteractable>("Farm House Door", new Vector2(6f, -12.25f), new Vector2(1.1f, 0.55f), Color.clear, farmRoot);
-            entrance.Configure(new Vector2(40f, -11.2f), "집에 들어가기", "농장 집 안으로 들어왔습니다.");
+            entrance.Configure(WorldAreaProfile.FarmhouseEntranceSpawn, "집에 들어가기", "농장 집 안으로 들어왔습니다.");
             CreateAnimalHerd(
                 "Chicken Herd",
                 session,
@@ -104,23 +104,19 @@ namespace FarmGame2D.World
 
         private void BuildFarmHouseInterior(GameSession session, Transform house, Transform farmRoot)
         {
-            var interior = new GameObject("Farm House Interior").transform;
-            interior.SetParent(transform);
-            PrototypeSpriteFactory.CreateBlock("Interior Floor", new Vector2(40f, -9.5f), new Vector2(8f, 6f), new Color(0.77f, 0.62f, 0.42f), interior);
-            CreateWorldArt("Interior Rug Art", WorldArtKind.InteriorRug, new Vector2(40f, -9.6f), interior, 2);
-            var originalTop = PrototypeSpriteFactory.CreateBlock("Interior Top Wall", new Vector2(40f, -6.45f), new Vector2(8.4f, 0.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
-            PrototypeSpriteFactory.CreateBlock("Interior Left Wall", new Vector2(35.8f, -9.5f), new Vector2(0.5f, 6.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
-            PrototypeSpriteFactory.CreateBlock("Interior Right Wall", new Vector2(44.2f, -9.5f), new Vector2(0.5f, 6.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
-            PrototypeSpriteFactory.CreateBlock("Interior Bottom Wall Left", new Vector2(37.8f, -12.55f), new Vector2(3.9f, 0.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
-            PrototypeSpriteFactory.CreateBlock("Interior Bottom Wall Right", new Vector2(42.2f, -12.55f), new Vector2(3.9f, 0.5f), new Color(0.34f, 0.2f, 0.14f), interior, true);
-
-            CreateArtInteractable<BedInteractable>("Interior Bed Art", WorldArtKind.InteriorBed, new Vector2(37.4f, -8.6f), new Vector2(1.3f, 2.2f), interior);
-            CreateWorldArt("Interior Table", WorldArtKind.InteriorTable, new Vector2(40.6f, -8.8f), interior, 4, new Vector2(1.7f, 0.8f), new Vector2(0f, 0.35f));
-            CreateArtInteractable<FarmFacilityInteractable>(
-                "Interior Cabinet", WorldArtKind.InteriorCabinet, new Vector2(42.4f, -7.2f), new Vector2(1.3f, 0.9f), interior).Configure(FarmFacility.Construction);
-            var exit = CreateInteractable<DoorInteractable>("Farm House Exit", new Vector2(40f, -12.2f), new Vector2(1.1f, 0.6f), new Color(0.5f, 0.28f, 0.13f), interior);
+            var center = WorldAreaProfile.FarmhouseInteriorCenter;
+            var interior = BuildFarmhouseRoom("Farm House Interior", center, hasOutsideDoor: true);
+            CreateWorldArt("Interior Rug Art", WorldArtKind.InteriorRug, center + new Vector2(0f, -0.35f), interior, 2);
+            firstFloorBed = CreateArtInteractable<BedInteractable>("Interior Bed Art", WorldArtKind.InteriorBed,
+                center + new Vector2(-2.6f, 0.65f), new Vector2(1.3f, 2.2f), interior).gameObject;
+            firstFloorTable = CreateWorldArt("Interior Table", WorldArtKind.InteriorTable, center + new Vector2(0.6f, 0.45f),
+                interior, 4, new Vector2(1.7f, 0.8f), new Vector2(0f, 0.35f));
+            CreateArtInteractable<FarmFacilityInteractable>("Interior Cabinet", WorldArtKind.InteriorCabinet,
+                center + new Vector2(2.4f, 2.05f), new Vector2(1.3f, 0.9f), interior).Configure(FarmFacility.Construction);
+            var exit = CreateInteractable<DoorInteractable>("Farm House Exit", center + new Vector2(0f, -2.95f),
+                new Vector2(1.1f, 0.6f), new Color(0.5f, 0.28f, 0.13f), interior);
             exit.Configure(new Vector2(6f, -13f), "밖으로 나가기", "농장으로 나왔습니다.");
-            BuildHouseUpgrades(session, house, farmRoot, interior, originalTop);
+            BuildHouseUpgrades(session, house, farmRoot, interior);
         }
 
         private void BuildMainStreetTown(GameSession session)

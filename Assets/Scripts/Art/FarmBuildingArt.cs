@@ -11,10 +11,52 @@ namespace FarmGame2D.Art
 
         public static Sprite Chimney => chimney ??= HouseDetail("Farmhouse kitchen chimney", new Rect(884f, 685f, 120f, 143f));
 
-        private static Sprite HouseDetail(string name, Rect rect)
+        private const float RoofSeamY = 445f;
+        public const float UpperStoryHeight = 1.25f;
+        public const float UpperWallOffset = (RoofSeamY - 88f - 828f * 0.05f) / 160f;
+        private static Sprite lowerFloor, upperWall, upperRoof, upstairsWindow, stairs;
+
+        public static Sprite LowerFloor => lowerFloor ??= HouseDetail("Farmhouse ground floor",
+            new Rect(366f, 88f, 804f, RoofSeamY - 88f), 828f * 0.05f / (RoofSeamY - 88f));
+        public static Sprite UpperRoof => upperRoof ??= HouseDetail("Raised farmhouse roof",
+            new Rect(366f, RoofSeamY, 804f, 916f - RoofSeamY));
+        public static Sprite UpstairsWindow => upstairsWindow ??= HouseDetail("Upper story window", new Rect(488f, 286f, 123f, 119f));
+        public static Sprite UpperWall => upperWall ??= Make("Farmhouse upper wall", 16f, CreateUpperWall(), 0f);
+        public static Sprite Stairs => stairs ??= Make("Oak staircase", 16f, new[]
+        {
+            "oooo................oooo", "owwoooooooooooooooooowwo", "olwllllllllllllllllllwlo",
+            "olwwwwwwwwwwwwwwwwwwwwlo", "owoddddddddddddddddddowo", "owollllllllllllllllllowo",
+            "owowwwwwwwwwwwwwwwwwwowo", "owoddddddddddddddddddowo", "owollllllllllllllllllowo",
+            "owowwwwwwwwwwwwwwwwwwowo", "owoddddddddddddddddddowo", "owollllllllllllllllllowo",
+            "owowwwwwwwwwwwwwwwwwwowo", "owoddddddddddddddddddowo", "owollllllllllllllllllowo",
+            "owowwwwwwwwwwwwwwwwwwowo", "oloddddddddddddddddddolo",
+            "ollllllllllllllllllllllo", "owwwwwwwwwwwwwwwwwwwwwwo", "oooooooooooooooooooooooo"
+        }, 0f);
+
+        private static string[] CreateUpperWall()
+        {
+            const int width = 71;
+            const int height = 20;
+            var rows = new string[height];
+            for (var y = 0; y < height; y++)
+            {
+                var row = new char[width];
+                for (var x = 0; x < width; x++)
+                {
+                    var beam = x < 4 || x >= width - 4 || Mathf.Abs(x - width / 2) < 2;
+                    row[x] = y == 0 || y == height - 1 || x == 0 || x == width - 1 ? 'o'
+                        : beam || y == 2 || y == height - 2 ? 'w'
+                        : (x * 7 + y * 11) % 19 < 4 ? 'p' : 'P';
+                }
+                rows[y] = new string(row);
+            }
+            return rows;
+        }
+
+        private static Sprite HouseDetail(string name, Rect rect, float pivotY = 0f)
         {
             var house = WorldArtCatalog.GetSprite(WorldArtKind.FarmHouse);
-            var sprite = Sprite.Create(house.texture, rect, new Vector2(0.5f, 0f),
+            var sprite = Sprite.Create(house.texture, rect, new Vector2(0.5f, pivotY),
                 house.pixelsPerUnit, 0, SpriteMeshType.FullRect);
             sprite.name = name;
             return sprite;
@@ -33,7 +75,7 @@ namespace FarmGame2D.Art
             "gmssssssssssssmg", "gggggggggggggggg"
         });
 
-        private static Sprite Make(string name, float pixelsPerUnit, string[] rows)
+        private static Sprite Make(string name, float pixelsPerUnit, string[] rows, float pivotY = 0.08f)
         {
             var width = rows.Max(row => row.Length);
             var texture = new Texture2D(width, rows.Length, TextureFormat.RGBA32, false)
@@ -46,7 +88,7 @@ namespace FarmGame2D.Art
                 pixels[(rows.Length - 1 - y) * width + x] = Pigment(rows[y][x]);
             texture.SetPixels32(pixels);
             texture.Apply(false, true);
-            return Sprite.Create(texture, new Rect(0, 0, width, rows.Length), new Vector2(0.5f, 0.08f),
+            return Sprite.Create(texture, new Rect(0, 0, width, rows.Length), new Vector2(0.5f, pivotY),
                 pixelsPerUnit, 0, SpriteMeshType.FullRect);
         }
 
@@ -54,7 +96,9 @@ namespace FarmGame2D.Art
         {
             'g' => new(49, 96, 72, 255), 'b' => new(147, 196, 185, 255), 'h' => new(222, 235, 201, 255),
             'm' => new(54, 54, 55, 255), 's' => new(112, 114, 103, 255),
-            'M' => new(166, 156, 135, 255), _ => new(0, 0, 0, 0)
+            'M' => new(166, 156, 135, 255), 'o' => new(85, 46, 26, 255),
+            'w' => new(174, 108, 55, 255), 'l' => new(224, 153, 87, 255), 'd' => new(129, 76, 42, 255),
+            'P' => new(242, 207, 160, 255), 'p' => new(235, 193, 146, 255), _ => new(0, 0, 0, 0)
         };
     }
 }

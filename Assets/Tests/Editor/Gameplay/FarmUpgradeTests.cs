@@ -56,6 +56,24 @@ namespace FarmGame2D.Tests
             Assert.That(indoor.growthDays, Is.EqualTo(1));
         }
 
+        [TestCase(39.5f, -2.9f, 2, true)]
+        [TestCase(33f, -5f, 1, true)]
+        [TestCase(40f, -10f, 2, false)]
+        [TestCase(52f, -6f, 2, false)]
+        [TestCase(70f, -10f, 1, false)]
+        [TestCase(70f, -10f, 0, true)]
+        public void FarmhouseSave_MovesOnlyCoordinatesThatNoLongerHaveARoom(float x, float y, int level, bool relocate)
+        {
+            var save = new GameSaveData { playerX = x, playerY = y, houseUpgradeLevel = level };
+            var expected = relocate ? WorldAreaProfile.FarmhouseEntranceSpawn : new Vector2(x, y);
+
+            GameSaveDataNormalizer.Normalize(save);
+            GameSaveDataNormalizer.Normalize(save);
+
+            Assert.That(new Vector2(save.playerX, save.playerY), Is.EqualTo(expected));
+            Assert.That(save.houseUpgradeLevel, Is.EqualTo(level));
+        }
+
         [Test]
         public void HouseRepair_SpendsWoodStoneAndIronOnce()
         {
