@@ -158,8 +158,8 @@ namespace FarmGame2D.UI
                         var count = session.Data.inventory.Count(crop.Seed);
                         var selected = !decoration.HasValue && session.SelectedTool == FarmTool.Seeds && session.SelectedSeed == crop.Seed;
                         if (DrawBagSlot(well, index++, ItemCatalog.GetLabel(crop.Seed),
-                            FarmPlotArtCatalog.GetCropSprite(crop.Seed, true), $"×{count}", GetSeasonLabel(crop.Season),
-                            count > 0, selected, count > 0))
+                            FarmPlotArtCatalog.GetCropSprite(crop.Seed, true), $"×{count}", null,
+                            count > 0, selected, count > 0, crop.Season))
                             session.SelectSeed(crop.Seed);
                     }
                     break;
@@ -197,7 +197,7 @@ namespace FarmGame2D.UI
         }
 
         private bool DrawBagSlot(Rect well, int index, string label, Sprite art, string countBadge, string tag,
-            bool owned, bool selected = false, bool actionable = false)
+            bool owned, bool selected = false, bool actionable = false, Season? season = null)
         {
             const int columns = 6;
             const float gap = 8f;
@@ -225,6 +225,12 @@ namespace FarmGame2D.UI
                 var tagRect = new Rect(slot.x + 5f, slot.y + 6f, tagWidth, 22f);
                 ShopFill(tagRect, selected ? ShopGreen : BagWell, 6f);
                 GUI.Label(tagRect, tag, selected ? bagActiveBadge : bagBadge);
+            }
+            if (season.HasValue)
+            {
+                var seasonBadge = new Rect(slot.x + 5f, slot.y + 6f, 26f, 22f);
+                ShopFill(seasonBadge, BagWell, 6f);
+                DrawSeasonIcon(seasonBadge, season.Value, 18f);
             }
             GUI.Label(new Rect(slot.x + 4f, slot.yMax - 33f, slot.width - 8f, 27f),
                 label, owned || selected ? bagItem : bagMutedItem);

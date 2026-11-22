@@ -171,7 +171,7 @@ namespace FarmGame2D.UI
             };
             var season = new Rect(rect.x + 10f, rect.y + 10f, 54f, 54f);
             farmSkin.DrawPixelPanel(season, seasonColor, DarkEdge, false);
-            GUI.Label(season, GetSeasonLabel(session.CurrentSeason), seasonStampStyle);
+            DrawSeasonIcon(season, session.CurrentSeason, 30f);
             GUI.Label(new Rect(rect.x + 76f, rect.y + 10f, 126f, 25f),
                 $"{SeasonCalendar.GetDayOfSeason(session.Data.day)}일  {timeText}", phoneLightStyle);
             GUI.Label(new Rect(rect.x + 76f, rect.y + 38f, 126f, 24f), $"{session.Data.money:N0} G", warmLightStyle);

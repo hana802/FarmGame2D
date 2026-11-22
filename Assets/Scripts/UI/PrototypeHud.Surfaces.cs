@@ -1,3 +1,5 @@
+using FarmGame2D.Art;
+using FarmGame2D.Core;
 using UnityEngine;
 
 namespace FarmGame2D.UI
@@ -21,7 +23,6 @@ namespace FarmGame2D.UI
         private GUIStyle phoneBodyStyle;
         private GUIStyle phoneLightStyle;
         private GUIStyle warmLightStyle;
-        private GUIStyle seasonStampStyle;
         private GUIStyle phoneInputStyle;
         private GUIStyle keyHintStyle;
         private FarmPhoneSkin phoneSkin;
@@ -38,7 +39,6 @@ namespace FarmGame2D.UI
             phoneBodyStyle = CreateSurfaceStyle(17, Ink);
             phoneLightStyle = CreateSurfaceStyle(16, Cream);
             warmLightStyle = CreateSurfaceStyle(16, Amber, FontStyle.Bold);
-            seasonStampStyle = CreateSurfaceStyle(23, Ink, FontStyle.Bold, TextAnchor.MiddleCenter);
             keyHintStyle = CreateSurfaceStyle(13, Amber, FontStyle.Bold, TextAnchor.MiddleCenter);
             phoneInputStyle = new GUIStyle(GUI.skin.textField)
             {
@@ -52,6 +52,12 @@ namespace FarmGame2D.UI
                 active = { background = null, textColor = Ink },
                 focused = { background = null, textColor = Ink }
             };
+        }
+
+        private static void DrawSeasonIcon(Rect bounds, Season season, float size)
+        {
+            var icon = new Rect(bounds.center - Vector2.one * (size * 0.5f), Vector2.one * size);
+            GUI.DrawTexture(icon, SeasonIconArt.Get(season));
         }
 
         private GUIStyle CreateSurfaceStyle(int size, Color color, FontStyle weight = FontStyle.Normal,

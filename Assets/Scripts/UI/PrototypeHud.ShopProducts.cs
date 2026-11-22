@@ -10,7 +10,7 @@ namespace FarmGame2D.UI
     {
         private static readonly string[] FarmShopTabs = { "씨앗", "가축 · 사료", "가축 판매", "농장 설비" };
         private static readonly string[] GeneralShopTabs = { "도구 · 광물", "마을 장식" };
-        private static readonly string[] GreenhouseShopTabs = { "봄", "여름", "가을", "겨울" };
+        private static readonly Season[] GreenhouseShopTabs = { Season.Spring, Season.Summer, Season.Autumn, Season.Winter };
 
         private static readonly ShopPurchaseRequest[] LivestockProducts =
         {

@@ -81,18 +81,19 @@ namespace FarmGame2D.UI
 
         private void DrawShopList(GameSession session, ShopHudLayout layout, ShopKind shop)
         {
-            var tabs = shop switch
-            {
-                ShopKind.Mining => GeneralShopTabs,
-                ShopKind.Greenhouse => GreenhouseShopTabs,
-                _ => FarmShopTabs
-            };
+            var tabs = shop == ShopKind.Mining ? GeneralShopTabs : FarmShopTabs;
+            var greenhouse = shop == ShopKind.Greenhouse;
+            var tabCount = greenhouse ? GreenhouseShopTabs.Length : tabs.Length;
             ShopFill(layout.Tabs, ShopLine, 12f);
-            for (var index = 0; index < tabs.Length; index++)
+            for (var index = 0; index < tabCount; index++)
             {
                 var selected = shopTab == index;
-                if (!ShopButton(layout.GetTab(index, tabs.Length), tabs[index], selected ? ShopGreen : ShopLine,
-                        selected ? shopAction : shopSecondary)) continue;
+                var tab = layout.GetTab(index, tabCount);
+                var background = selected ? ShopGreen : ShopLine;
+                var style = selected ? shopAction : shopSecondary;
+                var clicked = ShopButton(tab, greenhouse ? string.Empty : tabs[index], background, style);
+                if (greenhouse) DrawSeasonIcon(tab, GreenhouseShopTabs[index], 30f);
+                if (!clicked) continue;
                 shopTab = index;
                 shopNotice = null;
             }
