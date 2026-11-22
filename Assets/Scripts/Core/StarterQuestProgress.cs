@@ -13,6 +13,7 @@ namespace FarmGame2D.Core
         DeliverStone,
         DeliverCopper,
         DeliverIron,
+        DeliverGold,
         Complete
     }
 
@@ -49,7 +50,8 @@ namespace FarmGame2D.Core
 
     public static class StarterQuestProgress
     {
-        public const int BoardRefreshDays = 3;
+        public const int BoardRefreshDays = 7;
+        public const int BoardOfferCount = 10;
         private const int HarvestTarget = 3;
         private const int EggTarget = 1;
         private const int WeedTarget = 3;
@@ -59,21 +61,11 @@ namespace FarmGame2D.Core
         private const int StoneDeliveryTarget = 6;
         private const int CopperDeliveryTarget = 4;
         private const int IronDeliveryTarget = 3;
-        private static readonly StarterQuestId[] BoardQuestIds =
-        {
-            StarterQuestId.Harvest,
-            StarterQuestId.Egg,
-            StarterQuestId.Weeds,
-            StarterQuestId.Fishing,
-            StarterQuestId.Mining,
-            StarterQuestId.DeliverWood,
-            StarterQuestId.DeliverStone,
-            StarterQuestId.DeliverCopper,
-            StarterQuestId.DeliverIron
-        };
+        private const int GoldDeliveryTarget = 2;
 
         public static StarterQuestStatus GetCurrent(GameSaveData data)
         {
+            EnsureCurrentWeek(data);
             return data.activeQuestId < 0
                 ? new StarterQuestStatus(StarterQuestId.Complete, "광장 게시판에서 의뢰 선택", 0, 1, false)
                 : GetStatus(data, (StarterQuestId)data.activeQuestId);
@@ -81,43 +73,42 @@ namespace FarmGame2D.Core
 
         public static StarterQuestStatus[] GetAll(GameSaveData data)
         {
-            return new[]
-            {
-                GetHarvest(data), GetEgg(data), GetWeeds(data), GetFishing(data), GetMining(data),
-                GetDelivery(data, StarterQuestId.DeliverWood),
-                GetDelivery(data, StarterQuestId.DeliverStone),
-                GetDelivery(data, StarterQuestId.DeliverCopper),
-                GetDelivery(data, StarterQuestId.DeliverIron)
-            };
+            EnsureCurrentWeek(data);
+            return CurrentOffers(data);
         }
 
         public static StarterQuestStatus[] GetBoardOffers(GameSaveData data)
         {
-            const int offerCount = 3;
-            var cycle = Math.Max(0, (data.day - 1) / BoardRefreshDays);
-            var start = PositiveModulo(data.worldSeed + (cycle * 2), BoardQuestIds.Length);
-            var offers = new StarterQuestStatus[offerCount];
-            for (var index = 0; index < offerCount; index++)
+            return GetAll(data);
+        }
+
+        public static void EnsureCurrentWeek(GameSaveData data)
+        {
+            var week = Math.Max(0, data.day - 1) / BoardRefreshDays;
+            if (data.questWeekReady && data.questBoardWeek == week)
             {
-                offers[index] = GetStatus(data, BoardQuestIds[(start + index) % BoardQuestIds.Length]);
+                return;
             }
 
-            if (data.activeQuestId < 0)
-            {
-                return offers;
-            }
-
-            var activeId = (StarterQuestId)data.activeQuestId;
-            for (var index = 0; index < offers.Length; index++)
-            {
-                if (offers[index].Id == activeId)
-                {
-                    return offers;
-                }
-            }
-
-            offers[offers.Length - 1] = GetStatus(data, activeId);
-            return offers;
+            data.questWeekReady = true;
+            data.questBoardWeek = week;
+            data.activeQuestId = -1;
+            data.harvestQuestCompleted = false;
+            data.eggQuestCompleted = false;
+            data.weedQuestCompleted = false;
+            data.fishingQuestCompleted = false;
+            data.miningQuestCompleted = false;
+            data.woodDeliveryQuestCompleted = false;
+            data.stoneDeliveryQuestCompleted = false;
+            data.copperDeliveryQuestCompleted = false;
+            data.ironDeliveryQuestCompleted = false;
+            data.goldDeliveryQuestCompleted = false;
+            data.harvestQuestBaseline = data.wheatHarvested;
+            data.eggQuestBaseline = data.eggsCollected;
+            data.fishQuestBaseline = data.fishCaught;
+            data.mineQuestBaseline = data.oreMined;
+            data.pulledWeedIds ??= new System.Collections.Generic.List<int>();
+            data.pulledWeedIds.Clear();
         }
 
         public static int GetDaysUntilBoardRefresh(int day)
@@ -127,6 +118,7 @@ namespace FarmGame2D.Core
 
         public static bool TryAccept(GameSaveData data, StarterQuestId id)
         {
+            EnsureCurrentWeek(data);
             if (data.activeQuestId >= 0 || IsCompleted(data, id) || id == StarterQuestId.Complete)
             {
                 return false;
@@ -138,6 +130,7 @@ namespace FarmGame2D.Core
 
         public static StarterQuestCompletion TryCompleteCurrent(GameSaveData data)
         {
+            EnsureCurrentWeek(data);
             if (data.activeQuestId < 0)
             {
                 return default;
@@ -183,6 +176,9 @@ namespace FarmGame2D.Core
                 case StarterQuestId.DeliverIron:
                     data.ironDeliveryQuestCompleted = true;
                     break;
+                case StarterQuestId.DeliverGold:
+                    data.goldDeliveryQuestCompleted = true;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(id), id, null);
             }
@@ -202,7 +198,8 @@ namespace FarmGame2D.Core
                 StarterQuestId.Fishing => GetFishing(data),
                 StarterQuestId.Mining => GetMining(data),
                 StarterQuestId.DeliverWood or StarterQuestId.DeliverStone
-                    or StarterQuestId.DeliverCopper or StarterQuestId.DeliverIron => GetDelivery(data, id),
+                    or StarterQuestId.DeliverCopper or StarterQuestId.DeliverIron
+                    or StarterQuestId.DeliverGold => GetDelivery(data, id),
                 _ => new StarterQuestStatus(StarterQuestId.Complete, "의뢰 없음", 0, 1, false)
             };
         }
@@ -220,6 +217,7 @@ namespace FarmGame2D.Core
                 StarterQuestId.DeliverStone => data.stoneDeliveryQuestCompleted,
                 StarterQuestId.DeliverCopper => data.copperDeliveryQuestCompleted,
                 StarterQuestId.DeliverIron => data.ironDeliveryQuestCompleted,
+                StarterQuestId.DeliverGold => data.goldDeliveryQuestCompleted,
                 _ => true
             };
         }
@@ -235,8 +233,27 @@ namespace FarmGame2D.Core
                 StarterQuestId.DeliverStone => 140,
                 StarterQuestId.DeliverCopper => 200,
                 StarterQuestId.DeliverIron => 220,
+                StarterQuestId.DeliverGold => 260,
                 _ => 100
             };
+        }
+
+        private static StarterQuestStatus[] CurrentOffers(GameSaveData data)
+        {
+            return new[]
+            {
+                GetHarvest(data), GetEgg(data), GetWeeds(data), GetFishing(data), GetMining(data),
+                GetDelivery(data, StarterQuestId.DeliverWood),
+                GetDelivery(data, StarterQuestId.DeliverStone),
+                GetDelivery(data, StarterQuestId.DeliverCopper),
+                GetDelivery(data, StarterQuestId.DeliverIron),
+                GetDelivery(data, StarterQuestId.DeliverGold)
+            };
+        }
+
+        private static int WeekCount(int total, int baseline, int target)
+        {
+            return Math.Min(Math.Max(0, total - baseline), target);
         }
 
         private static int PositiveModulo(int value, int divisor)
@@ -250,7 +267,7 @@ namespace FarmGame2D.Core
             return new StarterQuestStatus(
                 StarterQuestId.Harvest,
                 "작물 3개 수확",
-                Math.Min(data.wheatHarvested, HarvestTarget),
+                WeekCount(data.wheatHarvested, data.harvestQuestBaseline, HarvestTarget),
                 HarvestTarget,
                 data.harvestQuestCompleted);
         }
@@ -260,7 +277,7 @@ namespace FarmGame2D.Core
             return new StarterQuestStatus(
                 StarterQuestId.Egg,
                 "달걀 1개 얻기",
-                data.firstEggAchievement ? 1 : 0,
+                WeekCount(data.eggsCollected, data.eggQuestBaseline, EggTarget),
                 EggTarget,
                 data.eggQuestCompleted);
         }
@@ -278,13 +295,13 @@ namespace FarmGame2D.Core
         private static StarterQuestStatus GetFishing(GameSaveData data)
         {
             return new StarterQuestStatus(StarterQuestId.Fishing, "물고기 2마리 낚기",
-                Math.Min(data.fishCaught, FishingTarget), FishingTarget, data.fishingQuestCompleted);
+                WeekCount(data.fishCaught, data.fishQuestBaseline, FishingTarget), FishingTarget, data.fishingQuestCompleted);
         }
 
         private static StarterQuestStatus GetMining(GameSaveData data)
         {
             return new StarterQuestStatus(StarterQuestId.Mining, "광석 3개 캐기",
-                Math.Min(data.oreMined, MiningTarget), MiningTarget, data.miningQuestCompleted);
+                WeekCount(data.oreMined, data.mineQuestBaseline, MiningTarget), MiningTarget, data.miningQuestCompleted);
         }
 
         private static StarterQuestStatus GetDelivery(GameSaveData data, StarterQuestId id)
@@ -294,7 +311,8 @@ namespace FarmGame2D.Core
                 StarterQuestId.DeliverWood => (GameItem.Wood, WoodDeliveryTarget, "순자에게 목재 8개", data.woodDeliveryQuestCompleted),
                 StarterQuestId.DeliverStone => (GameItem.Stone, StoneDeliveryTarget, "도윤에게 돌 6개", data.stoneDeliveryQuestCompleted),
                 StarterQuestId.DeliverCopper => (GameItem.CopperOre, CopperDeliveryTarget, "태오에게 구리 4개", data.copperDeliveryQuestCompleted),
-                _ => (GameItem.IronOre, IronDeliveryTarget, "민서에게 철 3개", data.ironDeliveryQuestCompleted)
+                StarterQuestId.DeliverIron => (GameItem.IronOre, IronDeliveryTarget, "민서에게 철 3개", data.ironDeliveryQuestCompleted),
+                _ => (GameItem.GoldOre, GoldDeliveryTarget, "하람에게 금 광석 2개", data.goldDeliveryQuestCompleted)
             };
             var owned = data.inventory?.Count(item) ?? 0;
             return new StarterQuestStatus(id, title, completed ? target : Math.Min(owned, target), target, completed);
@@ -308,6 +326,7 @@ namespace FarmGame2D.Core
                 StarterQuestId.DeliverStone => data.inventory.TrySpend(GameItem.Stone, StoneDeliveryTarget),
                 StarterQuestId.DeliverCopper => data.inventory.TrySpend(GameItem.CopperOre, CopperDeliveryTarget),
                 StarterQuestId.DeliverIron => data.inventory.TrySpend(GameItem.IronOre, IronDeliveryTarget),
+                StarterQuestId.DeliverGold => data.inventory.TrySpend(GameItem.GoldOre, GoldDeliveryTarget),
                 _ => true
             };
         }

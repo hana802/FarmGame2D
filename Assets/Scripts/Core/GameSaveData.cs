@@ -58,6 +58,14 @@ namespace FarmGame2D.Core
         public bool stoneDeliveryQuestCompleted;
         public bool copperDeliveryQuestCompleted;
         public bool ironDeliveryQuestCompleted;
+        public bool goldDeliveryQuestCompleted;
+        public int questBoardWeek = -1;
+        public bool questWeekReady;
+        public int harvestQuestBaseline;
+        public int eggQuestBaseline;
+        public int fishQuestBaseline;
+        public int mineQuestBaseline;
+        public int eggsCollected;
         public int activeQuestId = -1;
         public int fishCaught;
         public int oreMined;

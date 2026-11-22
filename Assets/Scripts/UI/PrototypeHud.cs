@@ -492,7 +492,7 @@ namespace FarmGame2D.UI
             GUI.Label(layout.Status,
                 activeQuestId >= 0 ? "진행 중인 의뢰를 먼저 끝내 주세요." : "하고 싶은 의뢰를 하나 골라 보세요.", phoneBodyStyle);
             var refreshDays = StarterQuestProgress.GetDaysUntilBoardRefresh(session.Data.day);
-            GUI.Label(layout.Refresh, $"{StarterQuestProgress.BoardRefreshDays}일마다 갱신 · 다음 갱신까지 {refreshDays}일",
+            GUI.Label(layout.Refresh, $"{StarterQuestProgress.BoardRefreshDays}일마다 전부 갱신 · 다음 갱신까지 {refreshDays}일",
                 phoneBodyStyle);
 
             var quests = StarterQuestProgress.GetBoardOffers(session.Data);

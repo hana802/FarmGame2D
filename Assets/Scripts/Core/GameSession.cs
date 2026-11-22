@@ -75,6 +75,7 @@ namespace FarmGame2D.Core
                 ? loaded
                 : GameSaveData.CreateNew(FarmFieldLayout.PlotCount, UnityEngine.Random.Range(10000, 999999));
             EnsurePlotCount();
+            StarterQuestProgress.EnsureCurrentWeek(Data);
             SelectFirstOwnedSeed();
             processedDay = Data.day;
             DontDestroyOnLoad(gameObject);
@@ -236,6 +237,7 @@ namespace FarmGame2D.Core
                 var collected = Data.readyEggs;
                 Data.readyEggs = 0;
                 Data.inventory.Add(GameItem.Egg, collected);
+                Data.eggsCollected += collected;
                 var firstEgg = !Data.firstEggAchievement;
                 Data.firstEggAchievement = true;
                 Message = $"달걀을 {collected}개 모았습니다." + (firstEgg ? " 도전 과제: 첫 달걀!" : string.Empty);
@@ -970,6 +972,7 @@ namespace FarmGame2D.Core
 
         private void ProcessNewDay()
         {
+            StarterQuestProgress.EnsureCurrentWeek(Data);
             FarmUpgradeRules.WaterGreenhousePlots(Data);
             foreach (var plot in Data.farmPlots)
             {
@@ -1271,6 +1274,7 @@ namespace FarmGame2D.Core
             CloseFarmFacility();
             Data = loaded;
             EnsurePlotCount();
+            StarterQuestProgress.EnsureCurrentWeek(Data);
             SelectFirstOwnedSeed();
             processedDay = Data.day;
             if (playerTransform != null)

@@ -63,28 +63,43 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
-        public void QuestBoardOffers_RotateEveryThreeDaysAndKeepActiveQuest()
+        public void QuestBoard_ShowsTenOffersAndReplacesAllOfThemAfterSevenDays()
         {
             var data = GameSaveData.CreateNew(FarmFieldLayout.PlotCount, 1234);
             data.day = 1;
-            var firstCycle = StarterQuestProgress.GetBoardOffers(data);
-            data.day = 3;
-            var thirdDay = StarterQuestProgress.GetBoardOffers(data);
+            data.wheatHarvested = 4;
+            data.activeQuestId = (int)StarterQuestId.Harvest;
+            data.harvestQuestCompleted = true;
+            data.pulledWeedIds.Add(1);
 
-            Assert.That(firstCycle, Has.Length.EqualTo(3));
-            Assert.That(thirdDay, Has.Length.EqualTo(3));
-            Assert.That(thirdDay[0].Id, Is.EqualTo(firstCycle[0].Id));
-            Assert.That(StarterQuestProgress.GetDaysUntilBoardRefresh(data.day), Is.EqualTo(1));
+            var firstWeek = StarterQuestProgress.GetBoardOffers(data);
 
-            data.activeQuestId = (int)firstCycle[0].Id;
-            data.day = 4;
-            var refreshed = StarterQuestProgress.GetBoardOffers(data);
+            Assert.That(firstWeek, Has.Length.EqualTo(StarterQuestProgress.BoardOfferCount));
+            Assert.That(data.activeQuestId, Is.EqualTo(-1));
+            Assert.That(data.harvestQuestCompleted, Is.False);
+            Assert.That(data.pulledWeedIds, Is.Empty);
+            Assert.That(firstWeek[0].Current, Is.Zero);
+            Assert.That(StarterQuestProgress.GetDaysUntilBoardRefresh(1), Is.EqualTo(7));
 
-            Assert.That(refreshed, Has.Length.EqualTo(3));
-            Assert.That(refreshed[0].Id, Is.Not.EqualTo(firstCycle[0].Id));
-            Assert.That(refreshed, Has.Some.Matches<StarterQuestStatus>(quest => quest.Id == firstCycle[0].Id),
-                "An active quest must remain visible after the three-day board refresh.");
-            Assert.That(StarterQuestProgress.GetDaysUntilBoardRefresh(data.day), Is.EqualTo(3));
+            data.harvestQuestCompleted = true;
+            data.activeQuestId = (int)StarterQuestId.Harvest;
+            data.day = 7;
+            var sameWeek = StarterQuestProgress.GetBoardOffers(data);
+
+            Assert.That(sameWeek[0].Completed, Is.True);
+            Assert.That(data.activeQuestId, Is.EqualTo((int)StarterQuestId.Harvest));
+            Assert.That(StarterQuestProgress.GetDaysUntilBoardRefresh(7), Is.EqualTo(1));
+
+            data.wheatHarvested = 9;
+            data.day = 8;
+            var nextWeek = StarterQuestProgress.GetBoardOffers(data);
+
+            Assert.That(nextWeek, Has.Length.EqualTo(10));
+            Assert.That(nextWeek[0].Completed, Is.False);
+            Assert.That(nextWeek[0].Current, Is.Zero);
+            Assert.That(nextWeek[9].Id, Is.EqualTo(StarterQuestId.DeliverGold));
+            Assert.That(data.activeQuestId, Is.EqualTo(-1));
+            Assert.That(StarterQuestProgress.GetDaysUntilBoardRefresh(8), Is.EqualTo(7));
         }
 
         [Test]
@@ -655,7 +670,7 @@ namespace FarmGame2D.Tests
             Assert.That(layout.Title.yMax, Is.LessThanOrEqualTo(layout.Status.yMin));
             Assert.That(layout.Status.yMax, Is.LessThanOrEqualTo(layout.Refresh.yMin));
             Assert.That(layout.Refresh.yMax, Is.LessThanOrEqualTo(layout.GetQuestButton(0).yMin));
-            Assert.That(layout.GetQuestButton(2).yMax, Is.LessThan(layout.CloseButton.yMin));
+            Assert.That(layout.GetQuestButton(StarterQuestProgress.BoardOfferCount - 1).yMax, Is.LessThan(layout.CloseButton.yMin));
             Assert.That(layout.CloseButton.xMax, Is.LessThan(layout.Panel.xMax));
             Assert.That(layout.CloseButton.yMax, Is.LessThan(layout.Panel.yMax));
         }

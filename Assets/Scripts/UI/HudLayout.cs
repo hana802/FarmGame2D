@@ -165,7 +165,8 @@ namespace FarmGame2D.UI
             Rect status,
             Rect refresh,
             Rect firstQuestButton,
-            Rect closeButton)
+            Rect closeButton,
+            float questStride)
         {
             Panel = panel;
             Title = title;
@@ -173,6 +174,7 @@ namespace FarmGame2D.UI
             Refresh = refresh;
             FirstQuestButton = firstQuestButton;
             CloseButton = closeButton;
+            QuestStride = questStride;
         }
 
         public Rect Panel { get; }
@@ -181,12 +183,13 @@ namespace FarmGame2D.UI
         public Rect Refresh { get; }
         public Rect FirstQuestButton { get; }
         public Rect CloseButton { get; }
+        public float QuestStride { get; }
 
         public Rect GetQuestButton(int index)
         {
             return new Rect(
                 FirstQuestButton.x,
-                FirstQuestButton.y + (index * 62f),
+                FirstQuestButton.y + (index * QuestStride),
                 FirstQuestButton.width,
                 FirstQuestButton.height);
         }
@@ -326,15 +329,19 @@ namespace FarmGame2D.UI
 
         public static QuestBoardHudLayout CalculateQuestBoardLayout()
         {
-            const float width = 392f;
-            var panel = new Rect(ReferenceWidth - width - 36f, 144f, width, 430f);
+            const float width = 420f;
+            var panel = new Rect(ReferenceWidth - width - 24f, 12f, width, 640f);
+            var close = new Rect(panel.xMax - 128f, panel.yMax - 46f, 104f, 32f);
+            var listTop = panel.y + 108f;
+            var stride = (close.yMin - 8f - listTop) / 10f;
             return new QuestBoardHudLayout(
                 panel,
-                InsetRow(panel, 28f, 26f, 38f),
-                InsetRow(panel, 28f, 79f, 32f),
-                InsetRow(panel, 28f, 116f, 28f),
-                InsetRow(panel, 28f, 154f, 52f),
-                new Rect(panel.xMax - 137f, panel.yMax - 66f, 109f, 36f));
+                InsetRow(panel, 22f, 14f, 28f),
+                InsetRow(panel, 22f, 44f, 22f),
+                InsetRow(panel, 22f, 68f, 22f),
+                new Rect(panel.x + 16f, listTop, panel.width - 32f, stride - 4f),
+                close,
+                stride);
         }
 
         public static ToastHudLayout CalculateToastLayout()
