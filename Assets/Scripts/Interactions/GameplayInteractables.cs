@@ -127,7 +127,7 @@ namespace FarmGame2D.Interactions
 
     public sealed class TurnipMarketInteractable : InteractableBehaviour
     {
-        public override string Prompt => "순무 장수와 시세 보기";
+        public override string Prompt => "밀짚모자 상인과 순무 시세 보기";
 
         public override void Interact(PrototypePlayerController player)
         {

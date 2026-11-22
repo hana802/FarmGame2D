@@ -38,8 +38,9 @@ namespace FarmGame2D.World
             BuildMarketStall("Weekend Bakery", WorldArtKind.BakeryStall, ShopKind.MarketBakery, 9.95f);
             BuildMarketStall("Island Specialties", WorldArtKind.SpecialtiesStall, ShopKind.MarketSpecialties, 11.9f);
             var merchant = CreateWorldArt("Weekend Merchant", WorldArtKind.WeekendMerchant,
-                new Vector2(12.89f, 2.62f), marketRoot.transform, 5, new Vector2(0.52f, 0.5f));
-            merchant.AddComponent<ShopInteractable>().Configure(ShopKind.MarketSpecialties);
+                new Vector2(12.89f, 2.62f), town, 5, new Vector2(0.75f, 1.4f), new Vector2(0f, 0.7f));
+            merchant.GetComponent<BoxCollider2D>().isTrigger = true;
+            merchant.AddComponent<TurnipMarketInteractable>();
             BuildHarbor(town);
 
             session.StateChanged += RefreshVillageSchedule;

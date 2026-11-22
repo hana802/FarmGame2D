@@ -144,7 +144,6 @@ namespace FarmGame2D.World
             var farmShop = CreateInteractable<ShopInteractable>("Seed And Feed Shop Entrance", new Vector2(5.8f, 6.25f), new Vector2(1.2f, 0.55f), Color.clear, townRoot);
             farmShop.Configure(ShopKind.SeedsAndAnimals);
             CreateArtInteractable<SellBoxInteractable>("Selling Box", WorldArtKind.SellingBox, new Vector2(9.35f, 6.05f), new Vector2(1.2f, 0.85f), townRoot);
-            PlaceTurnipMerchant(townRoot);
             CreateNoticeEntrance("West Home Entrance", new Vector2(-11.5f, 7.75f), "서쪽 집에 들어가기", "문이 잠겨 있습니다. 집주인을 먼저 만나보세요.", townRoot);
             CreateNoticeEntrance("East Home Entrance", new Vector2(11.5f, 7.75f), "동쪽 집에 들어가기", "문이 잠겨 있습니다. 집주인을 먼저 만나보세요.", townRoot);
             CreateInteractable<QuestBoardInteractable>("Quest Board", new Vector2(0f, 3.15f), new Vector2(3.2f, 1.5f), Color.clear, townRoot);
@@ -159,7 +158,7 @@ namespace FarmGame2D.World
                 "씨앗은 계절에 맞아야 잘 자라요. 상점에서 지금 계절의 씨앗을 확인해 보세요.",
                 "작물은 하루아침에 자라지 않아요. 물을 준 뒤 집에서 자고 다음 날 다시 살펴보세요.",
                 "판매 상자는 씨앗·동물 상점 오른쪽에 있어요. 수확물을 들고 멀리 돌아갈 필요가 없답니다.",
-                "순무 장수는 판매 상자 아래쪽에 있어요. 매주 첫날 사고, 시세는 아침에 한 번 바뀌며 다음 주가 되면 썩어요.",
+                "순무는 장터의 밀짚모자 상인이 팔아요. 매주 첫날 사고, 시세는 아침에 한 번 바뀌며 다음 주가 되면 썩어요.",
                 "광산에서는 곡괭이가 필요해요. 먼저 서쪽 광물 상점에서 준비하는 게 좋습니다."
             }, 0);
             ConfigureNpcMovement(guide, villageRoutes, 6, 0.72f, seed + 11, new Vector2(0f, 9.5f), "안내자 하람");
@@ -500,22 +499,6 @@ namespace FarmGame2D.World
             renderer.sortingOrder = WorldDepthSorter.CalculateOrder(
                 square.position.y + 3.15f,
                 WorldDepthSorter.BuildingDepthOffset);
-        }
-
-        private static void PlaceTurnipMerchant(Transform townRoot)
-        {
-            var merchant = CreateInteractable<TurnipMarketInteractable>("Turnip Merchant", new Vector2(7.9f, 4.85f),
-                new Vector2(0.8f, 1.15f), new Color(0.36f, 0.55f, 0.28f), townRoot);
-            var art = GameArtCatalog.GetVillagerVariantSprite(1, 3, false);
-            var renderer = merchant.GetComponent<SpriteRenderer>();
-            if (art != null)
-            {
-                renderer.sprite = art;
-                renderer.color = Color.white;
-                merchant.transform.localScale = Vector3.one;
-            }
-
-            merchant.gameObject.AddComponent<WorldDepthSorter>().Configure(2);
         }
 
         private static void CreateNoticeEntrance(

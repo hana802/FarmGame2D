@@ -228,7 +228,7 @@ namespace FarmGame2D.Art
                 WorldArtKind.FisherHut => new("Art/World/east_harbor_v1", new Rect(19, 256, 398, 499), 175f),
                 WorldArtKind.HarborPier => new("Art/World/east_harbor_v1", new Rect(434, 234, 724, 518), 157f, new Vector2(0f, 0.47f)),
                 WorldArtKind.HarborBoat => new("Art/World/east_harbor_v1", new Rect(1186, 390, 332, 190), 192f, new Vector2(0.5f, 0.5f)),
-                WorldArtKind.WeekendMerchant => new("Art/World/weekend_merchant_v1", new Rect(196, 167, 704, 1083), 962f, new Vector2(0.5f, 0.01f)),
+                WorldArtKind.WeekendMerchant => new("Art/World/weekend_merchant_v1", new Rect(196, 167, 704, 1083), 680f, new Vector2(0.5f, 0.01f)),
                 _ => throw new System.ArgumentOutOfRangeException(nameof(kind), kind, null)
             };
         }
