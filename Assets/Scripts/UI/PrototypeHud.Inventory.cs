@@ -39,7 +39,17 @@ namespace FarmGame2D.UI
         private static readonly Color BagScrim = new Color32(18, 38, 30, 85);
         private static readonly Color BagShadow = new Color32(18, 38, 30, 110);
 
+        private const int BagColumns = 6;
+        private const float BagGap = 8f;
+        private static readonly int BagPointerHint = "InventoryList".GetHashCode();
+
         private InventoryPage inventoryPage;
+        private float bagScrollY, bagScrollAtPress;
+        private int bagPointerId;
+        private Vector2 bagPress, bagRelease;
+        private bool bagDragging, bagClicked;
+
+        private float BagCardHeight => inventoryPage == InventoryPage.Produce ? 109f : 140f;
         private GUIStyle bagTitle, bagTab, bagItem, bagMutedItem, bagBadge, bagActiveBadge;
         private GUIStyle summaryHeading, summaryLabel, summaryCount, summaryItem;
         private static readonly Color SummaryInk = new Color32(74, 49, 36, 255);
@@ -67,15 +77,86 @@ namespace FarmGame2D.UI
             {
                 var tab = new Rect(panel.x + 18f + index * 183f, panel.y + 73f, 178f, 40f);
                 var selected = (int)inventoryPage == index;
-                if (ShopButton(tab, InventoryTabs[index], selected ? ShopGreen : ShopLine, selected ? shopAction : bagTab))
+                if (ShopButton(tab, InventoryTabs[index], selected ? ShopGreen : ShopLine, selected ? shopAction : bagTab) && !selected)
+                {
                     inventoryPage = (InventoryPage)index;
+                    bagScrollY = 0f;
+                }
             }
 
             var well = new Rect(panel.x + 16f, panel.y + 123f, panel.width - 32f, 360f);
             ShopFill(well, BagWell, 10f);
-            DrawInventoryItems(session, well);
-            GUI.Label(new Rect(panel.x + 20f, panel.y + 492f, panel.width - 40f, 36f),
-                InventoryHints[(int)inventoryPage], shopSmall);
+            var rows = Mathf.CeilToInt(GetInventoryItemCount() / (float)BagColumns);
+            var contentHeight = rows * (BagCardHeight + BagGap) + BagGap;
+            var view = well;
+            var maxScroll = Mathf.Max(0f, contentHeight - view.height);
+            if (maxScroll > 0f) view.width -= 22f;
+            bagScrollY = Mathf.Clamp(bagScrollY, 0f, maxScroll);
+            HandleBagPointer(view, maxScroll);
+
+            GUI.BeginGroup(view);
+            DrawInventoryItems(session, new Rect(0f, -bagScrollY, view.width, contentHeight));
+            GUI.EndGroup();
+            if (maxScroll > 0f)
+            {
+                var track = new Rect(view.xMax, view.y + 4f, 16f, view.height - 8f);
+                bagScrollY = GUI.VerticalScrollbar(track, bagScrollY, view.height, 0f, contentHeight);
+            }
+
+            var hint = maxScroll > 0f ? "목록을 드래그하거나 마우스 휠을 돌려 더 볼 수 있어요." : InventoryHints[(int)inventoryPage];
+            GUI.Label(new Rect(panel.x + 20f, panel.y + 492f, panel.width - 40f, 36f), hint, shopSmall);
+        }
+
+        private int GetInventoryItemCount() => inventoryPage switch
+        {
+            InventoryPage.Tools => InventoryTools.Length,
+            InventoryPage.Seeds => CropCatalog.GetAll().Count,
+            InventoryPage.Produce => CropCatalog.GetAll().Count + AnimalAndFishProducts.Length,
+            InventoryPage.Materials => InventoryMaterials.Length,
+            InventoryPage.Decorations => TownDecorationCatalog.GetAll().Count + 1,
+            _ => 0
+        };
+
+        private void HandleBagPointer(Rect view, float maxScroll)
+        {
+            var control = GUIUtility.GetControlID(BagPointerHint, FocusType.Passive, view);
+            var input = Event.current;
+            var point = input.mousePosition;
+            var inside = view.Contains(point);
+            bagClicked = false;
+            switch (input.GetTypeForControl(control))
+            {
+                case EventType.ScrollWheel when inside && maxScroll > 0f:
+                    bagScrollY = Mathf.Clamp(bagScrollY + input.delta.y * 20f, 0f, maxScroll);
+                    input.Use();
+                    break;
+                case EventType.MouseDown when inside && input.button == 0 && GUIUtility.hotControl == 0:
+                    GUIUtility.hotControl = bagPointerId = control;
+                    bagPress = point - view.position;
+                    bagScrollAtPress = bagScrollY;
+                    bagDragging = false;
+                    input.Use();
+                    break;
+                case EventType.MouseDrag when GUIUtility.hotControl == control:
+                    var movement = point - view.position - bagPress;
+                    bagDragging |= movement.sqrMagnitude >= 25f;
+                    if (bagDragging) bagScrollY = Mathf.Clamp(bagScrollAtPress - movement.y, 0f, maxScroll);
+                    input.Use();
+                    break;
+                case EventType.MouseUp when GUIUtility.hotControl == control && input.button == 0:
+                    bagRelease = point - view.position;
+                    bagClicked = inside && !bagDragging && (bagRelease - bagPress).sqrMagnitude < 25f;
+                    ReleaseBagPointer();
+                    input.Use();
+                    break;
+            }
+        }
+
+        private void ReleaseBagPointer()
+        {
+            if (bagPointerId == 0) return;
+            if (GUIUtility.hotControl == bagPointerId) GUIUtility.hotControl = 0;
+            bagPointerId = 0;
         }
 
         private void DrawInventorySummary(GameSession session)
@@ -198,12 +279,10 @@ namespace FarmGame2D.UI
         private bool DrawBagSlot(Rect well, int index, string label, Sprite art, string countBadge, string tag,
             bool owned, bool selected = false, bool actionable = false, Season? season = null)
         {
-            const int columns = 6;
-            const float gap = 8f;
-            var cardHeight = inventoryPage == InventoryPage.Produce ? 109f : 140f;
-            var width = (well.width - (columns + 1) * gap) / columns;
-            var slot = new Rect(well.x + gap + index % columns * (width + gap),
-                well.y + gap + index / columns * (cardHeight + gap), width, cardHeight);
+            var cardHeight = BagCardHeight;
+            var width = (well.width - (BagColumns + 1) * BagGap) / BagColumns;
+            var slot = new Rect(well.x + BagGap + index % BagColumns * (width + BagGap),
+                well.y + BagGap + index / BagColumns * (cardHeight + BagGap), width, cardHeight);
             var surface = selected ? BagAccent : owned ? ShopCard : ShopPaper;
             if (actionable && slot.Contains(Event.current.mousePosition))
                 surface = Color.Lerp(surface, BagAccent, 0.36f);
@@ -233,7 +312,7 @@ namespace FarmGame2D.UI
             }
             GUI.Label(new Rect(slot.x + 4f, slot.yMax - 33f, slot.width - 8f, 27f),
                 label, owned || selected ? bagItem : bagMutedItem);
-            return actionable && GUI.Button(slot, GUIContent.none, GUIStyle.none);
+            return actionable && bagClicked && slot.Contains(bagPress) && slot.Contains(bagRelease);
         }
 
         private void DrawInventoryIcon(Rect rect, Sprite art, bool owned)

@@ -131,6 +131,10 @@ namespace FarmGame2D.UI
                 {
                     DrawInventory(session);
                 }
+                else
+                {
+                    ReleaseBagPointer();
+                }
 
                 if (session.OpenFacility != FarmFacility.None)
                     DrawFarmFacility(session);
