@@ -7,8 +7,8 @@ namespace FarmGame2D.World
 {
     public sealed partial class PrototypeWorldBuilder
     {
-        private GameObject firstFloorBed, firstFloorTable, firstFloorWorkshop, upstairs, stove;
-        private GameObject porch, upperExterior, chimney;
+        private GameObject firstFloorBed, firstFloorTable, firstFloorWorkshop, workbench, firstFloorCabinet, upstairs, kitchen;
+        private GameObject porch, upperExterior, chimney, kitchenWindow;
         private SpriteRenderer houseExterior;
 
         private void BuildHouseUpgrades(GameSession session, Transform house, Transform farm, Transform interior)
@@ -23,19 +23,14 @@ namespace FarmGame2D.World
             firstFloorWorkshop = new GameObject("Farmhouse Workshop");
             firstFloorWorkshop.transform.SetParent(interior);
             var workshop = firstFloorWorkshop.transform;
-            AddHouseFurniture("Workshop Tool Bench", FarmhouseFurnitureArt.Workbench, center + new Vector2(0.1f, 0.15f),
+            workbench = AddHouseFurniture("Workshop Tool Bench", FarmhouseFurnitureArt.Workbench, center + new Vector2(0.1f, 0.15f),
                 new Vector2(2.15f, 0.66f), workshop);
             CreateArtInteractable<SellBoxInteractable>("Workshop Selling Box", WorldArtKind.SellingBox,
                 center + new Vector2(-2.85f, 0.1f), new Vector2(1.2f, 0.8f), workshop);
             AddStair("Stairs to Bedroom", center + new Vector2(0f, 2.03f), WorldAreaProfile.FarmhouseBedroomEntry,
                 "2층으로 올라가기", workshop);
 
-            stove = new GameObject("Farmhouse Kitchen");
-            stove.transform.SetParent(interior);
-            var stovePosition = center + new Vector2(2.8f, 0.15f);
-            AddHouseFurniture("Kitchen Stove", FarmhouseFurnitureArt.Range, stovePosition, new Vector2(1.25f, 0.6f), stove.transform);
-            CreateInteractable<FarmFacilityInteractable>("Kitchen Worktop", stovePosition - Vector2.up * 0.4f,
-                new Vector2(1.2f, 0.62f), Color.clear, stove.transform).Configure(FarmFacility.Kitchen);
+            BuildFarmhouseKitchen(interior, center);
 
             var bedroomCenter = WorldAreaProfile.FarmhouseBedroomCenter;
             var bedroom = BuildFarmhouseRoom("Farmhouse Upstairs Bedroom", bedroomCenter, hasOutsideDoor: false);
@@ -56,6 +51,29 @@ namespace FarmGame2D.World
 
             session.StateChanged += RefreshHouseUpgrades;
             RefreshHouseUpgrades();
+        }
+
+        private void BuildFarmhouseKitchen(Transform interior, Vector2 center)
+        {
+            kitchen = new GameObject("Farmhouse Kitchen");
+            var root = kitchen.transform;
+            root.SetParent(interior);
+            root.position = center;
+
+            var floor = PrototypeSpriteFactory.CreateBlock("Kitchen Checkered Tiles", center + new Vector2(2.55f, 0.72f),
+                new Vector2(2.7f, 3.6f), Color.clear, root).GetComponent<SpriteRenderer>();
+            floor.sprite = FarmhouseFurnitureArt.KitchenFloor;
+            floor.sortingOrder = 1;
+
+            var stovePosition = center + new Vector2(3.25f, 1.47f);
+            CreateBuildingDetail("Kitchen Prep Counter", FarmBuildingArt.KitchenCounter, center + new Vector2(1.91f, 1.47f), root);
+            CreateBuildingDetail("Kitchen Stove", FarmBuildingArt.KitchenStove, stovePosition, root);
+            CreateBuildingDetail("Kitchen Wall Shelf", FarmBuildingArt.KitchenShelf, center + new Vector2(2.55f, 2.27f), root);
+
+            var counter = WorldAreaProfile.FarmhouseKitchenCounter;
+            CreateSolidCollider("Kitchen Counter Blocker", root, counter.center, counter.size);
+            CreateInteractable<FarmFacilityInteractable>("Kitchen Worktop", stovePosition - Vector2.up * 0.32f,
+                new Vector2(1.2f, 0.62f), Color.clear, root).Configure(FarmFacility.Kitchen);
         }
 
         private void BuildHouseExterior(Transform house)
@@ -79,6 +97,9 @@ namespace FarmGame2D.World
             chimney = CreateBuildingDetail("Farmhouse Kitchen Chimney", FarmBuildingArt.Chimney,
                 origin + new Vector2(-1.33f, 3.23f + FarmBuildingArt.UpperStoryHeight), house);
             chimney.GetComponent<SpriteRenderer>().sortingOrder = depth + 4;
+            kitchenWindow = CreateBuildingDetail("Farmhouse Kitchen Window", FarmBuildingArt.KitchenWindow,
+                origin + new Vector2(1.37f, 0.99f), house);
+            kitchenWindow.GetComponent<SpriteRenderer>().sortingOrder = depth + 1;
         }
 
         private void AddFacadeLayer(string name, Sprite art, Vector2 point, int sortingOrder)
@@ -91,14 +112,19 @@ namespace FarmGame2D.World
         {
             var level = GameSession.Instance.Data.houseUpgradeLevel;
             var expanded = level >= 1;
+            var kitchenOpen = level >= 2;
             firstFloorBed.SetActive(!expanded);
             firstFloorTable.SetActive(!expanded);
             firstFloorWorkshop.SetActive(expanded);
+            workbench.SetActive(!kitchenOpen);
+            var cabinetPosition = WorldAreaProfile.FarmhouseInteriorCenter + new Vector2(kitchenOpen ? -2.4f : 2.4f, 2.05f);
+            firstFloorCabinet.transform.position = cabinetPosition;
             upstairs.SetActive(expanded);
-            stove.SetActive(level >= 2);
+            kitchen.SetActive(kitchenOpen);
             porch.SetActive(expanded);
             upperExterior.SetActive(expanded);
-            chimney.SetActive(level >= 2);
+            chimney.SetActive(kitchenOpen);
+            kitchenWindow.SetActive(kitchenOpen);
             houseExterior.sprite = expanded ? FarmBuildingArt.LowerFloor : WorldArtCatalog.GetSprite(WorldArtKind.FarmHouse);
         }
 
@@ -108,7 +134,7 @@ namespace FarmGame2D.World
             room.SetParent(transform);
             var floor = PrototypeSpriteFactory.CreateBlock("Interior Floor", center + new Vector2(0f, -0.25f),
                 new Vector2(8f, 6f), new Color(0.77f, 0.62f, 0.42f), room);
-            if (!hasOutsideDoor) floor.GetComponent<SpriteRenderer>().sprite = FarmhouseFurnitureArt.GetFloor(8, false);
+            floor.GetComponent<SpriteRenderer>().sprite = FarmhouseFurnitureArt.WoodFloor;
             var wall = new Color(0.34f, 0.2f, 0.14f);
             PrototypeSpriteFactory.CreateBlock("Interior Top Wall", center + new Vector2(0f, 2.8f),
                 new Vector2(8.4f, 0.5f), wall, room, true);

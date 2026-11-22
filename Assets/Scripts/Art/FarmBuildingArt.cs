@@ -14,7 +14,8 @@ namespace FarmGame2D.Art
         private const float RoofSeamY = 445f;
         public const float UpperStoryHeight = 1.25f;
         public const float UpperWallOffset = (RoofSeamY - 88f - 828f * 0.05f) / 160f;
-        private static Sprite lowerFloor, upperWall, upperRoof, upstairsWindow, stairs;
+        private static Sprite lowerFloor, upperWall, upperRoof, upstairsWindow, stairs, kitchenWindow;
+        private static Sprite kitchenCounter, kitchenStove, kitchenShelf;
 
         public static Sprite LowerFloor => lowerFloor ??= HouseDetail("Farmhouse ground floor",
             new Rect(366f, 88f, 804f, RoofSeamY - 88f), 828f * 0.05f / (RoofSeamY - 88f));
@@ -22,6 +23,56 @@ namespace FarmGame2D.Art
             new Rect(366f, RoofSeamY, 804f, 916f - RoofSeamY));
         public static Sprite UpstairsWindow => upstairsWindow ??= HouseDetail("Upper story window", new Rect(488f, 286f, 123f, 119f));
         public static Sprite UpperWall => upperWall ??= Make("Farmhouse upper wall", 16f, CreateUpperWall(), 0f);
+
+        public static Sprite KitchenWindow => kitchenWindow ??= Make("Kitchen casement with sage shutters", 16f, new[]
+        {
+            "..ooooowwwooooo..", ".oollllllllllloo.", "oggoohhwPhhoogggo",
+            "ogwobhbwPbhbogwgo", "ogwobbbwPbbbomwgo", "ogwobbbwPbbbomwgo",
+            "ogwolllwPlllomwgo", "ogwobhbwPbhbomwgo", "ogwobbbwPbbbomwgo",
+            "ogwobbbwPbbbomwgo", "oggoowwwwwwwooggo", "olllllllllllllllo",
+            "owwwwwwwwwwwwwwwo", "ooooooooooooooooo"
+        }, 0f);
+
+        public static Sprite KitchenCounter => kitchenCounter ??= Make("Oak prep counter with a sage sink", 16f, new[]
+        {
+            "..oooooobbboooooooooo..", ".ollllllbbgblllllMMllo.",
+            "olllmmmmmmmmmmmlllllllo", "olllmssshsssssmlllllllo",
+            "olllmmmmmmmmmmmlllllllo", "olllllllllllllllllllllo",
+            "owwwwwwwwwwwwwwwwwwwwwo", "oodddddddddddddddddddoo",
+            "odwwwwwwwwodwwwwwwwwwdo", "odwdddMddwodwdddMdddwdo",
+            "odwddddddwodwdddddddwdo", "odwwwwwwwwodwwwwwwwwwdo",
+            "odddddddddodddddddddddo", "ooooooooooooooooooooooo",
+            ".ooo...............ooo."
+        }, 0f);
+
+        public static Sprite KitchenStove => kitchenStove ??= Make("Iron range with a glowing firebox", 16f, new[]
+        {
+            "..mmmmmmmmmmmmmmmm..", ".mMMMMMMMMMMMMMMMMm.",
+            "mMMmmmMMMMMmmmMMMMMm", "mMmmssmMMMmssmmMMMMm",
+            "mMMmmmMMMMMmmmMMMMMm", "mssssssssssssssssssm",
+            "mmMssMssMssMssMssMmm", "mssssssssssssssssssm",
+            "msmMMMMMMMMMMMMmsMsm", "msmmoooooooooommsssm",
+            "msmmmoooloooommmsssm", "msmmmoPlwlooommmsssm",
+            "msmmollwlwlooommsssm", "msmmmmmmmmmmmmmmsssm",
+            "mssssssssssssssssssm", "mmmmmmmmmmmmmmmmmmmm",
+            ".mmm............mmm."
+        }, 0f);
+
+        public static Sprite KitchenShelf => kitchenShelf ??= Make("Oak shelf with crocks and dishes", 16f, new[]
+        {
+            ".....gggg.....mmm........ooo......",
+            ".....gbbg....mhhhmm......olwo.....",
+            "....gghhgg...mhbbbm.....olllwo....",
+            "....gbbbbg...mbbbbm.....owwwwo....",
+            "....gggggg...mmmmm....oooooooo....",
+            ".oooooooooooooooooooooooooooooooo.",
+            "ollllllllllllllllllllllllllllllllo",
+            "owwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwo",
+            ".oooooooooooooooooooooooooooooooo.",
+            "..odd........................ddo..",
+            "..oo..........................oo.."
+        }, 0f);
+
         public static Sprite Stairs => stairs ??= Make("Oak staircase", 16f, new[]
         {
             "oooo................oooo", "owwoooooooooooooooooowwo", "olwllllllllllllllllllwlo",

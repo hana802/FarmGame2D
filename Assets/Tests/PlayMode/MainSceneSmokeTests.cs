@@ -94,6 +94,8 @@ namespace FarmGame2D.Tests
             Assert.That(GameObject.Find("Workshop Selling Box").GetComponent<SellBoxInteractable>(), Is.Not.Null);
             Assert.That(GameObject.Find("Workshop Tool Bench"), Is.Not.Null);
             Assert.That(GameObject.Find("Kitchen Stove"), Is.Null);
+            Assert.That(GameObject.Find("Farmhouse Kitchen Window"), Is.Null);
+            Assert.That(GameObject.Find("Farmhouse Kitchen Chimney"), Is.Null);
 
             var up = GameObject.Find("Stairs to Bedroom").GetComponent<DoorInteractable>();
             up.Interact(player);
@@ -120,6 +122,14 @@ namespace FarmGame2D.Tests
             session.ShowMessage(string.Empty);
             var kitchen = GameObject.Find("Kitchen Worktop").GetComponent<FarmFacilityInteractable>();
             Assert.That(kitchen.transform.parent.parent, Is.EqualTo(up.transform.parent.parent));
+            Assert.That(GameObject.Find("Workshop Tool Bench"), Is.Null);
+            Assert.That(GameObject.Find("Workshop Selling Box"), Is.Not.Null);
+            Assert.That(GameObject.Find("Bedroom Chest"), Is.Not.Null);
+            foreach (var fixture in new[] { "Kitchen Stove", "Kitchen Prep Counter", "Kitchen Wall Shelf", "Kitchen Checkered Tiles" })
+                Assert.That(kitchen.transform.parent.Find(fixture).GetComponent<SpriteRenderer>().sprite, Is.Not.Null);
+            Assert.That(GameObject.Find("Farmhouse Kitchen Window"), Is.Not.Null);
+            Assert.That(GameObject.Find("Farmhouse Kitchen Chimney"), Is.Not.Null);
+            Assert.That(GameObject.Find("Farmhouse Masonry Landing"), Is.Not.Null);
             kitchen.Interact(player);
             Assert.That(session.OpenFacility, Is.EqualTo(FarmFacility.Kitchen));
         }

@@ -1,5 +1,6 @@
 using System.Linq;
 using FarmGame2D.Core;
+using FarmGame2D.World;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -78,6 +79,21 @@ namespace FarmGame2D.Tests
             Assert.That(save.houseUpgradeLevel, Is.EqualTo(level));
             Assert.That(save.money, Is.EqualTo(700));
             Assert.That(save.bedroomChest.Count(GameItem.BakedSweetPotato), Is.EqualTo(2));
+        }
+
+        [TestCase(1, 2.4f, 1.7f, false)]
+        [TestCase(2, 2.4f, 1.7f, true)]
+        [TestCase(2, 0f, 1.7f, false)]
+        [TestCase(2, 3.25f, 1.1f, false)]
+        public void ExistingPosition_MovesOnlyIfTheNewCounterBlocksIt(int level, float x, float y, bool relocated)
+        {
+            var oldPosition = WorldAreaProfile.FarmhouseInteriorCenter + new Vector2(x, y);
+            var save = new GameSaveData { houseUpgradeLevel = level, playerX = oldPosition.x, playerY = oldPosition.y };
+
+            GameSaveDataNormalizer.Normalize(save);
+
+            Assert.That(new Vector2(save.playerX, save.playerY),
+                Is.EqualTo(relocated ? WorldAreaProfile.FarmhouseEntranceSpawn : oldPosition));
         }
 
         private void UseSave(GameSaveData save)

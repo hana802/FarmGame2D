@@ -111,8 +111,10 @@ namespace FarmGame2D.World
                 center + new Vector2(-2.6f, 0.65f), new Vector2(1.3f, 2.2f), interior).gameObject;
             firstFloorTable = CreateWorldArt("Interior Table", WorldArtKind.InteriorTable, center + new Vector2(0.6f, 0.45f),
                 interior, 4, new Vector2(1.7f, 0.8f), new Vector2(0f, 0.35f));
-            CreateArtInteractable<FarmFacilityInteractable>("Interior Cabinet", WorldArtKind.InteriorCabinet,
-                center + new Vector2(2.4f, 2.05f), new Vector2(1.3f, 0.9f), interior).Configure(FarmFacility.Construction);
+            var cabinet = CreateArtInteractable<FarmFacilityInteractable>("Interior Cabinet", WorldArtKind.InteriorCabinet,
+                center + new Vector2(2.4f, 2.05f), new Vector2(1.3f, 0.9f), interior);
+            cabinet.Configure(FarmFacility.Construction);
+            firstFloorCabinet = cabinet.gameObject;
             var exit = CreateInteractable<DoorInteractable>("Farm House Exit", center + new Vector2(0f, -2.95f),
                 new Vector2(1.1f, 0.6f), new Color(0.5f, 0.28f, 0.13f), interior);
             exit.Configure(new Vector2(6f, -13f), "밖으로 나가기", "농장으로 나왔습니다.");

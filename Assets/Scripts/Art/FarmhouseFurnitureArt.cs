@@ -5,11 +5,9 @@ namespace FarmGame2D.Art
     internal static class FarmhouseFurnitureArt
     {
         private static Texture2D atlas;
-        private static Sprite workbench, sink, range, chest, workshopFloor, kitchenFloor;
+        private static Sprite workbench, chest, woodFloor, kitchenFloor;
 
         public static Sprite Workbench => workbench ??= Fixture("Oak workbench", new Rect(59, 613, 596, 432), 225f);
-        public static Sprite Sink => sink ??= Fixture("Sage sink counter", new Rect(772, 615, 599, 423), 228f);
-        public static Sprite Range => range ??= Fixture("Cast iron cooking range", new Rect(171, 50, 371, 481), 292f);
         public static Sprite Chest => chest ??= Fixture("Workshop tool chest", new Rect(861, 119, 419, 288), 300f);
 
         private static Sprite Fixture(string name, Rect rect, float pixelsPerUnit)
@@ -20,9 +18,8 @@ namespace FarmGame2D.Art
             return sprite;
         }
 
-        public static Sprite GetFloor(int width, bool kitchen) => kitchen
-            ? kitchenFloor ??= CreateFloor(width, true)
-            : workshopFloor ??= CreateFloor(width, false);
+        public static Sprite WoodFloor => woodFloor ??= CreateFloor(8, false);
+        public static Sprite KitchenFloor => kitchenFloor ??= CreateFloor(3, true);
 
         private static Sprite CreateFloor(int width, bool kitchen)
         {
@@ -31,15 +28,14 @@ namespace FarmGame2D.Art
             for (var y = 0; y < resolution; y++)
             for (var x = 0; x < resolution; x++)
             {
-                var column = x * width * 2 / resolution;
                 if (kitchen)
                 {
                     var tileX = x * width % resolution;
                     var tileY = y * 4 % resolution;
-                    var light = (column / 2 + y * 4 / resolution) % 2 == 0;
-                    pixels[y * resolution + x] = tileX < 19 || tileY < 9
-                        ? new Color32(143, 132, 106, 255)
-                        : light ? new Color32(200, 187, 154, 255) : new Color32(157, 166, 128, 255);
+                    var light = (x * width / resolution + y * 4 / resolution) % 2 == 0;
+                    pixels[y * resolution + x] = tileX < 9 || tileY < 9
+                        ? new Color32(115, 101, 77, 255)
+                        : light ? new Color32(215, 199, 162, 255) : new Color32(138, 158, 123, 255);
                     continue;
                 }
 

@@ -1,5 +1,6 @@
 using FarmGame2D.Farming;
-using UnityEngine;
+using FarmGame2D.Player;
+using FarmGame2D.World;
 
 namespace FarmGame2D.Core
 {
@@ -48,6 +49,8 @@ namespace FarmGame2D.Core
             {
                 Data.houseUpgradeLevel = level + 1;
                 Data.houseUpgraded = true;
+                if (Data.houseUpgradeLevel == 2 && WorldAreaProfile.OverlapsFarmhouseKitchenCounter(PlayerPosition))
+                    playerTransform.GetComponent<PrototypePlayerController>().Teleport(WorldAreaProfile.FarmhouseEntranceSpawn);
             }
             else
             {
