@@ -260,6 +260,8 @@ namespace FarmGame2D.UI
 
         private void DrawMessage(GameSession session)
         {
+            if (string.IsNullOrWhiteSpace(session.Message)) return;
+
             if (session.ActivePortraitRow < 0)
             {
                 var toastLayout = HudLayout.CalculateToastLayout();

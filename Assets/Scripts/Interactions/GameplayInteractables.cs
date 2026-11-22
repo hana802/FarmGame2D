@@ -57,7 +57,8 @@ namespace FarmGame2D.Interactions
         public override void Interact(PrototypePlayerController player)
         {
             player.Teleport(destination);
-            GameSession.Instance?.ShowMessage(arrivalMessage);
+            if (!string.IsNullOrEmpty(arrivalMessage))
+                GameSession.Instance?.ShowMessage(arrivalMessage);
         }
     }
 
