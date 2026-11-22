@@ -40,7 +40,11 @@ namespace FarmGame2D.Core
             { GameItem.TomatoOmelet, "토마토 오믈렛" },
             { GameItem.Turnip, "순무" },
             { GameItem.MarketBread, "유나의 밀빵" },
-            { GameItem.HarborMackerel, "고등어" }
+            { GameItem.HarborMackerel, "고등어" },
+            { GameItem.StrawberryJam, "딸기 잼" },
+            { GameItem.RoastedCorn, "구운 옥수수" },
+            { GameItem.PumpkinPie, "호박 파이" },
+            { GameItem.BakedSweetPotato, "군고구마" }
         };
 
         private static readonly Dictionary<GameItem, int> SellPrices = new()
@@ -56,7 +60,11 @@ namespace FarmGame2D.Core
             { GameItem.SeaBass, 45 },
             { GameItem.GoldenCarp, 120 },
             { GameItem.MarketBread, 25 },
-            { GameItem.HarborMackerel, 62 }
+            { GameItem.HarborMackerel, 62 },
+            { GameItem.StrawberryJam, 54 },
+            { GameItem.RoastedCorn, 48 },
+            { GameItem.PumpkinPie, 76 },
+            { GameItem.BakedSweetPotato, 64 }
         };
 
         public static string GetLabel(GameItem item)

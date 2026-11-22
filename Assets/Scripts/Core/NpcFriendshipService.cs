@@ -32,6 +32,18 @@ namespace FarmGame2D.Core
         public int TotalPoints { get; }
     }
 
+    public readonly struct FoodPreference
+    {
+        public FoodPreference(GameItem item, NpcGiftReaction reaction)
+        {
+            Item = item;
+            Reaction = reaction;
+        }
+
+        public GameItem Item { get; }
+        public NpcGiftReaction Reaction { get; }
+    }
+
     public static class NpcFriendshipService
     {
         public const int MaxPoints = 100;
@@ -42,7 +54,17 @@ namespace FarmGame2D.Core
             GameItem.Wheat, GameItem.Egg, GameItem.Potato, GameItem.Strawberry,
             GameItem.Tomato, GameItem.Corn, GameItem.Pumpkin, GameItem.SweetPotato,
             GameItem.Milk, GameItem.Stone, GameItem.CopperOre, GameItem.IronOre,
-            GameItem.GoldOre, GameItem.RiverFish, GameItem.SeaBass, GameItem.GoldenCarp
+            GameItem.GoldOre, GameItem.RiverFish, GameItem.SeaBass, GameItem.GoldenCarp,
+            GameItem.MarketBread, GameItem.PotatoSoup, GameItem.TomatoOmelet,
+            GameItem.StrawberryJam, GameItem.RoastedCorn, GameItem.PumpkinPie,
+            GameItem.BakedSweetPotato
+        };
+
+        private static readonly GameItem[] FoodItems =
+        {
+            GameItem.MarketBread, GameItem.PotatoSoup, GameItem.TomatoOmelet,
+            GameItem.StrawberryJam, GameItem.RoastedCorn, GameItem.PumpkinPie,
+            GameItem.BakedSweetPotato
         };
 
         public static NpcFriendshipData GetOrCreate(GameSaveData data, string npcId)
@@ -91,6 +113,20 @@ namespace FarmGame2D.Core
             }
 
             return preferred;
+        }
+
+        public static IReadOnlyList<FoodPreference> GetFoodPreferences(string npcId)
+        {
+            var foods = new List<FoodPreference>();
+            if (string.IsNullOrWhiteSpace(npcId)) return foods;
+
+            foreach (var item in FoodItems)
+            {
+                var reaction = GetReaction(npcId, item);
+                if (reaction != NpcGiftReaction.Neutral) foods.Add(new FoodPreference(item, reaction));
+            }
+
+            return foods;
         }
 
         public static IReadOnlyList<GameItem> GetOwnedGiftableItems(InventoryModel inventory)
@@ -146,8 +182,11 @@ namespace FarmGame2D.Core
                 || (npcId == "Young Villager" && item == GameItem.Corn)
                 || (npcId == "Fisher Minseo" && item == GameItem.GoldenCarp)
                 || (npcId == "Florist Taeo" && item == GameItem.Strawberry)
-                || (npcId == "Baker Yuna" && item == GameItem.Wheat)
-                || (npcId == "Rancher Sora" && item == GameItem.Milk)) return NpcGiftReaction.Loved;
+                || (npcId == "Baker Yuna" && (item == GameItem.Wheat || item == GameItem.MarketBread))
+                || (npcId == "Rancher Sora" && item == GameItem.Milk)
+                || (npcId == "Elder" && (item == GameItem.PotatoSoup || item == GameItem.BakedSweetPotato))
+                || (npcId == "Young Villager" && (item == GameItem.TomatoOmelet || item == GameItem.RoastedCorn))
+                || (npcId == "Florist Taeo" && item == GameItem.StrawberryJam)) return NpcGiftReaction.Loved;
 
             if ((npcId == "Guide" && (item == GameItem.Strawberry || item == GameItem.GoldenCarp))
                 || (npcId == "Elder" && (item == GameItem.Milk || item == GameItem.Wheat))
@@ -155,7 +194,8 @@ namespace FarmGame2D.Core
                 || (npcId == "Fisher Minseo" && (item == GameItem.SeaBass || item == GameItem.RiverFish))
                 || (npcId == "Florist Taeo" && (item == GameItem.Pumpkin || item == GameItem.Tomato))
                 || (npcId == "Baker Yuna" && (item == GameItem.Strawberry || item == GameItem.Pumpkin || item == GameItem.Milk))
-                || (npcId == "Rancher Sora" && (item == GameItem.Egg || item == GameItem.Corn))) return NpcGiftReaction.Liked;
+                || (npcId == "Rancher Sora" && (item == GameItem.Egg || item == GameItem.Corn || item == GameItem.TomatoOmelet))
+                || (npcId == "Florist Taeo" && item == GameItem.PumpkinPie)) return NpcGiftReaction.Liked;
 
             return NpcGiftReaction.Neutral;
         }

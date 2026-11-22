@@ -21,16 +21,22 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
-        public void WeekendOffersFollowSeasonAndWeek()
+        public void WeekendOffersAreFoodsTheWeekdayShopDoesNotSell()
         {
-            Assert.That(WeekendMarket.GetOffers(ShopKind.MarketProduce, 6).Select(offer => offer.Item),
-                Is.EquivalentTo(new[] { GameItem.Potato, GameItem.Strawberry }));
-            Assert.That(WeekendMarket.GetOffers(ShopKind.MarketProduce, 34).Select(offer => offer.Item),
-                Is.EquivalentTo(new[] { GameItem.Tomato, GameItem.Corn }));
-            Assert.That(WeekendMarket.GetOffers(ShopKind.MarketSpecialties, 6).Single().Item,
-                Is.EqualTo(WeekendMarket.GetOffers(ShopKind.MarketSpecialties, 7).Single().Item));
-            Assert.That(WeekendMarket.GetOffers(ShopKind.MarketSpecialties, 13).Single().Item,
-                Is.Not.EqualTo(WeekendMarket.GetOffers(ShopKind.MarketSpecialties, 7).Single().Item));
+            Assert.That(WeekendMarket.GetOffers(ShopKind.MarketProduce, 6).Single().Item, Is.EqualTo(GameItem.StrawberryJam));
+            Assert.That(WeekendMarket.GetOffers(ShopKind.MarketProduce, 34).Single().Item, Is.EqualTo(GameItem.RoastedCorn));
+            Assert.That(WeekendMarket.GetOffers(ShopKind.MarketProduce, 62).Single().Item, Is.EqualTo(GameItem.PumpkinPie));
+            Assert.That(WeekendMarket.GetOffers(ShopKind.MarketProduce, 90).Single().Item, Is.EqualTo(GameItem.BakedSweetPotato));
+            Assert.That(WeekendMarket.GetOffers(ShopKind.MarketBakery, 6).Single().Item, Is.EqualTo(GameItem.MarketBread));
+            Assert.That(WeekendMarket.GetOffers(ShopKind.MarketSpecialties, 6).Select(offer => offer.Item),
+                Is.EquivalentTo(new[] { GameItem.PotatoSoup, GameItem.TomatoOmelet }));
+            Assert.That(WeekendMarket.GetOffers(ShopKind.MarketSpecialties, 13).Select(offer => offer.Item),
+                Is.EquivalentTo(WeekendMarket.GetOffers(ShopKind.MarketSpecialties, 6).Select(offer => offer.Item)));
+
+            foreach (var shop in new[] { ShopKind.MarketProduce, ShopKind.MarketBakery, ShopKind.MarketSpecialties })
+            foreach (var day in new[] { 6, 34, 62, 90 })
+            foreach (var offer in WeekendMarket.GetOffers(shop, day))
+                Assert.That(offer.Price, Is.GreaterThan(ItemCatalog.GetSellPrice(offer.Item)));
         }
 
         [Test]

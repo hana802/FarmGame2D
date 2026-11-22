@@ -65,11 +65,23 @@ namespace FarmGame2D.Tests
                 NpcFriendshipService.GetPreferredItems("Guide", NpcGiftReaction.Loved));
             CollectionAssert.AreEqual(new[] { GameItem.Strawberry, GameItem.GoldenCarp },
                 NpcFriendshipService.GetPreferredItems("Guide", NpcGiftReaction.Liked));
-            CollectionAssert.AreEqual(new[] { GameItem.Wheat },
+            CollectionAssert.AreEqual(new[] { GameItem.Wheat, GameItem.MarketBread },
                 NpcFriendshipService.GetPreferredItems("Baker Yuna", NpcGiftReaction.Loved));
+            CollectionAssert.AreEqual(new[] { GameItem.MarketBread },
+                FoodItems(NpcFriendshipService.GetFoodPreferences("Baker Yuna")));
+            CollectionAssert.AreEqual(new[] { GameItem.PotatoSoup, GameItem.BakedSweetPotato },
+                FoodItems(NpcFriendshipService.GetFoodPreferences("Elder")));
             Assert.That(NpcFriendshipService.GetPreferredItems("Guide", NpcGiftReaction.Neutral), Is.Empty);
         }
 
+        private static GameItem[] FoodItems(System.Collections.Generic.IReadOnlyList<FoodPreference> foods)
+        {
+            var items = new GameItem[foods.Count];
+            for (var index = 0; index < foods.Count; index++) items[index] = foods[index].Item;
+            return items;
+        }
+
+        [Test]
         public void GiftableInventory_ExcludesSeedsAndFeed()
         {
             var inventory = new InventoryModel();

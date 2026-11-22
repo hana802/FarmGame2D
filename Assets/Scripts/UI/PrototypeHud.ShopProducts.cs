@@ -104,7 +104,7 @@ namespace FarmGame2D.UI
                 ShopPurchaseKind.ChickenSale => "마지막 한 마리는 판매할 수 없어요",
                 ShopPurchaseKind.CowSale => "키우던 소를 판매할 수 있어요",
                 ShopPurchaseKind.Pickaxe => "광맥을 캐는 도구",
-                ShopPurchaseKind.MarketItem => "주말 장터 상품  ·  가방에 바로 보관",
+                ShopPurchaseKind.MarketItem => "평일 상점에 없는 음식  ·  주민에게 선물",
                 ShopPurchaseKind.Ore => "광물  ·  가방에 바로 보관",
                 ShopPurchaseKind.Sprinkler => "매일 아침 아래쪽 두 칸 너비, 세 줄에 물주기",
                 _ => "빈 잔디에 놓는 장식품"

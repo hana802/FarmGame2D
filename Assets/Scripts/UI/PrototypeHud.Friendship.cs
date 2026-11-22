@@ -34,7 +34,7 @@ namespace FarmGame2D.UI
 
             const int columns = 2;
             const float gap = 10f;
-            const float cardHeight = 124f;
+            const float cardHeight = 168f;
             var rowCount = Mathf.Max(1, Mathf.CeilToInt(friendshipResidents.Length / (float)columns));
             var contentHeight = rowCount * (cardHeight + gap) - gap;
             var scroll = contentHeight > area.height;
@@ -78,6 +78,8 @@ namespace FarmGame2D.UI
                 FormatGiftLine("정말 좋아함", NpcFriendshipService.GetPreferredItems(id, NpcGiftReaction.Loved)), friendshipGiftStyle);
             GUI.Label(new Rect(text.x, text.y + 72f, text.width, 36f),
                 FormatGiftLine("좋아함", NpcFriendshipService.GetPreferredItems(id, NpcGiftReaction.Liked)), friendshipGiftStyle);
+            GUI.Label(new Rect(card.x + 12f, card.y + 112f, card.width - 24f, 48f),
+                FormatFoodLine(NpcFriendshipService.GetFoodPreferences(id)), friendshipGiftStyle);
         }
 
         private static string FormatGiftLine(string title, System.Collections.Generic.IReadOnlyList<GameItem> items)
@@ -86,6 +88,19 @@ namespace FarmGame2D.UI
             var names = new string[items.Count];
             for (var index = 0; index < items.Count; index++) names[index] = ItemCatalog.GetLabel(items[index]);
             return $"{title}  {string.Join(" · ", names)}";
+        }
+
+        private static string FormatFoodLine(System.Collections.Generic.IReadOnlyList<FoodPreference> foods)
+        {
+            if (foods == null || foods.Count == 0) return "음식  아직 없어요";
+            var parts = new string[foods.Count];
+            for (var index = 0; index < foods.Count; index++)
+            {
+                var tone = foods[index].Reaction == NpcGiftReaction.Loved ? "정말 좋아함" : "좋아함";
+                parts[index] = $"{ItemCatalog.GetLabel(foods[index].Item)} · {tone}";
+            }
+
+            return "음식  " + string.Join("\n", parts);
         }
     }
 }

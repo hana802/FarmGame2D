@@ -25,7 +25,8 @@ namespace FarmGame2D.UI
         private static readonly GameItem[] AnimalAndFishProducts =
         {
             GameItem.Turnip, GameItem.Egg, GameItem.Milk, GameItem.RiverFish, GameItem.SeaBass, GameItem.GoldenCarp,
-            GameItem.HarborMackerel, GameItem.MarketBread
+            GameItem.HarborMackerel, GameItem.MarketBread, GameItem.PotatoSoup, GameItem.TomatoOmelet,
+            GameItem.StrawberryJam, GameItem.RoastedCorn, GameItem.PumpkinPie, GameItem.BakedSweetPotato
         };
         private static readonly GameItem[] InventoryMaterials =
         {
@@ -167,9 +168,6 @@ namespace FarmGame2D.UI
                 case InventoryPage.Produce:
                     foreach (var crop in crops) DrawBagStack(session, well, index++, crop.Produce);
                     foreach (var item in AnimalAndFishProducts) DrawBagStack(session, well, index++, item);
-                    if (session.Data.houseUpgradeLevel >= 2)
-                        foreach (var recipe in BuildingUpgradeCatalog.Recipes)
-                            DrawBagStack(session, well, index++, recipe.Result);
                     break;
                 case InventoryPage.Materials:
                     foreach (var item in InventoryMaterials) DrawBagStack(session, well, index++, item);

@@ -16,14 +16,6 @@ namespace FarmGame2D.Core
 
     public static class WeekendMarket
     {
-        private static readonly MarketOffer Bread = new(GameItem.MarketBread, 36);
-        private static readonly MarketOffer[] Specialties =
-        {
-            new(GameItem.PotatoSoup, 75),
-            new(GameItem.TomatoOmelet, 95),
-            new(GameItem.FlowerPot, 68)
-        };
-
         public static bool IsMarketShop(ShopKind shop) =>
             shop is ShopKind.MarketProduce or ShopKind.MarketBakery or ShopKind.MarketSpecialties;
 
@@ -32,16 +24,27 @@ namespace FarmGame2D.Core
             switch (shop)
             {
                 case ShopKind.MarketProduce:
-                    foreach (var crop in CropCatalog.GetForSeason(SeasonCalendar.GetSeason(day)))
-                        yield return new MarketOffer(crop.Produce, crop.SellPrice + 7);
+                    yield return SeasonalFood(SeasonCalendar.GetSeason(day));
                     break;
                 case ShopKind.MarketBakery:
-                    yield return Bread;
+                    yield return new MarketOffer(GameItem.MarketBread, 36);
                     break;
                 case ShopKind.MarketSpecialties:
-                    yield return Specialties[SeasonCalendar.WeekIndex(day) % Specialties.Length];
+                    yield return new MarketOffer(GameItem.PotatoSoup, 120);
+                    yield return new MarketOffer(GameItem.TomatoOmelet, 90);
                     break;
             }
+        }
+
+        private static MarketOffer SeasonalFood(Season season)
+        {
+            return season switch
+            {
+                Season.Spring => new MarketOffer(GameItem.StrawberryJam, 80),
+                Season.Summer => new MarketOffer(GameItem.RoastedCorn, 72),
+                Season.Autumn => new MarketOffer(GameItem.PumpkinPie, 110),
+                _ => new MarketOffer(GameItem.BakedSweetPotato, 92)
+            };
         }
     }
 }

@@ -36,7 +36,11 @@ namespace FarmGame2D.Core
         TomatoOmelet,
         Turnip,
         MarketBread,
-        HarborMackerel
+        HarborMackerel,
+        StrawberryJam,
+        RoastedCorn,
+        PumpkinPie,
+        BakedSweetPotato
     }
 
     public enum FarmTool

@@ -56,9 +56,9 @@ namespace FarmGame2D.UI
                 layout.Header.height - 24f), ShopGreen);
             var (title, art) = shownShop switch
             {
-                ShopKind.MarketProduce => ("소라의 계절 채소", WorldArtKind.ProduceStall),
+                ShopKind.MarketProduce => ("소라의 계절 별미", WorldArtKind.ProduceStall),
                 ShopKind.MarketBakery => ("유나의 주말 빵집", WorldArtKind.BakeryStall),
-                ShopKind.MarketSpecialties => ("섬 특산품 가판대", WorldArtKind.SpecialtiesStall),
+                ShopKind.MarketSpecialties => ("행상인의 요리", WorldArtKind.SpecialtiesStall),
                 ShopKind.Greenhouse => ("온실 씨앗 선반", WorldArtKind.SeedFeedShop),
                 ShopKind.Mining => ("마을 잡화점", WorldArtKind.GeneralStore),
                 _ => ("씨앗과 가축 상점", WorldArtKind.SeedFeedShop)
