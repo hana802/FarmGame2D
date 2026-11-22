@@ -25,7 +25,14 @@ namespace FarmGame2D.Art
         InteriorCabinet,
         InteriorRug,
         SellingBox,
-        Weed
+        Weed,
+        ProduceStall,
+        BakeryStall,
+        SpecialtiesStall,
+        FisherHut,
+        HarborPier,
+        HarborBoat,
+        WeekendMerchant
     }
 
     public enum WorldTileKind
@@ -215,6 +222,13 @@ namespace FarmGame2D.Art
                 WorldArtKind.InteriorRug => new("Art/World/interior_rug_v1", new Rect(230f, 137f, 1072f, 750f), 450f, new Vector2(0.5f, 0.5f)),
                 WorldArtKind.SellingBox => new("Art/World/selling_box_v1", new Rect(237f, 93f, 835f, 1005f), 520f, new Vector2(0.5f, 0.05f)),
                 WorldArtKind.Weed => new("Art/World/weed_v1", new Rect(476f, 266f, 568f, 502f), 520f, new Vector2(0.5f, 0.08f)),
+                WorldArtKind.ProduceStall => new("Art/World/weekend_market_v1", new Rect(15, 207, 505, 550), 310f),
+                WorldArtKind.BakeryStall => new("Art/World/weekend_market_v1", new Rect(527, 207, 481, 631), 310f),
+                WorldArtKind.SpecialtiesStall => new("Art/World/weekend_market_v1", new Rect(1022, 207, 496, 532), 310f),
+                WorldArtKind.FisherHut => new("Art/World/east_harbor_v1", new Rect(19, 256, 398, 499), 175f),
+                WorldArtKind.HarborPier => new("Art/World/east_harbor_v1", new Rect(434, 234, 724, 518), 157f, new Vector2(0f, 0.47f)),
+                WorldArtKind.HarborBoat => new("Art/World/east_harbor_v1", new Rect(1186, 390, 332, 190), 192f, new Vector2(0.5f, 0.5f)),
+                WorldArtKind.WeekendMerchant => new("Art/World/weekend_merchant_v1", new Rect(196, 167, 704, 1083), 962f, new Vector2(0.5f, 0.01f)),
                 _ => throw new System.ArgumentOutOfRangeException(nameof(kind), kind, null)
             };
         }

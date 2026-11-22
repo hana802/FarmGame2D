@@ -40,6 +40,8 @@ namespace FarmGame2D.UI
 
         private static IEnumerable<ShopPurchaseRequest> GetShopProducts(GameSession session, ShopKind shop, int tab)
         {
+            if (WeekendMarket.IsMarketShop(shop)) return GetWeekendMarketProducts(shop, session.Data.day);
+
             if (shop == ShopKind.Mining)
             {
                 if (tab == 0) return MiningProducts;
@@ -58,6 +60,13 @@ namespace FarmGame2D.UI
                 3 => FarmEquipment,
                 _ => GetSeedProducts(session.CurrentSeason)
             };
+        }
+
+        private static IEnumerable<ShopPurchaseRequest> GetWeekendMarketProducts(ShopKind shop, int day)
+        {
+            foreach (var offer in WeekendMarket.GetOffers(shop, day))
+                yield return new ShopPurchaseRequest(ShopPurchaseKind.MarketItem,
+                    ItemCatalog.GetLabel(offer.Item), offer.Item, 1, offer.Price);
         }
 
         private static IEnumerable<ShopPurchaseRequest> GetSeedProducts(Season season)
@@ -95,6 +104,7 @@ namespace FarmGame2D.UI
                 ShopPurchaseKind.ChickenSale => "마지막 한 마리는 판매할 수 없어요",
                 ShopPurchaseKind.CowSale => "키우던 소를 판매할 수 있어요",
                 ShopPurchaseKind.Pickaxe => "광맥을 캐는 도구",
+                ShopPurchaseKind.MarketItem => "주말 장터 상품  ·  가방에 바로 보관",
                 ShopPurchaseKind.Ore => "광물  ·  가방에 바로 보관",
                 ShopPurchaseKind.Sprinkler => "매일 아침 아래쪽 두 칸 너비, 세 줄에 물주기",
                 _ => "빈 잔디에 놓는 장식품"
@@ -123,6 +133,7 @@ namespace FarmGame2D.UI
                 ShopPurchaseKind.Chicken or ShopPurchaseKind.ChickenSale => WorldArtCatalog.GetSprite(WorldArtKind.Chicken),
                 ShopPurchaseKind.Cow or ShopPurchaseKind.CowSale => WorldArtCatalog.GetSprite(WorldArtKind.Cow),
                 ShopPurchaseKind.Pickaxe => GameArtCatalog.GetHeldToolSprite(FarmTool.Pickaxe),
+                ShopPurchaseKind.MarketItem => GetInventoryArt(request.Item),
                 ShopPurchaseKind.Ore => WorldArtCatalog.GetSprite(WorldArtKind.MiningRock),
                 ShopPurchaseKind.Decoration => TownDecorationArt.GetSprite(request.Item),
                 ShopPurchaseKind.Sprinkler => FarmEquipmentArt.Sprinkler,

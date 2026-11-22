@@ -68,6 +68,7 @@ namespace FarmGame2D.Core
         public int eggsCollected;
         public int activeQuestId = -1;
         public int fishCaught;
+        public int lastHarborDeliveryWeek;
         public int oreMined;
         public bool firstHarvestAchievement;
         public bool firstEggAchievement;

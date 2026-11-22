@@ -34,7 +34,9 @@ namespace FarmGame2D.Core
         Sprinkler,
         PotatoSoup,
         TomatoOmelet,
-        Turnip
+        Turnip,
+        MarketBread,
+        HarborMackerel
     }
 
     public enum FarmTool
@@ -67,6 +69,9 @@ namespace FarmGame2D.Core
     {
         SeedsAndAnimals,
         Mining,
-        Greenhouse
+        Greenhouse,
+        MarketProduce,
+        MarketBakery,
+        MarketSpecialties
     }
 }

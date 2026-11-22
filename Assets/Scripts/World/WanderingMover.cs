@@ -26,6 +26,8 @@ namespace FarmGame2D.World
         private int homeNode = -1;
         private bool hasNightAnchor;
         private bool hasTarget;
+        private Vector2? workplace;
+        private Vector2 beforeWork;
 
         public WanderArea RoamingArea => daytimeArea;
         public bool IsMoving => hasTarget && Time.time >= waitUntil && Time.time >= pausedUntil;
@@ -81,9 +83,31 @@ namespace FarmGame2D.World
             }
         }
 
+        public void SetWorkplace(Vector2? location)
+        {
+            if (workplace == location) return;
+            GetComponent<NpcSocialAgent>()?.CancelConversation();
+            if (location.HasValue) beforeWork = motor.Position;
+
+            var position = location ?? beforeWork;
+            GetComponent<Rigidbody2D>().position = position;
+            transform.position = position;
+            GetComponent<NpcMotionPresenter>()?.Face(position + Vector2.down);
+            workplace = location;
+            if (!workplace.HasValue && waypointNetwork != null)
+            {
+                currentNode = waypointNetwork.FindClosestNode(position);
+                previousNode = -1;
+            }
+
+            MovementDirection = Vector2.zero;
+            pausedUntil = Time.time;
+            AbandonTarget(0.5f);
+        }
+
         private void FixedUpdate()
         {
-            if (random == null || Time.time < pausedUntil)
+            if (random == null || workplace.HasValue || Time.time < pausedUntil)
             {
                 return;
             }

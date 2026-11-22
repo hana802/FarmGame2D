@@ -24,7 +24,8 @@ namespace FarmGame2D.UI
         };
         private static readonly GameItem[] AnimalAndFishProducts =
         {
-            GameItem.Turnip, GameItem.Egg, GameItem.Milk, GameItem.RiverFish, GameItem.SeaBass, GameItem.GoldenCarp
+            GameItem.Turnip, GameItem.Egg, GameItem.Milk, GameItem.RiverFish, GameItem.SeaBass, GameItem.GoldenCarp,
+            GameItem.HarborMackerel, GameItem.MarketBread
         };
         private static readonly GameItem[] InventoryMaterials =
         {
@@ -100,7 +101,7 @@ namespace FarmGame2D.UI
             var data = session.Data;
             var inventory = data.inventory;
             var fishCount = inventory.Count(GameItem.RiverFish) + inventory.Count(GameItem.SeaBass)
-                + inventory.Count(GameItem.GoldenCarp);
+                + inventory.Count(GameItem.GoldenCarp) + inventory.Count(GameItem.HarborMackerel);
             var juvenileCount = data.chickenJuvenileDays.Count + data.cowJuvenileDays.Count;
             var x = panel.x + 10f;
             var right = x + 103f;

@@ -69,6 +69,9 @@ namespace FarmGame2D.Interactions
         {
             ShopKind.Mining => "광물 상점 열기",
             ShopKind.Greenhouse => "온실 씨앗 선반 열기",
+            ShopKind.MarketProduce => "소라의 계절 채소 보기",
+            ShopKind.MarketBakery => "유나의 주말 빵집 열기",
+            ShopKind.MarketSpecialties => "행상인의 이번 주 특산품 보기",
             _ => "씨앗·동물 상점 열기"
         };
 

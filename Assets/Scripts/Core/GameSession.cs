@@ -569,6 +569,12 @@ namespace FarmGame2D.Core
         public void OpenShop(ShopKind shop)
         {
             var shouldOpen = !ShopOpen || ActiveShop != shop;
+            if (shouldOpen && WeekendMarket.IsMarketShop(shop) && !SeasonCalendar.IsWeekend(Data.day))
+            {
+                ShowMessage("장터는 토요일과 일요일에 열려요.");
+                return;
+            }
+
             ActiveShop = shop;
             ShopOpen = shouldOpen;
             PhoneOpen = false;
@@ -675,10 +681,12 @@ namespace FarmGame2D.Core
             return true;
         }
 
-        public void CatchFish()
+        public void CatchFish(bool atHarbor = false)
         {
-            var roll = Mathf.Abs(unchecked((Data.worldSeed * 31) + (Data.day * 17) + (Data.fishCaught * 13))) % 100;
-            var fish = roll < 8 ? GameItem.GoldenCarp : roll < 43 ? GameItem.SeaBass : GameItem.RiverFish;
+            var roll = (int)(System.Math.Abs((long)unchecked((Data.worldSeed * 31) + (Data.day * 17) + (Data.fishCaught * 13))) % 100);
+            var fish = atHarbor
+                ? (roll < 75 ? GameItem.HarborMackerel : GameItem.SeaBass)
+                : (roll < 8 ? GameItem.GoldenCarp : roll < 43 ? GameItem.SeaBass : GameItem.RiverFish);
             Data.inventory.Add(fish, 1);
             Data.fishCaught++;
             Message = $"{ItemCatalog.GetLabel(fish)}을(를) 낚았습니다!";
@@ -976,6 +984,8 @@ namespace FarmGame2D.Core
                 ProcessNewDay();
             }
 
+            if (ShopOpen && WeekendMarket.IsMarketShop(ActiveShop) && !SeasonCalendar.IsWeekend(snapshot.Day))
+                ShopOpen = false;
             if (snapshot.Hour == 6 && snapshot.Minute == 0) WaterSprinklersAtDawn(snapshot.Day);
             NotifyChanged();
         }

@@ -26,6 +26,8 @@ namespace FarmGame2D.Art
                 GameItem.GoldenCarp => (Fish, 0xb16b38, 0xeaa44c, 0xffe28e),
                 GameItem.PotatoSoup => (Soup, 0x9c6241, 0xeca752, 0xffe2ad),
                 GameItem.TomatoOmelet => (Omelet, 0xbb623c, 0xf4bc52, 0xfff0a6),
+                GameItem.MarketBread => (Bread, 0x743e25, 0xbb753b, 0xf6c575),
+                GameItem.HarborMackerel => (Fish, 0x334d62, 0x648697, 0xd0e2dc),
                 GameItem.Turnip => (Turnip, 0xc4a07a, 0xf3e2c4, 0x6e9a45),
                 _ => (null, 0, 0, 0)
             };
@@ -73,6 +75,17 @@ namespace FarmGame2D.Art
             ".....000....", "...003320...", "..03222210..", ".0322232110.", ".0222322210.",
             "022112221110", "021122211110", ".0111111110.", "..00000000.."
         };
+        private static readonly string[] Bread =
+        {
+            "...0000...",
+            "..022220..",
+            ".0223220..",
+            "023322320.",
+            "0232232200",
+            "0112222110",
+            ".00000000."
+        };
+
         private static readonly string[] Fish =
         {
             ".....00.....", "....0210...0", "..0032220.00", ".03222021010", "032223221210",

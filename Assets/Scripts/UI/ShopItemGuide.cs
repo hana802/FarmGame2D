@@ -8,6 +8,8 @@ namespace FarmGame2D.UI
         {
             switch (request.Kind)
             {
+                case ShopPurchaseKind.MarketItem:
+                    return "주말 장터에서 산 물건이에요. 구매하면 가방에 바로 들어가요.";
                 case ShopPurchaseKind.Seed:
                     return CropCatalog.TryGetBySeed(request.Item, out var crop)
                         ? DescribeSeed(crop)

@@ -40,6 +40,7 @@ namespace FarmGame2D.World
             if (GameSession.Instance != null)
             {
                 GameSession.Instance.StateChanged -= RefreshSeason;
+                GameSession.Instance.StateChanged -= RefreshVillageSchedule;
                 GameSession.Instance.StateChanged -= RefreshHouseUpgrades;
             }
         }
@@ -196,7 +197,7 @@ namespace FarmGame2D.World
                 "황금 잉어는 보기 드물지만 포기하지 않으면 만날 수 있어요.",
                 "낚시는 서두르지 않는 게 중요해요. 찌가 움직일 때까지 기다려 보세요.",
                 "잡은 물고기는 판매 상자에 넣어도 되고 가방에 간직해도 돼요.",
-                "바닷물 색이 계절마다 조금씩 달라지는 걸 알고 있었나요?"
+                "동쪽 부두에서는 고등어가 잘 잡혀요. 오두막 앞에 제 납품 의뢰를 남겨 뒀어요."
             }, 4);
             ConfigureNpcMovement(fisher, villageRoutes, 10, 0.68f, seed + 44, new Vector2(-11.5f, 2.5f), "어부 민서");
 
@@ -248,35 +249,46 @@ namespace FarmGame2D.World
             CreateInteractable<FishingSpotInteractable>("Pond Fishing Spot", new Vector2(-11.5f, -0.15f), new Vector2(1.4f, 0.8f), Color.clear, townRoot);
             CreateInteractable<FishingSpotInteractable>("West Coast Fishing Spot", new Vector2(-17.25f, -4f), new Vector2(0.8f, 1.6f), Color.clear, townRoot);
             CreateInteractable<FishingSpotInteractable>("South Coast Fishing Spot", new Vector2(12f, -15.3f), new Vector2(1.6f, 0.8f), Color.clear, townRoot);
+            BuildVillageExpansion(session, townRoot, fisher, baker, rancher);
             BuildRandomTrees(session, townRoot);
         }
 
         private void BuildRandomTrees(GameSession session, Transform parent)
         {
             var random = new System.Random(session.Data.worldSeed);
-            var created = 0;
-            while (created < 18)
+            var originalLocations = new List<Vector2>(18);
+            while (originalLocations.Count < 18)
             {
-                var x = random.Next(-16, 17);
-                var y = random.Next(-14, 17);
-                if (!WorldPlacementRules.CanPlaceTree(new Vector2(x, y)))
+                var location = NextTreeCandidate(random);
+                if (WorldPlacementRules.CanPlaceTree(location)) originalLocations.Add(location);
+            }
+
+            // Relocate only conflicts and keep all original tree IDs for existing regrowth records.
+            var occupied = new HashSet<Vector2>(originalLocations);
+            for (var index = 0; index < originalLocations.Count; index++)
+            {
+                var location = originalLocations[index];
+                if (OccupiesExpansion(location))
                 {
-                    continue;
+                    do location = NextTreeCandidate(random);
+                    while (!WorldPlacementRules.CanPlaceTree(location) || OccupiesExpansion(location) || !occupied.Add(location));
                 }
 
                 var tree = CreateWorldArt(
-                    $"Seeded Tree {created + 1}",
+                    $"Seeded Tree {index + 1}",
                     WorldArtKind.Tree,
-                    new Vector2(x, y),
+                    location,
                     parent,
                     3,
                     new Vector2(1.35f, 0.7f),
                     new Vector2(0f, 0.45f));
                 trees.Add(tree.GetComponent<SpriteRenderer>());
-                tree.AddComponent<ChoppableTree>().Configure(session, created);
-                created++;
+                tree.AddComponent<ChoppableTree>().Configure(session, index);
             }
         }
+
+        private static Vector2 NextTreeCandidate(System.Random random) =>
+            new(random.Next(-16, 17), random.Next(-14, 17));
 
         private void BuildWeeds(GameSession session)
         {
@@ -326,7 +338,7 @@ namespace FarmGame2D.World
             PrototypeSpriteFactory.CreateBlock("North Boundary", new Vector2(0f, 18f), new Vector2(38f, 1f), Color.clear, transform, true);
             PrototypeSpriteFactory.CreateBlock("South Boundary", new Vector2(0f, -16f), new Vector2(38f, 1f), Color.clear, transform, true);
             PrototypeSpriteFactory.CreateBlock("West Boundary", new Vector2(-18f, 1f), new Vector2(1f, 35f), Color.clear, transform, true);
-            PrototypeSpriteFactory.CreateBlock("East Boundary", new Vector2(18f, 1f), new Vector2(1f, 35f), Color.clear, transform, true);
+            BuildEastBoundary();
         }
 
         private void RefreshSeason()

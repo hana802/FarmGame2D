@@ -177,8 +177,15 @@ namespace FarmGame2D.UI
             var season = new Rect(rect.x + 10f, rect.y + 10f, 54f, 54f);
             farmSkin.DrawPixelPanel(season, seasonColor, DarkEdge, false);
             DrawSeasonIcon(season, session.CurrentSeason, 30f);
-            GUI.Label(new Rect(rect.x + 76f, rect.y + 10f, 126f, 25f),
-                $"{SeasonCalendar.GetDayOfSeason(session.Data.day)}일  {timeText}", phoneLightStyle);
+            var day = session.Data.day;
+            var weekday = new Rect(rect.x + 112f, rect.y + 12f, 25f, 22f);
+            var weekend = SeasonCalendar.IsWeekend(day);
+            FarmGuiSkin.DrawSolid(weekday, weekend ? new Color32(236, 197, 120, 255) : new Color32(59, 84, 74, 255));
+            GUI.Label(new Rect(rect.x + 76f, rect.y + 10f, 37f, 25f),
+                $"{SeasonCalendar.GetDayOfSeason(day)}일", phoneLightStyle);
+            GUI.Label(new Rect(weekday.x + 4f, rect.y + 10f, 22f, 25f),
+                SeasonCalendar.GetWeekdayLabel(day), weekend ? phoneSectionStyle : phoneLightStyle);
+            GUI.Label(new Rect(rect.x + 144f, rect.y + 10f, 58f, 25f), timeText, phoneLightStyle);
             GUI.Label(new Rect(rect.x + 76f, rect.y + 38f, 126f, 24f), $"{session.Data.money:N0} G", warmLightStyle);
         }
 
@@ -649,6 +656,9 @@ namespace FarmGame2D.UI
                     break;
                 case ShopPurchaseKind.Sprinkler:
                     session.PurchaseSprinkler(count);
+                    break;
+                case ShopPurchaseKind.MarketItem:
+                    session.PurchaseMarketItem(request.Item, count);
                     break;
                 case ShopPurchaseKind.Decoration:
                     session.PurchaseDecoration(request.Item, count);

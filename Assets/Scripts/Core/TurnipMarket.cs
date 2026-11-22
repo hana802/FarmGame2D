@@ -4,13 +4,13 @@ namespace FarmGame2D.Core
 {
     public static class TurnipMarket
     {
-        public const int WeekLength = 7;
+        public const int WeekLength = SeasonCalendar.DaysPerWeek;
         public const int MinBuyPrice = 24;
         public const int MaxBuyPrice = 60;
 
-        public static int WeekIndex(int day) => Math.Max(0, day - 1) / WeekLength;
+        public static int WeekIndex(int day) => SeasonCalendar.WeekIndex(day);
 
-        public static int DayIndex(int day) => Math.Max(0, day - 1) % WeekLength;
+        public static int DayIndex(int day) => SeasonCalendar.WeekdayIndex(day);
 
         public static bool IsPurchaseDay(int day) => day >= 1 && DayIndex(day) == 0;
 

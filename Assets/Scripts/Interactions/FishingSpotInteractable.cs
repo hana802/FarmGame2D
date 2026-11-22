@@ -10,6 +10,12 @@ namespace FarmGame2D.Interactions
     public sealed class FishingSpotInteractable : InteractableBehaviour
     {
         private bool fishing;
+        private Vector2? harborCastTarget;
+
+        public void ConfigureHarbor(Vector2 waterPosition)
+        {
+            harborCastTarget = waterPosition;
+        }
         private PrototypePlayerController angler;
 
         public override string Prompt => fishing ? "입질을 기다리는 중" : "낚싯대 던지기";
@@ -35,7 +41,7 @@ namespace FarmGame2D.Interactions
         {
             fishing = true;
             angler = player;
-            var castTarget = FishingCastTarget.Resolve(transform.position, player.transform.position);
+            var castTarget = harborCastTarget ?? FishingCastTarget.Resolve(transform.position, player.transform.position);
             player.BeginMining(castTarget);
             GameObject bobber = null;
             LineRenderer line = null;
@@ -86,7 +92,7 @@ namespace FarmGame2D.Interactions
             if (released && GameSession.Instance != null)
             {
                 GameAudioController.Play(GameAudioCue.FishingCatch);
-                GameSession.Instance.CatchFish();
+                GameSession.Instance.CatchFish(harborCastTarget.HasValue);
             }
 
             fishing = false;

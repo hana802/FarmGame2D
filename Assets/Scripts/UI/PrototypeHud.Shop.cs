@@ -37,8 +37,6 @@ namespace FarmGame2D.UI
 
             EnsureShopStyles();
             var layout = HudLayout.CalculateShopLayout();
-            var mining = shownShop == ShopKind.Mining;
-            var greenhouse = shownShop == ShopKind.Greenhouse;
             var input = Event.current;
             if (input.type == EventType.KeyDown && input.keyCode == KeyCode.Escape)
             {
@@ -56,9 +54,17 @@ namespace FarmGame2D.UI
             ShopFill(layout.Header, ShopGreen, 20f);
             FarmGuiSkin.DrawSolid(new Rect(layout.Header.x, layout.Header.y + 24f, layout.Header.width,
                 layout.Header.height - 24f), ShopGreen);
-            DrawShopArt(new Rect(layout.Header.x + 23f, layout.Header.y + 12f, 56f, 50f),
-                WorldArtCatalog.GetSprite(mining ? WorldArtKind.GeneralStore : WorldArtKind.SeedFeedShop));
-            GUI.Label(layout.Title, greenhouse ? "온실 씨앗 선반" : mining ? "마을 잡화점" : "씨앗과 가축 상점", shopHeading);
+            var (title, art) = shownShop switch
+            {
+                ShopKind.MarketProduce => ("소라의 계절 채소", WorldArtKind.ProduceStall),
+                ShopKind.MarketBakery => ("유나의 주말 빵집", WorldArtKind.BakeryStall),
+                ShopKind.MarketSpecialties => ("섬 특산품 가판대", WorldArtKind.SpecialtiesStall),
+                ShopKind.Greenhouse => ("온실 씨앗 선반", WorldArtKind.SeedFeedShop),
+                ShopKind.Mining => ("마을 잡화점", WorldArtKind.GeneralStore),
+                _ => ("씨앗과 가축 상점", WorldArtKind.SeedFeedShop)
+            };
+            DrawShopArt(new Rect(layout.Header.x + 23f, layout.Header.y + 12f, 56f, 50f), WorldArtCatalog.GetSprite(art));
+            GUI.Label(layout.Title, title, shopHeading);
             GUI.Label(layout.Balance, $"{session.Data.money:N0} G", shopLight);
             if (ShopButton(layout.CloseButton, "×", new Color32(61, 98, 82, 255), shopAction))
             {
@@ -83,8 +89,10 @@ namespace FarmGame2D.UI
         {
             var tabs = shop == ShopKind.Mining ? GeneralShopTabs : FarmShopTabs;
             var greenhouse = shop == ShopKind.Greenhouse;
-            var tabCount = greenhouse ? GreenhouseShopTabs.Length : tabs.Length;
+            var market = WeekendMarket.IsMarketShop(shop);
+            var tabCount = market ? 0 : greenhouse ? GreenhouseShopTabs.Length : tabs.Length;
             ShopFill(layout.Tabs, ShopLine, 12f);
+            if (market) GUI.Label(layout.Tabs, "토요일 · 일요일", shopSecondary);
             for (var index = 0; index < tabCount; index++)
             {
                 var selected = shopTab == index;
@@ -122,6 +130,8 @@ namespace FarmGame2D.UI
 
             var footer = shopNotice ?? shop switch
             {
+                ShopKind.MarketSpecialties => "특산품은 주마다 바뀌어요.",
+                ShopKind.MarketProduce or ShopKind.MarketBakery => "주말 장터에서만 살 수 있어요.",
                 ShopKind.Mining => string.Empty,
                 ShopKind.Greenhouse => "여기서 산 씨앗은 온실 안에서 계절과 상관없이 심을 수 있어요.",
                 _ => $"보유 가축  ·  닭 {session.Data.ownedChickens}마리   소 {session.Data.ownedCows}마리"
