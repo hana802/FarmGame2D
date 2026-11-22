@@ -12,8 +12,9 @@ namespace FarmGame2D.UI
         private static readonly Color SaleSummary = new Color32(239, 224, 192, 255);
         private Vector2 sellScrollPosition;
         private bool sellBoxWasOpen;
+        private bool sellAllConfirmationOpen;
         private string saleNotice;
-        private GUIStyle saleTitle, saleName, salePrice, saleCount, saleTotal, saleSecondary;
+        private GUIStyle saleTitle, saleName, salePrice, saleCount, saleTotal, saleSecondary, salePrompt, saleAmount;
 
         private void DrawSellBox(GameSession session)
         {
@@ -22,6 +23,7 @@ namespace FarmGame2D.UI
                 sellBoxWasOpen = true;
                 sellScrollPosition = Vector2.zero;
                 saleNotice = null;
+                sellAllConfirmationOpen = false;
             }
 
             EnsureSaleStyles();
@@ -47,9 +49,11 @@ namespace FarmGame2D.UI
             if (offers.Length == 0)
                 DrawEmptySellBox(content);
             else
-                DrawSellOffers(session, content, offers);
+                DrawSellOffers(session, content, offers, !sellAllConfirmationOpen);
 
             DrawSaleSummary(session, new Rect(panel.x + 24f, panel.yMax - 105f, panel.width - 48f, 82f), offers);
+            if (sellAllConfirmationOpen)
+                DrawSellAllConfirmation(session, panel, header.yMax, offers);
         }
 
         private void DrawEmptySellBox(Rect content)
@@ -60,7 +64,7 @@ namespace FarmGame2D.UI
                 "지금 팔 수 있는 물품이 없어요", saleCount);
         }
 
-        private void DrawSellOffers(GameSession session, Rect content, ProduceSale.Offer[] offers)
+        private void DrawSellOffers(GameSession session, Rect content, ProduceSale.Offer[] offers, bool interactive)
         {
             GUI.Label(new Rect(content.x + 13f, content.y, 255f, 25f), "품목", salePrice);
             GUI.Label(new Rect(content.x + 414f, content.y, 140f, 25f), "개당 가격", salePrice);
@@ -70,11 +74,11 @@ namespace FarmGame2D.UI
             sellScrollPosition = GUI.BeginScrollView(viewport, sellScrollPosition,
                 new Rect(0f, 0f, width, Mathf.Max(viewport.height, offers.Length * stride - 8f)));
             for (var index = 0; index < offers.Length; index++)
-                DrawSellOffer(session, new Rect(0f, index * stride, width, 72f), offers[index]);
+                DrawSellOffer(session, new Rect(0f, index * stride, width, 72f), offers[index], interactive);
             GUI.EndScrollView();
         }
 
-        private void DrawSellOffer(GameSession session, Rect row, ProduceSale.Offer offer)
+        private void DrawSellOffer(GameSession session, Rect row, ProduceSale.Offer offer, bool interactive)
         {
             ShopFill(row, ShopCard, 10f);
             ShopFill(new Rect(row.x + 12f, row.y + 11f, 91f, 50f), ShopLine, 8f);
@@ -83,13 +87,13 @@ namespace FarmGame2D.UI
             GUI.Label(new Rect(row.x + 414f, row.y + 11f, 116f, 50f), $"{offer.UnitPrice:N0} G", salePrice);
             var one = new Rect(row.xMax - 267f, row.y + 14f, 108f, 44f);
             var all = new Rect(row.xMax - 148f, row.y + 14f, 134f, 44f);
-            if (ShopButton(offer.Quantity == 1 ? all : one, "1개 판매", offer.Quantity == 1 ? SaleHeader : ShopLine,
-                offer.Quantity == 1 ? shopAction : saleSecondary))
+            if (SaleButton(offer.Quantity == 1 ? all : one, "1개 판매", offer.Quantity == 1 ? SaleHeader : ShopLine,
+                offer.Quantity == 1 ? shopAction : saleSecondary, interactive))
             {
                 session.SellProduce(offer.Item, 1);
                 saleNotice = session.Message;
             }
-            else if (offer.Quantity > 1 && ShopButton(all, "전량 판매", SaleHeader, shopAction))
+            else if (offer.Quantity > 1 && SaleButton(all, "전량 판매", SaleHeader, shopAction, interactive))
             {
                 session.SellProduce(offer.Item, offer.Quantity);
                 saleNotice = session.Message;
@@ -110,11 +114,51 @@ namespace FarmGame2D.UI
             GUI.Label(new Rect(footer.x + 16f, footer.y + 10f, 158f, 32f), "전체 판매 금액", salePrice);
             GUI.Label(new Rect(footer.x + 174f, footer.y + 8f, 215f, 35f), $"{total:N0} G", saleTotal);
             if (saleNotice != null) GUI.Label(new Rect(footer.x + 16f, footer.y + 43f, footer.width - 230f, 27f), saleNotice, salePrice);
-            if (ShopButton(new Rect(footer.xMax - 191f, footer.y + 15f, 174f, 52f), "모두 판매", SaleAccent, shopAction))
+            if (SaleButton(new Rect(footer.xMax - 191f, footer.y + 15f, 174f, 52f), "모두 판매", SaleAccent, shopAction,
+                !sellAllConfirmationOpen))
+            {
+                sellAllConfirmationOpen = true;
+            }
+        }
+
+        private void DrawSellAllConfirmation(GameSession session, Rect panel, float headerBottom, ProduceSale.Offer[] offers)
+        {
+            var dim = Rect.MinMaxRect(panel.x, headerBottom, panel.xMax, panel.yMax);
+            FarmGuiSkin.DrawSolid(dim, new Color32(22, 34, 28, 148));
+            var card = new Rect(panel.center.x - 250f, panel.center.y - 86f, 500f, 188f);
+            ShopFill(new Rect(card.x, card.y + 6f, card.width, card.height), new Color32(20, 24, 20, 90), 16f);
+            ShopFill(card, ShopPaper, 16f);
+
+            var total = 0;
+            foreach (var offer in offers) total += offer.Total;
+            GUI.Label(new Rect(card.x + 24f, card.y + 22f, card.width - 48f, 42f), "모두 판매하시겠습니까?", salePrompt);
+            GUI.Label(new Rect(card.x + 24f, card.y + 64f, card.width - 48f, 34f), $"{total:N0} G", saleAmount);
+
+            var no = new Rect(card.x + 24f, card.yMax - 68f, 214f, 48f);
+            var yes = new Rect(card.xMax - 238f, card.yMax - 68f, 214f, 48f);
+            if (ShopButton(no, "아니요", ShopLine, saleSecondary))
+                sellAllConfirmationOpen = false;
+            else if (ShopButton(yes, "네", SaleAccent, shopAction))
             {
                 session.SellAllProduce();
                 saleNotice = session.Message;
+                sellAllConfirmationOpen = false;
             }
+
+            if (GUI.Button(dim, GUIContent.none, GUIStyle.none) && !card.Contains(Event.current.mousePosition))
+                sellAllConfirmationOpen = false;
+        }
+
+        private static bool SaleButton(Rect rect, string label, Color background, GUIStyle text, bool interactive)
+        {
+            if (!interactive)
+            {
+                ShopFill(rect, background, 8f);
+                GUI.Label(rect, label, text);
+                return false;
+            }
+
+            return ShopButton(rect, label, background, text);
         }
 
         private void EnsureSaleStyles()
@@ -127,6 +171,8 @@ namespace FarmGame2D.UI
             saleCount = ShopStyle(23, ShopInk, FontStyle.Bold, TextAnchor.MiddleCenter);
             saleTotal = ShopStyle(27, SaleHeader, FontStyle.Bold);
             saleSecondary = ShopStyle(19, SaleHeader, FontStyle.Bold, TextAnchor.MiddleCenter);
+            salePrompt = ShopStyle(26, ShopInk, FontStyle.Bold, TextAnchor.MiddleCenter);
+            saleAmount = ShopStyle(22, SaleHeader, FontStyle.Bold, TextAnchor.MiddleCenter);
         }
 
         private bool TryOpenClickedSellBox(Vector2 screenPosition)
