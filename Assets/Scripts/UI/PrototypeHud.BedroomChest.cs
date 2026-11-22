@@ -14,20 +14,13 @@ namespace FarmGame2D.UI
             EnsureShopStyles();
 
             var panel = new Rect(164f, 75f, 952f, 570f);
-            var header = new Rect(panel.x, panel.y, panel.width, 76f);
-            FarmGuiSkin.DrawSolid(new Rect(0f, 0f, HudLayout.ReferenceWidth, HudLayout.ReferenceHeight), BagScrim);
-            ShopFill(panel, ShopPaper, 18f);
-            ShopFill(header, ShopGreen, 18f);
-            FarmGuiSkin.DrawSolid(new Rect(header.x, header.y + 26f, header.width, 50f), ShopGreen);
-            DrawShopArt(new Rect(header.x + 23f, header.y + 14f, 57f, 48f), FarmhouseFurnitureArt.Chest);
-            GUI.Label(new Rect(header.x + 94f, header.y + 10f, 275f, 56f), "침실 보관함", shopHeading);
-            if (ShopButton(new Rect(header.xMax - 98f, header.y + 18f, 76f, 40f), "닫기", ShopPaper, shopSecondary))
+            if (DrawContainerFrame(panel, FarmhouseFurnitureArt.Chest, "침실 보관함"))
             {
                 session.CloseBedroomChest();
                 return;
             }
 
-            var bag = new Rect(panel.x + 22f, header.yMax + 18f, 446f, 427f);
+            var bag = new Rect(panel.x + 22f, panel.y + 94f, 446f, 427f);
             var chest = new Rect(bag.xMax + 16f, bag.y, bag.width, bag.height);
             DrawChestColumn(session, bag, session.Data.inventory, ref chestBagScroll, deposit: true);
             DrawChestColumn(session, chest, session.Data.bedroomChest, ref chestStorageScroll, deposit: false);
@@ -62,10 +55,7 @@ namespace FarmGame2D.UI
 
         private void DrawChestStack(GameSession session, Rect row, InventoryEntry entry, bool deposit)
         {
-            ShopFill(row, ShopCard, 8f);
-            DrawShopArt(new Rect(row.x + 9f, row.y + 7f, 40f, 40f), GetInventoryArt(entry.item));
-            GUI.Label(new Rect(row.x + 56f, row.y + 4f, row.width - 239f, 26f), ItemCatalog.GetLabel(entry.item), shopBody);
-            GUI.Label(new Rect(row.x + 56f, row.y + 27f, 146f, 23f), $"×{entry.quantity:N0}", shopSmall);
+            DrawContainerItem(row, entry.item, entry.quantity, row.width - 239f);
             var single = new Rect(row.xMax - 205f, row.y + 8f, 91f, 38f);
             var all = new Rect(row.xMax - 106f, row.y + 8f, 98f, 38f);
             var oneLabel = deposit ? "1개 넣기" : "1개 꺼내기";
@@ -74,6 +64,27 @@ namespace FarmGame2D.UI
                 session.MoveBedroomChestItem(entry.item, 1, deposit);
             else if (entry.quantity > 1 && ShopButton(all, allLabel, ShopGreen, shopAction))
                 session.MoveBedroomChestItem(entry.item, entry.quantity, deposit);
+        }
+
+        private bool DrawContainerFrame(Rect panel, Sprite icon, string title)
+        {
+            var header = new Rect(panel.x, panel.y, panel.width, 76f);
+            FarmGuiSkin.DrawSolid(new Rect(0f, 0f, HudLayout.ReferenceWidth, HudLayout.ReferenceHeight), BagScrim);
+            ShopFill(panel, ShopPaper, 18f);
+            ShopFill(header, ShopGreen, 18f);
+            FarmGuiSkin.DrawSolid(new Rect(header.x, header.y + 26f, header.width, 50f), ShopGreen);
+            DrawShopArt(new Rect(header.x + 23f, header.y + 14f, 57f, 48f), icon);
+            GUI.Label(new Rect(header.x + 94f, header.y + 10f, 275f, 56f), title, shopHeading);
+            return ShopButton(new Rect(header.xMax - 98f, header.y + 18f, 76f, 40f),
+                "닫기", ShopPaper, shopSecondary);
+        }
+
+        private void DrawContainerItem(Rect row, GameItem item, int quantity, float nameWidth)
+        {
+            ShopFill(row, ShopCard, 8f);
+            DrawShopArt(new Rect(row.x + 9f, row.y + 7f, 40f, 40f), GetInventoryArt(item));
+            GUI.Label(new Rect(row.x + 56f, row.y + 4f, nameWidth, 26f), ItemCatalog.GetLabel(item), shopBody);
+            GUI.Label(new Rect(row.x + 56f, row.y + 27f, nameWidth, 23f), $"×{quantity:N0}", shopSmall);
         }
     }
 }
