@@ -106,8 +106,9 @@ namespace FarmGame2D.UI
                 ShopFill(new Rect(card.x + 10f, card.y + 8f, 62f, 58f), ShopLine, 8f);
                 DrawShopArt(new Rect(card.x + 16f, card.y + 12f, 50f, 50f), GetShopArt(product));
                 GUI.Label(new Rect(card.x + 88f, card.y + 9f, 372f, 29f), product.DisplayName, shopName);
-                GUI.Label(new Rect(card.x + 88f, card.y + 37f, 372f, 25f), ShopProductNote(session, product), shopSmall);
-                GUI.Label(new Rect(card.xMax - 186f, card.y + 17f, 88f, 40f), ShopPrice(product), shopName);
+                GUI.Label(new Rect(card.x + 88f, card.y + 37f, 372f, 25f), ShopProductNote(product), shopSmall);
+                GUI.Label(new Rect(card.xMax - 186f, card.y + 8f, 88f, 29f), ShopPrice(product), shopName);
+                DrawShopStock(new Rect(card.xMax - 221f, card.y + 40f, 126f, 25f), session.Data, product);
                 ShopFill(new Rect(card.xMax - 88f, card.y + 17f, 72f, 40f), ShopPaper, 8f);
                 GUI.Label(new Rect(card.xMax - 88f, card.y + 17f, 72f, 40f), "보기 ›", shopSecondary);
                 if (GUI.Button(card, GUIContent.none, GUIStyle.none))
@@ -141,7 +142,8 @@ namespace FarmGame2D.UI
             ShopFill(icon, ShopLine, 10f);
             DrawShopArt(new Rect(icon.x + 9f, icon.y + 7f, 68f, 62f), GetShopArt(request));
             GUI.Label(new Rect(icon.xMax + 18f, icon.y + 1f, 400f, 38f), request.DisplayName, shopName);
-            GUI.Label(new Rect(icon.xMax + 18f, icon.y + 38f, 400f, 28f), ShopProductNote(session, request), shopSmall);
+            GUI.Label(new Rect(icon.xMax + 18f, icon.y + 38f, 400f, 28f), ShopProductNote(request), shopSmall);
+            DrawShopStock(new Rect(layout.Detail.xMax - 154f, icon.y + 23f, 126f, 30f), session.Data, request);
             FarmGuiSkin.DrawSolid(new Rect(layout.Detail.x + 22f, icon.yMax + 11f, layout.Detail.width - 44f, 1f), ShopLine);
 
             var guide = ShopItemGuide.Describe(request).Split('\n');
@@ -190,6 +192,12 @@ namespace FarmGame2D.UI
                 shopPurchaseConfirmation.Confirm(confirmed => ExecutePurchase(session, confirmed));
                 shopNotice = session.Message;
             }
+        }
+
+        private void DrawShopStock(Rect rect, GameSaveData data, ShopPurchaseRequest request)
+        {
+            ShopFill(rect, BagWell, 6f);
+            GUI.Label(rect, ShopStockLabel(data, request), shopSecondary);
         }
 
         private void EnsureShopStyles()

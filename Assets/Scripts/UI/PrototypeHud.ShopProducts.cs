@@ -75,7 +75,15 @@ namespace FarmGame2D.UI
 
         private static string ShopPrice(ShopPurchaseRequest request) => $"{(request.IsSale ? "+" : "")}{request.Price:N0} G";
 
-        private static string ShopProductNote(GameSession session, ShopPurchaseRequest request)
+        private static string ShopStockLabel(GameSaveData data, ShopPurchaseRequest request) => request.Kind switch
+        {
+            ShopPurchaseKind.Chicken or ShopPurchaseKind.ChickenSale => $"보유 {data.ownedChickens:N0}마리",
+            ShopPurchaseKind.Cow or ShopPurchaseKind.CowSale => $"보유 {data.ownedCows:N0}마리",
+            ShopPurchaseKind.Pickaxe => data.hasPickaxe ? "보유 1개" : "보유 0개",
+            _ => $"보유 {data.inventory.Count(request.Item):N0}개"
+        };
+
+        private static string ShopProductNote(ShopPurchaseRequest request)
         {
             return request.Kind switch
             {
@@ -84,9 +92,9 @@ namespace FarmGame2D.UI
                 ShopPurchaseKind.Feed => "닭과 소의 하루 먹이",
                 ShopPurchaseKind.Chicken => "달걀을 낳는 어른 닭",
                 ShopPurchaseKind.Cow => "우유를 내는 어른 소",
-                ShopPurchaseKind.ChickenSale => $"보유 {session.Data.ownedChickens}마리  ·  마지막 한 마리는 판매할 수 없어요",
-                ShopPurchaseKind.CowSale => $"보유 {session.Data.ownedCows}마리",
-                ShopPurchaseKind.Pickaxe => session.Data.hasPickaxe ? "구입 완료" : "광맥을 캐는 도구",
+                ShopPurchaseKind.ChickenSale => "마지막 한 마리는 판매할 수 없어요",
+                ShopPurchaseKind.CowSale => "키우던 소를 판매할 수 있어요",
+                ShopPurchaseKind.Pickaxe => "광맥을 캐는 도구",
                 ShopPurchaseKind.Ore => "광물  ·  가방에 바로 보관",
                 ShopPurchaseKind.Sprinkler => "매일 아침 아래쪽 두 칸 너비, 세 줄에 물주기",
                 _ => "빈 잔디에 놓는 장식품"
