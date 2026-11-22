@@ -101,6 +101,7 @@ namespace FarmGame2D.UI
                     || session.QuestBoardOpen
                     || session.SellBoxOpen
                     || session.TurnipMarketOpen
+                    || session.BedroomChestOpen
                     || NpcInteractionOverlay.IsOpen;
                 if (!modalOpen) DrawInventorySummary(session);
                 if (messageVisibility.ShouldShow(
@@ -147,9 +148,15 @@ namespace FarmGame2D.UI
                 if (session.TurnipMarketOpen)
                     DrawTurnipMarket(session);
 
+                if (session.BedroomChestOpen)
+                    DrawBedroomChest(session);
+                else
+                    chestBagScroll = chestStorageScroll = Vector2.zero;
+
                 var input = Event.current;
                 if (!modalOpen && input.type == EventType.MouseDown && input.button == 0
-                    && player != null && (TryOpenClickedSellBox(Input.mousePosition)
+                    && player != null && (TryOpenClickedContainer<SellBoxInteractable>(Input.mousePosition)
+                        || TryOpenClickedContainer<BedroomChestInteractable>(Input.mousePosition)
                         || player.TryInteractWithClickedNpc(Input.mousePosition)))
                 {
                     input.Use();

@@ -145,7 +145,13 @@ namespace FarmGame2D.Core
                 CloseTurnipMarket();
             }
 
-            if (Input.GetKeyDown(KeyCode.G) && !PhoneOpen && !ShopOpen && !InventoryOpen && !QuestBoardOpen && !SellBoxOpen && !TurnipMarketOpen)
+            if (BedroomChestOpen && Input.GetKeyDown(KeyCode.Escape))
+            {
+                CloseBedroomChest();
+            }
+
+            if (Input.GetKeyDown(KeyCode.G) && !PhoneOpen && !ShopOpen && !InventoryOpen
+                && !QuestBoardOpen && !SellBoxOpen && !TurnipMarketOpen && !BedroomChestOpen)
             {
                 ToggleDogSit();
             }
@@ -553,6 +559,7 @@ namespace FarmGame2D.Core
         public void TogglePhone()
         {
             PhoneOpen = !PhoneOpen;
+            BedroomChestOpen = false;
             ShopOpen = false;
             InventoryOpen = false;
             QuestBoardOpen = false;
@@ -588,6 +595,7 @@ namespace FarmGame2D.Core
         public void ToggleInventory()
         {
             InventoryOpen = !InventoryOpen;
+            BedroomChestOpen = false;
             PhoneOpen = false;
             ShopOpen = false;
             QuestBoardOpen = false;
@@ -1293,6 +1301,7 @@ namespace FarmGame2D.Core
         private void ApplyLoadedData(GameSaveData loaded, string successMessage)
         {
             CloseFarmFacility();
+            BedroomChestOpen = false;
             Data = loaded;
             EnsurePlotCount();
             StarterQuestProgress.EnsureCurrentWeek(Data);

@@ -20,6 +20,7 @@ namespace FarmGame2D.Core
         public float playerX;
         public float playerY = -12f;
         public InventoryModel inventory = new();
+        public InventoryModel bedroomChest = new();
         public List<NpcFriendshipData> npcFriendships = new();
         public string spouseNpcId = string.Empty;
         public bool weddingSeen;

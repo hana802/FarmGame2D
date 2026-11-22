@@ -56,7 +56,7 @@ namespace FarmGame2D.Core
         private void DiscardExpiredTurnips()
         {
             if (processedDay <= 1 || !TurnipMarket.IsPurchaseDay(processedDay)) return;
-            var rotted = TurnipMarket.Discard(Data.inventory);
+            var rotted = (long)TurnipMarket.Discard(Data.inventory) + TurnipMarket.Discard(Data.bedroomChest);
             if (rotted > 0)
                 TurnipNotice = $"지난주의 순무 {rotted}개가 썩어 없어졌어요.";
         }

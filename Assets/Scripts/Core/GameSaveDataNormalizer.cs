@@ -20,6 +20,8 @@ namespace FarmGame2D.Core
         {
             data.version = GameSaveData.CurrentVersion;
             data.inventory ??= new InventoryModel();
+            data.bedroomChest ??= new InventoryModel();
+            data.bedroomChest.entries ??= new List<InventoryEntry>();
             data.npcFriendships ??= new List<NpcFriendshipData>();
             data.pulledWeedIds ??= new List<int>();
             data.farmPlots ??= new List<FarmPlotData>();

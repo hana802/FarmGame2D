@@ -175,17 +175,17 @@ namespace FarmGame2D.UI
             saleAmount = ShopStyle(22, SaleHeader, FontStyle.Bold, TextAnchor.MiddleCenter);
         }
 
-        private bool TryOpenClickedSellBox(Vector2 screenPosition)
+        private bool TryOpenClickedContainer<T>(Vector2 screenPosition) where T : InteractableBehaviour
         {
             if (!(Camera.main is Camera worldCamera)) return false;
             var point = worldCamera.ScreenToWorldPoint(screenPosition);
-            foreach (var sellBox in FindObjectsByType<SellBoxInteractable>(FindObjectsSortMode.None))
+            foreach (var container in FindObjectsByType<T>())
             {
-                if (Vector2.Distance(player.transform.position, sellBox.transform.position) > 1.8f
-                    || !sellBox.TryGetComponent<SpriteRenderer>(out var boxRenderer)) continue;
+                if (Vector2.Distance(player.transform.position, container.transform.position) > 1.8f
+                    || !container.TryGetComponent<SpriteRenderer>(out var boxRenderer)) continue;
                 point.z = boxRenderer.bounds.center.z;
                 if (!boxRenderer.bounds.Contains(point)) continue;
-                sellBox.Interact(player);
+                container.Interact(player);
                 return true;
             }
             return false;

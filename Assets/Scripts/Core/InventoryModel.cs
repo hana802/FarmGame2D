@@ -55,6 +55,18 @@ namespace FarmGame2D.Core
             return true;
         }
 
+        public bool TryMoveTo(InventoryModel destination, GameItem item, int quantity)
+        {
+            if (destination == null || destination == this || quantity <= 0
+                || destination.Count(item) > int.MaxValue - quantity || !TrySpend(item, quantity))
+            {
+                return false;
+            }
+
+            destination.Add(item, quantity);
+            return true;
+        }
+
         private InventoryEntry Find(GameItem item)
         {
             return entries.Find(entry => entry.item == item);

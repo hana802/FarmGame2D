@@ -43,8 +43,14 @@ namespace FarmGame2D.World
             CreateWorldArt("Bedroom Rug", WorldArtKind.InteriorRug, bedroomCenter + new Vector2(0f, -0.35f), bedroom, 2);
             CreateArtInteractable<BedInteractable>("Upstairs Bed", WorldArtKind.InteriorBed,
                 bedroomCenter + new Vector2(2.45f, 0.65f), new Vector2(1.3f, 2.2f), bedroom);
-            AddHouseFurniture("Bedroom Chest", FarmhouseFurnitureArt.Chest, bedroomCenter + new Vector2(-2.5f, 1.4f),
+            var chestPosition = bedroomCenter + new Vector2(-2.5f, 1.4f);
+            var chest = AddHouseFurniture("Bedroom Chest", FarmhouseFurnitureArt.Chest, chestPosition,
                 new Vector2(1.15f, 0.62f), bedroom);
+            var handle = chest.AddComponent<BoxCollider2D>();
+            handle.isTrigger = true;
+            handle.size = new Vector2(1.15f, 0.6f);
+            handle.offset = Vector2.down * 0.25f;
+            chest.AddComponent<BedroomChestInteractable>();
             AddStair("Stairs to Ground Floor", bedroomCenter + new Vector2(0f, -2.75f), center + new Vector2(0f, 1.25f),
                 "1층으로 내려가기", bedroom);
 
@@ -129,10 +135,11 @@ namespace FarmGame2D.World
             stair.AddComponent<DoorInteractable>().Configure(destination, prompt, string.Empty);
         }
 
-        private static void AddHouseFurniture(string name, Sprite art, Vector2 position, Vector2 footprint, Transform parent)
+        private static GameObject AddHouseFurniture(string name, Sprite art, Vector2 position, Vector2 footprint, Transform parent)
         {
             var item = CreateBuildingDetail(name, art, position, parent);
             CreateSolidCollider($"{name} Blocker", item.transform, new Vector2(0f, 0.25f), footprint);
+            return item;
         }
 
         private static GameObject CreateBuildingDetail(string name, Sprite sprite, Vector2 point, Transform parent)
