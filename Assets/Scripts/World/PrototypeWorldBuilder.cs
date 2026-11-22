@@ -134,7 +134,7 @@ namespace FarmGame2D.World
             CreateVillageSquareNoticeboardArt(villageSquare.transform);
             CreateVillageSquareBlockers(villageSquare.transform);
 
-            CreateNoticeEntrance("Town Hall Entrance", new Vector2(0f, 10.55f), "시청에 들어가기", "시청 내부는 아직 준비 중입니다.", townRoot);
+            BuildTownHall(townRoot);
             var miningShop = CreateInteractable<ShopInteractable>("General Store Entrance", new Vector2(-5.8f, 6.25f), new Vector2(1.2f, 0.55f), Color.clear, townRoot);
             miningShop.Configure(ShopKind.Mining);
             var farmShop = CreateInteractable<ShopInteractable>("Seed And Feed Shop Entrance", new Vector2(5.8f, 6.25f), new Vector2(1.2f, 0.55f), Color.clear, townRoot);

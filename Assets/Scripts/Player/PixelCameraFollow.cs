@@ -55,6 +55,7 @@ namespace FarmGame2D.Player
 
         private static Vector2 GetInteriorCenter(Vector2 position)
         {
+            if (WorldAreaProfile.IsTownHall(position)) return WorldAreaProfile.TownHallCenter;
             if (WorldAreaProfile.IsFarmhouseBedroom(position)) return WorldAreaProfile.FarmhouseBedroomCenter;
             if (position.x <= WorldAreaProfile.HouseInteriorBoundaryX) return WorldAreaProfile.FarmhouseInteriorCenter;
 
@@ -67,13 +68,14 @@ namespace FarmGame2D.Player
         private void ApplyViewForPosition(Vector2 position)
         {
             IsInteriorView = WorldAreaProfile.IsInterior(position);
-            worldCamera.orthographicSize = IsInteriorView
+            var useSmallRoomView = IsInteriorView && !WorldAreaProfile.IsTownHall(position);
+            worldCamera.orthographicSize = useSmallRoomView
                 ? WorldAreaProfile.InteriorCameraSize
                 : WorldAreaProfile.OutdoorCameraSize;
-            pixelPerfect.refResolutionX = IsInteriorView
+            pixelPerfect.refResolutionX = useSmallRoomView
                 ? WorldAreaProfile.InteriorReferenceWidth
                 : WorldAreaProfile.OutdoorReferenceWidth;
-            pixelPerfect.refResolutionY = IsInteriorView
+            pixelPerfect.refResolutionY = useSmallRoomView
                 ? WorldAreaProfile.InteriorReferenceHeight
                 : WorldAreaProfile.OutdoorReferenceHeight;
         }

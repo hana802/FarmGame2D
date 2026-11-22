@@ -32,7 +32,8 @@ namespace FarmGame2D.Art
         FisherHut,
         HarborPier,
         HarborBoat,
-        WeekendMerchant
+        WeekendMerchant,
+        TownHallInterior
     }
 
     public enum WorldTileKind
@@ -203,6 +204,8 @@ namespace FarmGame2D.Art
             return kind switch
             {
                 WorldArtKind.FarmHouse => new("Art/World/farm_house_v1", new Rect(366f, 88f, 804f, 828f), 160f),
+                WorldArtKind.TownHallInterior => new("Art/World/town_hall_interior_v1",
+                    new Rect(0, 0, 1672, 941), 112f, new Vector2(0.5f, 0.5f)),
                 WorldArtKind.TownHall => new("Art/World/town_hall_v1", new Rect(168f, 10f, 1200f, 1004f), 200f),
                 WorldArtKind.GeneralStore => new("Art/World/general_store_v1", new Rect(161f, 22f, 1216f, 979f), 220f),
                 WorldArtKind.SeedFeedShop => new("Art/World/seed_feed_shop_v1", new Rect(230f, 42f, 1073f, 982f), 205f),

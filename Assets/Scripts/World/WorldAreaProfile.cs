@@ -13,17 +13,25 @@ namespace FarmGame2D.World
         public const int InteriorReferenceHeight = 225;
         public const float HouseInteriorBoundaryX = 47f;
         public const float FarmhouseBedroomBoundaryX = 63f;
+        public const float TownHallBoundaryX = 83f;
         public static readonly Vector2 FarmConstructionSite = new(3.05f, -13.15f);
         public static readonly Vector2 FarmhouseInteriorCenter = new(40f, -9.25f);
         public static readonly Vector2 FarmhouseEntranceSpawn = new(40f, -11.2f);
         public static readonly Vector2 FarmhouseBedroomCenter = new(70f, -9.25f);
         public static readonly Vector2 FarmhouseBedroomEntry = new(70f, -11.2f);
 
-        public static bool IsFarmhouseBedroom(Vector2 position) => position.x >= FarmhouseBedroomBoundaryX;
+        public static readonly Vector2 TownHallCenter = new(90f, -9.25f);
+        public static readonly Vector2 TownHallEntry = TownHallCenter + new Vector2(0f, -2.82f);
+        public static readonly Vector2 TownHallExit = new(0f, 9.68f);
+
+        public static bool IsTownHall(Vector2 position) => position.x >= TownHallBoundaryX;
+
+        public static bool IsFarmhouseBedroom(Vector2 position) =>
+            position.x >= FarmhouseBedroomBoundaryX && !IsTownHall(position);
 
         public static bool NeedsFarmhouseRelocation(float x, float y, int upgradeLevel)
         {
-            if (x >= FarmhouseBedroomBoundaryX) return upgradeLevel == 0;
+            if (IsFarmhouseBedroom(new Vector2(x, y))) return upgradeLevel == 0;
             return x >= InteriorStartX && x < HouseInteriorBoundaryX
                 && (x < 36f || x > 44f || y > -6.65f);
         }
