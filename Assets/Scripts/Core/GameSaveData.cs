@@ -23,6 +23,7 @@ namespace FarmGame2D.Core
         public InventoryModel bedroomChest = new();
         public List<NpcFriendshipData> npcFriendships = new();
         public string spouseNpcId = string.Empty;
+        public string weddingSpouseNpcId = string.Empty;
         public bool weddingSeen;
         public int spouseHelpLastDay;
         public List<FarmPlotData> farmPlots = new();

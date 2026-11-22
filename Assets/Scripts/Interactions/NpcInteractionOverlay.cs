@@ -53,6 +53,7 @@ namespace FarmGame2D.Interactions
             instance.portraitRow = dialoguePortraitRow;
             instance.choosingGift = false;
             instance.choosingFarmHelp = false;
+            instance.choosingDivorce = false;
             var data = GameSession.Instance?.Data;
             instance.activeBondEvent = data == null ? null :
                 BondEventService.GetPendingNpcEnding(data, instance.npcId) ??
@@ -99,21 +100,22 @@ namespace FarmGame2D.Interactions
             speakerMover?.Pause(0.25f);
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (choosingFarmHelp) choosingFarmHelp = false;
+                if (choosingDivorce) choosingDivorce = false;
+                else if (choosingFarmHelp) choosingFarmHelp = false;
                 else if (choosingGift) choosingGift = false;
                 else Close();
             }
-            else if (!choosingFarmHelp && !choosingGift && !activeBondEvent.HasValue && Time.frameCount != openedFrame
+            else if (!choosingDivorce && !choosingFarmHelp && !choosingGift && !activeBondEvent.HasValue && Time.frameCount != openedFrame
                 && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return)))
             {
                 Close();
             }
 
-            if (choosingGift || choosingFarmHelp || activeBondEvent.HasValue)
+            if (choosingGift || choosingFarmHelp || choosingDivorce || activeBondEvent.HasValue)
             {
                 dialogueVisibleUntil = Time.unscaledTime + VillagerDialogueDismiss.Seconds;
             }
-            else if (VillagerDialogueDismiss.ShouldClose(choosingGift, choosingFarmHelp, activeBondEvent.HasValue, dialogueVisibleUntil, Time.unscaledTime))
+            else if (VillagerDialogueDismiss.ShouldClose(choosingGift, choosingFarmHelp || choosingDivorce, activeBondEvent.HasValue, dialogueVisibleUntil, Time.unscaledTime))
             {
                 Close();
             }
@@ -174,6 +176,12 @@ namespace FarmGame2D.Interactions
             var viewport = HudLayout.CalculateViewport(Screen.width, Screen.height);
             GUI.matrix = Matrix4x4.TRS(new Vector3(viewport.OffsetX, viewport.OffsetY, 0f), Quaternion.identity,
                 new Vector3(viewport.Scale, viewport.Scale, 1f));
+            if (choosingDivorce)
+            {
+                DrawDivorceConfirm(new Rect(390f, 180f, 500f, 340f), data);
+                return;
+            }
+
             if (choosingFarmHelp)
             {
                 DrawFarmHelpMenu(new Rect(380f, 145f, 520f, 430f), GameSession.Instance);
@@ -184,6 +192,12 @@ namespace FarmGame2D.Interactions
                 HudLayout.ReferenceHeight - 252f, 840f, 204f);
             var body = new Rect(panel.x + 28f, panel.y + 65f, panel.width - 56f, 80f);
             DrawDialogueCard(panel, body);
+            if (!choosingGift && BondEventService.IsSpouse(data, npcId)
+                && DrawDialogueButton(new Rect(panel.xMax - 156f, panel.y + 14f, 124f, 36f), "이혼하기", new Color32(232, 196, 184, 255)))
+            {
+                choosingGift = false;
+                choosingDivorce = true;
+            }
 
             var footer = new Rect(body.x, body.yMax + 10f, body.width, 36f);
             DrawFriendship(new Rect(footer.x, footer.y, 340f, footer.height), data);
@@ -381,6 +395,7 @@ namespace FarmGame2D.Interactions
         private void Close()
         {
             choosingFarmHelp = false;
+            choosingDivorce = false;
             choosingGift = false;
             activeBondEvent = null;
             speakerMover?.Resume();

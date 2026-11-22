@@ -24,6 +24,10 @@ namespace FarmGame2D.Core
     {
         public const int DogCompanionThreshold = 10;
         public const int DogEndingThreshold = 50;
+        public const int DivorceCost = 5000;
+        public const int DivorceFriendshipPoints = 20;
+
+        public enum DivorceOutcome { NotSpouse, TooPoor, Divorced }
 
         public static BondEventDefinition? GetPendingNpcEnding(GameSaveData data, string npcId)
         {
@@ -47,6 +51,19 @@ namespace FarmGame2D.Core
             data.spouseNpcId = npcId;
             data.weddingSeen = false;
             return true;
+        }
+
+        public static DivorceOutcome TryDivorce(GameSaveData data, string npcId)
+        {
+            if (!IsSpouse(data, npcId)) return DivorceOutcome.NotSpouse;
+            if (data.money < DivorceCost) return DivorceOutcome.TooPoor;
+
+            data.money -= DivorceCost;
+            var friendship = NpcFriendshipService.GetOrCreate(data, npcId);
+            if (friendship != null) friendship.points = DivorceFriendshipPoints;
+            if (string.IsNullOrEmpty(data.weddingSpouseNpcId)) data.weddingSpouseNpcId = npcId;
+            data.spouseNpcId = string.Empty;
+            return DivorceOutcome.Divorced;
         }
 
         public static BondEventDefinition? GetPendingWedding(GameSaveData data, string npcId)
@@ -96,7 +113,11 @@ namespace FarmGame2D.Core
                     data.dogEndingSeen = true;
                     break;
                 case BondEventKind.Wedding:
-                    if (IsSpouse(data, bondEvent.NpcId)) data.weddingSeen = true;
+                    if (IsSpouse(data, bondEvent.NpcId))
+                    {
+                        data.weddingSeen = true;
+                        data.weddingSpouseNpcId = bondEvent.NpcId;
+                    }
                     break;
             }
         }

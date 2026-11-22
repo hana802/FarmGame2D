@@ -23,6 +23,10 @@ namespace FarmGame2D.Core
             data.bedroomChest ??= new InventoryModel();
             data.bedroomChest.entries ??= new List<InventoryEntry>();
             data.npcFriendships ??= new List<NpcFriendshipData>();
+            data.spouseNpcId ??= string.Empty;
+            data.weddingSpouseNpcId ??= string.Empty;
+            if (data.weddingSeen && string.IsNullOrEmpty(data.weddingSpouseNpcId))
+                data.weddingSpouseNpcId = data.spouseNpcId;
             data.pulledWeedIds ??= new List<int>();
             data.farmPlots ??= new List<FarmPlotData>();
             data.miningNodes ??= new List<MiningNodeData>();

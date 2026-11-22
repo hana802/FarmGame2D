@@ -146,5 +146,38 @@ namespace FarmGame2D.Tests.Editor.Gameplay
             Assert.That(restored.spouseNpcId, Is.EqualTo("Florist Taeo"));
             Assert.That(restored.weddingSeen, Is.True);
         }
+
+        [Test]
+        public void Divorce_CostsFiveThousandAndLeavesRemarriageOpen()
+        {
+            var save = GameSaveData.CreateNew(0, 1);
+            save.money = 4999;
+            var yuna = NpcFriendshipService.GetOrCreate(save, "Baker Yuna");
+            var sora = NpcFriendshipService.GetOrCreate(save, "Rancher Sora");
+            yuna.points = 100;
+            sora.points = 100;
+            Assert.That(BondEventService.TryDivorce(save, "Baker Yuna"), Is.EqualTo(BondEventService.DivorceOutcome.NotSpouse));
+
+            Assert.That(BondEventService.TryAcceptMarriage(save, "Baker Yuna"), Is.True);
+            BondEventService.Complete(save, BondEventService.GetPendingWedding(save, "Baker Yuna").Value);
+            Assert.That(BondEventService.TryDivorce(save, "Baker Yuna"), Is.EqualTo(BondEventService.DivorceOutcome.TooPoor));
+            Assert.That(save.spouseNpcId, Is.EqualTo("Baker Yuna"));
+            Assert.That(yuna.points, Is.EqualTo(100));
+
+            save.money = 5000;
+            Assert.That(BondEventService.TryDivorce(save, "Baker Yuna"), Is.EqualTo(BondEventService.DivorceOutcome.Divorced));
+            Assert.That(save.money, Is.Zero);
+            Assert.That(save.spouseNpcId, Is.Empty);
+            Assert.That(yuna.points, Is.EqualTo(20));
+            Assert.That(save.weddingSeen, Is.True);
+            Assert.That(save.weddingSpouseNpcId, Is.EqualTo("Baker Yuna"));
+            Assert.That(FarmAchievements.GetAll(save).First(record => record.Title == "우리의 결혼식").Detail, Does.Contain("유나"));
+
+            Assert.That(BondEventService.GetMarriageProposal(save, "Baker Yuna"), Is.Null);
+            Assert.That(BondEventService.GetMarriageProposal(save, "Rancher Sora").HasValue, Is.True);
+            yuna.points = 100;
+            Assert.That(BondEventService.TryAcceptMarriage(save, "Baker Yuna"), Is.True);
+            Assert.That(BondEventService.GetPendingWedding(save, "Baker Yuna").HasValue, Is.True);
+        }
     }
 }

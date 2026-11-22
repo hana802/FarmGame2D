@@ -20,8 +20,9 @@ namespace FarmGame2D.Core
 
         public static IEnumerable<Entry> GetAll(GameSaveData data)
         {
+            var weddingNameId = !string.IsNullOrEmpty(data.spouseNpcId) ? data.spouseNpcId : data.weddingSpouseNpcId;
             yield return new Entry("우리의 결혼식", data.weddingSeen
-                ? $"{BondEventService.GetResidentName(data.spouseNpcId)} 님과 결혼식을 올렸어요."
+                ? $"{BondEventService.GetResidentName(weddingNameId)} 님과 결혼식을 올렸어요."
                 : "결혼식이 열리면 기록돼요.", data.weddingSeen);
             yield return new Entry("친구가 된 날", "강아지와 처음 마음을 나눈 날", data.dogCompanionEventSeen);
             yield return new Entry("언제나 함께", "강아지와 오래도록 우정 쌓기", data.dogEndingSeen);
