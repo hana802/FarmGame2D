@@ -33,7 +33,8 @@ namespace FarmGame2D.Core
         Wood,
         Sprinkler,
         PotatoSoup,
-        TomatoOmelet
+        TomatoOmelet,
+        Turnip
     }
 
     public enum FarmTool

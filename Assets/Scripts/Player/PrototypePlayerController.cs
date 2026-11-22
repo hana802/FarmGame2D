@@ -61,6 +61,7 @@ namespace FarmGame2D.Player
 
             if (GameSession.Instance.InventoryOpen || GameSession.Instance.PhoneOpen || GameSession.Instance.ShopOpen
                 || GameSession.Instance.QuestBoardOpen || GameSession.Instance.SellBoxOpen
+                || GameSession.Instance.TurnipMarketOpen
                 || GameSession.Instance.OpenFacility != FarmFacility.None || NpcInteractionOverlay.IsOpen
                 || SleepTransitionOverlay.IsPlaying)
             {

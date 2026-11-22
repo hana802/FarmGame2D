@@ -140,7 +140,12 @@ namespace FarmGame2D.Core
                 CloseSellBox();
             }
 
-            if (Input.GetKeyDown(KeyCode.G) && !PhoneOpen && !ShopOpen && !InventoryOpen && !QuestBoardOpen && !SellBoxOpen)
+            if (TurnipMarketOpen && Input.GetKeyDown(KeyCode.Escape))
+            {
+                CloseTurnipMarket();
+            }
+
+            if (Input.GetKeyDown(KeyCode.G) && !PhoneOpen && !ShopOpen && !InventoryOpen && !QuestBoardOpen && !SellBoxOpen && !TurnipMarketOpen)
             {
                 ToggleDogSit();
             }
@@ -472,6 +477,7 @@ namespace FarmGame2D.Core
         public void OpenSellBox()
         {
             SellBoxOpen = true;
+            TurnipMarketOpen = false;
             PhoneOpen = false;
             ShopOpen = false;
             InventoryOpen = false;
@@ -551,6 +557,7 @@ namespace FarmGame2D.Core
             InventoryOpen = false;
             QuestBoardOpen = false;
             SellBoxOpen = false;
+            TurnipMarketOpen = false;
             NotifyChanged();
         }
 
@@ -568,6 +575,7 @@ namespace FarmGame2D.Core
             InventoryOpen = false;
             QuestBoardOpen = false;
             SellBoxOpen = false;
+            TurnipMarketOpen = false;
             NotifyChanged();
         }
 
@@ -578,6 +586,7 @@ namespace FarmGame2D.Core
             ShopOpen = false;
             QuestBoardOpen = false;
             SellBoxOpen = false;
+            TurnipMarketOpen = false;
             NotifyChanged();
         }
 
@@ -588,6 +597,7 @@ namespace FarmGame2D.Core
             ShopOpen = false;
             InventoryOpen = false;
             SellBoxOpen = false;
+            TurnipMarketOpen = false;
             NotifyChanged();
         }
 
@@ -973,6 +983,7 @@ namespace FarmGame2D.Core
         private void ProcessNewDay()
         {
             StarterQuestProgress.EnsureCurrentWeek(Data);
+            DiscardExpiredTurnips();
             FarmUpgradeRules.WaterGreenhousePlots(Data);
             foreach (var plot in Data.farmPlots)
             {

@@ -24,7 +24,7 @@ namespace FarmGame2D.UI
         };
         private static readonly GameItem[] AnimalAndFishProducts =
         {
-            GameItem.Egg, GameItem.Milk, GameItem.RiverFish, GameItem.SeaBass, GameItem.GoldenCarp
+            GameItem.Turnip, GameItem.Egg, GameItem.Milk, GameItem.RiverFish, GameItem.SeaBass, GameItem.GoldenCarp
         };
         private static readonly GameItem[] InventoryMaterials =
         {

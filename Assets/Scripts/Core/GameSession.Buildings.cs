@@ -13,6 +13,8 @@ namespace FarmGame2D.Core
             if (facility == FarmFacility.Kitchen && Data.houseUpgradeLevel < 2) return;
             OpenFacility = facility;
             FacilityNotice = string.Empty;
+            TurnipMarketOpen = false;
+            SellBoxOpen = false;
         }
 
         public void CloseFarmFacility()

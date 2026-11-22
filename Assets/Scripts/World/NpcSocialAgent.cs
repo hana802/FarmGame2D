@@ -315,6 +315,7 @@ namespace FarmGame2D.World
                     || session.PhoneOpen
                     || session.QuestBoardOpen
                     || session.SellBoxOpen
+                    || session.TurnipMarketOpen
                     || NpcInteractionOverlay.IsOpen);
         }
 

@@ -100,6 +100,7 @@ namespace FarmGame2D.UI
                     || session.OpenFacility != FarmFacility.None
                     || session.QuestBoardOpen
                     || session.SellBoxOpen
+                    || session.TurnipMarketOpen
                     || NpcInteractionOverlay.IsOpen;
                 if (!modalOpen) DrawInventorySummary(session);
                 if (messageVisibility.ShouldShow(
@@ -142,6 +143,9 @@ namespace FarmGame2D.UI
                     DrawSellBox(session);
                 else
                     sellBoxWasOpen = false;
+
+                if (session.TurnipMarketOpen)
+                    DrawTurnipMarket(session);
 
                 var input = Event.current;
                 if (!modalOpen && input.type == EventType.MouseDown && input.button == 0

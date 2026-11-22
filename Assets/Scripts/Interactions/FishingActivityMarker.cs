@@ -49,7 +49,7 @@ namespace FarmGame2D.Interactions
         {
             var session = GameSession.Instance;
             return session != null
-                && (session.PhoneOpen || session.ShopOpen || session.InventoryOpen || session.QuestBoardOpen || session.SellBoxOpen);
+                && (session.PhoneOpen || session.ShopOpen || session.InventoryOpen || session.QuestBoardOpen || session.SellBoxOpen || session.TurnipMarketOpen);
         }
     }
 }
