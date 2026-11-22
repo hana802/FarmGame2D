@@ -29,9 +29,9 @@ namespace FarmGame2D.Core
         {
             var price = TurnipMarket.BuyPrice(Data.worldSeed, Data.day);
             var bought = TurnipMarket.Buy(Data, quantity);
-            Message = bought > 0
-                ? $"순무 {bought}개를 {bought * price}G에 샀어요."
-                : TurnipMarket.IsPurchaseDay(Data.day) ? "순무를 살 돈이 부족해요." : "순무는 매주 첫날에만 살 수 있어요.";
+            Message = TurnipNotice = bought > 0
+                ? $"순무 씨앗 {bought}개를 {bought * price}G에 샀어요."
+                : TurnipMarket.IsPurchaseDay(Data.day) ? "순무 씨앗을 살 돈이 부족해요." : "순무 씨앗은 매주 첫날에만 살 수 있어요.";
             NotifyChanged();
             if (bought > 0) SaveSilently();
         }
@@ -42,13 +42,13 @@ namespace FarmGame2D.Core
             var income = TurnipMarket.Sell(Data, quantity);
             if (income <= 0)
             {
-                Message = "팔 순무가 없어요.";
+                Message = TurnipNotice = "팔 순무가 없어요.";
                 NotifyChanged();
                 return;
             }
 
             var sold = before - Data.inventory.Count(GameItem.Turnip);
-            Message = $"순무 {sold}개를 오늘 시세에 팔아 {income}G를 받았어요.";
+            Message = TurnipNotice = $"순무 {sold}개를 오늘 시세에 팔아 {income}G를 받았어요.";
             NotifyChanged();
             SaveSilently();
         }

@@ -30,13 +30,14 @@ namespace FarmGame2D.UI
             var buy = TurnipMarket.BuyPrice(data.worldSeed, data.day);
             var sell = TurnipMarket.SellPrice(data.worldSeed, data.day);
             var owned = data.inventory.Count(GameItem.Turnip);
+            var seeds = data.inventory.Count(GameItem.TurnipSeed);
             var card = new Rect(panel.x + 24f, header.yMax + 18f, panel.width - 48f, 214f);
             ShopFill(card, ShopCard, 12f);
             GUI.Label(new Rect(card.x + 22f, card.y + 16f, card.width - 44f, 58f), TurnipMarket.PurchaseNote(data.day), shopBody);
-            var priceLine = buying ? $"이번 주 구매가  {buy:N0} G    ·    오늘 시세  {sell:N0} G" : $"오늘 시세  {sell:N0} G";
+            var priceLine = buying ? $"씨앗 한 개  {buy:N0} G    ·    오늘 시세  {sell:N0} G" : $"오늘 시세  {sell:N0} G";
             GUI.Label(new Rect(card.x + 22f, card.y + 84f, card.width - 44f, 34f), priceLine, shopName);
-            GUI.Label(new Rect(card.x + 22f, card.y + 124f, card.width - 44f, 30f), $"가진 순무  {owned:N0}개", shopSmall);
-            GUI.Label(new Rect(card.x + 22f, card.y + 158f, card.width - 44f, 30f), TurnipMarket.FreshnessNote(data.day), shopSmall);
+            GUI.Label(new Rect(card.x + 22f, card.y + 124f, card.width - 44f, 30f), $"순무 씨앗  {seeds:N0}개    ·    판매할 순무  {owned:N0}개", shopSmall);
+            GUI.Label(new Rect(card.x + 22f, card.y + 158f, card.width - 44f, 30f), owned > 0 ? TurnipMarket.FreshnessNote(data.day) : "수확한 순무는 다음 주 아침에 썩어요.", shopSmall);
 
             var notice = string.IsNullOrEmpty(session.TurnipNotice)
                 ? "판매 상자에는 순무가 안 팔려요. 시세는 하루가 바뀔 때 한 번 움직입니다."
@@ -44,8 +45,8 @@ namespace FarmGame2D.UI
             GUI.Label(new Rect(panel.x + 28f, card.yMax + 12f, panel.width - 56f, 48f), notice, shopSmall);
 
             var buttonY = panel.yMax - 78f;
-            DrawTurnipButton(new Rect(panel.x + 24f, buttonY, 174f, 52f), buying && data.money >= buy, "1개 사기", () => session.BuyTurnips(1));
-            DrawTurnipButton(new Rect(panel.x + 210f, buttonY, 174f, 52f), buying && data.money >= buy, "10개 사기", () => session.BuyTurnips(10));
+            DrawTurnipButton(new Rect(panel.x + 24f, buttonY, 174f, 52f), buying && data.money >= buy, "씨앗 1개 사기", () => session.BuyTurnips(1));
+            DrawTurnipButton(new Rect(panel.x + 210f, buttonY, 174f, 52f), buying && data.money >= buy, "씨앗 10개 사기", () => session.BuyTurnips(10));
             DrawTurnipButton(new Rect(panel.x + 396f, buttonY, 174f, 52f), owned > 0, "1개 팔기", () => session.SellTurnips(1));
             DrawTurnipButton(new Rect(panel.x + 582f, buttonY, 174f, 52f), owned > 0, "모두 팔기", () => session.SellTurnips(owned));
         }

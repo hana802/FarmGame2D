@@ -18,6 +18,62 @@ namespace FarmGame2D.Tests
     public sealed class MainSceneSmokeTests
     {
         [UnityTest]
+        public IEnumerator MarketSeedsProduceSellableTurnipsAfterTwoWateredDays()
+        {
+            SceneManager.LoadScene("Main");
+            yield return null;
+            yield return null;
+
+            var session = GameSession.Instance;
+            var inventory = session.Data.inventory;
+            var clock = GameClockController.Instance;
+            const int winterWeekStart = SeasonCalendar.DaysPerSeason * 3 + 1;
+            clock.SetTime(winterWeekStart, 6, 0);
+            session.Data.money = 500;
+            inventory.TrySpend(GameItem.Turnip, inventory.Count(GameItem.Turnip));
+            inventory.TrySpend(GameItem.TurnipSeed, inventory.Count(GameItem.TurnipSeed));
+
+            session.PurchaseSeed(GameItem.TurnipSeed, anySeason: true);
+            Assert.That(inventory.Count(GameItem.TurnipSeed), Is.Zero);
+            var market = GameObject.Find("Weekend Merchant").GetComponent<TurnipMarketInteractable>();
+            market.Interact(Object.FindFirstObjectByType<PrototypePlayerController>());
+            Assert.That(session.TurnipMarketOpen, Is.True);
+            session.BuyTurnips(1);
+            session.CloseTurnipMarket();
+            Assert.That(inventory.Count(GameItem.TurnipSeed), Is.EqualTo(1));
+            Assert.That(TurnipMarket.Sell(session.Data, 1), Is.Zero);
+
+            var plotIndex = session.Data.farmPlots.Count;
+            var plot = new FarmPlotData { state = SoilState.Tilled };
+            session.Data.farmPlots.Add(plot);
+            session.SelectSeed(GameItem.TurnipSeed);
+            session.UsePlot(plotIndex);
+            Assert.That(plot.plantedSeed, Is.EqualTo(GameItem.TurnipSeed));
+            Assert.That(plot.state, Is.EqualTo(SoilState.Planted));
+            Assert.That(inventory.Count(GameItem.TurnipSeed), Is.Zero);
+
+            session.SelectTool(FarmTool.WateringCan);
+            session.UsePlot(plotIndex);
+            clock.SetTime(winterWeekStart + 1, 6, 0);
+            Assert.That(plot.growthDays, Is.EqualTo(1));
+            Assert.That(plot.state, Is.EqualTo(SoilState.Planted));
+            Assert.That(TurnipMarket.Sell(session.Data, 1), Is.Zero);
+
+            session.UsePlot(plotIndex);
+            clock.SetTime(winterWeekStart + 2, 6, 0);
+            Assert.That(plot.state, Is.EqualTo(SoilState.Ready));
+            Assert.That(TurnipMarket.Sell(session.Data, 1), Is.Zero);
+            session.UsePlot(plotIndex);
+            Assert.That(inventory.Count(GameItem.Turnip), Is.EqualTo(1));
+
+            var moneyBeforeSale = session.Data.money;
+            session.SellTurnips(1);
+            Assert.That(inventory.Count(GameItem.Turnip), Is.Zero);
+            Assert.That(session.Data.money, Is.EqualTo(moneyBeforeSale +
+                TurnipMarket.SellPrice(session.Data.worldSeed, session.Data.day)));
+        }
+
+        [UnityTest]
         public IEnumerator FarmhouseUpgrades_ConnectTheBedroomAndKeepDailyFacilitiesOnTheGroundFloor()
         {
             SceneManager.LoadScene("Main");

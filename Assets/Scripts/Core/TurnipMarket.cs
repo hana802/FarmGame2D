@@ -42,8 +42,8 @@ namespace FarmGame2D.Core
         public static int DaysUntilRot(int day) => WeekLength - DayIndex(day);
 
         public static string PurchaseNote(int day) => IsPurchaseDay(day)
-            ? "오늘은 순무를 사는 날이에요. 계절과 상관없이 매주 첫날입니다."
-            : "오늘은 순무를 사지 않아요. 가진 순무는 오늘 시세에 팔 수 있어요.";
+            ? "매주 첫날에 순무 씨앗을 팔아요. 밭에 심고 이틀 물을 주면 수확할 수 있어요."
+            : "순무 씨앗은 매주 첫날에 팔아요. 수확한 순무는 오늘 시세에 팔 수 있어요.";
 
         public static string FreshnessNote(int day)
         {
@@ -58,7 +58,7 @@ namespace FarmGame2D.Core
             quantity = Math.Min(quantity, data.money / price);
             if (quantity <= 0) return 0;
             data.money -= quantity * price;
-            data.inventory.Add(GameItem.Turnip, quantity);
+            data.inventory.Add(GameItem.TurnipSeed, quantity);
             return quantity;
         }
 

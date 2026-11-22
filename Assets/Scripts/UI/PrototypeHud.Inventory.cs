@@ -24,7 +24,7 @@ namespace FarmGame2D.UI
         };
         private static readonly GameItem[] AnimalAndFishProducts =
         {
-            GameItem.Turnip, GameItem.Egg, GameItem.Milk, GameItem.RiverFish, GameItem.SeaBass, GameItem.GoldenCarp,
+            GameItem.Egg, GameItem.Milk, GameItem.RiverFish, GameItem.SeaBass, GameItem.GoldenCarp,
             GameItem.HarborMackerel, GameItem.MarketBread, GameItem.PotatoSoup, GameItem.TomatoOmelet,
             GameItem.StrawberryJam, GameItem.RoastedCorn, GameItem.PumpkinPie, GameItem.BakedSweetPotato
         };
@@ -241,8 +241,9 @@ namespace FarmGame2D.UI
                         var count = session.Data.inventory.Count(crop.Seed);
                         var selected = !decoration.HasValue && session.SelectedTool == FarmTool.Seeds && session.SelectedSeed == crop.Seed;
                         if (DrawBagSlot(well, index++, ItemCatalog.GetLabel(crop.Seed),
-                            FarmPlotArtCatalog.GetCropSprite(crop.Seed, true), $"×{count}", null,
-                            count > 0, selected, count > 0, crop.Season))
+                            FarmPlotArtCatalog.GetCropSprite(crop.Seed, true), $"×{count}",
+                            crop.AllSeason ? "사계절" : null, count > 0, selected, count > 0,
+                            crop.AllSeason ? null : crop.Season))
                             session.SelectSeed(crop.Seed);
                     }
                     break;

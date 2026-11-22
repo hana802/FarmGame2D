@@ -348,7 +348,13 @@ namespace FarmGame2D.Core
         public void PurchaseSeed(GameItem seed, int packs = 1, bool anySeason = false)
         {
             packs = Mathf.Max(1, packs);
-            if (!CropCatalog.TryGetBySeed(seed, out var crop) || (!anySeason && crop.Season != CurrentSeason))
+            if (seed == GameItem.TurnipSeed)
+            {
+                Message = "순무 씨앗은 매주 첫날 장터의 순무 시세판에서 살 수 있어요.";
+                return;
+            }
+
+            if (!CropCatalog.TryGetBySeed(seed, out var crop) || (!anySeason && !crop.CanPlantIn(CurrentSeason)))
             {
                 Message = "지금 계절에는 판매하지 않는 씨앗입니다.";
                 return;
@@ -1062,7 +1068,7 @@ namespace FarmGame2D.Core
                 return;
             }
 
-            if (!plot.greenhouse && crop.Season != CurrentSeason)
+            if (!plot.greenhouse && !crop.CanPlantIn(CurrentSeason))
             {
                 Message = $"{crop.Label}은(는) {GetSeasonLabel(crop.Season)}에 심을 수 있습니다.";
                 return;

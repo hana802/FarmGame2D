@@ -39,6 +39,7 @@ namespace FarmGame2D.Core
             { GameItem.PotatoSoup, "감자 수프" },
             { GameItem.TomatoOmelet, "토마토 오믈렛" },
             { GameItem.Turnip, "순무" },
+            { GameItem.TurnipSeed, "순무 씨앗" },
             { GameItem.MarketBread, "유나의 밀빵" },
             { GameItem.HarborMackerel, "고등어" },
             { GameItem.StrawberryJam, "딸기 잼" },

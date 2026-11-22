@@ -33,6 +33,7 @@ namespace FarmGame2D.Art
                 GameItem.BakedSweetPotato => (Bread, 0x6a341c, 0xc46a32, 0xf0b07a),
                 GameItem.HarborMackerel => (Fish, 0x334d62, 0x648697, 0xd0e2dc),
                 GameItem.Turnip => (Turnip, 0xc4a07a, 0xf3e2c4, 0x6e9a45),
+                GameItem.TurnipSeed => (TurnipSprout, 0x416c3f, 0x72a34c, 0xb6cf66),
                 _ => (null, 0, 0, 0)
             };
             if (rows == null) return null;
@@ -99,6 +100,11 @@ namespace FarmGame2D.Art
         {
             "..3...3.....", "...3...3....", "..3...3.....", "..00000000..", ".0223332220.",
             "032222222230", "021111111120", ".0222222220.", "..01111110..", "...000000..."
+        };
+        private static readonly string[] TurnipSprout =
+        {
+            "........20..", ".320...230..", "..230.2330..", "...220220...",
+            ".....110....", "....2110....", "....210.....", "....10......"
         };
         private static readonly string[] Turnip =
         {

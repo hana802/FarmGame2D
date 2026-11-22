@@ -45,7 +45,7 @@ namespace FarmGame2D.Tests
         }
 
         [Test]
-        public void TurnipMarket_BuysOnlyOnWeekStartAndRotsWithoutTouchingOtherItems()
+        public void TurnipMarket_BuysSeedsOnWeekStartAndOnlyHarvestedTurnipsRot()
         {
             var data = GameSaveData.CreateNew(1, 11);
             data.money = 500;
@@ -55,16 +55,20 @@ namespace FarmGame2D.Tests
             data.day = 1;
             var bought = TurnipMarket.Buy(data, 10);
             Assert.That(bought, Is.GreaterThan(0));
-            Assert.That(data.inventory.Count(GameItem.Turnip), Is.EqualTo(bought));
-            Assert.That(data.money, Is.EqualTo(500 - bought * TurnipMarket.BuyPrice(11, 1)));
-
-            var income = TurnipMarket.Sell(data, 1);
-            Assert.That(income, Is.EqualTo(TurnipMarket.SellPrice(11, 1)));
-            data.inventory.Add(GameItem.Egg, 2);
-            Assert.That(TurnipMarket.Discard(data.inventory), Is.EqualTo(bought - 1));
+            Assert.That(data.inventory.Count(GameItem.TurnipSeed), Is.EqualTo(bought));
             Assert.That(data.inventory.Count(GameItem.Turnip), Is.Zero);
+            Assert.That(data.money, Is.EqualTo(500 - bought * TurnipMarket.BuyPrice(11, 1)));
+            Assert.That(TurnipMarket.Sell(data, 1), Is.Zero);
+
+            data.inventory.Add(GameItem.Turnip, 3);
+            data.inventory.Add(GameItem.Egg, 2);
+            Assert.That(ProduceSale.List(data.inventory).Any(offer =>
+                offer.Item is GameItem.Turnip or GameItem.TurnipSeed), Is.False);
+            Assert.That(TurnipMarket.Sell(data, 1), Is.EqualTo(TurnipMarket.SellPrice(11, 1)));
+            Assert.That(TurnipMarket.Discard(data.inventory), Is.EqualTo(2));
+            Assert.That(data.inventory.Count(GameItem.Turnip), Is.Zero);
+            Assert.That(data.inventory.Count(GameItem.TurnipSeed), Is.EqualTo(bought));
             Assert.That(data.inventory.Count(GameItem.Egg), Is.EqualTo(2));
-            Assert.That(ProduceSale.List(data.inventory).Any(offer => offer.Item == GameItem.Turnip), Is.False);
         }
 
         private static int FindSeed(bool spike)

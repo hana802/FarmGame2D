@@ -15,6 +15,9 @@ namespace FarmGame2D.Art
 
         public static Sprite GetCropSprite(GameItem seed, bool ripe)
         {
+            if (seed == GameItem.TurnipSeed)
+                return InventoryItemArt.GetSprite(ripe ? GameItem.Turnip : GameItem.TurnipSeed);
+
             var cell = seed switch
             {
                 GameItem.PotatoSeed => 0,

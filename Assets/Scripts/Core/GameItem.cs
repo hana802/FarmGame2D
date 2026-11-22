@@ -40,7 +40,8 @@ namespace FarmGame2D.Core
         StrawberryJam,
         RoastedCorn,
         PumpkinPie,
-        BakedSweetPotato
+        BakedSweetPotato,
+        TurnipSeed
     }
 
     public enum FarmTool
