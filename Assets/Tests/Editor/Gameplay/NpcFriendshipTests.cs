@@ -7,6 +7,16 @@ namespace FarmGame2D.Tests
     public sealed class NpcFriendshipTests
     {
         [Test]
+        public void ReadingAnUnknownResidentStartsAtZeroWithoutAddingASaveRecord()
+        {
+            var data = new GameSaveData();
+
+            Assert.That(NpcFriendshipService.GetPoints(data, "Guide"), Is.Zero);
+            Assert.That(NpcFriendshipService.GetHeartCount(data, "Guide"), Is.Zero);
+            Assert.That(data.npcFriendships, Is.Empty);
+        }
+
+        [Test]
         public void FavoriteGift_ConsumesItemAndRaisesFriendship()
         {
             var data = GameSaveData.CreateNew(FarmFieldLayout.PlotCount, 1234);

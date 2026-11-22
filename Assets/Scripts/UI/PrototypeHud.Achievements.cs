@@ -12,8 +12,9 @@ namespace FarmGame2D.UI
         {
             var first = layout.FarmTabButton;
             const float gap = 8f;
-            var span = Mathf.Max(360f, layout.SettingsTabButton.xMax - first.x);
-            var width = (span - 2f * gap) / 3f;
+            const int tabCount = 4;
+            var span = Mathf.Max(432f, layout.SettingsTabButton.xMax - first.x);
+            var width = (span - (tabCount - 1) * gap) / tabCount;
             return new Rect(first.x + index * (width + gap), first.y, width, first.height);
         }
 

@@ -11,7 +11,8 @@ namespace FarmGame2D.UI
     {
         Farm,
         Settings,
-        Achievements
+        Achievements,
+        Friendship
     }
 
     public sealed partial class PrototypeHud : MonoBehaviour
@@ -287,7 +288,14 @@ namespace FarmGame2D.UI
             FarmGuiSkin.DrawSolid(new Rect(0f, 0f, HudLayout.ReferenceWidth, HudLayout.ReferenceHeight), CanvasScrim);
             phoneSkin.DrawNotebook(layout.Panel, layout.Screen);
             phoneSkin.DrawHeader(layout.Header, layout.Title);
-            GUI.Label(layout.Title, phonePage == PhonePage.Achievements ? "도전과제" : settings ? "설정" : "농장 수첩", phoneTitleStyle);
+            var pageTitle = phonePage switch
+            {
+                PhonePage.Settings => "설정",
+                PhonePage.Achievements => "도전과제",
+                PhonePage.Friendship => "주민 호감도",
+                _ => "농장 수첩"
+            };
+            GUI.Label(layout.Title, pageTitle, phoneTitleStyle);
 
             if (phoneSkin.DrawClose(layout.CloseButton))
             {
@@ -303,12 +311,19 @@ namespace FarmGame2D.UI
             }
 
             DrawPhoneTabs(layout);
-            if (phonePage == PhonePage.Achievements)
+            var fullPage = Rect.MinMaxRect(layout.Content.xMin, layout.Content.yMin,
+                layout.CloudPanel.xMax, layout.Content.yMax);
+            if (phonePage == PhonePage.Friendship)
             {
-                DrawAchievements(session, Rect.MinMaxRect(layout.Content.x, layout.Content.y, layout.CloudPanel.xMax, layout.Content.yMax));
+                DrawFriendshipPage(session.Data, fullPage);
                 return;
             }
 
+            if (phonePage == PhonePage.Achievements)
+            {
+                DrawAchievements(session, fullPage);
+                return;
+            }
             phoneSkin.DrawPageSeam(layout.Content, layout.CloudPanel);
             if (settings)
             {
@@ -334,11 +349,17 @@ namespace FarmGame2D.UI
                 phonePage = PhonePage.Settings;
                 exitNotice = string.Empty;
             }
-
             if (DrawPhoneTab(GetPhoneTab(layout, 2), "도전과제", PhonePage.Achievements))
             {
                 if (phonePage != PhonePage.Achievements) achievementScroll = Vector2.zero;
                 phonePage = PhonePage.Achievements;
+                exitNotice = string.Empty;
+            }
+
+            if (DrawPhoneTab(GetPhoneTab(layout, 3), "호감도", PhonePage.Friendship))
+            {
+                RefreshFriendshipResidents();
+                phonePage = PhonePage.Friendship;
                 exitNotice = string.Empty;
             }
         }

@@ -12,6 +12,8 @@ namespace FarmGame2D.Interactions
         private int portraitRow = -1;
 
         public override string Prompt => $"{speaker}와 상호작용";
+        public string DisplayName => speaker;
+        public int PortraitRow => portraitRow;
         public int DialogueCount => dialogue.Count;
 
         public void Configure(string speakerName, string line, int npcPortraitRow = -1)

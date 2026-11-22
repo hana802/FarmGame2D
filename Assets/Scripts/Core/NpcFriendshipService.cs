@@ -49,18 +49,28 @@ namespace FarmGame2D.Core
         {
             if (data == null || string.IsNullOrWhiteSpace(npcId)) return null;
 
-            data.npcFriendships ??= new List<NpcFriendshipData>();
-            foreach (var friendship in data.npcFriendships)
-            {
-                if (friendship != null && string.Equals(friendship.npcId, npcId, StringComparison.Ordinal)) return friendship;
-            }
+            var existing = Find(data, npcId);
+            if (existing != null) return existing;
 
+            data.npcFriendships ??= new List<NpcFriendshipData>();
             var created = new NpcFriendshipData { npcId = npcId };
             data.npcFriendships.Add(created);
             return created;
         }
 
-        public static int GetPoints(GameSaveData data, string npcId) => GetOrCreate(data, npcId)?.points ?? 0;
+        private static NpcFriendshipData Find(GameSaveData data, string npcId)
+        {
+            if (data?.npcFriendships == null || string.IsNullOrWhiteSpace(npcId)) return null;
+
+            foreach (var friendship in data.npcFriendships)
+            {
+                if (friendship != null && string.Equals(friendship.npcId, npcId, StringComparison.Ordinal)) return friendship;
+            }
+
+            return null;
+        }
+
+        public static int GetPoints(GameSaveData data, string npcId) => Find(data, npcId)?.points ?? 0;
 
         public static int GetHeartCount(GameSaveData data, string npcId) => Math.Min(5, GetPoints(data, npcId) / PointsPerHeart);
 
