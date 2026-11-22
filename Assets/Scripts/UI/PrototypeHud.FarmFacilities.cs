@@ -34,7 +34,7 @@ namespace FarmGame2D.UI
             ShopFill(footer, BagWell, 7f);
             GUI.Label(new Rect(footer.x + 11f, footer.y, footer.width - 22f, footer.height),
                 session.FacilityNotice.Length > 0 ? session.FacilityNotice : kitchen
-                    ? "만든 요리는 가방에 들어가며 판매함에서 팔 수 있어요."
+                    ? "만든 요리는 판매함에 팔거나 주민에게 선물할 수 있어요."
                     : "비용을 내면 공사가 완료되고 새 공간이 열려요.", shopSmall);
         }
 
@@ -82,23 +82,24 @@ namespace FarmGame2D.UI
 
         private void DrawKitchenRecipes(GameSession session, Rect panel)
         {
-            var y = panel.y + 87f;
-            foreach (var recipe in BuildingUpgradeCatalog.Recipes)
+            var recipes = BuildingUpgradeCatalog.Recipes;
+            var inventory = session.Data.inventory;
+            for (var index = 0; index < recipes.Count; index++)
             {
-                var card = new Rect(panel.x + 18f, y, panel.width - 36f, 123f);
+                var recipe = recipes[index];
+                var card = new Rect(panel.x + 18f + index % 2 * 410f, panel.y + 81f + index / 2 * 147f, 394f, 133f);
                 ShopFill(card, ShopCard, 10f);
-                var icon = new Rect(card.x + 15f, card.y + 22f, 80f, 80f);
+                var icon = new Rect(card.x + 14f, card.y + 14f, 66f, 66f);
                 ShopFill(icon, BagWell, 9f);
-                DrawShopArt(new Rect(icon.x + 12f, icon.y + 12f, 56f, 56f), GetInventoryArt(recipe.Result));
-                GUI.Label(new Rect(card.x + 111f, card.y + 14f, 380f, 32f), ItemCatalog.GetLabel(recipe.Result), shopName);
-                var inventory = session.Data.inventory;
-                var first = inventory.Count(recipe.First);
-                var second = inventory.Count(recipe.Second);
-                var ingredients = $"{ItemCatalog.GetLabel(recipe.First)} {first}/1   ·   {ItemCatalog.GetLabel(recipe.Second)} {second}/1";
-                GUI.Label(new Rect(card.x + 111f, card.y + 46f, 400f, 25f), ingredients, shopSmall);
-                GUI.Label(new Rect(card.x + 111f, card.y + 74f, 330f, 25f), $"판매가 {recipe.SellPrice:N0} G", shopSmall);
-                var button = new Rect(card.xMax - 160f, card.y + 37f, 144f, 48f);
-                if (first > 0 && second > 0)
+                DrawShopArt(new Rect(icon.x + 9f, icon.y + 9f, 48f, 48f), GetInventoryArt(recipe.Result));
+                GUI.Label(new Rect(card.x + 94f, card.y + 14f, 280f, 32f), ItemCatalog.GetLabel(recipe.Result), shopName);
+                var ingredients = $"{ItemCatalog.GetLabel(recipe.First)} {inventory.Count(recipe.First)}/1";
+                if (recipe.Second is GameItem second)
+                    ingredients += $"   ·   {ItemCatalog.GetLabel(second)} {inventory.Count(second)}/1";
+                GUI.Label(new Rect(card.x + 94f, card.y + 47f, 280f, 25f), ingredients, shopSmall);
+                GUI.Label(new Rect(card.x + 14f, card.y + 91f, 200f, 34f), $"판매가 {recipe.SellPrice:N0} G", shopSmall);
+                var button = new Rect(card.xMax - 148f, card.y + 84f, 134f, 38f);
+                if (recipe.HasIngredients(inventory))
                 {
                     if (ShopButton(button, "1개 만들기", ShopGreen, shopAction)) session.TryCook(recipe.Result);
                 }
@@ -107,7 +108,6 @@ namespace FarmGame2D.UI
                     ShopFill(button, ShopLine, 8f);
                     GUI.Label(button, "재료 부족", shopSecondary);
                 }
-                y += 136f;
             }
         }
     }

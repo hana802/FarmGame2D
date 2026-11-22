@@ -29,7 +29,7 @@ namespace FarmGame2D.Core
 
     public readonly struct FarmRecipe
     {
-        public FarmRecipe(GameItem result, GameItem first, GameItem second, int sellPrice)
+        public FarmRecipe(GameItem result, GameItem first, GameItem? second, int sellPrice)
         {
             Result = result;
             First = first;
@@ -39,8 +39,11 @@ namespace FarmGame2D.Core
 
         public GameItem Result { get; }
         public GameItem First { get; }
-        public GameItem Second { get; }
+        public GameItem? Second { get; }
         public int SellPrice { get; }
+
+        public bool HasIngredients(InventoryModel inventory) =>
+            inventory.Count(First) > 0 && (Second is not GameItem second || inventory.Count(second) > 0);
     }
 
     public static class BuildingUpgradeCatalog
@@ -49,7 +52,7 @@ namespace FarmGame2D.Core
         private static readonly BuildingUpgrade[] HouseUpgrades =
         {
             new(0, 10, 8, GameItem.IronOre, 4, "2층 침실 · 1층 작업대와 판매함"),
-            new(700, 28, 12, GameItem.IronOre, 4, "굴뚝 · 1층 난로에서 요리하기")
+            new(700, 28, 12, GameItem.IronOre, 4, "1층 주방 · 요리 판매가 재료 합계 +50G")
         };
         private static readonly BuildingUpgrade[] GreenhouseUpgrades =
         {
@@ -59,8 +62,10 @@ namespace FarmGame2D.Core
 
         public static IReadOnlyList<FarmRecipe> Recipes { get; } = new FarmRecipe[]
         {
-            new(GameItem.PotatoSoup, GameItem.Potato, GameItem.Milk, 95),
-            new(GameItem.TomatoOmelet, GameItem.Egg, GameItem.Tomato, 68)
+            new(GameItem.PotatoSoup, GameItem.Potato, GameItem.Milk, 123),
+            new(GameItem.TomatoOmelet, GameItem.Egg, GameItem.Tomato, 103),
+            new(GameItem.BakedSweetPotato, GameItem.SweetPotato, null, 82),
+            new(GameItem.WheatBread, GameItem.Wheat, GameItem.Egg, 99)
         };
 
         public static BuildingUpgrade Get(FarmBuilding building, int level) =>

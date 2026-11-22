@@ -30,8 +30,8 @@ namespace FarmGame2D.Core
                     yield return new MarketOffer(GameItem.MarketBread, 36);
                     break;
                 case ShopKind.MarketSpecialties:
-                    yield return new MarketOffer(GameItem.PotatoSoup, 120);
-                    yield return new MarketOffer(GameItem.TomatoOmelet, 90);
+                    yield return new MarketOffer(GameItem.PotatoSoup, 124);
+                    yield return new MarketOffer(GameItem.TomatoOmelet, 104);
                     break;
             }
         }

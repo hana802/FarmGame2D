@@ -70,14 +70,14 @@ namespace FarmGame2D.Core
             {
                 if (recipe.Result != result) continue;
                 var inventory = Data.inventory;
-                if (inventory.Count(recipe.First) == 0 || inventory.Count(recipe.Second) == 0)
+                if (!recipe.HasIngredients(inventory))
                 {
                     FacilityNotice = "요리 재료가 부족해요.";
                     return false;
                 }
 
                 inventory.TrySpend(recipe.First, 1);
-                inventory.TrySpend(recipe.Second, 1);
+                if (recipe.Second is GameItem second) inventory.TrySpend(second, 1);
                 inventory.Add(recipe.Result, 1);
                 FacilityNotice = $"{ItemCatalog.GetLabel(recipe.Result)} 1개를 만들었어요.";
                 Message = FacilityNotice;

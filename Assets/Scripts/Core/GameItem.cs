@@ -41,7 +41,8 @@ namespace FarmGame2D.Core
         RoastedCorn,
         PumpkinPie,
         BakedSweetPotato,
-        TurnipSeed
+        TurnipSeed,
+        WheatBread
     }
 
     public enum FarmTool

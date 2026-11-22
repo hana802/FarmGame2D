@@ -26,7 +26,7 @@ namespace FarmGame2D.UI
         {
             GameItem.Egg, GameItem.Milk, GameItem.RiverFish, GameItem.SeaBass, GameItem.GoldenCarp,
             GameItem.HarborMackerel, GameItem.MarketBread, GameItem.PotatoSoup, GameItem.TomatoOmelet,
-            GameItem.StrawberryJam, GameItem.RoastedCorn, GameItem.PumpkinPie, GameItem.BakedSweetPotato
+            GameItem.StrawberryJam, GameItem.RoastedCorn, GameItem.PumpkinPie, GameItem.BakedSweetPotato, GameItem.WheatBread
         };
         private static readonly GameItem[] InventoryMaterials =
         {

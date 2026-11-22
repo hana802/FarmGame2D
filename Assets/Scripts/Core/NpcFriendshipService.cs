@@ -57,14 +57,14 @@ namespace FarmGame2D.Core
             GameItem.GoldOre, GameItem.RiverFish, GameItem.SeaBass, GameItem.GoldenCarp,
             GameItem.MarketBread, GameItem.PotatoSoup, GameItem.TomatoOmelet,
             GameItem.StrawberryJam, GameItem.RoastedCorn, GameItem.PumpkinPie,
-            GameItem.BakedSweetPotato
+            GameItem.BakedSweetPotato, GameItem.WheatBread
         };
 
         private static readonly GameItem[] FoodItems =
         {
             GameItem.MarketBread, GameItem.PotatoSoup, GameItem.TomatoOmelet,
             GameItem.StrawberryJam, GameItem.RoastedCorn, GameItem.PumpkinPie,
-            GameItem.BakedSweetPotato
+            GameItem.BakedSweetPotato, GameItem.WheatBread
         };
 
         public static NpcFriendshipData GetOrCreate(GameSaveData data, string npcId)

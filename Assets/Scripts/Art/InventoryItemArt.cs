@@ -27,6 +27,7 @@ namespace FarmGame2D.Art
                 GameItem.PotatoSoup => (Soup, 0x9c6241, 0xeca752, 0xffe2ad),
                 GameItem.TomatoOmelet => (Omelet, 0xbb623c, 0xf4bc52, 0xfff0a6),
                 GameItem.MarketBread => (Bread, 0x743e25, 0xbb753b, 0xf6c575),
+                GameItem.WheatBread => (Bread, 0x8b4c29, 0xd58b43, 0xffdd91),
                 GameItem.StrawberryJam => (Soup, 0x8d3048, 0xd45b6a, 0xf7b7c0),
                 GameItem.RoastedCorn => (Turnip, 0xc4a07a, 0xf0c14a, 0x6e9a45),
                 GameItem.PumpkinPie => (Omelet, 0x8a3e22, 0xe07a32, 0xf6d29a),
