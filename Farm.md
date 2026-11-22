@@ -86,5 +86,5 @@
 ## 실행과 기존 기록
 
 - Unity `6000.6.8f1`에서 [Main.unity](Assets/Scenes/Main.unity)를 열고 Play를 누른다. WebGL 빌드는 Unity 메뉴 **FarmGame2D → Build WebGL Site**로 생성한다. [실행 문서](docs/README.md)
-- `M` / `F`로 캐릭터를 고르고 `WASD` 또는 방향키로 이동한다. `E`는 상호작용, `Space`는 호미로 밭 만들기 또는 선택한 장식 배치, `G`는 강아지 앉기·따라오기, `I` / `B`는 가방, `P`는 휴대폰이다. `F5`는 저장, `F9`는 불러오기, `F6`는 계절 미리보기용 디버그 키다. [플레이어 입력](Assets/Scripts/Player/PrototypePlayerController.cs) · [세션 입력](Assets/Scripts/Core/GameSession.cs)
+- 시작 화면의 버튼으로 캐릭터를 고른다. `WASD` 또는 방향키로 이동한다. `E`는 상호작용, `Space`는 호미로 밭 만들기 또는 선택한 장식 배치, `G`는 강아지 앉기·따라오기, `I` / `B`는 가방, `P`는 휴대폰이다. `F5`는 저장, `F9`는 불러오기, `F6`는 계절 미리보기용 디버그 키다. [플레이어 입력](Assets/Scripts/Player/PrototypePlayerController.cs) · [세션 입력](Assets/Scripts/Core/GameSession.cs)
 - [초기 기획](docs/plans/2026-11-07-game-design-overview.md), [11월 8일 구현 현황](docs/PROJECT_STATUS_2026-11-08.md), [11월 16일 인연 이벤트 설계](docs/plans/2026-11-16-bond-endings-design.md), [11월 17일 결혼식 설계](docs/plans/2026-11-17-wedding-ceremony-animation-design.md)

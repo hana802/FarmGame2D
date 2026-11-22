@@ -179,7 +179,7 @@ namespace FarmGame2D.Core
 
         public void ChooseCharacter(CharacterChoice choice)
         {
-            if (choice == CharacterChoice.None)
+            if (choice == CharacterChoice.None || Data.characterChoice != CharacterChoice.None)
             {
                 return;
             }
