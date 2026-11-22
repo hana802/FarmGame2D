@@ -8,6 +8,8 @@ namespace FarmGame2D.World
     public sealed partial class PrototypeWorldBuilder
     {
         private GameObject marketRoot;
+        private SpriteRenderer visitingMerchant;
+        private GameObject turnipPriceBoard;
         private WanderingMover minseo;
         private WanderingMover yuna;
         private WanderingMover sora;
@@ -41,6 +43,14 @@ namespace FarmGame2D.World
                 new Vector2(12.89f, 2.62f), town, 5, new Vector2(0.75f, 1.4f), new Vector2(0f, 0.7f));
             merchant.GetComponent<BoxCollider2D>().isTrigger = true;
             merchant.AddComponent<TurnipMarketInteractable>();
+            visitingMerchant = merchant.GetComponent<SpriteRenderer>();
+            turnipPriceBoard = new GameObject("Turnip Price Board");
+            turnipPriceBoard.transform.SetParent(merchant.transform, false);
+            turnipPriceBoard.transform.localPosition = new Vector3(0f, 0.42f);
+            turnipPriceBoard.transform.localScale = Vector3.one * 0.38f;
+            var boardRenderer = turnipPriceBoard.AddComponent<SpriteRenderer>();
+            boardRenderer.sprite = WorldArtCatalog.GetVillageSquareNoticeboardSprite();
+            boardRenderer.sortingOrder = visitingMerchant.sortingOrder;
             BuildHarbor(town);
 
             session.StateChanged += RefreshVillageSchedule;
@@ -76,6 +86,8 @@ namespace FarmGame2D.World
             var data = villageSession.Data;
             var weekend = SeasonCalendar.IsWeekend(data.day);
             if (marketRoot.activeSelf != weekend) marketRoot.SetActive(weekend);
+            visitingMerchant.enabled = weekend;
+            if (turnipPriceBoard.activeSelf == weekend) turnipPriceBoard.SetActive(!weekend);
 
             var morning = data.hour >= 6 && data.hour < 12;
             minseo.SetWorkplace(morning ? new Vector2(15.35f, 3.55f) : null);

@@ -127,7 +127,9 @@ namespace FarmGame2D.Interactions
 
     public sealed class TurnipMarketInteractable : InteractableBehaviour
     {
-        public override string Prompt => "밀짚모자 상인과 순무 시세 보기";
+        public override string Prompt => SeasonCalendar.IsWeekend(GameSession.Instance?.Data.day ?? 1)
+            ? "밀짚모자 상인과 순무 시세 보기"
+            : "순무 시세판에서 거래하기";
 
         public override void Interact(PrototypePlayerController player)
         {

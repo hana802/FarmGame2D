@@ -16,7 +16,8 @@ namespace FarmGame2D.UI
             ShopFill(header, ShopGreen, 18f);
             FarmGuiSkin.DrawSolid(new Rect(header.x, header.y + 24f, header.width, header.height - 24f), ShopGreen);
             DrawShopArt(new Rect(header.x + 22f, header.y + 12f, 54f, 54f), GetInventoryArt(GameItem.Turnip));
-            GUI.Label(new Rect(header.x + 90f, header.y + 16f, 280f, 46f), "순무 장수", saleTitle);
+            var title = SeasonCalendar.IsWeekend(session.Data.day) ? "순무 장수" : "순무 시세판";
+            GUI.Label(new Rect(header.x + 90f, header.y + 16f, 280f, 46f), title, saleTitle);
             GUI.Label(new Rect(header.xMax - 330f, header.y + 22f, 230f, 34f), $"보유 금액  {session.Data.money:N0} G", shopLight);
             if (ShopButton(new Rect(header.xMax - 76f, header.y + 16f, 52f, 46f), "×", ShopGreen, shopAction))
             {
