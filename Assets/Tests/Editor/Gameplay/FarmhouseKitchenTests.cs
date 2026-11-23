@@ -96,6 +96,42 @@ namespace FarmGame2D.Tests
                 Is.EqualTo(relocated ? WorldAreaProfile.FarmhouseEntranceSpawn : oldPosition));
         }
 
+        [Test]
+        public void Rhythm_CompletesAfterThreeCenteredStrikes()
+        {
+            var rhythm = new CookingRhythm(GameItem.PotatoSoup);
+            for (var hit = 0; hit < CookingRhythm.RequiredHits; hit++)
+            {
+                rhythm.Advance(CookingRhythm.SweepSeconds * 0.5f);
+                Assert.That(rhythm.TryStrike(), Is.True);
+            }
+
+            Assert.That(rhythm.Succeeded, Is.True);
+            Assert.That(rhythm.Hits, Is.EqualTo(CookingRhythm.RequiredHits));
+        }
+
+        [Test]
+        public void Rhythm_MissesOutsideTheWindowWithoutAnotherChance()
+        {
+            var rhythm = new CookingRhythm(GameItem.WheatBread);
+            rhythm.Advance(CookingRhythm.SweepSeconds * 0.1f);
+            Assert.That(rhythm.TryStrike(), Is.False);
+            Assert.That(rhythm.Resolved, Is.True);
+            Assert.That(rhythm.Succeeded, Is.False);
+            Assert.That(rhythm.TryStrike(), Is.False);
+        }
+
+        [Test]
+        public void Rhythm_ExpiresWhenTheMarkerReachesTheEnd()
+        {
+            var rhythm = new CookingRhythm(GameItem.BakedSweetPotato);
+            rhythm.Advance(CookingRhythm.SweepSeconds * 0.5f);
+            Assert.That(rhythm.Resolved, Is.False);
+            rhythm.Advance(CookingRhythm.SweepSeconds);
+            Assert.That(rhythm.Resolved, Is.True);
+            Assert.That(rhythm.Succeeded, Is.False);
+        }
+
         private void UseSave(GameSaveData save)
         {
             session.CloseFarmFacility();

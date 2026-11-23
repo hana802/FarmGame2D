@@ -24,6 +24,8 @@ namespace FarmGame2D.Core
             FacilityNotice = string.Empty;
         }
 
+        public void SetFacilityNotice(string message) => FacilityNotice = message ?? string.Empty;
+
         public int GetBuildingLevel(FarmBuilding building) => building == FarmBuilding.House
             ? Data.houseUpgradeLevel : Data.greenhouseUpgradeLevel;
 

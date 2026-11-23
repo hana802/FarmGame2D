@@ -5,6 +5,8 @@ namespace FarmGame2D.UI
 {
     public sealed partial class PrototypeHud
     {
+        private CookingRhythm cookingRhythm;
+
         private void DrawFarmFacility(GameSession session)
         {
             EnsureShopStyles();
@@ -19,11 +21,15 @@ namespace FarmGame2D.UI
                 GUI.Label(new Rect(header.xMax - 250f, header.y, 132f, header.height), $"{session.Data.money:N0} G", shopLight);
             if (ShopButton(new Rect(header.xMax - 94f, header.y + 12f, 76f, 38f), "닫기", ShopPaper, shopSecondary))
             {
+                cookingRhythm = null;
                 session.CloseFarmFacility();
                 return;
             }
 
-            if (kitchen) DrawKitchenRecipes(session, panel);
+            if (!kitchen) cookingRhythm = null;
+            else UpdateCookingRhythm(session, panel);
+            if (kitchen && cookingRhythm != null) DrawCookingRhythm(session, panel);
+            else if (kitchen) DrawKitchenRecipes(session, panel);
             else
             {
                 DrawConstructionCard(session, FarmBuilding.House, new Rect(panel.x + 18f, panel.y + 81f, 394f, 292f));
@@ -34,7 +40,7 @@ namespace FarmGame2D.UI
             ShopFill(footer, BagWell, 7f);
             GUI.Label(new Rect(footer.x + 11f, footer.y, footer.width - 22f, footer.height),
                 session.FacilityNotice.Length > 0 ? session.FacilityNotice : kitchen
-                    ? "만든 요리는 판매함에 팔거나 주민에게 선물할 수 있어요."
+                    ? "초록 칸에서 스페이스를 세 번 누르면 완성돼요. 놓쳐도 재료는 그대로예요."
                     : "비용을 내면 공사가 완료되고 새 공간이 열려요.", shopSmall);
         }
 
@@ -101,7 +107,11 @@ namespace FarmGame2D.UI
                 var button = new Rect(card.xMax - 148f, card.y + 84f, 134f, 38f);
                 if (recipe.HasIngredients(inventory))
                 {
-                    if (ShopButton(button, "1개 만들기", ShopGreen, shopAction)) session.TryCook(recipe.Result);
+                    if (ShopButton(button, "박자 맞추기", ShopGreen, shopAction))
+                    {
+                        cookingRhythm = new CookingRhythm(recipe.Result);
+                        session.SetFacilityNotice("표시가 초록 칸에 있을 때 스페이스를 누르세요.");
+                    }
                 }
                 else
                 {
@@ -110,5 +120,77 @@ namespace FarmGame2D.UI
                 }
             }
         }
+
+        private void UpdateCookingRhythm(GameSession session, Rect panel)
+        {
+            if (cookingRhythm == null) return;
+
+            var current = Event.current;
+            var track = CookingTrackRect(panel);
+            if (current.type == EventType.KeyDown && current.keyCode == KeyCode.Space)
+            {
+                cookingRhythm.TryStrike();
+                current.Use();
+            }
+            else if (current.type == EventType.MouseDown && track.Contains(current.mousePosition))
+            {
+                cookingRhythm.TryStrike();
+                current.Use();
+            }
+
+            if (cookingRhythm.Resolved)
+            {
+                FinishCookingRhythm(session);
+                return;
+            }
+
+            if (current.type == EventType.Repaint)
+                cookingRhythm.Advance(Time.unscaledDeltaTime);
+            if (cookingRhythm != null && cookingRhythm.Resolved)
+                FinishCookingRhythm(session);
+        }
+
+        private void FinishCookingRhythm(GameSession session)
+        {
+            var rhythm = cookingRhythm;
+            cookingRhythm = null;
+            if (rhythm.Succeeded)
+            {
+                session.TryCook(rhythm.Dish);
+                return;
+            }
+
+            session.SetFacilityNotice("박자가 어긋났어요. 재료는 그대로예요.");
+        }
+
+        private void DrawCookingRhythm(GameSession session, Rect panel)
+        {
+            var rhythm = cookingRhythm;
+            var dish = ItemCatalog.GetLabel(rhythm.Dish);
+            GUI.Label(new Rect(panel.x + 36f, panel.y + 96f, panel.width - 72f, 42f), dish, shopHeading);
+            GUI.Label(new Rect(panel.x + 36f, panel.y + 146f, panel.width - 72f, 30f),
+                $"{rhythm.Hits} / {CookingRhythm.RequiredHits}  ·  초록 칸에서 스페이스", shopSmall);
+
+            var track = CookingTrackRect(panel);
+            ShopFill(track, ShopPaper, 8f);
+            var window = new Rect(
+                track.x + track.width * CookingRhythm.WindowStart,
+                track.y + 7f,
+                track.width * (CookingRhythm.WindowEnd - CookingRhythm.WindowStart),
+                track.height - 14f);
+            ShopFill(window, new Color32(120, 168, 96, 255), 6f);
+            var marker = new Rect(track.x + track.width * rhythm.Marker - 5f, track.y + 5f, 10f, track.height - 10f);
+            ShopFill(marker, ShopGreen, 3f);
+
+            var stop = new Rect(panel.x + panel.width * 0.5f - 90f, track.yMax + 28f, 180f, 42f);
+            if (ShopButton(stop, "그만두기", ShopPaper, shopSecondary))
+            {
+                cookingRhythm = null;
+                session.SetFacilityNotice("요리를 멈췄어요. 재료는 그대로예요.");
+            }
+        }
+
+        private static Rect CookingTrackRect(Rect panel) =>
+            new(panel.x + 48f, panel.y + 214f, panel.width - 96f, 52f);
     }
 }
